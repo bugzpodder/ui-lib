@@ -15,6 +15,10 @@ class LocalStorageMock {
 			this.store[key] = value.toString();
 		}
 	}
+
+	removeItem(key) {
+		delete this.store[key];
+	}
 }
 
 global.localStorage = new LocalStorageMock();

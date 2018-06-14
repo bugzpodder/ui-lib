@@ -66,6 +66,11 @@ describe("getSearchValuesFromOmniText", () => {
 	it("errors for keys", () => {
 		expect(() => getSearchValuesFromOmniText(searchDefs, "lotNmber:12 1 lot: 34")).toThrowError();
 	});
+	it("returns empty map with invalid arguments", () => {
+		const expectedSearchValues = new Map();
+		expect(getSearchValuesFromOmniText(searchDefs, "")).toEqual(expectedSearchValues);
+		expect(getSearchValuesFromOmniText(null, "foobar")).toEqual(expectedSearchValues);
+	});
 });
 
 describe("getSearchOptions", () => {

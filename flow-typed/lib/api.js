@@ -72,6 +72,7 @@ declare type SearchDef = {
 	aliases?: Array<string>,
 	description?: string,
 	searchOperator?: string,
+	localStorageKey?: string,
 	// TODO(jrosenfield): support validation in the future?
 };
 
@@ -85,3 +86,8 @@ declare type SearchOptionV2 = {
 } & SearchDef;
 
 declare type SearchOptionsV2 = Array<SearchOptionV2>;
+
+declare type SearchApi = {
+	searchDefs: SearchDefs,
+	setSearchOptions: Function,
+};

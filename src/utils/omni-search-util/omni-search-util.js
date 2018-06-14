@@ -47,8 +47,11 @@ const getKeysForSearchDef = (searchDef: SearchDef): Array<string> => {
 
 /** Go through searchDefs extract values from omniText */
 export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: string): SearchValues => {
-	const parsedValues = parseValuesFromOmniText(omniText);
 	const searchValues: SearchValues = new Map();
+	if (!isValueValid(omniText) || !searchDefs || searchDefs.length === 0) {
+		return searchValues;
+	}
+	const parsedValues = parseValuesFromOmniText(omniText);
 
 	searchDefs.forEach((searchDef, index) => {
 		const keys = getKeysForSearchDef(searchDef);

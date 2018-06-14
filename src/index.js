@@ -97,3 +97,4 @@ export {
 	hasKeyValue,
 	sanitizeId,
 } from "@grail/lib/src/utils";
+export { localStorage } from "@grail/lib/src/client-utils";

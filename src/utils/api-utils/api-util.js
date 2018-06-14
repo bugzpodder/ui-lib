@@ -140,7 +140,6 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
 						return `(${multiFieldSearch})`;
 					}
 					// Note: multiField is not implemented for date search.
-					// FIXME(jrosenfield): DATETIME_SEARCH_TYPE should not convert to toISOString
 					case DATE_SEARCH_TYPE:
 					case DATETIME_SEARCH_TYPE: {
 						if (!values && !Array.isArray(value)) {
