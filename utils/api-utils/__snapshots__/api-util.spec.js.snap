@@ -1,0 +1,3795 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filterResults should be identity 1`] = `
+Object {
+  "input": Array [
+    1,
+    5,
+    3,
+    2,
+    4,
+  ],
+  "options": Object {
+    "count": 10,
+    "offset": 0,
+    "searchOptions": Map {},
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    1,
+    5,
+    3,
+    2,
+    4,
+  ],
+}
+`;
+
+exports[`filterResults should filter empty multi-field 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": "aa",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "xy",
+    },
+    Object {
+      "id": "cc",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "bb",
+    },
+    Object {
+      "id": "ee",
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "multi" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(multi-field-text-search),
+        "value": "",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": "aa",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "xy",
+    },
+    Object {
+      "id": "cc",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "bb",
+    },
+    Object {
+      "id": "ee",
+      "name": "bx",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter end date with empty string startDate 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+        "values": Array [
+          "",
+          "2017-10-03T16:20:00.000Z",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter end date with empty string startDate 2`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(date),
+        "values": Array [
+          "",
+          "2017-10-03",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter end date with null startDate 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+        "values": Array [
+          null,
+          "2017-10-03T16:20:00.000Z",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter end date with null startDate 2`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(date),
+        "values": Array [
+          null,
+          "2017-10-03",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter equal number 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "isEqual": true,
+        "type": Symbol(numeric),
+        "value": 3,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": 3,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter false boolean 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "isValid": true,
+    },
+    Object {
+      "isValid": false,
+    },
+    Object {
+      "isValid": 1,
+    },
+    Object {
+      "isValid": 0,
+    },
+    Object {},
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "isValid" => Object {
+        "isEqual": false,
+        "type": Symbol(boolean),
+        "value": false,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "isValid": true,
+    },
+    Object {
+      "isValid": 1,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter false for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "isValid": 1,
+        },
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+        Object {
+          "isValid": 1,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.isValid" => Object {
+        "type": Symbol(boolean),
+        "value": false,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "isValid": 1,
+        },
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter id field 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": "P001001",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "A00100-1",
+    },
+    Object {
+      "id": "A00100-1",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "P001001",
+    },
+    Object {
+      "id": "ee",
+      "name": "P001002",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(full-id),
+        "value": "P00100-1",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": "dd",
+      "name": "P001001",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter id field with filterKey 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "P001001",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "A00100-1",
+        },
+      ],
+      "name": "xy",
+    },
+    Object {
+      "labels": Array [],
+      "name": "A00100-1",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001002",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(full-id),
+        "value": "P00100-1",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter lab test accession label id field 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": "P001001",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "A00100-1",
+    },
+    Object {
+      "id": "A00100-1",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "P001001",
+    },
+    Object {
+      "id": "ee",
+      "name": "P001002",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(full-id),
+        "value": "A00100-1",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": "bb",
+      "name": "A00100-1",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter lab test accession label id field with filterKey 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "P001001",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "A00100-1",
+        },
+      ],
+      "name": "xy",
+    },
+    Object {
+      "labels": Array [],
+      "name": "A00100-1",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001002",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(full-id),
+        "value": "A00100-1",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "A00100-1",
+        },
+      ],
+      "name": "xy",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter like id field 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": "P001001",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "A00100-1",
+    },
+    Object {
+      "id": "A00100-1",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "P001001",
+    },
+    Object {
+      "id": "ee",
+      "name": "P001002",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(like-id),
+        "value": "P001",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": "dd",
+      "name": "P001001",
+    },
+    Object {
+      "id": "ee",
+      "name": "P001002",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter like id field with filterKey 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "P001001",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "A00100-1",
+        },
+      ],
+      "name": "xy",
+    },
+    Object {
+      "labels": Array [],
+      "name": "A00100-1",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001002",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(like-id),
+        "value": "P001",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001002",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many multi-fields 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": "aa",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "xy",
+    },
+    Object {
+      "id": "cc",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "bb",
+    },
+    Object {
+      "id": "ee",
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "multi" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(multi-field-text-search),
+        "values": Array [
+          "aa",
+          "bb",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": "aa",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "xy",
+    },
+    Object {
+      "id": "cc",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "bb",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many nested multi-fields 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "gg",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+      "name": "xy",
+    },
+    Object {
+      "labels": Array [],
+      "name": "ab",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "multi" => Object {
+        "searchFields": Array [
+          "name",
+          "labels.name",
+        ],
+        "type": Symbol(multi-field-text-search),
+        "values": Array [
+          "ab",
+          "bb",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "gg",
+    },
+    Object {
+      "labels": Array [],
+      "name": "ab",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many numbers 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "type": Symbol(numeric),
+        "values": Array [
+          3,
+          4,
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many strings 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "aa",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(full-text),
+        "values": Array [
+          "xy",
+          "aa",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many strings for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "type": Symbol(full-text),
+        "values": Array [
+          "bb",
+          "gg",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many substrings for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "type": Symbol(like-text),
+        "values": Array [
+          "a",
+          "g",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many unequal strings for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "isEqual": false,
+        "type": Symbol(full-text),
+        "values": Array [
+          "bg",
+          "gg",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter many unequal substrings for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "isEqual": false,
+        "type": Symbol(like-text),
+        "values": Array [
+          "b",
+          "g",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter multi numeric for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 8,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.count" => Object {
+        "type": Symbol(numeric),
+        "values": Array [
+          10,
+          30,
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter multi search 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "x",
+      },
+      "id" => Object {
+        "type": Symbol(numeric),
+        "values": Array [
+          1,
+          3,
+          5,
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [],
+}
+`;
+
+exports[`filterResults should filter multi search with empty value 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "",
+      },
+      "id" => Object {
+        "type": Symbol(numeric),
+        "values": Array [
+          1,
+          3,
+          5,
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [],
+}
+`;
+
+exports[`filterResults should filter multi search with starting empty value 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "type": Symbol(numeric),
+        "values": Array [
+          1,
+          3,
+          5,
+        ],
+      },
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [],
+}
+`;
+
+exports[`filterResults should filter multi-field 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": "aa",
+      "name": "xx",
+    },
+    Object {
+      "id": "bb",
+      "name": "xy",
+    },
+    Object {
+      "id": "cc",
+      "name": "aa",
+    },
+    Object {
+      "id": "dd",
+      "name": "bb",
+    },
+    Object {
+      "id": "ee",
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "multi" => Object {
+        "searchFields": Array [
+          "id",
+          "name",
+        ],
+        "type": Symbol(multi-field-text-search),
+        "value": "aa",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": "aa",
+      "name": "xx",
+    },
+    Object {
+      "id": "cc",
+      "name": "aa",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter nested multi-field 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "gg",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+      "name": "xy",
+    },
+    Object {
+      "labels": Array [],
+      "name": "ab",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "multi" => Object {
+        "searchFields": Array [
+          "name",
+          "labels.name",
+        ],
+        "type": Symbol(multi-field-text-search),
+        "value": "bb",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "gg",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter number 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "type": Symbol(numeric),
+        "value": 3,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": 3,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter numeric for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 8,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.count" => Object {
+        "type": Symbol(numeric),
+        "value": 10,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter results for reverse start and end date 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+        "values": Array [
+          "2018-10-03",
+          "2017-10-30",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter start and end date 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(date),
+        "values": Array [
+          "2017-09-01",
+          "2017-10-03",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-10-02",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter start and end datetime 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+        "values": Array [
+          "2017-09-01",
+          "2017-10-03T16:20:00.000Z",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter start date 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(date),
+        "values": Array [
+          "2017-10-03",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter start datetime 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+        "values": Array [
+          "2017-10-03T16:20:00.000Z",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter string 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "aa",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(full-text),
+        "value": "xy",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "xy",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter string for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "type": Symbol(full-text),
+        "value": "bb",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter substring 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "x",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter substring for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "type": Symbol(like-text),
+        "value": "b",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter then offset 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 2,
+    "offset": 1,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "x",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter then sort 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "x",
+      },
+    },
+    "sortOptions": Array [
+      Object {
+        "id": "name",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "name": "bx",
+    },
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter then sort then offset 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 2,
+    "offset": 1,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "x",
+      },
+    },
+    "sortOptions": Array [
+      Object {
+        "id": "name",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter true boolean 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "isValid": true,
+    },
+    Object {
+      "isValid": false,
+    },
+    Object {
+      "isValid": 1,
+    },
+    Object {
+      "isValid": 0,
+    },
+    Object {},
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "isValid" => Object {
+        "type": Symbol(boolean),
+        "value": true,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "isValid": true,
+    },
+    Object {
+      "isValid": 1,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter true for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "isValid": 1,
+        },
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+        Object {
+          "isValid": 1,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.isValid" => Object {
+        "type": Symbol(numeric),
+        "value": true,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+        Object {
+          "isValid": 1,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal boolean for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "isValid": 1,
+        },
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+        Object {
+          "isValid": 1,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": true,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.isValid" => Object {
+        "isEqual": false,
+        "type": Symbol(numeric),
+        "value": true,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "isValid": 1,
+        },
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "isValid": false,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal number 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "isEqual": false,
+        "type": Symbol(numeric),
+        "value": 3,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal numeric for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 8,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.count" => Object {
+        "isEqual": false,
+        "type": Symbol(numeric),
+        "value": 30,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 8,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal numeric for nested 2`] = `
+Object {
+  "input": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 30,
+        },
+      ],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 8,
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "values.count" => Object {
+        "isEqual": false,
+        "type": Symbol(numeric),
+        "value": 30,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "values": Array [
+        Object {
+          "count": 10,
+        },
+        Object {
+          "count": 3,
+        },
+      ],
+    },
+    Object {
+      "values": Array [],
+    },
+    Object {
+      "values": Array [
+        Object {
+          "count": 8,
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal string for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "isEqual": false,
+        "type": Symbol(full-text),
+        "value": "bb",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal substring 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "xx",
+    },
+    Object {
+      "name": "xy",
+    },
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+    Object {
+      "name": "bx",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "isEqual": false,
+        "type": Symbol(like-text),
+        "value": "x",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "aa",
+    },
+    Object {
+      "name": "bb",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter unequal substring for nested 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "labels.name" => Object {
+        "isEqual": false,
+        "type": Symbol(like-text),
+        "value": "b",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [],
+    },
+  ],
+}
+`;
+
+exports[`filterResults should filter zero 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "type": Symbol(numeric),
+        "value": 0,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "id": 0,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should limit 1`] = `
+Object {
+  "input": Array [
+    1,
+    2,
+    3,
+    4,
+    5,
+  ],
+  "options": Object {
+    "count": 3,
+    "offset": 0,
+    "searchOptions": Map {},
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    1,
+    2,
+    3,
+  ],
+}
+`;
+
+exports[`filterResults should multi-sort 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {},
+    "sortOptions": Array [
+      Object {
+        "id": "name",
+      },
+      Object {
+        "id": "id",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "name": "a",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter empty string 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(full-text),
+        "value": "",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter empty substring 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "name" => Object {
+        "type": Symbol(like-text),
+        "value": "",
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter missing date 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "missingDate" => Object {
+        "type": Symbol(date),
+        "values": Array [
+          "2017-10-03",
+          "2017-10-30",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter missing datetime 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "missingDate" => Object {
+        "type": Symbol(datetime),
+        "values": Array [
+          "2017-10-03",
+          "2017-10-30",
+        ],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter undefined 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "id" => Object {
+        "type": Symbol(numeric),
+        "value": undefined,
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "x",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "b",
+    },
+    Object {
+      "name": "a",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter without date 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(date),
+        "values": Array [],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should not filter without datetime 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+        "values": Array [],
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should offset 1`] = `
+Object {
+  "input": Array [
+    1,
+    2,
+    3,
+    4,
+    5,
+  ],
+  "options": Object {
+    "count": 2,
+    "offset": 1,
+    "searchOptions": Map {},
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    2,
+    3,
+  ],
+}
+`;
+
+exports[`filterResults should return true if no values 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {
+      "date" => Object {
+        "type": Symbol(datetime),
+      },
+    },
+    "sortOptions": Array [],
+  },
+  "output": Array [
+    Object {
+      "date": "2017-08-23",
+    },
+    Object {
+      "date": "2017-10-02",
+    },
+    Object {
+      "date": "2017-10-03",
+    },
+    Object {
+      "date": "2017-10-30",
+    },
+    Object {
+      "date": "2017-11-23",
+    },
+  ],
+}
+`;
+
+exports[`filterResults should sort 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {},
+    "sortOptions": Array [
+      Object {
+        "id": "id",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "id": 0,
+    },
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 4,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should sort and offset 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 2,
+    "offset": 1,
+    "searchOptions": Map {},
+    "sortOptions": Array [
+      Object {
+        "id": "id",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 2,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should sort desc 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 0,
+    "searchOptions": Map {},
+    "sortOptions": Array [
+      Object {
+        "desc": true,
+        "id": "id",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 1,
+    },
+  ],
+}
+`;
+
+exports[`filterResults should sort desc and offset 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 5,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 4,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+  "options": Object {
+    "count": 5,
+    "offset": 3,
+    "searchOptions": Map {},
+    "sortOptions": Array [
+      Object {
+        "desc": true,
+        "id": "id",
+      },
+    ],
+  },
+  "output": Array [
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 0,
+    },
+  ],
+}
+`;
