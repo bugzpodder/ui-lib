@@ -1,7 +1,7 @@
 {
   "presets": [
-    "@babel/preset-env",
-    "@babel/preset-flow"
+    "@babel/env",
+    "@babel/flow"
   ],
-  "plugins": ["transform-class-properties"]
+  "plugins": ["@babel/proposal-class-properties", ["@babel/transform-runtime", { "polyfill": false, "useBuiltIns": true }]]
 }
