@@ -18,7 +18,8 @@ export const grailGrayDarkest = "#404040";
 export const grailGrayDark = "#595959";
 export const grailGrayMedium = "#949494";
 export const grailGrayLight = "#D9D9D9";
-export const grailGrayLightest = "#F0F0F0";
+export const grailGrayLighter = "#F0F0F0";
+export const grailGrayLightest = "#F9F9F9";
 
 export const black = "#000000";
 export const white = "#FFF";

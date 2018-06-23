@@ -7,6 +7,7 @@ export {
 	grailGrayDark,
 	grailGrayDarkest,
 	grailGrayLight,
+	grailGrayLighter,
 	grailGrayLightest,
 	grailGrayMedium,
 	grailGreen,
