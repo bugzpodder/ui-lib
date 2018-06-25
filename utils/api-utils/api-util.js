@@ -61,13 +61,18 @@ export const isValueValid = (value: mixed) => {
 	return value !== "" && value !== undefined && value !== null && value.length !== 0;
 };
 
+const SANITIZATION_EXCEPTIONS = [
+	/^NPC/, // Mock NPC qPCR/NGS samples (ex: NPC-QPCR-1A, NPC-NGS-1)
+	/^A/, // Accession labels (ex: A00014L-1)
+];
 export const sanitizeId = (id: string = "") => {
 	id = id.trim();
-	// Only sanitize id if id is not for an accession label from lab test
-	if (id[0] !== "A") {
-		return id.replace(/-/g, "");
+
+	// Do not sanitize if id matches any exceptions (mock NGS, qPCR, accession samples)
+	if (SANITIZATION_EXCEPTIONS.some(regex => regex.test(id))) {
+		return id;
 	}
-	return id;
+	return id.replace(/-/g, "");
 };
 
 /*
