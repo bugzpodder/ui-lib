@@ -6,7 +6,7 @@ import escapeRegExp from "lodash/escapeRegExp";
 import partialRight from "lodash/partialRight";
 import debounce from "lodash/debounce";
 import moment from "moment";
-import { DATE_FORMAT } from "@grail/lib/constants";
+import { DATE_FORMAT } from "@grail/lib";
 
 import {
 	BOOLEAN_SEARCH_TYPE,

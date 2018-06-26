@@ -1,6 +1,6 @@
 // @flow
 import isArray from "lodash/isArray";
-import { getQuery, stringifyQuery, updateQuery } from "@grail/lib/utils";
+import { getQuery, stringifyQuery, updateQuery } from "@grail/lib";
 
 type SearchParams = { location: Location, history: HistoryFunctions, searchOptions: SearchOptions };
 

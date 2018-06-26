@@ -1,7 +1,8 @@
 // @flow
-import { generateFilledArray } from "@grail/lib/utils/array-utils";
 import startCase from "lodash/startCase";
 import camelCase from "lodash/camelCase";
+
+import { generateFilledArray } from "../array-utils";
 
 // Map of sentence case key words to their desired display string.
 const KEYWORDS: Map<string, string> = new Map([

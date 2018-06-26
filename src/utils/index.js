@@ -36,10 +36,10 @@ export {
 	getOmniTextFromSearchValues,
 	getSearchOptions,
 } from "./omni-search-util";
-export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises } from "./array-utils";
-export { setKeyValue } from "./key-value-utils";
+export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises, mapBy } from "./array-utils";
+export { hasKey, hasKeyValue, setKeyValue } from "./key-value-utils";
 export { fnv1 } from "./hash-utils";
-export { sentenceCase, upperAlphaChars, normalizeStr } from "./string-utils";
+export { makeTitleString, sentenceCase, upperAlphaChars, normalizeStr } from "./string-utils";
 export {
 	expandSearchValues,
 	extractSearchValues,
@@ -56,3 +56,4 @@ export {
 	updateQueryInternal,
 	updateSearchUrl,
 } from "./url-utils";
+export { Warning } from "./warning-utils";

@@ -6,15 +6,15 @@
 $grid-breakpoints: (
 	xs: 0,
 	// Phone or smaller
-	sm: 576px,
+		sm: 576px,
 	// Tablet
-	md: 768px,
+		md: 768px,
 	// Large tablet
-	lg: 992px,
+		lg: 992px,
 	// Chromebook
-	xl: 1200px,
+		xl: 1200px,
 	// Desktop (Bootstrap doesn't provide this size, however, it makes sense for GRAIL apps)
-	ul: 1600px,
+		ul: 1600px,
 ) !default;
 
 // Breakpoint viewport sizes and media queries.
@@ -58,7 +58,7 @@ $grid-breakpoints: (
 //    767.98px
 @function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
 	$next: breakpoint-next($name, $breakpoints);
-	@return if($next, breakpoint-min($next, $breakpoints) - .02px, null);
+	@return if($next, breakpoint-min($next, $breakpoints) - 0.02px, null);
 }
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash infront.

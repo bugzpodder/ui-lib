@@ -1,6 +1,6 @@
 // @flow
 import "../mocks/fetch.mock";
-import "@grail/lib/utils/mocks";
+import "@grail/lib/src/utils/mocks";
 import moment from "moment-timezone";
 
 import {

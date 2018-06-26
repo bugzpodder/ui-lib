@@ -1,7 +1,7 @@
 // @flow
 import "../mocks/fetch.mock";
-import "@grail/lib/utils/mocks";
-import { buildOrderQuery, getPage, isValueValid } from "@grail/lib/utils";
+import "@grail/lib/src/utils/mocks";
+import { buildOrderQuery, getPage, isValueValid } from "@grail/lib";
 
 describe("getPage", () => {
 	it("should give page for 0 offset", () => {

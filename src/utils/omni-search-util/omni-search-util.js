@@ -1,5 +1,5 @@
 // @flow
-import { isValueValid } from "@grail/lib/utils";
+import { isValueValid } from "@grail/lib";
 
 export const OMNI_KEY = "omni";
 export const OMNI_ERROR = "OmniError";

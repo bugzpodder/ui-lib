@@ -38,7 +38,7 @@ $grail-colors: (
 	grail-gray-light-color: $grail-gray-light-color,
 	grail-gray-medium-color: $grail-gray-medium-color,
 	grail-gray-dark-color: $grail-gray-dark-color,
-	grail-gray-darkest-color: $grail-gray-darkest-color
+	grail-gray-darkest-color: $grail-gray-darkest-color,
 );
 
 @each $name, $color in $grail-colors {

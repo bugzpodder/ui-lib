@@ -1,7 +1,7 @@
 // @flow
 import debounce from "lodash/debounce";
 import qs from "qs";
-import { isValueValid } from "@grail/lib/utils";
+import { isValueValid } from "@grail/lib";
 
 type Option = {
 	shouldUpdateBrowserHistory?: boolean,

@@ -1,5 +1,5 @@
 //@flow
-import { LIKE_TEXT_SEARCH_TYPE, MULTI_FIELD_TEXT_SEARCH_TYPE } from "@grail/lib/utils";
+import { LIKE_TEXT_SEARCH_TYPE, MULTI_FIELD_TEXT_SEARCH_TYPE } from "@grail/lib";
 
 import { getOmniTextFromSearchValues, getSearchValuesFromOmniText, getSearchOptions } from "./omni-search-util";
 
