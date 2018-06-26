@@ -3,7 +3,7 @@
 import { type Passport } from "passport";
 
 import { GoogleJwtStrategy } from "./google-strategy";
-import { extractUser } from "./utils";
+import { extractUser } from "./passport-utils";
 
 export const setUpPassport = (passport: Passport, googleAuthConfig: GoogleAuthConfig) => {
 	// required for persistent login sessions

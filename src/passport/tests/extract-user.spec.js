@@ -3,7 +3,7 @@
 import merge from "lodash/merge";
 import curry from "lodash/curry";
 
-import { extractUser, extractGoogleInfo } from "../utils";
+import { extractUser, extractGoogleInfo } from "../passport-utils";
 
 const baseUser = {
 	accessToken: "some long access token",

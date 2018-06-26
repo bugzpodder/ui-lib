@@ -6,7 +6,7 @@ import { google } from "googleapis";
 import fetch from "node-fetch";
 import qs from "qs";
 
-import { extractUser, extractGoogleInfo, type User, type GoogleUserInfo } from "./utils";
+import { extractUser, extractGoogleInfo, type User, type GoogleUserInfo } from "./passport-utils";
 
 export const refreshAccessToken = (user: User, googleAuthConfig: GoogleAuthConfig) => {
 	const postData = {
