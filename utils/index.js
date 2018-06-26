@@ -1,6 +1,5 @@
 // @flow
 export { AbstractMultiKeyMap, AssayStepMap } from "./assay-utils";
-export { Warning } from "./warning-utils";
 export {
 	BOOLEAN_SEARCH_TYPE,
 	DATE_SEARCH_TYPE,
