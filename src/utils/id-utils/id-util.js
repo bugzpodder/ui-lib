@@ -13,3 +13,18 @@ export const sanitizeId = (id: string = "") => {
 	}
 	return id.replace(/-/g, "");
 };
+
+export const getInputBarcode = (id: string = "", previousId: string = "") => {
+	id = id.trim();
+	if (!previousId) {
+		return id;
+	}
+
+	const prefix = id.substr(0, id.length - 1);
+	const suffix = id[id.length - 1];
+	const previousLabelPrefix = previousId.substr(0, previousId.length - 1);
+	if (prefix === previousLabelPrefix) {
+		return `${prefix}-${suffix}`;
+	}
+	return id;
+};

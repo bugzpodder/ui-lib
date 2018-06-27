@@ -1,6 +1,6 @@
 // @flow
 
-import { sanitizeId } from "./id-util";
+import { sanitizeId, getInputBarcode } from "./id-util";
 
 describe("sanitizeId", () => {
 	it("should sanitize all normal sample ids", () => {
@@ -13,5 +13,19 @@ describe("sanitizeId", () => {
 	});
 	it("should be able to handle undefined input", () => {
 		expect(sanitizeId(undefined)).toBe("");
+	});
+});
+
+describe("getInputBarcode", () => {
+	it("returns input barcode when given id and previous id", () => {
+		expect(getInputBarcode("P000101", "P000100")).toBe("P00010-1");
+		expect(getInputBarcode("S000100", "S000100")).toBe("S00010-0");
+	});
+	it("returns same as id when not given previous id", () => {
+		expect(getInputBarcode("NPC-NGS-1", "")).toBe("NPC-NGS-1");
+		expect(getInputBarcode("NPC-NGS-1")).toBe("NPC-NGS-1");
+	});
+	it("should be able to handle undefined input", () => {
+		expect(getInputBarcode(undefined)).toBe("");
 	});
 });

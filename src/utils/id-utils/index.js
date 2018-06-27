@@ -1,4 +1,4 @@
 // @flow
-import { sanitizeId } from "./id-util";
+import { sanitizeId, getInputBarcode } from "./id-util";
 
-export { sanitizeId };
+export { sanitizeId, getInputBarcode };

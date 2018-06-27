@@ -96,5 +96,6 @@ export {
 	hasKey,
 	hasKeyValue,
 	sanitizeId,
+	getInputBarcode,
 } from "@grail/lib/src/utils";
 export { localStorage } from "@grail/lib/src/client-utils";
