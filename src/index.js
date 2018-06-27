@@ -96,5 +96,3 @@ export {
 	hasKey,
 	hasKeyValue,
 } from "@grail/lib/src/utils";
-
-export { extractGoogleInfo, extractUser, GoogleJwtStrategy, refreshAccessToken, setUpPassport } from "./passport";
