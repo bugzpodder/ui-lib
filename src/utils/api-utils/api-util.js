@@ -6,7 +6,7 @@ import escapeRegExp from "lodash/escapeRegExp";
 import partialRight from "lodash/partialRight";
 import debounce from "lodash/debounce";
 import moment from "moment";
-import { DATE_FORMAT } from "@grail/lib";
+import { DATE_FORMAT, sanitizeId } from "@grail/lib";
 
 import {
 	BOOLEAN_SEARCH_TYPE,
@@ -59,20 +59,6 @@ export const buildOrderQuery = (sortOptions: SortOptions = []) => {
 export const isValueValid = (value: mixed) => {
 	// $FlowFixMe: undefined is not equal to 0 so there are no type errors here
 	return value !== "" && value !== undefined && value !== null && value.length !== 0;
-};
-
-const SANITIZATION_EXCEPTIONS = [
-	/^NPC/, // Mock NPC qPCR/NGS samples (ex: NPC-QPCR-1A, NPC-NGS-1)
-	/^A/, // Accession labels (ex: A00014L-1)
-];
-export const sanitizeId = (id: string = "") => {
-	id = id.trim();
-
-	// Do not sanitize if id matches any exceptions (mock NGS, qPCR, accession samples)
-	if (SANITIZATION_EXCEPTIONS.some(regex => regex.test(id))) {
-		return id;
-	}
-	return id.replace(/-/g, "");
 };
 
 /*

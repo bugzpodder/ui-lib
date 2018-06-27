@@ -40,6 +40,7 @@ export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromi
 export { hasKey, hasKeyValue, setKeyValue } from "./key-value-utils";
 export { fnv1 } from "./hash-utils";
 export { makeTitleString, sentenceCase, upperAlphaChars, normalizeStr } from "./string-utils";
+export { sanitizeId } from "./id-utils";
 export {
 	expandSearchValues,
 	extractSearchValues,
