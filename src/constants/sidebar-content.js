@@ -110,7 +110,7 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 				path: "/pipeline/assay-analysis-versions",
 			},
 			{
-				name: "All Analysis Versions",
+				name: "Analysis Versions",
 				domain: LIMS,
 				path: "/pipeline/analysis-versions",
 			},
