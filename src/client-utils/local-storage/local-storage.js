@@ -9,11 +9,11 @@ const getLocalStorage = () => {
 	return localStorage;
 };
 
-export const set = (key: string, object: mixed) => {
+export const set = (key: string, object: any) => {
 	getLocalStorage().setItem(key, JSON.stringify(object));
 };
 
-export const get = (key: string, defaultValue: mixed = undefined) => {
+export const get = (key: string, defaultValue: any = undefined) => {
 	const object = getLocalStorage().getItem(key);
 	if (object !== undefined && object !== null && object !== "undefined") {
 		return JSON.parse(object);
