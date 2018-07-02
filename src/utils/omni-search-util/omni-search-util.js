@@ -4,36 +4,41 @@ import { isValueValid } from "@grail/lib";
 export const OMNI_KEY = "omni";
 export const OMNI_ERROR = "OmniError";
 
-/** OMNI SEARCH PATTERN designed to capture field and values from omni search
- * `description: "lims test"`
- * group 1: optional, the label repended to the search values in (eg: `description: `)
- * -	group 2: label text that is part of group 1 (eg: `description`)
- * group 3: the value text, designed to capture a single term without whitespace
- * 					or multiple words enclosed by quotes (eg: `"lims test"`)
- * - group 4: the value enclosed by quotes (eg: `lims test`)
- * - group 5: list of values enclosed by brackets
- * const pattern = /(([^,:("\s]+):\s*)?([^",\s]+|"([^"]*)"?)/gm;
- */
-const pattern = /(([^,:("\s]+):\s*)?([^"[,\s]+|"([^"]*)"?|\[([^\]]*)\]?)/gm;
+// FIXME(jrosenfield): add documentation for regexes
+const validOmniText = /^(([^:]*\s+)?[\w-.]+:)*[^:]*$/;
+const searchKey = /(([^:]*\s*)\s)?([\w-.]+):/gm;
+
+const items = /("([^"]*)"?|([^",][^,]+)*),?/gm;
+
+const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Array<string>>) => {
+	if (isValueValid(value)) {
+		const previousValues = arrayMap.get(key);
+		if (previousValues === undefined) {
+			arrayMap.set(key, [value]);
+		} else {
+			arrayMap.set(key, [...previousValues, value]);
+		}
+	}
+};
 
 /** Parse a map of field label to field value, using OMNI_KEY if no label is present. */
 const parseValuesFromOmniText = (omniText: string): Map<string, Array<string>> => {
 	const parsed: Map<string, Array<string>> = new Map();
-	let result = pattern.exec(omniText);
-	while (result !== null) {
-		let key = OMNI_KEY;
-		const value = (result[5] && result[5].split(",").map(string => string.trim())) || [result[4] || result[3]];
-		if (result[2] !== undefined) {
-			key = result[2];
-		}
-		const previousValue = parsed.get(key);
-		if (previousValue === undefined) {
-			parsed.set(key, value);
-		} else {
-			parsed.set(key, previousValue.concat(value));
-		}
-		result = pattern.exec(omniText);
+	if (!validOmniText.test(omniText)) {
+		const error = new Error("Invalid search text.");
+		error.name = OMNI_ERROR;
+		throw error;
 	}
+	let key = OMNI_KEY;
+	let lastIndex = 0;
+	let result = searchKey.exec(omniText);
+	while (result !== null) {
+		addItemToArrayMap(key, result[2], parsed);
+		key = result[3];
+		lastIndex = searchKey.lastIndex;
+		result = searchKey.exec(omniText);
+	}
+	addItemToArrayMap(key, omniText.slice(lastIndex), parsed);
 	return parsed;
 };
 
@@ -47,10 +52,10 @@ const getKeysForSearchDef = (searchDef: SearchDef): Array<string> => {
 
 /** Go through searchDefs extract values from omniText */
 export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: string): SearchValues => {
-	const searchValues: SearchValues = new Map();
 	if (!isValueValid(omniText) || !searchDefs || searchDefs.length === 0) {
-		return searchValues;
+		return new Map();
 	}
+	const searchValues: Map<number, string> = new Map();
 	const parsedValues = parseValuesFromOmniText(omniText);
 
 	searchDefs.forEach((searchDef, index) => {
@@ -58,44 +63,28 @@ export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: st
 		if (index === 0) {
 			keys.unshift(OMNI_KEY);
 		}
-		const searchValue: Array<string> = [];
+		let values: Array<string> = [];
 		keys.forEach(key => {
 			const parsedValueArray = parsedValues.get(key);
 			if (parsedValueArray !== undefined) {
 				parsedValues.delete(key);
-				parsedValueArray.forEach(parsedValue => {
-					searchValue.push(isValueValid(parsedValue) ? parsedValue : "");
-				});
+				values = values.concat(parsedValueArray);
 			}
 		});
-		if (searchValue.length) {
-			searchValues.set(index, searchValue.length > 1 ? searchValue : searchValue[0]);
+		if (values.length) {
+			// TODO: consider including a space (", ") when joining.
+			searchValues.set(index, values.join(","));
 		}
 	});
 
 	// If there are field labels that could not be mapped to a searchDef, the omniText is invalid.
 	const invalidKey = [...parsedValues.keys()].find(key => !!key);
 	if (invalidKey) {
-		const err = new Error(`${invalidKey} is not a valid search tag.`);
-		err.name = OMNI_ERROR;
-		throw err;
+		const error = new Error(`${invalidKey} is not a valid search tag.`);
+		error.name = OMNI_ERROR;
+		throw error;
 	}
 	return searchValues;
-};
-
-const getOmniTextForValues = (searchDef: SearchDef, searchValues: SearchValue): ?string => {
-	let value: string = "";
-	if (!Array.isArray(searchValues)) {
-		searchValues = [searchValues];
-	}
-	if (searchValues.length === 1) {
-		value = searchValues[0];
-		value = /\w\s+\w/.test(value) ? `"${value}"` : value;
-	} else {
-		value = `[${searchValues.map(item => (isValueValid(item) ? item : "")).join(", ")}]`;
-	}
-	const key = getKeysForSearchDef(searchDef)[0];
-	return `${key}:${value}`;
 };
 
 export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues: SearchValues): string => {
@@ -103,27 +92,41 @@ export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues
 	searchDefs.forEach((searchDef, index) => {
 		const searchValue = searchValues.get(index);
 		if (isValueValid(searchValue)) {
+			let omniValue = searchValue;
 			if (index !== 0) {
-				// $FlowFixMe: isValueValid call ensures searchValue is not undefined.
-				const omniValue = getOmniTextForValues(searchDef, searchValue);
-				if (isValueValid(omniValue)) {
-					omniValues.push(omniValue);
-				}
-			} else {
-				omniValues.push(searchValue);
+				const key = getKeysForSearchDef(searchDef)[0];
+				// $FlowFixMe: isValueValid call means omniValue is defined
+				omniValue = `${key}:${omniValue}`;
 			}
+			omniValues.push(omniValue);
 		}
 	});
 	return omniValues.join(" ");
 };
 
 export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {
-	const searchOptions = [];
+	const searchOptions: Array<string> = [];
 	searchDefs.forEach((searchDef, index) => {
 		const searchValue = searchValues.get(index);
 		if (isValueValid(searchValue)) {
+			// $FlowFixMe: isValueValid call means searchValue is defined
 			searchOptions.push({ ...searchDef, value: searchValue });
 		}
 	});
+	// $FlowFixMe: cannot return because it thinks it could be object type
 	return searchOptions;
+};
+
+export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => {
+	const parsedItems: Array<string> = [];
+	let lastIndex = 0;
+	items.lastIndex = lastIndex;
+	let result = items.exec(omniValue);
+	while (result !== null && lastIndex !== omniValue.length) {
+		lastIndex = items.lastIndex;
+		const item = result[3] || result[2] || result[1];
+		parsedItems.push(item.trim());
+		result = items.exec(omniValue);
+	}
+	return parsedItems;
 };

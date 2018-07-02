@@ -58,10 +58,10 @@ declare type ApiQueryOptions = {
 // Search Definitions. Used by OmniSearch to build the UI. Used to build SearchOptions:
 type SearchFieldProps = {
 	searchKey: string,
+	searchValue: ?string,
+	onChange: (string, any) => any,
 	placeholder?: string,
 	searchType?: Symbol,
-	searchValue: ?SearchValue,
-	onChange: (string, any) => any,
 };
 
 declare type SearchDef = {
@@ -78,11 +78,10 @@ declare type SearchDef = {
 
 declare type SearchDefs = Array<SearchDef>;
 
-declare type SearchValue = string | Array<string>;
-declare type SearchValues = Map<number, SearchValue>;
+declare type SearchValues = Map<number, string>;
 
 declare type SearchOptionV2 = {
-	value: SearchValue,
+	value: Array<string>,
 } & SearchDef;
 
 declare type SearchOptionsV2 = Array<SearchOptionV2>;

@@ -103,7 +103,8 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
 						multiFieldSearchMemo += doublePipe;
 						return `${multiFieldSearchMemo}(${searchField}${equalityField}${formatter(String(value).trim())})`;
 					}
-					return `${searchField}${equalityField}${formatter(String(value).trim())}`;
+					const result = `${searchField}${equalityField}${formatter(String(value).trim())}`;
+					return searchFields.length > 1 ? `(${result})` : result;
 				}, "");
 				return `${multiValueSearchMemo}${multiValueSearchMemo && doublePipe}${multiFieldSearch}`;
 			}, "");
