@@ -104,6 +104,14 @@ export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues
 	return omniValues.join(" ");
 };
 
+export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => {
+	return keyValues
+		.map(({ key, value }) => {
+			return `${key}:${value}`;
+		})
+		.join(" ");
+};
+
 export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {
 	const searchOptions: Array<string> = [];
 	searchDefs.forEach((searchDef, index) => {

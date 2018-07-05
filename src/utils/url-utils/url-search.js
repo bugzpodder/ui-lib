@@ -1,6 +1,6 @@
 // @flow
 import isArray from "lodash/isArray";
-import { getQuery, stringifyQuery, updateQuery } from "@grail/lib";
+import { getQuery, getOmniTextFromKeyValues, stringifyQuery, updateQuery } from "@grail/lib";
 
 type SearchParams = { location: Location, history: HistoryFunctions, searchOptions: SearchOptions };
 
@@ -90,9 +90,14 @@ export const updateSearchUrl = ({ location, history, searchOptions }: SearchPara
 	});
 };
 
+// Deprecate in favor of `omni` search
 export const getUrlQueryString = (key: string, value: SearchOptionValueItem) => {
 	const searchValues = new Map().set(key, { value });
 	return `${stringifyQuery(getUrlQuery(searchValues))}`;
+};
+
+export const getOmniUrlQueryString = (keyValues: Array<KeyValue>) => {
+	return `${stringifyQuery({ omni: getOmniTextFromKeyValues(keyValues) })}`;
 };
 
 export const getUrlQueryStringForValues = (key: string, values: Array<SearchOptionValueItem>) => {

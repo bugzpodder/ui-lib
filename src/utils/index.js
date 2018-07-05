@@ -36,6 +36,7 @@ export {
 	getItemsFromOmniValue,
 	getSearchValuesFromOmniText,
 	getOmniTextFromSearchValues,
+	getOmniTextFromKeyValues,
 	getSearchOptions,
 } from "./omni-search-util";
 export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises, mapBy } from "./array-utils";
@@ -50,6 +51,7 @@ export {
 	getPathname,
 	getQuery,
 	getUrlQueryForOptions,
+	getOmniUrlQueryString,
 	getUrlQueryString,
 	getUrlQueryStringForValues,
 	getSearchValues,

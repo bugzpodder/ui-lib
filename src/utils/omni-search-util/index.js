@@ -5,5 +5,6 @@ export {
 	getItemsFromOmniValue,
 	getSearchValuesFromOmniText,
 	getOmniTextFromSearchValues,
+	getOmniTextFromKeyValues,
 	getSearchOptions,
 } from "./omni-search-util";

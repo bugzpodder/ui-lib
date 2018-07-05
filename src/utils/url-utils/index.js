@@ -4,6 +4,7 @@ export {
 	extractSearchValues,
 	flattenSearchValues,
 	getUrlQueryForOptions,
+	getOmniUrlQueryString,
 	getUrlQueryString,
 	getUrlQueryStringForValues,
 	getSearchValues,

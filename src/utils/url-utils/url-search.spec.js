@@ -8,6 +8,7 @@ import {
 	extractSearchValues,
 	flattenSearchValues,
 	getUrlQueryForOptions,
+	getOmniUrlQueryString,
 	mergeSearchOptions,
 } from "./url-search";
 
@@ -130,5 +131,12 @@ describe("getUrlQueryForOptions", () => {
 	it("should get url query", () => {
 		const test = getUrlQueryForOptions(defaultSearchOptions);
 		expect(test).toBe("name=test%20name");
+	});
+});
+
+describe("getOmniUrlQueryString", () => {
+	it("should get url query", () => {
+		const test = getOmniUrlQueryString([{ key: "test", value: "name" }]);
+		expect(test).toBe("omni=test%3Aname");
 	});
 });

@@ -4,6 +4,7 @@ import { LIKE_TEXT_SEARCH_TYPE, FULL_TEXT_SEARCH_TYPE } from "@grail/lib";
 import {
 	getItemsFromOmniValue,
 	getOmniTextFromSearchValues,
+	getOmniTextFromKeyValues,
 	getSearchValuesFromOmniText,
 	getSearchOptions,
 } from "./omni-search-util";
@@ -25,26 +26,42 @@ const searchDefs: SearchDefs = [
 ];
 
 describe("getOmniTextFromSearchValues", () => {
-	it("accepts arrays", () => {
+	it("accepts stringified arrays", () => {
 		const searchValues = new Map();
 		searchValues.set(0, "1");
-		searchValues.set(1, ["34", "12"]);
-		const expectedOmniText = "1 lot:34,12";
+		searchValues.set(1, "34, 12");
+		const expectedOmniText = "1 lot:34, 12";
 		expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
 	});
-	it("skips null values", () => {
+	it("skips missing values", () => {
 		const searchValues = new Map();
-		searchValues.set(0, null);
-		searchValues.set(1, ["34", null]);
+		searchValues.set(1, "34,");
 		const expectedOmniText = "lot:34,";
 		expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
 	});
-	it("skips empty arrays", () => {
+	it("skips empty strings", () => {
 		const searchValues = new Map();
-		searchValues.set(0, []);
-		searchValues.set(1, ["34", null]);
+		searchValues.set(0, "");
+		searchValues.set(1, "34,");
 		const expectedOmniText = "lot:34,";
 		expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
+	});
+});
+
+describe("getOmniTextFromKeyValues", () => {
+	it("accepts stringified arrays", () => {
+		const keyValues = [
+			{
+				key: "part",
+				value: "1",
+			},
+			{
+				key: "lot",
+				value: "34, 12",
+			},
+		];
+		const expectedOmniText = "part:1 lot:34, 12";
+		expect(getOmniTextFromKeyValues(keyValues)).toEqual(expectedOmniText);
 	});
 });
 
