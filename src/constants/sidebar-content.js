@@ -116,8 +116,8 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 			},
 			{
 				name: "Previous Runs",
-				domain: PIPELINE,
-				path: "",
+				domain: LIMS,
+				path: "/pipeline-ui",
 			},
 		],
 	},
