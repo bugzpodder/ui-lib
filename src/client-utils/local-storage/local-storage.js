@@ -1,5 +1,5 @@
 // @flow
-import * as jsonUtil from "@grail/lib/src/utils/json-utils";
+import { mapToJson, jsonToMap } from "@grail/lib";
 
 const getLocalStorage = () => {
 	const { localStorage } = global;
@@ -28,7 +28,7 @@ export const remove = (key: string) => {
 
 export const setMap: Function = (key: string, map: Map<*, *>) => {
 	if (map instanceof Map) {
-		const mapJson = jsonUtil.mapToJson(map);
+		const mapJson = mapToJson(map);
 		set(key, mapJson);
 	} else {
 		throw new Error("Value is not a Map object");
@@ -37,5 +37,5 @@ export const setMap: Function = (key: string, map: Map<*, *>) => {
 
 export const getMap: Function = (key: string) => {
 	const mapJson = get(key);
-	return mapJson ? jsonUtil.jsonToMap(mapJson) : new Map();
+	return mapJson ? jsonToMap(mapJson) : new Map();
 };

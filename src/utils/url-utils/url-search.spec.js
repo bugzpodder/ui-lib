@@ -1,7 +1,7 @@
 // @flow
 import mockConsole from "jest-mock-console";
 
-import { LIKE_TEXT_SEARCH_TYPE } from "../index";
+import { LIKE_TEXT_SEARCH_TYPE } from "../api-utils";
 
 import {
 	expandSearchValues,

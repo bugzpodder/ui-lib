@@ -6,9 +6,9 @@
     "build:lib": "NODE_ENV=production babel ./src --out-dir ./dist --delete-dir-on-start --copy-files",
     "cover": "open coverage/lcov-report/index.html",
     "flow": "flow",
-    "lint": "eslint --ext .js constants/ utils/ client-utils/",
+    "lint": "eslint --ext .js src/",
     "lint-fix": "yarn lint --fix",
-    "format": "prettier --write \"utils/**/*.js\" \"client-utils/**/*.js\" \"constants/**/*.js\" \"scripts/**/*.js\" && yarn lint-fix",
+    "format": "prettier --write \"src/**/*.js\" \"scripts/**/*.js\" && yarn lint-fix",
     "preinstall": "node -e 'if(!/yarn\\.js$/.test(process.env.npm_execpath))throw new Error(\"Use yarn install\")'",
     "precommit": "lint-staged",
     "test": "jest --watch",
@@ -64,17 +64,14 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/utils/**/*.js",
-      "!src/utils/**/index.js",
-      "!src/utils/index.js",
-      "!src/utils/mocks/**",
-      "src/client-utils/**/*.js",
-      "!src/client-utils/**/index.js",
-      "!src/client-utils/index.js",
-      "!src/client-utils/mocks/**"
+      "src/**/*.js",
+      "!**/index.js",
+      "!**/mocks/**",
+      "!src/constants/**",
+      "!src/passport/**"
     ],
     "coverageThreshold": {
-      "src/utils/**/*.js": {
+      "src/**/*.js": {
         "branches": 80,
         "functions": 100,
         "lines": 90,

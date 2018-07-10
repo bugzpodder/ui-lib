@@ -1,6 +1,5 @@
 // @flow
-import "../mocks/fetch.mock";
-import "@grail/lib/src/utils/mocks";
+import "../mocks";
 import {
 	BOOLEAN_SEARCH_TYPE,
 	DATE_SEARCH_TYPE,

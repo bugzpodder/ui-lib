@@ -16,7 +16,7 @@ async function createPackageFile() {
 		name,
 		version,
 		dependencies,
-		main: "./utils/index.js",
+		main: "./index.js",
 		private: true,
 	};
 	const buildPath = path.resolve(__dirname, "../dist/package.json");
