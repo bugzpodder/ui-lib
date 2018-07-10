@@ -32,8 +32,8 @@ describe("date formatting", () => {
 		expect(formatDate("")).toEqual(formattedEpochDate);
 	});
 
-	it(`converts null to "${EPOCH_DATE}"`, () => {
-		expect(formatDate(null)).toEqual(formattedEpochDate);
+	it("converts null to null", () => {
+		expect(formatDate(null)).toEqual(null);
 	});
 });
 
@@ -54,7 +54,7 @@ describe("datetime formatting", () => {
 		expect(formatDateTime("")).toEqual(EPOCH_DATE_TIME);
 	});
 
-	it(`converts null to "${EPOCH_DATE_TIME}"`, () => {
-		expect(formatDateTime(null)).toEqual(EPOCH_DATE_TIME);
+	it("converts null to null", () => {
+		expect(formatDateTime(null)).toEqual(null);
 	});
 });
