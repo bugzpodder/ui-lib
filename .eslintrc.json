@@ -65,9 +65,13 @@
           {
             "name": "lodash",
             "message": "Please import lodash functions directly, eg: import isEmpty from \"lodash/isEmpty\"."
+          },
+          {
+            "name": "@grail/components",
+            "message": "Please do not import @grail/components from @grail/lib."
           }
         ],
-        "patterns": ["@grail/lib/src/*", "@grail/components/src/*"]
+        "patterns": ["@grail/lib/src/*", "@grail/components/*"]
       }
     ],
     "no-return-assign": 0,
