@@ -36,7 +36,6 @@ export {
 
 export { localStorage } from "./client-utils";
 
-// @flow
 export { AbstractMultiKeyMap, AssayStepMap } from "./utils/assay-utils";
 export {
 	BOOLEAN_SEARCH_TYPE,
@@ -67,7 +66,7 @@ export {
 	titleizeObjectKeys,
 	trimObjectValues,
 } from "./utils/json-utils";
-export { formatDate, formatDateTime } from "./utils/date-utils";
+export { formatDateOnly, formatDate, formatDateTime } from "./utils/date-utils";
 export {
 	OMNI_KEY,
 	OMNI_ERROR,

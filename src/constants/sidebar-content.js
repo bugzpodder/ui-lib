@@ -157,18 +157,23 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 		path: "/lims/sample-storage/racks",
 	},
 	{
-		name: "Reagents",
+		name: "Facilities",
 		children: [
+			{
+				name: "Lot Numbers",
+				domain: LIMS,
+				path: "/lims/reagents",
+				exact: true,
+			},
 			{
 				name: "Part Numbers",
 				domain: LIMS,
 				path: "/lims/reagents/part-numbers",
 			},
 			{
-				name: "Lot Numbers",
+				name: "Instruments",
 				domain: LIMS,
-				path: "/lims/reagents",
-				exact: true,
+				path: "/facilities/instruments",
 			},
 		],
 	},
