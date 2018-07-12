@@ -60,8 +60,6 @@ type SearchFieldProps = {
 	searchKey: string,
 	searchValue: ?string,
 	onChange: (string, any) => any,
-	placeholder?: string,
-	searchType?: Symbol,
 };
 
 declare type SearchDef = {

@@ -98,7 +98,7 @@ describe("getSearchOptions", () => {
 			type: LIKE_TEXT_SEARCH_TYPE,
 			description: "e.g. G0000",
 			searchFields: ["part"],
-			value: "1",
+			value: ["1"],
 		},
 		{
 			name: "Lot Number",
@@ -106,12 +106,12 @@ describe("getSearchOptions", () => {
 			aliases: ["lot"],
 			description: "Lot Num/External Ref",
 			searchFields: ["lotNumber", "externalReference"],
-			value: "2",
+			value: ["2", "", "3", "4"],
 		},
 	];
 	const searchValues = new Map();
 	searchValues.set(0, "1");
-	searchValues.set(1, "2");
+	searchValues.set(1, "2,,3,4");
 	it("should create search options properly", () => {
 		expect(getSearchOptions(searchDefs, searchValues)).toEqual(expectedSearchOptions);
 	});

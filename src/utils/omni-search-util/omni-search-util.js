@@ -8,7 +8,7 @@ export const OMNI_ERROR = "OmniError";
 const validOmniText = /^(([^:]*\s+)?[\w-.]+:)*[^:]*$/;
 const searchKey = /(([^:]*\s*)\s)?([\w-.]+):/gm;
 
-const items = /("([^"]*)"?|([^",][^,]+)*),?/gm;
+const items = /("([^"]*)"?|([^",][^,]*)*),?/gm;
 
 const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Array<string>>) => {
 	if (isValueValid(value)) {
@@ -113,20 +113,22 @@ export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => {
 };
 
 export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {
-	const searchOptions: Array<string> = [];
+	const searchOptions: SearchOptionsV2 = [];
 	searchDefs.forEach((searchDef, index) => {
-		const searchValue = searchValues.get(index);
-		if (isValueValid(searchValue)) {
+		const value = getItemsFromOmniValue(searchValues.get(index));
+		if (isValueValid(value)) {
 			// $FlowFixMe: isValueValid call means searchValue is defined
-			searchOptions.push({ ...searchDef, value: searchValue });
+			searchOptions.push({ ...searchDef, value });
 		}
 	});
-	// $FlowFixMe: cannot return because it thinks it could be object type
 	return searchOptions;
 };
 
 export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => {
 	const parsedItems: Array<string> = [];
+	if (!isValueValid(omniValue)) {
+		return parsedItems;
+	}
 	let lastIndex = 0;
 	items.lastIndex = lastIndex;
 	let result = items.exec(omniValue);
