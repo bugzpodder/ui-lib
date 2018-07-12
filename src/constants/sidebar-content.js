@@ -53,11 +53,6 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 				domain: LIMS,
 				path: "/lims/create-study-samples",
 			},
-			{
-				name: "Bulk Create Study Samples",
-				domain: LIMS,
-				path: "/lims/bulk-create-study-samples",
-			},
 		],
 	},
 	{
