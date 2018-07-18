@@ -35,7 +35,14 @@ export const convertObjectKeys = (keyMutator: Function, ignoredKeys: Array<strin
 	return convertedObject;
 };
 
-const ignoredKeys = ["InputState", "inputState", "OutputState", "outputState"];
+const ignoredKeys = [
+	"InputState",
+	"inputState",
+	"OutputState",
+	"outputState",
+	"ProgramStateUpdate",
+	"programStateUpdate",
+];
 // $FlowFixMe This type is incompatible with function type Callable
 export const camelizeObjectKeys: Function = curry(convertObjectKeys)(camelCase, ignoredKeys);
 
