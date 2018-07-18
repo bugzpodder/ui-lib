@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable flowtype/require-valid-file-annotation */
 import cp from "child_process";
 import path from "path";
