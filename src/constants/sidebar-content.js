@@ -156,9 +156,8 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 		domain: LIMS,
 		path: "/lims/sample-storage/racks",
 	},
-	// FIXME(nsawas): reintroduce Facilities item
 	{
-		name: "Reagents",
+		name: "Facilities",
 		children: [
 			{
 				name: "Lot Numbers",
@@ -171,29 +170,13 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 				domain: LIMS,
 				path: "/lims/reagents/part-numbers",
 			},
+			{
+				name: "Instruments",
+				domain: LIMS,
+				path: "/facilities/instruments",
+			},
 		],
 	},
-	// {
-	// 	name: "Facilities",
-	// 	children: [
-	// 		{
-	// 			name: "Lot Numbers",
-	// 			domain: LIMS,
-	// 			path: "/lims/reagents",
-	// 			exact: true,
-	// 		},
-	// 		{
-	// 			name: "Part Numbers",
-	// 			domain: LIMS,
-	// 			path: "/lims/reagents/part-numbers",
-	// 		},
-	// 		{
-	// 			name: "Instruments",
-	// 			domain: LIMS,
-	// 			path: "/facilities/instruments",
-	// 		},
-	// 	],
-	// },
 	{
 		name: "R&D",
 		children: [

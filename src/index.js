@@ -1,5 +1,4 @@
 // @flow
-
 export {
 	black,
 	grailBlue,
@@ -79,7 +78,8 @@ export {
 export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises, mapBy } from "./utils/array-utils";
 export { hasKey, hasKeyValue, setKeyValue } from "./utils/key-value-utils";
 export { fnv1 } from "./utils/hash-utils";
-export { makeTitleString, sentenceCase, upperAlphaChars, normalizeStr } from "./utils/string-utils";
+// $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+export { makeTitleString, normalizeStr, sentenceCase, upperAlphaChars } from "./utils/string-utils";
 export { sanitizeId, getInputBarcode } from "./utils/id-utils";
 export {
 	expandSearchValues,
