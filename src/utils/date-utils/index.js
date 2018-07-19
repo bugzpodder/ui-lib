@@ -1,2 +1,2 @@
 // @flow
-export { formatDateOnly, formatDate, formatDateTime } from "./date-util";
+export { formatDate, formatDateTime } from "./date-util";

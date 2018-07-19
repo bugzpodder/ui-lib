@@ -115,6 +115,10 @@ describe("getSearchOptions", () => {
 	it("should create search options properly", () => {
 		expect(getSearchOptions(searchDefs, searchValues)).toEqual(expectedSearchOptions);
 	});
+	const invalidSearchValues = new Map().set(2, "1");
+	it("should create search options properly", () => {
+		expect(getSearchOptions(searchDefs, invalidSearchValues)).toEqual([]);
+	});
 });
 
 describe("getItemsFromOmniValue", () => {

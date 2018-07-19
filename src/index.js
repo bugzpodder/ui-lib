@@ -65,7 +65,7 @@ export {
 	titleizeObjectKeys,
 	trimObjectValues,
 } from "./utils/json-utils";
-export { formatDateOnly, formatDate, formatDateTime } from "./utils/date-utils";
+export { formatDate, formatDateTime } from "./utils/date-utils";
 export {
 	OMNI_KEY,
 	OMNI_ERROR,

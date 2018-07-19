@@ -9,7 +9,7 @@ const isDefinedNotNull = (value: mixed) => {
 };
 
 export const flattenSearchValues = (searchValues: SearchOptionValues) => {
-	const validSearchValues = [...searchValues]
+	return [...searchValues]
 		.map(([key, { value, values }]) => ({ key, value, values }))
 		.filter(({ value, values }) => {
 			if (!isDefinedNotNull(value) && values === undefined) {
@@ -26,7 +26,6 @@ export const flattenSearchValues = (searchValues: SearchOptionValues) => {
 			acc[key] = isDefinedNotNull(value) ? value : values;
 			return acc;
 		}, {});
-	return validSearchValues;
 };
 
 export const expandSearchValues = (validSearchValues: Object): SearchOptionValues => {
@@ -74,7 +73,7 @@ export const mergeSearchOptions = (searchOptions: SearchOptions, searchValues?: 
 };
 
 export const getSearchValues = ({ location }: { location: Location }): SearchOptionValues => {
-	const validSearchValues = getQuery({ location }) || {};
+	const validSearchValues = getQuery({ location });
 	return expandSearchValues(validSearchValues);
 };
 

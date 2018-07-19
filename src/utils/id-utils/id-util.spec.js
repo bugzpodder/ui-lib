@@ -28,4 +28,7 @@ describe("getInputBarcode", () => {
 	it("should be able to handle undefined input", () => {
 		expect(getInputBarcode(undefined)).toBe("");
 	});
+	it("should return the given id when the previous id doesn't match", () => {
+		expect(getInputBarcode("S000100", "P000100")).toBe("S000100");
+	});
 });
