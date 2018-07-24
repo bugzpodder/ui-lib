@@ -60,7 +60,7 @@ describe("updateSearchUrl", () => {
 			replace: jest.fn(),
 		};
 		updateSearchUrl({ location, history, searchOptions: new Map() });
-		expect(history.replace).toBeCalledWith({ search: "?" });
+		expect(history.replace).not.toBeCalled();
 		expect(history.push).not.toBeCalled();
 	});
 	singleValues.forEach(value => {

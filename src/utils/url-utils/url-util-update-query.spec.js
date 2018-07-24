@@ -11,7 +11,7 @@ describe("updateQuery", () => {
 	it("handles props with history but no new queries", () => {
 		const props = { history };
 		updateQueryTest(props);
-		expect(props.history.replace).toBeCalledWith({ search: "?" });
+		expect(props.history.replace).not.toBeCalled();
 	});
 	it("handles props with history and existing search but no new queries", () => {
 		const location = {
@@ -20,7 +20,7 @@ describe("updateQuery", () => {
 		};
 		const props = { location, history };
 		updateQueryTest(props);
-		expect(props.history.replace).toBeCalledWith({ search: "?someQuery=5" });
+		expect(props.history.replace).not.toBeCalled();
 	});
 	it("handles props with history and one new query", () => {
 		const props = { history };

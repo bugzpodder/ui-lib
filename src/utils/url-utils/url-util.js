@@ -2,6 +2,7 @@
 import debounce from "lodash/debounce";
 import qs from "qs";
 import { isValueValid } from "@grail/lib";
+import equals from "lodash/fp/equals";
 
 type Option = {
 	shouldUpdateBrowserHistory?: boolean,
@@ -35,8 +36,9 @@ export const updateQueryInternal = (props: Object = {}, newQueries: Object = {},
 	const { shouldUpdateBrowserHistory = false, shouldReplaceQuery = false } = options;
 	const historyOperation = shouldUpdateBrowserHistory ? history.push : history.replace;
 	const newQuery = shouldReplaceQuery === true ? newQueries : { ...query, ...newQueries };
-
-	historyOperation({ search: `?${stringifyQuery(newQuery)}` });
+	if (!equals(query, newQuery)) {
+		historyOperation({ search: `?${stringifyQuery(newQuery)}` });
+	}
 };
 
-export const updateQuery = debounce(updateQueryInternal, 500);
+export const updateQuery = debounce(updateQueryInternal, 100);
