@@ -31,6 +31,8 @@ export {
 	PIPELINE,
 	EXTERNAL,
 	sidebarItems,
+	MAX_NOTIFICATIONS,
+	NotificationTypes,
 } from "./constants";
 
 export { localStorage } from "./client-utils";
