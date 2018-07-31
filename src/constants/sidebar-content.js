@@ -100,14 +100,14 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
 				path: "/pipeline/sample-sheets/upload",
 			},
 			{
-				name: "Assay Analysis Versions",
-				domain: LIMS,
-				path: "/pipeline/assay-analysis-versions",
-			},
-			{
 				name: "Analysis Versions",
 				domain: LIMS,
 				path: "/pipeline/analysis-versions",
+			},
+			{
+				name: "Assay Analysis Versions",
+				domain: LIMS,
+				path: "/pipeline/assay-analysis-versions",
 			},
 			{
 				name: "Previous Runs",
