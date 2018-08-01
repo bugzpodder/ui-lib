@@ -1,5 +1,3 @@
-# @grail/lib
-
 ## Contents
 
 The `@grail/lib` module holds both utility functions and constants used across GRAIL applications.

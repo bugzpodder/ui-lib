@@ -35,8 +35,13 @@ async function run() {
 	await cp.exec("find . -name '__snapshots__' -delete", { cwd: distDir });
 	await fse.remove(path.resolve(__dirname, "../dist/utils/mocks"));
 	await Promise.all(["README.md", "CHANGELOG.md"].map(file => copyFile(file)));
-	await createPackageFile();
+	const packageData = await createPackageFile();
 	await cp.exec("npm pack", { cwd: distDir });
+	console.info(
+		`\n\nTo upload to s3, run:\n\ngrail-aws tickets/eng/dev/aws s3 cp dist/grail-lib-${
+			packageData.version
+		}.tgz s3://grail-ui/${packageData.version}/\n\n`,
+	);
 }
 
 run();
