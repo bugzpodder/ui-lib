@@ -14,7 +14,7 @@
  */
 
 declare module "passport-strategy" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 /**
@@ -23,17 +23,17 @@ declare module "passport-strategy" {
  * needed.
  */
 declare module "passport-strategy/lib/index" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module "passport-strategy/lib/strategy" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 // Filename aliases
 declare module "passport-strategy/lib/index.js" {
-	declare module.exports: $Exports<"passport-strategy/lib/index">;
+  declare module.exports: $Exports<"passport-strategy/lib/index">;
 }
 declare module "passport-strategy/lib/strategy.js" {
-	declare module.exports: $Exports<"passport-strategy/lib/strategy">;
+  declare module.exports: $Exports<"passport-strategy/lib/strategy">;
 }

@@ -37,20 +37,20 @@
  * For more information, see the following: https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
  */
 export const fnv1 = (data: string | Buffer) => {
-	// Offset basis.
-	let hash = 0x811c9dc5;
-	// istanbul ignore else
-	if (typeof data === "string") {
-		data = new Buffer(data);
-	} else if (!(data instanceof Buffer)) {
-		throw Error("expected a 'string' or 'Buffer'");
-	}
+  // Offset basis.
+  let hash = 0x811c9dc5;
+  // istanbul ignore else
+  if (typeof data === "string") {
+    data = new Buffer(data);
+  } else if (!(data instanceof Buffer)) {
+    throw Error("expected a 'string' or 'Buffer'");
+  }
 
-	for (let i = 0; i < data.length; ++i) {
-		// 32 bit FNV_Prime = 2^24 + 2^8 + 0x93.
-		hash += (hash << 24) + (hash << 8) + (hash << 7) + (hash << 4) + (hash << 1);
-		hash = hash ^ data[i];
-	}
+  for (let i = 0; i < data.length; ++i) {
+    // 32 bit FNV_Prime = 2^24 + 2^8 + 0x93.
+    hash += (hash << 24) + (hash << 8) + (hash << 7) + (hash << 4) + (hash << 1);
+    hash = hash ^ data[i];
+  }
 
-	return hash & 0xffffffff;
+  return hash & 0xffffffff;
 };

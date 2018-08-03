@@ -14,7 +14,7 @@
  */
 
 declare module "node-fetch" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 /**
@@ -23,24 +23,24 @@ declare module "node-fetch" {
  * needed.
  */
 declare module "node-fetch/browser" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module "node-fetch/lib/index.es" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module "node-fetch/lib/index" {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 // Filename aliases
 declare module "node-fetch/browser.js" {
-	declare module.exports: $Exports<"node-fetch/browser">;
+  declare module.exports: $Exports<"node-fetch/browser">;
 }
 declare module "node-fetch/lib/index.es.js" {
-	declare module.exports: $Exports<"node-fetch/lib/index.es">;
+  declare module.exports: $Exports<"node-fetch/lib/index.es">;
 }
 declare module "node-fetch/lib/index.js" {
-	declare module.exports: $Exports<"node-fetch/lib/index">;
+  declare module.exports: $Exports<"node-fetch/lib/index">;
 }

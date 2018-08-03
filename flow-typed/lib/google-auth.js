@@ -1,5 +1,5 @@
 declare type GoogleAuthConfig = {
-	clientId: string,
-	clientSecret: string,
-	callbackUrl: string,
+  clientId: string,
+  clientSecret: string,
+  callbackUrl: string,
 };

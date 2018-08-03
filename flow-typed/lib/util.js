@@ -1,9 +1,9 @@
 declare type HistoryFunctions = {
-	+push: Function,
-	+replace: Function,
+  +push: Function,
+  +replace: Function,
 };
 
 declare type KeyValue = {
-	key: string,
-	value: string,
+  key: string,
+  value: string,
 };

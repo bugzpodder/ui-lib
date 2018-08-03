@@ -1,9 +1,9 @@
 //@flow
 export class Warning extends Error {
-	isWarning: boolean;
+  isWarning: boolean;
 
-	constructor(message: string) {
-		super(message);
-		this.isWarning = true;
-	}
+  constructor(message: string) {
+    super(message);
+    this.isWarning = true;
+  }
 }

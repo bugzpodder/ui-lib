@@ -7,7 +7,6 @@
   "extends": ["@grail/eslint-config-grail/src/back-end", "@grail/eslint-config-grail/src/flow"],
   "plugins": ["flowtype", "import", "filenames"],
   "rules": {
-    "indent": ["error", "tab", { "SwitchCase": 1 }],
     "no-restricted-imports": [
       "error",
       {
@@ -23,7 +22,6 @@
         ],
         "patterns": ["@grail/lib/src/*", "@grail/components/*"]
       }
-    ],
-    "no-tabs": 0
+    ]
   }
 }
