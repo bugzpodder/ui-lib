@@ -21,7 +21,8 @@
     "moment": "^2.22.2",
     "node-fetch": "^2.1.2",
     "passport": "^0.4.0",
-    "passport-strategy": "^1.0.0"
+    "passport-strategy": "^1.0.0",
+    "qs": "^6.5.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
@@ -43,6 +44,8 @@
     "jest": "^23.1.0",
     "jest-mock-console": "^0.3.5",
     "lint-staged": "^7.2.0",
+    "mock-socket": "^8.0.2",
+    "moment-timezone": "^0.5.21",
     "prettier": "^1.13.5"
   },
   "lint-staged": {

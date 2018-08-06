@@ -1,4 +1,4 @@
-//@flow
+// @flow
 
 export const EPOCH_DATE = "1970-01-01";
 export const EPOCH_DATE_TIME = "1970-01-01T08:00:00.000Z";

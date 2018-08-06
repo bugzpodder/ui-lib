@@ -1,5 +1,5 @@
 // @flow
-import { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises, mapBy } from "./array-util";
+import { generateFilledArray, mapBy, serializePromises } from "./array-util";
 
 describe("generateFilledArray", () => {
   it("shall generate an empty array", () => {
@@ -22,30 +22,34 @@ describe("generateFilledArray", () => {
   });
 });
 
-describe("generateArrayWithIncreasingNumbers", () => {
+describe("generateFilledArray functional", () => {
   it("shall generate a array with numbers", () => {
-    expect(generateArrayWithIncreasingNumbers(4)).toEqual([0, 1, 2, 3]);
-  });
-  it("shall generate a array with numbers, starting at a value", () => {
-    expect(generateArrayWithIncreasingNumbers(4, -4)).toEqual([-4, -3, -2, -1]);
+    let start = -4;
+    // eslint-disable-next-line no-plusplus
+    const values = generateFilledArray(4, () => start++);
+    expect(values).toEqual([-4, -3, -2, -1]);
   });
 });
 
 describe("serializePromises", () => {
-  it("shall serially call array functions", done => {
+  it("shall serially call array functions", (done) => {
     const count = 10;
-    const values = generateArrayWithIncreasingNumbers(count);
+    let start = 0;
+    // eslint-disable-next-line no-plusplus
+    const values = generateFilledArray(count, () => start++);
     const resolutionValues = new Array(count);
     let resolutionIndex = 0;
-    const promise = serializePromises(values, value => {
-      return new Promise(resolve => {
+    const promise = serializePromises(
+      values,
+      value => new Promise((resolve) => {
         setTimeout(() => {
-          resolutionValues[resolutionIndex++] = value;
+          resolutionValues[resolutionIndex] = value;
+          resolutionIndex += 1;
           resolve(value);
         }, Math.random() * 10);
-      });
-    });
-    promise.then(results => {
+      }),
+    );
+    promise.then((results) => {
       expect(resolutionValues).toEqual(values);
       expect(results).toEqual(values);
       done();

@@ -18,7 +18,7 @@ describe("stringifyQuery", () => {
       "testStr=test&testNum=2&testZero=0&testArray%5B0%5D=first&testArray%5B1%5D=second&testTrue=true&testFalse=false",
     );
   });
-  badValues.forEach(value => {
+  badValues.forEach((value) => {
     it("handles query object with invalid value", () => {
       const queryObj = {
         testStr: "test",

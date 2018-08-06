@@ -1,5 +1,5 @@
 // @flow
-import { mapToJson, jsonToMap } from "@grail/lib";
+import { jsonToMap, mapToJson } from "../../utils/json-utils";
 
 const getLocalStorage = () => {
   const { localStorage } = global;

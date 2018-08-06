@@ -1,6 +1,6 @@
 // @flow
-import { localStorage } from ".";
 import "../mocks";
+import { localStorage } from ".";
 
 beforeEach(() => {
   global.localStorage.clear();

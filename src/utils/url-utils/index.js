@@ -11,4 +11,6 @@ export {
   mergeSearchOptions,
   updateSearchUrl,
 } from "./url-search";
-export { getPathname, getQuery, stringifyQuery, updateQuery, updateQueryInternal } from "./url-util";
+export {
+  getPathname, getQuery, stringifyQuery, updateQuery, updateQueryInternal,
+} from "./url-util";

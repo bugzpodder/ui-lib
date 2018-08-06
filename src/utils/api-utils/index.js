@@ -1,5 +1,7 @@
 // @flow
-export { buildOrderQuery, buildSearchQuery, debounceRequest, filterResults, getPage, isValueValid } from "./api-util";
+export {
+  buildOrderQuery, buildSearchQuery, debounceRequest, filterResults, getPage, isValueValid,
+} from "./api-util";
 export {
   BOOLEAN_SEARCH_TYPE,
   DATE_SEARCH_TYPE,

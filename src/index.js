@@ -77,11 +77,19 @@ export {
   getOmniTextFromKeyValues,
   getSearchOptions,
 } from "./utils/omni-search-util";
-export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises, mapBy } from "./utils/array-utils";
+export { generateFilledArray, serializePromises, mapBy } from "./utils/array-utils";
 export { hasKey, hasKeyValue, setKeyValue } from "./utils/key-value-utils";
 export { fnv1 } from "./utils/hash-utils";
-// $FlowFixMe: exports are missing in ModuleNamespace for export {} from
-export { makeTitleString, normalizeStr, sentenceCase, upperAlphaChars } from "./utils/string-utils";
+export {
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  makeTitleString,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  normalizeStr,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  sentenceCase,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  upperAlphaChars,
+} from "./utils/string-utils";
 export { sanitizeId, getInputBarcode } from "./utils/id-utils";
 export {
   expandSearchValues,

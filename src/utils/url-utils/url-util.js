@@ -1,8 +1,8 @@
 // @flow
 import debounce from "lodash/debounce";
-import qs from "qs";
-import { isValueValid } from "@grail/lib";
 import equals from "lodash/fp/equals";
+import qs from "qs";
+import { isValueValid } from "../api-utils";
 
 type Option = {
   shouldUpdateBrowserHistory?: boolean,
@@ -21,7 +21,8 @@ export const getQuery = (props: Object = {}): Object => {
 };
 
 export const stringifyQuery = (query: Object = {}): string => {
-  Object.keys(query).forEach(key => !isValueValid(query[key]) && delete query[key]); // delete params with empty string values
+  // delete params with empty string values
+  Object.keys(query).forEach(key => !isValueValid(query[key]) && delete query[key]);
   return qs.stringify(query);
 };
 

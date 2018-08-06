@@ -48,7 +48,9 @@ export const extractUser = (accessToken: string, refreshToken: string, info: Goo
 
 // Extracts Google Info from session user.
 export const extractGoogleInfo = (user: User): GoogleUserInfo => {
-  const { email, givenName, familyName, pictureUrl, idToken, expirationInSeconds } = user;
+  const {
+    email, givenName, familyName, pictureUrl, idToken, expirationInSeconds,
+  } = user;
   return {
     email,
     picture: pictureUrl,

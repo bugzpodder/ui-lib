@@ -1,5 +1,7 @@
 // @flow
-import { getSearchValues, getUrlQueryString, getUrlQueryStringForValues, updateSearchUrl } from "./url-search";
+import {
+  getSearchValues, getUrlQueryString, getUrlQueryStringForValues, updateSearchUrl,
+} from "./url-search";
 
 const singleValues = ["testString", 0, 2.1727, false, true];
 const arrayValues = [["a", "testString"], [0, Math.E, -Math.PI], [false, true]];
@@ -25,7 +27,7 @@ describe("getSearchValues", () => {
     };
     expect(getSearchValues({ location })).toEqual(new Map());
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     const location: Location = {
       pathname: "/some/route",
       search: generateValueSearchQuery("test", value),
@@ -35,7 +37,7 @@ describe("getSearchValues", () => {
       expect(getSearchValues({ location })).toEqual(new Map().set("test", { value: String(value) }));
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     const testValues = values.map(value => String(value));
     const location: Location = {
       pathname: "/some/route",
@@ -63,7 +65,7 @@ describe("updateSearchUrl", () => {
     expect(history.replace).not.toBeCalled();
     expect(history.push).not.toBeCalled();
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     const history = {
       push: jest.fn(),
       replace: jest.fn(),
@@ -73,7 +75,7 @@ describe("updateSearchUrl", () => {
       expect(history.replace).toBeCalledWith({ search: generateValueSearchQuery("test", value) });
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     const history = {
       push: jest.fn(),
       replace: jest.fn(),
@@ -90,7 +92,7 @@ describe("getUrlQueryString", () => {
   it("handles no search values", () => {
     expect(getUrlQueryString("test", "")).toEqual("");
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
       expect(`?${getUrlQueryString("test", value)}`).toEqual(generateValueSearchQuery("test", value));
     });
@@ -101,7 +103,7 @@ describe("getUrlQueryStringForValues", () => {
   it("handles no search values", () => {
     expect(getUrlQueryStringForValues("test", [])).toEqual("");
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
       expect(`?${getUrlQueryStringForValues("test", values)}`).toEqual(generateValuesSearchQuery("test", values));
     });

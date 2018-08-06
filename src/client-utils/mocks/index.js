@@ -1,4 +1,4 @@
 // @flow
-import "./local-storage.mock";
+import "./local-storage-mock";
 
 global.isMock = true;

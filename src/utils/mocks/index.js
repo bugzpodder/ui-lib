@@ -1,4 +1,4 @@
 // @flow
-import "./fetch.mock";
+import "./fetch-mock";
 
 global.isMock = true;

@@ -1,4 +1,4 @@
-//@flow
+// @flow
 export class Warning extends Error {
   isWarning: boolean;
 

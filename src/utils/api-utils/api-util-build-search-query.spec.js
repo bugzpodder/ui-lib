@@ -4,12 +4,12 @@ import moment from "moment-timezone";
 
 import {
   BOOLEAN_SEARCH_TYPE,
-  DATE_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
-  FULL_TEXT_SEARCH_TYPE,
-  LIKE_TEXT_SEARCH_TYPE,
+  DATE_SEARCH_TYPE,
   FULL_ID_SEARCH_TYPE,
+  FULL_TEXT_SEARCH_TYPE,
   LIKE_ID_SEARCH_TYPE,
+  LIKE_TEXT_SEARCH_TYPE,
   MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
   doubleAmpersand,
@@ -267,7 +267,7 @@ describe("buildSearchQuery for multi value search", () => {
       buildSearchQuery(
         new Map().set("column1", {
           type: BOOLEAN_SEARCH_TYPE,
-          values: [true, false], //Technically, this is silly...
+          values: [true, false], // Technically, this is silly...
         }),
       ),
     ).toEqual(`(column1==true${doublePipe}column1==false)`);
@@ -520,21 +520,21 @@ describe("buildSearchQuery for full text search utilizing isEqual", () => {
 
 describe("buildSearchQuery is invalid", () => {
   it("should throw an error for an invalid search type", () => {
-    expect(() => {
-      return buildSearchQuery({
-        column1: {
-          value: "abc",
-          type: "INVALID",
-          isEqual: true,
-        },
-      });
-    }).toThrowError();
+    const INVALID = Symbol("UNIT_TEST INVALID_SYMBOL");
+    const column1 = {
+      value: "abc",
+      type: INVALID,
+      isEqual: true,
+    };
+    expect(buildSearchQuery.bind(null, { column1 })).toThrow(
+      new Error("Unknown search type: Symbol(UNIT_TEST INVALID_SYMBOL)"),
+    );
   });
-  it("should throw error if date search field value is invalid", () => {
+  it("should return if date search field value is invalid", () => {
     expect(
       buildSearchQuery({
         column1: {
-          values: null,
+          values: undefined,
           type: DATETIME_SEARCH_TYPE,
           isEqual: true,
         },
@@ -542,6 +542,6 @@ describe("buildSearchQuery is invalid", () => {
     ).toEqual("");
   });
   it("should return if no search options are present", () => {
-    expect(buildSearchQuery({ column1: "" })).toEqual("");
+    expect(buildSearchQuery({ column1: undefined })).toEqual("");
   });
 });

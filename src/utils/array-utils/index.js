@@ -1,2 +1,2 @@
 // @flow
-export { generateArrayWithIncreasingNumbers, generateFilledArray, serializePromises, mapBy } from "./array-util";
+export { generateFilledArray, serializePromises, mapBy } from "./array-util";

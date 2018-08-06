@@ -1,15 +1,15 @@
 // @flow
-import isObject from "lodash/isObject";
-import forEach from "lodash/forEach";
-import curry from "lodash/curry";
-import upperFirst from "lodash/upperFirst";
 import camelCase from "lodash/camelCase";
+import curry from "lodash/curry";
+import forEach from "lodash/forEach";
+import isObject from "lodash/isObject";
+import upperFirst from "lodash/upperFirst";
 
 export const convertObjectKeys = (keyMutator: Function, ignoredKeys: Array<string>, object: any) => {
   let convertedObject;
   if (Array.isArray(object)) {
     convertedObject = [];
-    forEach(object, value => {
+    forEach(object, (value) => {
       if (typeof value === "object") {
         value = convertObjectKeys(keyMutator, ignoredKeys, value);
       }
@@ -70,7 +70,7 @@ export const trimObjectValues = (object: Object) => {
     return object;
   }
   const formattedObject = {};
-  Object.entries(object).forEach(entry => {
+  Object.entries(object).forEach((entry) => {
     // $FlowFixMe: property trim is missing in "mixed";
     formattedObject[entry[0]] = entry[1].trim();
   });

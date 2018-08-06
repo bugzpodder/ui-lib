@@ -2,7 +2,7 @@
 
 import forEach from "lodash/forEach";
 
-import { hasKeyValue, hasKey, setKeyValue } from "./key-value-util";
+import { hasKey, hasKeyValue, setKeyValue } from "./key-value-util";
 
 const setKeyValueTestCases = [
   {
@@ -39,7 +39,7 @@ describe("setKeyValue", () => {
 });
 
 describe("hasKeyValue", () => {
-  const initial = setKeyValueTestCases[1].initial;
+  const { initial } = setKeyValueTestCases[1];
   const actual = hasKeyValue(initial, "foo", "foo");
   it("should have key value", () => {
     expect(actual).toEqual(true);
@@ -47,7 +47,7 @@ describe("hasKeyValue", () => {
 });
 
 describe("hasKey", () => {
-  const initial = setKeyValueTestCases[1].initial;
+  const { initial } = setKeyValueTestCases[1];
   const actual = hasKey(initial, "foo");
   it("should have key", () => {
     expect(actual).toEqual(true);

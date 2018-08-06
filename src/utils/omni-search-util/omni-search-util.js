@@ -1,5 +1,5 @@
 // @flow
-import { isValueValid } from "@grail/lib";
+import { isValueValid } from "../api-utils";
 
 export const OMNI_KEY = "omni";
 export const OMNI_ERROR = "OmniError";
@@ -34,7 +34,9 @@ const parseValuesFromOmniText = (omniText: string): Map<string, Array<string>> =
   let result = searchKey.exec(omniText);
   while (result !== null) {
     addItemToArrayMap(key, result[2], parsed);
+    // eslint-disable-next-line prefer-destructuring
     key = result[3];
+    // eslint-disable-next-line prefer-destructuring
     lastIndex = searchKey.lastIndex;
     result = searchKey.exec(omniText);
   }
@@ -43,7 +45,7 @@ const parseValuesFromOmniText = (omniText: string): Map<string, Array<string>> =
 };
 
 const getKeysForSearchDef = (searchDef: SearchDef): Array<string> => {
-  const aliases = searchDef.aliases;
+  const { aliases } = searchDef;
   if (aliases !== undefined && aliases.length) {
     return [...aliases, ...searchDef.searchFields];
   }
@@ -64,7 +66,7 @@ export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: st
       keys.unshift(OMNI_KEY);
     }
     let values: Array<string> = [];
-    keys.forEach(key => {
+    keys.forEach((key) => {
       const parsedValueArray = parsedValues.get(key);
       if (parsedValueArray !== undefined) {
         parsedValues.delete(key);
@@ -104,12 +106,24 @@ export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues
   return omniValues.join(" ");
 };
 
-export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => {
-  return keyValues
-    .map(({ key, value }) => {
-      return `${key}:${value}`;
-    })
-    .join(" ");
+export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => keyValues.map(({ key, value }) => `${key}:${value}`).join(" ");
+
+export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => {
+  const parsedItems: Array<string> = [];
+  if (!isValueValid(omniValue)) {
+    return parsedItems;
+  }
+  let lastIndex = 0;
+  items.lastIndex = lastIndex;
+  let result = items.exec(omniValue);
+  while (result !== null && lastIndex !== omniValue.length) {
+    // eslint-disable-next-line prefer-destructuring
+    lastIndex = items.lastIndex;
+    const item = result[3] || result[2] || result[1];
+    parsedItems.push(item.trim());
+    result = items.exec(omniValue);
+  }
+  return parsedItems;
 };
 
 export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {
@@ -122,21 +136,4 @@ export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchVal
     }
   });
   return searchOptions;
-};
-
-export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => {
-  const parsedItems: Array<string> = [];
-  if (!isValueValid(omniValue)) {
-    return parsedItems;
-  }
-  let lastIndex = 0;
-  items.lastIndex = lastIndex;
-  let result = items.exec(omniValue);
-  while (result !== null && lastIndex !== omniValue.length) {
-    lastIndex = items.lastIndex;
-    const item = result[3] || result[2] || result[1];
-    parsedItems.push(item.trim());
-    result = items.exec(omniValue);
-  }
-  return parsedItems;
 };

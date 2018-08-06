@@ -18,7 +18,7 @@ export class AbstractMultiKeyMap {
     }
     const tuples = [];
     if (iterables) {
-      iterables.forEach(tuple => {
+      iterables.forEach((tuple) => {
         tuples.push([this.serializeKey(tuple[0]), tuple[1]]);
       });
     }
@@ -47,43 +47,54 @@ export class AbstractMultiKeyMap {
     this.deserializeKey = this.deserializeKey.bind(this);
   }
 
+  /* eslint-disable class-methods-use-this */
   // istanbul ignore next abstract
   serializeKey(key: Object) {
     console.debug(`Serializing ${key.toString()}`);
     throw new TypeError("Must implement serializeKey");
   }
+  /* eslint-enable class-methods-use-this */
 
+  /* eslint-disable class-methods-use-this */
   //  istanbul ignore next abstract
   deserializeKey(key: string) {
     console.debug(`Deserializing ${key}`);
     throw new TypeError("Must implement deserializeKey");
   }
+  /* eslint-enable class-methods-use-this */
 
   set(object: Object, value: any) {
     this._map.set(this.serializeKey(object), value);
     return this;
   }
+
   get(object: Object) {
     return this._map.get(this.serializeKey(object));
   }
+
   has(object: Object) {
     return this._map.has(this.serializeKey(object));
   }
+
   delete(object: Object) {
     this._map.delete(this.serializeKey(object));
     return this;
   }
+
   forEach(callback: Function, callersThis: any) {
     this._map.forEach((value, key) => {
       callback.apply(callersThis, [value, this.deserializeKey(key)]);
     });
   }
+
   clear() {
     this._map.clear();
   }
+
   size() {
     return this._map.size;
   }
+
   keys(): Array<Object> {
     return [...this._map.keys()].map(key => this.deserializeKey(key));
   }

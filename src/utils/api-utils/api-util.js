@@ -1,27 +1,27 @@
 // @flow
-/** Shared API utilities **/
+/** Shared API utilities * */
 
-import keys from "lodash/keys";
-import escapeRegExp from "lodash/escapeRegExp";
-import partialRight from "lodash/partialRight";
 import debounce from "lodash/debounce";
+import escapeRegExp from "lodash/escapeRegExp";
+import keys from "lodash/keys";
 import moment from "moment";
-import { DATE_FORMAT, sanitizeId } from "@grail/lib";
-
+import partialRight from "lodash/partialRight";
 import {
   BOOLEAN_SEARCH_TYPE,
-  DATE_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
+  DATE_SEARCH_TYPE,
+  FULL_ID_SEARCH_TYPE,
   FULL_TEXT_SEARCH_TYPE,
+  LIKE_ID_SEARCH_TYPE,
   LIKE_TEXT_SEARCH_TYPE,
   MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
-  FULL_ID_SEARCH_TYPE,
-  LIKE_ID_SEARCH_TYPE,
   doubleAmpersand,
   doublePipe,
   percentChar,
 } from "./api-constants";
+import { DATE_FORMAT } from "../../constants";
+import { sanitizeId } from "../id-utils";
 
 /*
 Determine the page for the page query URL parameter
@@ -47,7 +47,7 @@ export const buildOrderQuery = (sortOptions: SortOptions = []) => {
       memo += ", ";
     }
     return `${memo}${id} ${desc}`;
-  }, "" /*initial memo*/);
+  }, "" /* initial memo */);
   if (order) {
     order = `&order=${order}`;
   } else {
@@ -56,10 +56,8 @@ export const buildOrderQuery = (sortOptions: SortOptions = []) => {
   return order;
 };
 
-export const isValueValid = (value: mixed) => {
-  // $FlowFixMe: undefined is not equal to 0 so there are no type errors here
-  return value !== "" && value !== undefined && value !== null && value.length !== 0;
-};
+// $FlowFixMe `value.length` doesn't exist on mixed.
+export const isValueValid = (value: mixed) => value !== "" && value !== undefined && value !== null && value.length !== 0;
 
 /*
 Using a Map or object of searchOptions, this builds a search query that and's each item for the
@@ -76,8 +74,8 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
   let query = "";
   const searchKeys = searchOptions instanceof Map ? Array.from(searchOptions.keys()) : keys(searchOptions);
   query = searchKeys.reduce((memo, searchOptionKey) => {
-    const searchOption =
-      searchOptions instanceof Map ? searchOptions.get(searchOptionKey) : searchOptions[searchOptionKey];
+    // eslint-disable-next-line max-len
+    const searchOption = searchOptions instanceof Map ? searchOptions.get(searchOptionKey) : searchOptions[searchOptionKey];
     if (!searchOption) {
       return memo;
     }
@@ -90,9 +88,11 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
       values,
       searchOperator,
     } = searchOption;
+    // eslint-disable-next-line no-nested-ternary
     const searchValues = Array.isArray(values) ? values : Array.isArray(value) ? value : [value];
     let equalityField = isEqual === undefined || isEqual ? "==" : "!=";
     equalityField = searchOperator === undefined ? equalityField : searchOperator.toString();
+    // eslint-disable-next-line arrow-parens
     const multiValueSearchBuilder = formatter => {
       const multiValueSearch = searchValues.reduce((multiValueSearchMemo, value) => {
         if (!isValueValid(value)) {
@@ -126,9 +126,10 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
           case LIKE_ID_SEARCH_TYPE:
             return multiValueSearchBuilder(value => `"${percentChar}${sanitizeId(value)}${percentChar}"`);
           case MULTI_FIELD_TEXT_SEARCH_TYPE: {
-            // FIXME(jrosenfield) - Deprecate MULTI_FIELD_TEXT_SEARCH_TYPE since it can be replaced with LIKE_TEXT_SEARCH_TYPE
+            // FIXME(jrosenfield) - Deprecate MULTI_FIELD_TEXT_SEARCH_TYPE since it
+            // can be replaced with LIKE_TEXT_SEARCH_TYPE
             if (!isValueValid(value)) {
-              return;
+              return null;
             }
             const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
               if (multiFieldSearchMemo) {
@@ -195,119 +196,122 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
 };
 
 export const filterResults = (items: Array<any>, options: FilterOptions): Array<any> => {
-  const { count, offset, sortOptions, searchOptions } = options;
+  const {
+    count, offset, sortOptions, searchOptions,
+  } = options;
   const searchKeys = Array.from(searchOptions.keys());
 
-  const filteredResults = items.filter(item => {
-    return searchKeys.reduce((result, key) => {
-      const searchOption = searchOptions.get(key);
-      if (!result || !searchOption) {
-        return false;
-      }
+  const filteredResults = items.filter(item => searchKeys.reduce((result, key) => {
+    const searchOption = searchOptions.get(key);
+    if (!result || !searchOption) {
+      return false;
+    }
 
-      const { rawQuery, type, searchFields, isEqual, value = "", values } = searchOption;
-      const searchValues = Array.isArray(values) ? values : [value];
-      const shouldEqual = !!(isEqual === undefined || isEqual);
-      if (rawQuery) {
-        throw new Error("Unsupported raw query");
-      }
+    const {
+      rawQuery, type, searchFields, isEqual, value = "", values,
+    } = searchOption;
+    const searchValues = Array.isArray(values) ? values : [value];
+    const shouldEqual = !!(isEqual === undefined || isEqual);
+    if (rawQuery) {
+      throw new Error("Unsupported raw query");
+    }
 
-      if (type === DATETIME_SEARCH_TYPE || type === DATE_SEARCH_TYPE) {
-        if (!item[key]) {
-          return true;
-        }
-        if (!values) {
-          return true;
-        }
-        // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-        let [startDate, endDate] = values;
-        if (startDate && endDate) {
-          if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
-            [startDate, endDate] = [endDate, startDate];
-          }
-        }
-        return (
-          (!startDate || moment(item[key]).isAfter(moment(String(startDate)))) &&
-          (!endDate || moment(item[key]).isBefore(moment(String(endDate))))
-        );
-      }
-
-      const validValues = searchValues.filter(value => isValueValid(value));
-      if (validValues.length === 0) {
+    if (type === DATETIME_SEARCH_TYPE || type === DATE_SEARCH_TYPE) {
+      if (!item[key]) {
         return true;
       }
-
-      return validValues.reduce((searchResult, value) => {
-        if (searchResult || !isValueValid(value)) {
-          return searchResult;
-        }
-        const [itemKey, filterKey] = key.split(".");
-        const regExp = new RegExp(escapeRegExp(String(value)), "i");
-        const idRegExp = new RegExp(escapeRegExp(sanitizeId(String(value))), "i");
-
-        if (filterKey) {
-          switch (type) {
-            case LIKE_TEXT_SEARCH_TYPE:
-              return item[itemKey] && item[itemKey].some(e => regExp.test(e[filterKey])) === shouldEqual;
-            case LIKE_ID_SEARCH_TYPE:
-              return item[itemKey] && item[itemKey].some(e => idRegExp.test(e[filterKey])) === shouldEqual;
-            case BOOLEAN_SEARCH_TYPE:
-              return item[itemKey] && item[itemKey].some(e => !!e[filterKey] === value) === shouldEqual;
-            case NUMERIC_SEARCH_TYPE:
-            // fallthrough
-            case FULL_TEXT_SEARCH_TYPE:
-              return item[itemKey] && item[itemKey].some(e => e[filterKey] === value) === shouldEqual;
-            case FULL_ID_SEARCH_TYPE:
-              return (
-                item[itemKey] && item[itemKey].some(e => e[filterKey] === sanitizeId(String(value))) === shouldEqual
-              );
-            default:
-          }
-        } else {
-          switch (type) {
-            case LIKE_TEXT_SEARCH_TYPE:
-              return isValueValid(item[key]) && regExp.test(item[key]) === shouldEqual;
-            case LIKE_ID_SEARCH_TYPE:
-              return isValueValid(item[key]) && idRegExp.test(item[key]) === shouldEqual;
-            case BOOLEAN_SEARCH_TYPE:
-              return shouldEqual ? !!item[key] === value : !!item[key] !== value;
-            case NUMERIC_SEARCH_TYPE:
-            // fallthrough
-            case FULL_TEXT_SEARCH_TYPE:
-              return shouldEqual ? item[key] === value : item[key] !== value;
-            case FULL_ID_SEARCH_TYPE:
-              return shouldEqual ? item[key] === sanitizeId(String(value)) : item[key] !== sanitizeId(String(value));
-            default:
-          }
-        }
-
-        if (type === MULTI_FIELD_TEXT_SEARCH_TYPE) {
-          if (!searchFields) {
-            throw new Error("Requires `searchFields`");
-          }
-          return searchFields.reduce((found, field) => {
-            const [itemKey, filterKey] = field.split(".");
-            if (filterKey) {
-              return found || (item[itemKey] && item[itemKey].some(e => regExp.test(e[filterKey])) === shouldEqual);
-            }
-            return found || (isValueValid(item[field]) && shouldEqual === regExp.test(item[field]));
-          }, false);
-        }
-        throw new Error(`Unknown search type: ${String(type)}`);
-      }, false);
-    }, true);
-  });
-
-  filteredResults.sort((a, b) => {
-    return sortOptions.reduce((result, field) => {
-      if (result !== 0 || !field.id || a[field.id] === b[field.id]) {
-        return result;
-      } else if (a[field.id] < b[field.id]) {
-        return field.desc ? 1 : -1;
+      if (!values) {
+        return true;
       }
-      return field.desc ? -1 : 1;
-    }, 0);
-  });
+      // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
+      let [startDate, endDate] = values;
+      if (startDate && endDate) {
+        if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
+          [startDate, endDate] = [endDate, startDate];
+        }
+      }
+      return (
+        (!startDate || moment(item[key]).isAfter(moment(String(startDate))))
+          && (!endDate || moment(item[key]).isBefore(moment(String(endDate))))
+      );
+    }
+
+    const validValues = searchValues.filter(value => isValueValid(value));
+    if (validValues.length === 0) {
+      return true;
+    }
+
+    return validValues.reduce((searchResult, value) => {
+      if (searchResult || !isValueValid(value)) {
+        return searchResult;
+      }
+      const [itemKey, filterKey] = key.split(".");
+      const regExp = new RegExp(escapeRegExp(String(value)), "i");
+      const idRegExp = new RegExp(escapeRegExp(sanitizeId(String(value))), "i");
+
+      if (filterKey) {
+        switch (type) {
+          case LIKE_TEXT_SEARCH_TYPE:
+            return item[itemKey] && item[itemKey].some(e => regExp.test(e[filterKey])) === shouldEqual;
+          case LIKE_ID_SEARCH_TYPE:
+            return item[itemKey] && item[itemKey].some(e => idRegExp.test(e[filterKey])) === shouldEqual;
+          case BOOLEAN_SEARCH_TYPE:
+            return item[itemKey] && item[itemKey].some(e => !!e[filterKey] === value) === shouldEqual;
+          case NUMERIC_SEARCH_TYPE:
+            // fallthrough
+          case FULL_TEXT_SEARCH_TYPE:
+            return item[itemKey] && item[itemKey].some(e => e[filterKey] === value) === shouldEqual;
+          case FULL_ID_SEARCH_TYPE:
+            return (
+              item[itemKey] && item[itemKey].some(e => e[filterKey] === sanitizeId(String(value))) === shouldEqual
+            );
+          default:
+        }
+      } else {
+        switch (type) {
+          case LIKE_TEXT_SEARCH_TYPE:
+            return isValueValid(item[key]) && regExp.test(item[key]) === shouldEqual;
+          case LIKE_ID_SEARCH_TYPE:
+            return isValueValid(item[key]) && idRegExp.test(item[key]) === shouldEqual;
+          case BOOLEAN_SEARCH_TYPE:
+            return shouldEqual ? !!item[key] === value : !!item[key] !== value;
+          case NUMERIC_SEARCH_TYPE:
+            // fallthrough
+          case FULL_TEXT_SEARCH_TYPE:
+            return shouldEqual ? item[key] === value : item[key] !== value;
+          case FULL_ID_SEARCH_TYPE:
+            return shouldEqual ? item[key] === sanitizeId(String(value)) : item[key] !== sanitizeId(String(value));
+          default:
+        }
+      }
+
+      if (type === MULTI_FIELD_TEXT_SEARCH_TYPE) {
+        if (!searchFields) {
+          throw new Error("Requires `searchFields`");
+        }
+        return searchFields.reduce((found, field) => {
+          const [itemKey, filterKey] = field.split(".");
+          if (filterKey) {
+            return found || (item[itemKey] && item[itemKey].some(e => regExp.test(e[filterKey])) === shouldEqual);
+          }
+          return found || (isValueValid(item[field]) && shouldEqual === regExp.test(item[field]));
+        }, false);
+      }
+      throw new Error(`Unknown search type: ${String(type)}`);
+    }, false);
+    // eslint-disable-next-line space-in-parens
+  }, true), );
+
+  filteredResults.sort((a, b) => sortOptions.reduce((result, field) => {
+    if (result !== 0 || !field.id || a[field.id] === b[field.id]) {
+      return result;
+    }
+    if (a[field.id] < b[field.id]) {
+      return field.desc ? 1 : -1;
+    }
+    return field.desc ? -1 : 1;
+    // eslint-disable-next-line space-in-parens
+  }, 0), );
 
   return filteredResults.slice(offset, offset + count);
 };

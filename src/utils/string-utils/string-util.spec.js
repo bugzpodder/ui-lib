@@ -2,7 +2,9 @@
 
 import keys from "lodash/keys";
 
-import { sentenceCase, upperAlphaChars, normalizeStr, makeTitleString } from "./string-util";
+import {
+  makeTitleString, normalizeStr, sentenceCase, upperAlphaChars,
+} from "./string-util";
 
 const multiLine = `multiple lines
 of
@@ -16,7 +18,7 @@ const expectedSentenceCaseTranslations = {
   camel: "Camel",
   "123camel": "123 Camel",
   ABDCamel: "Abd Camel",
-  "123": "123",
+  123: "123",
   'test "quotes"': "Test Quotes",
   "test 'quotes'": "Test Quotes",
   snake_case: "Snake Case",
@@ -27,7 +29,7 @@ const expectedSentenceCaseTranslations = {
 };
 
 describe("sentenceCase", () => {
-  keys(expectedSentenceCaseTranslations).forEach(key => {
+  keys(expectedSentenceCaseTranslations).forEach((key) => {
     const value = expectedSentenceCaseTranslations[key];
     it(`convert "${key}" to "${value}"`, () => {
       expect(sentenceCase(key)).toEqual(value);

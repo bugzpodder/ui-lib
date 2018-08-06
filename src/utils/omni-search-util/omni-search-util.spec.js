@@ -1,12 +1,12 @@
-//@flow
-import { LIKE_TEXT_SEARCH_TYPE, FULL_TEXT_SEARCH_TYPE } from "@grail/lib";
+// @flow
+import { FULL_TEXT_SEARCH_TYPE, LIKE_TEXT_SEARCH_TYPE } from "../api-utils/api-constants";
 
 import {
   getItemsFromOmniValue,
-  getOmniTextFromSearchValues,
   getOmniTextFromKeyValues,
-  getSearchValuesFromOmniText,
+  getOmniTextFromSearchValues,
   getSearchOptions,
+  getSearchValuesFromOmniText,
 } from "./omni-search-util";
 
 const searchDefs: SearchDefs = [

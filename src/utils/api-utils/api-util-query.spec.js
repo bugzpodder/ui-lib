@@ -1,6 +1,6 @@
 // @flow
 import "../mocks";
-import { buildOrderQuery, getPage, isValueValid } from "@grail/lib";
+import { buildOrderQuery, getPage, isValueValid } from "./api-util";
 
 describe("getPage", () => {
   it("should give page for 0 offset", () => {
@@ -18,10 +18,10 @@ describe("getPage", () => {
 });
 
 describe("isValueValid", () => {
-  [0, -1, 1, Infinity, 42, 3.1415926535, "test", true, false, "A sentence", " "].forEach(value => {
+  [0, -1, 1, Infinity, 42, 3.1415926535, "test", true, false, "A sentence", " "].forEach((value) => {
     it(`should validate '${String(value)}'`, () => expect(isValueValid(value)).toBe(true));
   });
-  ["", null, undefined].forEach(value => {
+  ["", null, undefined].forEach((value) => {
     it(`should invalidate '${String(value)}'`, () => expect(isValueValid(value)).toBe(false));
   });
 });

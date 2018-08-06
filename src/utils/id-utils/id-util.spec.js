@@ -1,6 +1,6 @@
 // @flow
 
-import { sanitizeId, getInputBarcode } from "./id-util";
+import { getInputBarcode, sanitizeId } from "./id-util";
 
 describe("sanitizeId", () => {
   it("should sanitize all normal sample ids", () => {

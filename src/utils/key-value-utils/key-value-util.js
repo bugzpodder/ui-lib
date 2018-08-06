@@ -9,10 +9,7 @@ export const setKeyValue = (keyValues: Array<Object>, item: Object) => {
   keyValues.push(item);
 };
 
-export const hasKeyValue = (keyValues: Array<KeyValue>, k: string, v: string) => {
-  return keyValues.some(({ key, value }) => key === k && value === v);
-};
+// eslint-disable-next-line max-len
+export const hasKeyValue = (keyValues: Array<KeyValue>, k: string, v: string) => keyValues.some(({ key, value }) => key === k && value === v);
 
-export const hasKey = (keyValues: Array<KeyValue>, k: string) => {
-  return keyValues.some(({ key }) => key === k);
-};
+export const hasKey = (keyValues: Array<KeyValue>, k: string) => keyValues.some(({ key }) => key === k);

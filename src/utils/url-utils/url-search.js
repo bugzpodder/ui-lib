@@ -1,37 +1,34 @@
 // @flow
 import isArray from "lodash/isArray";
-import { getQuery, getOmniTextFromKeyValues, stringifyQuery, updateQuery } from "@grail/lib";
+import { getOmniTextFromKeyValues } from "../omni-search-util";
+import { getQuery, stringifyQuery, updateQuery } from "./url-util";
 
 type SearchParams = { location: Location, history: HistoryFunctions, searchOptions: SearchOptions };
 
-const isDefinedNotNull = (value: mixed) => {
-  return value !== undefined && value !== null;
-};
+const isDefinedNotNull = (value: mixed) => value !== undefined && value !== null;
 
-export const flattenSearchValues = (searchValues: SearchOptionValues) => {
-  return [...searchValues]
-    .map(([key, { value, values }]) => ({ key, value, values }))
-    .filter(({ value, values }) => {
-      if (!isDefinedNotNull(value) && values === undefined) {
+export const flattenSearchValues = (searchValues: SearchOptionValues) => [...searchValues]
+  .map(([key, { value, values }]) => ({ key, value, values }))
+  .filter(({ value, values }) => {
+    if (!isDefinedNotNull(value) && values === undefined) {
+      return false;
+    }
+    if (value === undefined && values !== undefined) {
+      if (!values.length || !values.some(isDefinedNotNull)) {
         return false;
       }
-      if (value === undefined && values !== undefined) {
-        if (!values.length || !values.some(isDefinedNotNull)) {
-          return false;
-        }
-      }
-      return true;
-    })
-    .reduce((acc, { key, value, values }) => {
-      acc[key] = isDefinedNotNull(value) ? value : values;
-      return acc;
-    }, {});
-};
+    }
+    return true;
+  })
+  .reduce((acc, { key, value, values }) => {
+    acc[key] = isDefinedNotNull(value) ? value : values;
+    return acc;
+  }, {});
 
 export const expandSearchValues = (validSearchValues: Object): SearchOptionValues => {
   try {
     const searchValues = new Map();
-    Object.keys(validSearchValues).forEach(key => {
+    Object.keys(validSearchValues).forEach((key) => {
       const result = validSearchValues[key];
       if (isArray(result)) {
         searchValues.set(key, { values: result });
@@ -77,9 +74,7 @@ export const getSearchValues = ({ location }: { location: Location }): SearchOpt
   return expandSearchValues(validSearchValues);
 };
 
-const getUrlQuery = (searchValues: SearchOptionValues): Object => {
-  return flattenSearchValues(searchValues);
-};
+const getUrlQuery = (searchValues: SearchOptionValues): Object => flattenSearchValues(searchValues);
 
 export const updateSearchUrl = ({ location, history, searchOptions }: SearchParams, options: Object = {}) => {
   const searchValues = extractSearchValues(searchOptions);
@@ -95,9 +90,7 @@ export const getUrlQueryString = (key: string, value: SearchOptionValueItem) => 
   return `${stringifyQuery(getUrlQuery(searchValues))}`;
 };
 
-export const getOmniUrlQueryString = (keyValues: Array<KeyValue>) => {
-  return `${stringifyQuery({ omni: getOmniTextFromKeyValues(keyValues) })}`;
-};
+export const getOmniUrlQueryString = (keyValues: Array<KeyValue>) => `${stringifyQuery({ omni: getOmniTextFromKeyValues(keyValues) })}`;
 
 export const getUrlQueryStringForValues = (key: string, values: Array<SearchOptionValueItem>) => {
   const searchValues = new Map().set(key, { values });

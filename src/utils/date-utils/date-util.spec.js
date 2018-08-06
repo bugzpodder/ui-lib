@@ -1,6 +1,6 @@
 // @flow
 import moment from "moment-timezone";
-import { EPOCH_DATE, EPOCH_DATE_TIME } from "@grail/lib";
+import { EPOCH_DATE, EPOCH_DATE_TIME } from "../../constants/date-constants";
 
 import { formatDate, formatDateTime } from "./date-util";
 
