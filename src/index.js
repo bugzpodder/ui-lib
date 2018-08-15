@@ -89,6 +89,8 @@ export {
   sentenceCase,
   // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
   upperAlphaChars,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  formatPercent,
 } from "./utils/string-utils";
 export { sanitizeId, getInputBarcode } from "./utils/id-utils";
 export {

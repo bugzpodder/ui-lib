@@ -3,7 +3,7 @@
 import keys from "lodash/keys";
 
 import {
-  makeTitleString, normalizeStr, sentenceCase, upperAlphaChars,
+  formatPercent, makeTitleString, normalizeStr, sentenceCase, upperAlphaChars,
 } from "./string-util";
 
 const multiLine = `multiple lines
@@ -76,5 +76,15 @@ describe("makeTitleString", () => {
 
   it("doesnt have to cap first", () => {
     expect(makeTitleString("cfDNA_assay", false)).toEqual("cfDNA Assay");
+  });
+});
+
+describe("formatPercent", () => {
+  const tests = [["0.12", "12.00%"], ["0.0123", "1.23%"], ["0.1230", "12.30%"], [0.12, "12.00%"]];
+
+  tests.forEach(([start, end]) => {
+    it(`should convert ${start} -> ${end}`, () => {
+      expect(formatPercent(start)).toEqual(end);
+    });
   });
 });

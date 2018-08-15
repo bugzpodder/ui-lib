@@ -48,3 +48,12 @@ export const makeTitleString = (str: string, capFirst: boolean = true) => str
   .replace(/_/g, " ") // underscore to space
   .replace(/^(.)/, $1 => (capFirst ? $1.toUpperCase() : $1)) // capitalize the first letter (if specified)
   .replace("  ", " ");
+
+/**
+ * Formats a float as a percentage, rounding to two decimal points.
+ * The number is typically already rounded in the back-end, but we round again
+ * because floating-point arithmetic on an already-rounded number might generate
+ * a value like 4.32000000000000001.
+ * @param value The float to format.
+ */
+export const formatPercent = (value: string | number) => `${(parseFloat(value) * 100.0).toFixed(2)}%`;
