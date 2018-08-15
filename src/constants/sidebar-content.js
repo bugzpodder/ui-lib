@@ -221,6 +221,11 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         path: "/lims/import-samples",
       },
       {
+        name: "Import Mock Samples",
+        domain: LIMS,
+        path: "/lims/import-mock-samples",
+      },
+      {
         name: "Config",
         domain: LIMS,
         path: "/admin/config",
