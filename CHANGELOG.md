@@ -1,3 +1,8 @@
+## 0.6.0 - 2018-08-17
+
+1.  New navigation links for mock samples.
+2.  Add formatPercent.
+
 ## 0.5.0 - 2018-07-31
 
 1.  Updated navigation links for instruments and analysis versions.
