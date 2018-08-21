@@ -56,4 +56,10 @@ export const makeTitleString = (str: string, capFirst: boolean = true) => str
  * a value like 4.32000000000000001.
  * @param value The float to format.
  */
-export const formatPercent = (value: string | number) => `${(parseFloat(value) * 100.0).toFixed(2)}%`;
+export const formatPercent = (value: string | number) => {
+  const floatValue = parseFloat(value);
+  if (Number.isNaN(floatValue)) {
+    return "-";
+  }
+  return `${(floatValue * 100.0).toFixed(2)}%`;
+};
