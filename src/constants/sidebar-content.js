@@ -1,17 +1,17 @@
 // @flow
-export const LIMS = Symbol("lims");
-export const EDC = Symbol("EDC");
-export const PIPELINE = Symbol("pipeline");
-export const EXTERNAL = Symbol("external");
+export const LIMS = "lims";
+export const EDC = "EDC";
+export const PIPELINE = "pipeline";
+export const EXTERNAL = "external";
 
 export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
   {
     name: "Sample Management",
     children: [
       {
-        name: "Sample Accessioning",
+        name: "Commercial Accessioning",
         domain: EDC,
-        path: "",
+        path: "/v/VERMILLION/trfs",
       },
       {
         name: "Samples",
@@ -73,7 +73,6 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         domain: LIMS,
         path: "/automation/programs",
       },
-
       {
         name: "Program Regex Tester",
         domain: LIMS,
@@ -95,6 +94,11 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         path: "/pipeline/analysis-runs/new",
       },
       {
+        name: "Previous Runs",
+        domain: LIMS,
+        path: "/pipeline-ui",
+      },
+      {
         name: "Sample Sheets",
         domain: LIMS,
         path: "/pipeline/sample-sheets/upload",
@@ -104,20 +108,15 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         domain: LIMS,
         path: "/pipeline/assay-analysis",
       },
-      {
-        name: "Previous Runs",
-        domain: LIMS,
-        path: "/pipeline-ui",
-      },
     ],
   },
   {
     name: "Test Management",
     children: [
       {
-        name: "TRF Review",
+        name: "Tests",
         domain: EDC,
-        path: "",
+        path: "/v/VERMILLION/trfs",
       },
       {
         name: "Test Review",
@@ -125,9 +124,19 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         path: "/lims/lab-tests",
       },
       {
-        name: "Results Review",
+        name: "Healthcare Providers",
         domain: EDC,
-        path: "",
+        path: "/v/VERMILLION/providers",
+      },
+      {
+        name: "Invoices",
+        domain: EDC,
+        path: "/v/VERMILLION/providers",
+      },
+      {
+        name: "Adjustments",
+        domain: EDC,
+        path: "/v/VERMILLION/adjustments",
       },
     ],
   },
@@ -137,7 +146,7 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
       {
         name: "Dashboards",
         domain: EXTERNAL,
-        path: "https://eng-cluster.eng.aws.grail.com:8620/",
+        path: "https://eng-cluster.eng.aws.grail.com:8630/",
       },
       {
         name: "Reports",
@@ -192,44 +201,50 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
       },
     ],
   },
-  {
-    name: "Admin",
-    children: [
-      {
-        name: "Users",
-        domain: LIMS,
-        path: "/admin/users",
-      },
-      {
-        name: "Labs",
-        domain: LIMS,
-        path: "/admin/labs",
-      },
-      {
-        name: "Printers",
-        domain: LIMS,
-        path: "/admin/printers",
-      },
-      {
-        name: "Printer Labels",
-        domain: LIMS,
-        path: "/admin/printer-labels",
-      },
-      {
-        name: "Import BST Samples",
-        domain: LIMS,
-        path: "/lims/import-samples",
-      },
-      {
-        name: "Import Mock Samples",
-        domain: LIMS,
-        path: "/lims/import-mock-samples",
-      },
-      {
-        name: "Config",
-        domain: LIMS,
-        path: "/admin/config",
-      },
-    ],
-  },
 ];
+
+export const adminItems = {
+  name: "Admin",
+  children: [
+    {
+      name: "Lab Users",
+      domain: LIMS,
+      path: "/admin/users",
+    },
+    {
+      name: "Accessioning Users",
+      domain: EDC,
+      path: "/v/VERMILLION/users",
+    },
+    {
+      name: "Labs",
+      domain: LIMS,
+      path: "/admin/labs",
+    },
+    {
+      name: "Printers",
+      domain: LIMS,
+      path: "/admin/printers",
+    },
+    {
+      name: "Printer Labels",
+      domain: LIMS,
+      path: "/admin/printer-labels",
+    },
+    {
+      name: "Import BST Samples",
+      domain: LIMS,
+      path: "/lims/import-samples",
+    },
+    {
+      name: "Import Mock Samples",
+      domain: LIMS,
+      path: "/lims/import-mock-samples",
+    },
+    {
+      name: "Config",
+      domain: LIMS,
+      path: "/admin/config",
+    },
+  ],
+};

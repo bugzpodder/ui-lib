@@ -1,6 +1,6 @@
 declare type SidebarItem = {|
   name: string,
-  domain: Symbol,
+  domain: string,
   path: string,
   exact?: boolean,
 |};

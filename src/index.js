@@ -30,6 +30,7 @@ export {
   EDC,
   PIPELINE,
   EXTERNAL,
+  adminItems,
   sidebarItems,
   MAX_NOTIFICATIONS,
   NotificationTypes,
