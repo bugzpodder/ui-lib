@@ -164,15 +164,15 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
     name: "Reagents",
     children: [
       {
+        name: "Part Numbers",
+        domain: LIMS,
+        path: "/lims/reagents/part-numbers",
+      },
+      {
         name: "Reagent Lots",
         domain: LIMS,
         path: "/lims/reagents",
         exact: true,
-      },
-      {
-        name: "Part Numbers",
-        domain: LIMS,
-        path: "/lims/reagents/part-numbers",
       },
     ],
   },
