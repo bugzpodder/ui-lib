@@ -1,5 +1,5 @@
 // @flow
-import { isValueValid } from "../api-utils";
+import { OMNI_TEXT_SEARCH_TYPE, isValueValid } from "../api-utils";
 
 export const OMNI_KEY = "omni";
 export const OMNI_ERROR = "OmniError";
@@ -61,8 +61,11 @@ export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: st
   const parsedValues = parseValuesFromOmniText(omniText);
 
   searchDefs.forEach((searchDef, index) => {
-    const keys = getKeysForSearchDef(searchDef);
+    let keys = getKeysForSearchDef(searchDef);
     if (index === 0) {
+      if (searchDef.type === OMNI_TEXT_SEARCH_TYPE) {
+        keys = [];
+      }
       keys.unshift(OMNI_KEY);
     }
     let values: Array<string> = [];

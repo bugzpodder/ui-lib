@@ -1,3 +1,7 @@
+## 0.7.0 - 2018-09-XX
+
+1.  Add support for `OMNI_TEXT_SEARCH_TYPE`.
+
 ## 0.6.0 - 2018-08-17
 
 1.  New navigation links for mock samples.

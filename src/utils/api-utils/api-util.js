@@ -16,6 +16,7 @@ import {
   LIKE_TEXT_SEARCH_TYPE,
   MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
+  OMNI_TEXT_SEARCH_TYPE,
   doubleAmpersand,
   doublePipe,
   percentChar,
@@ -114,6 +115,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
       if (!rawQuery) {
         switch (type) {
           case LIKE_TEXT_SEARCH_TYPE:
+          case OMNI_TEXT_SEARCH_TYPE:
             return multiValueSearchBuilder(value => `"${percentChar}${value.trim()}${percentChar}"`);
           case NUMERIC_SEARCH_TYPE:
           // fallthrough to next case
@@ -252,6 +254,7 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
       if (filterKey) {
         switch (type) {
           case LIKE_TEXT_SEARCH_TYPE:
+          case OMNI_TEXT_SEARCH_TYPE:
             return item[itemKey] && item[itemKey].some(e => regExp.test(e[filterKey])) === shouldEqual;
           case LIKE_ID_SEARCH_TYPE:
             return item[itemKey] && item[itemKey].some(e => idRegExp.test(e[filterKey])) === shouldEqual;
@@ -270,6 +273,7 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
       } else {
         switch (type) {
           case LIKE_TEXT_SEARCH_TYPE:
+          case OMNI_TEXT_SEARCH_TYPE:
             return isValueValid(item[key]) && regExp.test(item[key]) === shouldEqual;
           case LIKE_ID_SEARCH_TYPE:
             return isValueValid(item[key]) && idRegExp.test(item[key]) === shouldEqual;
