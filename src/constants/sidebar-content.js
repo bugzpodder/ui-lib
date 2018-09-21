@@ -14,9 +14,19 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         path: "/v/VERMILLION/trfs",
       },
       {
+        name: "Research Accessioning",
+        domain: LIMS,
+        path: "/lims/accession",
+      },
+      {
         name: "Samples",
         domain: LIMS,
         path: "/lims/samples",
+      },
+      {
+        name: "Stored Samples",
+        domain: LIMS,
+        path: "/lims/stored-samples",
       },
       {
         name: "Batches",
