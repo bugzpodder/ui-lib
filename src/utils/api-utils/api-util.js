@@ -34,6 +34,11 @@ export const getPage = (offset: number = 0, count: number = 10) => {
 };
 
 /*
+Convert boolean to
+*/
+export const boolToString = (bool: boolean): string => (bool ? "1" : "0");
+
+/*
 Builds an order query that and's each item for the order query URL parameter
 */
 export const buildOrderQuery = (sortOptions: SortOptions = []) => {

@@ -57,6 +57,7 @@ export {
   doubleAmpersand,
   doublePipe,
   filterResults,
+  boolToString,
   getPage,
   isValueValid,
   percentChar,

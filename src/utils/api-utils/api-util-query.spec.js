@@ -1,6 +1,17 @@
 // @flow
 import "../mocks";
-import { buildOrderQuery, getPage, isValueValid } from "./api-util";
+import {
+  boolToString, buildOrderQuery, getPage, isValueValid,
+} from "./api-util";
+
+describe("getOverride", () => {
+  it("should give '0' for false", () => {
+    expect(boolToString(false)).toEqual("0");
+  });
+  it("should give '1' for true", () => {
+    expect(boolToString(true)).toEqual("1");
+  });
+});
 
 describe("getPage", () => {
   it("should give page for 0 offset", () => {
