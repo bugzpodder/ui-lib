@@ -4,7 +4,7 @@ export const EDC = "EDC";
 export const PIPELINE = "pipeline";
 export const EXTERNAL = "external";
 
-export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
+export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPlaceholder)[] = [
   {
     name: "Sample Management",
     children: [
@@ -32,6 +32,10 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
         name: "Batches",
         domain: LIMS,
         path: "/lims/batches",
+      },
+      {
+        name: "Queued Repeats",
+        placeholder: true,
       },
       {
         name: "Sample Issues",
@@ -99,7 +103,11 @@ export const sidebarItems: (SidebarItem | ParentSidebarItem)[] = [
     name: "Pipeline",
     children: [
       {
-        name: "New Run",
+        name: "New Production Run",
+        placeholder: true,
+      },
+      {
+        name: "New Experimental Run",
         domain: LIMS,
         path: "/pipeline/analysis-runs/new",
       },

@@ -1,11 +1,19 @@
-declare type SidebarItem = {|
+declare type SidebarItemChild = SidebarItemLink | SidebarItemPlaceholder;
+declare type SidebarItem = SidebarItemParent | SidebarItemChild;
+
+declare type SidebarItemLink = {|
   name: string,
   domain: string,
   path: string,
   exact?: boolean,
 |};
 
-declare type ParentSidebarItem = {|
+declare type SidebarItemPlaceholder = {|
   name: string,
-  children: SidebarItem[],
+  placeholder: true,
+|};
+
+declare type SidebarItemParent = {|
+  name: string,
+  children: SidebarItemChild[],
 |};
