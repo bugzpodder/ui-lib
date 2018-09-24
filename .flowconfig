@@ -1,5 +1,6 @@
 [ignore]
 .*\.spec\.js
+.*/dist/*
 
 [include]
 

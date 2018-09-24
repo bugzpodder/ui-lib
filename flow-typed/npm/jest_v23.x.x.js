@@ -1,5 +1,5 @@
-// flow-typed signature: bc9e644ba43fa1c4d1fccc5fd47f65e9
-// flow-typed version: d37e775f89/jest_v23.x.x/flow_>=v0.39.x
+// flow-typed signature: 691597c4a5aab83a3b2e6d9ccd01a97d
+// flow-typed version: 71534a866d/jest_v23.x.x/flow_>=v0.39.x
 
 type JestMockFn<TArguments: $ReadOnlyArray<*>, TReturn> = {
   (...args: TArguments): TReturn,
@@ -18,6 +18,11 @@ type JestMockFn<TArguments: $ReadOnlyArray<*>, TReturn> = {
      * instantiated from this mock function.
      */
     instances: Array<TReturn>,
+    /**
+     * An array that contains all the object results that have been
+     * returned by this mock function call
+     */
+    results: Array<{ isThrow: boolean, value: TReturn }>,
   },
   /**
    * Resets all information stored in the mockFn.mock.calls and
@@ -61,13 +66,29 @@ type JestMockFn<TArguments: $ReadOnlyArray<*>, TReturn> = {
    */
   mockReturnThis(): void,
   /**
-   * Deprecated: use jest.fn(() => value) instead
+   * Accepts a value that will be returned whenever the mock function is called.
    */
   mockReturnValue(value: TReturn): JestMockFn<TArguments, TReturn>,
   /**
    * Sugar for only returning a value once inside your mock
    */
   mockReturnValueOnce(value: TReturn): JestMockFn<TArguments, TReturn>,
+  /**
+   * Sugar for jest.fn().mockImplementation(() => Promise.resolve(value))
+   */
+  mockResolvedValue(value: TReturn): JestMockFn<TArguments, Promise<TReturn>>,
+  /**
+   * Sugar for jest.fn().mockImplementationOnce(() => Promise.resolve(value))
+   */
+  mockResolvedValueOnce(value: TReturn): JestMockFn<TArguments, Promise<TReturn>>,
+  /**
+   * Sugar for jest.fn().mockImplementation(() => Promise.reject(value))
+   */
+  mockRejectedValue(value: TReturn): JestMockFn<TArguments, Promise<any>>,
+  /**
+   * Sugar for jest.fn().mockImplementationOnce(() => Promise.reject(value))
+   */
+  mockRejectedValueOnce(value: TReturn): JestMockFn<TArguments, Promise<any>>,
 };
 
 type JestAsymmetricEqualityType = {
@@ -99,7 +120,7 @@ type JestMatcherResult = {
   pass: boolean,
 };
 
-type JestMatcher = (actual: any, expected: any) => JestMatcherResult;
+type JestMatcher = (actual: any, expected: any) => JestMatcherResult | Promise<JestMatcherResult>;
 
 type JestPromiseType = {
   /**
@@ -121,14 +142,39 @@ type JestPromiseType = {
 type JestTestName = string | Function;
 
 /**
+ *  Plugin: jest-styled-components
+ */
+
+type JestStyledComponentsMatcherValue = string | JestAsymmetricEqualityType | RegExp | typeof undefined;
+
+type JestStyledComponentsMatcherOptions = {
+  media?: string,
+  modifier?: string,
+  supports?: string,
+};
+
+type JestStyledComponentsMatchersType = {
+  toHaveStyleRule(
+    property: string,
+    value: JestStyledComponentsMatcherValue,
+    options?: JestStyledComponentsMatcherOptions,
+  ): void,
+};
+
+/**
  *  Plugin: jest-enzyme
  */
 type EnzymeMatchersType = {
+  // 5.x
+  toBeEmpty(): void,
+  toBePresent(): void,
+  // 6.x
   toBeChecked(): void,
   toBeDisabled(): void,
-  toBeEmpty(): void,
   toBeEmptyRender(): void,
-  toBePresent(): void,
+  toContainMatchingElement(selector: string): void,
+  toContainMatchingElements(n: number, selector: string): void,
+  toContainExactlyOneMatchingElement(selector: string): void,
   toContainReact(element: React$Element<any>): void,
   toExist(): void,
   toHaveClassName(className: string): void,
@@ -139,9 +185,9 @@ type EnzymeMatchersType = {
   toHaveStyle: ((styleKey: string, styleValue?: any) => void) & ((style: Object) => void),
   toHaveTagName(tagName: string): void,
   toHaveText(text: string): void,
-  toIncludeText(text: string): void,
   toHaveValue(value: any): void,
-  toMatchElement(element: React$Element<any>): void,
+  toIncludeText(text: string): void,
+  toMatchElement(element: React$Element<any>, options?: {| ignoreProps?: boolean |}): void,
   toMatchSelector(selector: string): void,
 };
 
@@ -479,7 +525,12 @@ type JestExtendedMatchersType = {
 };
 
 interface JestExpectType {
-  not: JestExpectType & EnzymeMatchersType & DomTestingLibraryType & JestJQueryMatchersType & JestExtendedMatchersType;
+  not: JestExpectType &
+    EnzymeMatchersType &
+    DomTestingLibraryType &
+    JestJQueryMatchersType &
+    JestStyledComponentsMatchersType &
+    JestExtendedMatchersType;
   /**
    * If you have a mock function, you can use .lastCalledWith to test what
    * arguments it was last called with.
@@ -632,13 +683,20 @@ interface JestExpectType {
    */
   toMatchObject(object: Object | Array<Object>): void;
   /**
+   * Use .toStrictEqual to check that a javascript object matches a subset of the properties of an object.
+   */
+  toStrictEqual(value: any): void;
+  /**
    * This ensures that an Object matches the most recent snapshot.
    */
-  toMatchSnapshot(propertyMatchers?: { [key: string]: JestAsymmetricEqualityType }, name?: string): void;
+  toMatchSnapshot(propertyMatchers?: any, name?: string): void;
   /**
    * This ensures that an Object matches the most recent snapshot.
    */
   toMatchSnapshot(name: string): void;
+
+  toMatchInlineSnapshot(snapshot?: string): void;
+  toMatchInlineSnapshot(propertyMatchers?: any, snapshot?: string): void;
   /**
    * Use .toThrow to test that a function throws when it is called.
    * If you want to test that a specific error gets thrown, you can provide an
@@ -654,6 +712,7 @@ interface JestExpectType {
    * matching the most recent snapshot when it is called.
    */
   toThrowErrorMatchingSnapshot(): void;
+  toThrowErrorMatchingInlineSnapshot(snapshot?: string): void;
 }
 
 type JestObjectType = {
@@ -840,6 +899,13 @@ declare var describe: {
    * Skip running this describe block
    */
   skip(name: JestTestName, fn: () => void): void,
+
+  /**
+   * each runs this test against array of argument arrays per each run
+   *
+   * @param {table} table of Test
+   */
+  each(table: Array<Array<mixed> | mixed>): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
 };
 
 /** An individual test unit */
@@ -853,13 +919,27 @@ declare var it: {
    */
   (name: JestTestName, fn?: (done: () => void) => ?Promise<mixed>, timeout?: number): void,
   /**
+   * each runs this test against array of argument arrays per each run
+   *
+   * @param {table} table of Test
+   */
+  each(table: Array<Array<mixed> | mixed>): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
+  /**
    * Only run this test
    *
    * @param {JestTestName} Name of Test
    * @param {Function} Test
    * @param {number} Timeout for the test, in milliseconds.
    */
-  only(name: JestTestName, fn?: (done: () => void) => ?Promise<mixed>, timeout?: number): void,
+  only(
+    name: JestTestName,
+    fn?: (done: () => void) => ?Promise<mixed>,
+    timeout?: number,
+  ): {
+    each(
+      table: Array<Array<mixed> | mixed>,
+    ): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
+  },
   /**
    * Skip running this test
    *
@@ -876,6 +956,12 @@ declare var it: {
    * @param {number} Timeout for the test, in milliseconds.
    */
   concurrent(name: JestTestName, fn?: (done: () => void) => ?Promise<mixed>, timeout?: number): void,
+  /**
+   * each runs this test against array of argument arrays per each run
+   *
+   * @param {table} table of Test
+   */
+  each(table: Array<Array<mixed> | mixed>): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
 };
 declare function fit(name: JestTestName, fn: (done: () => void) => ?Promise<mixed>, timeout?: number): void;
 /** An individual test unit */
@@ -945,7 +1031,9 @@ declare var expect: {
     EnzymeMatchersType &
     DomTestingLibraryType &
     JestJQueryMatchersType &
+    JestStyledComponentsMatchersType &
     JestExtendedMatchersType,
+
   /** Add additional Jasmine matchers to Jest's roster */
   extend(matchers: { [name: string]: JestMatcher }): void,
   /** Add a module that formats application-specific data structures. */
@@ -959,6 +1047,12 @@ declare var expect: {
   /** Matches any received string that contains the exact expected string. */
   stringContaining(value: string): string,
   stringMatching(value: string | RegExp): string,
+  not: {
+    arrayContaining: (value: $ReadOnlyArray<mixed>) => Array<mixed>,
+    objectContaining: (value: {}) => Object,
+    stringContaining: (value: string) => string,
+    stringMatching: (value: string | RegExp) => string,
+  },
 };
 
 // TODO handle return type

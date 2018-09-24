@@ -3,5 +3,5 @@
     "@babel/env",
     "@babel/flow"
   ],
-  "plugins": ["@babel/proposal-class-properties", ["@babel/transform-runtime", { "polyfill": false, "useBuiltIns": true }]]
+  "plugins": ["@babel/proposal-class-properties", "@babel/transform-runtime"]
 }
