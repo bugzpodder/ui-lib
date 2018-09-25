@@ -60,6 +60,7 @@ type SearchFieldProps = {
   searchKey: string,
   searchValue: ?string,
   onChange: (string, any) => any,
+  isFullWidth?: boolean,
 };
 
 declare type SearchDef = {
