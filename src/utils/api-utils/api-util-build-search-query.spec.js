@@ -91,7 +91,7 @@ describe("buildSearchQuery for full id search", () => {
           type: FULL_ID_SEARCH_TYPE,
         },
       }),
-    ).toEqual('(column1=="P001001")');
+    ).toEqual('(column1=="P00100-1"||column1=="P001001")');
   });
   it("should generate query for one accession label element", () => {
     expect(
@@ -124,7 +124,7 @@ describe("buildSearchQuery for like id search", () => {
           type: LIKE_ID_SEARCH_TYPE,
         },
       }),
-    ).toEqual(`(column1=="${percentChar}P001001${percentChar}")`);
+    ).toEqual(`(column1=="${percentChar}P00100-1${percentChar}"||column1=="${percentChar}P001001${percentChar}")`);
   });
   it("should generate query for one accession label element", () => {
     expect(

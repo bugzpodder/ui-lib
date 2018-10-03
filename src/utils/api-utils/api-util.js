@@ -76,6 +76,29 @@ ES6 Map keys are iterated by insert order, and therefore iteration is determinis
 Therefore, we should deprecate objects as inputs to improve testability.
 */
 
+const getSearchValues = (searchOption: SearchOption) => {
+  const { type, value = "", values } = searchOption;
+  let searchValues = [];
+  if (Array.isArray(values)) {
+    searchValues = values;
+  } else if (Array.isArray(value)) {
+    searchValues = value;
+  } else {
+    searchValues = [value];
+  }
+
+  if (type === FULL_ID_SEARCH_TYPE || type === LIKE_ID_SEARCH_TYPE) {
+    searchValues = searchValues.reduce((memo, currValue) => {
+      const sanitizedValue = sanitizeId(String(currValue));
+      if (sanitizedValue !== currValue) {
+        return [...memo, currValue, sanitizedValue];
+      }
+      return [...memo, currValue];
+    }, []);
+  }
+  return searchValues;
+};
+
 export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOptions = new Map()) => {
   let query = "";
   const searchKeys = searchOptions instanceof Map ? Array.from(searchOptions.keys()) : keys(searchOptions);
@@ -94,8 +117,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
       values,
       searchOperator,
     } = searchOption;
-    // eslint-disable-next-line no-nested-ternary
-    const searchValues = Array.isArray(values) ? values : Array.isArray(value) ? value : [value];
+    const searchValues = getSearchValues(searchOption);
     let equalityField = isEqual === undefined || isEqual ? "==" : "!=";
     equalityField = searchOperator === undefined ? equalityField : searchOperator.toString();
     // eslint-disable-next-line arrow-parens
@@ -129,9 +151,9 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
           case FULL_TEXT_SEARCH_TYPE:
             return multiValueSearchBuilder(value => `"${value.trim()}"`);
           case FULL_ID_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `"${sanitizeId(value)}"`);
+            return multiValueSearchBuilder(value => `"${value}"`);
           case LIKE_ID_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `"${percentChar}${sanitizeId(value)}${percentChar}"`);
+            return multiValueSearchBuilder(value => `"${percentChar}${value}${percentChar}"`);
           case MULTI_FIELD_TEXT_SEARCH_TYPE: {
             // FIXME(jrosenfield) - Deprecate MULTI_FIELD_TEXT_SEARCH_TYPE since it
             // can be replaced with LIKE_TEXT_SEARCH_TYPE
@@ -215,9 +237,9 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
     }
 
     const {
-      rawQuery, type, searchFields, isEqual, value = "", values,
+      rawQuery, type, searchFields, isEqual, values,
     } = searchOption;
-    const searchValues = Array.isArray(values) ? values : [value];
+    const searchValues = getSearchValues(searchOption);
     const shouldEqual = !!(isEqual === undefined || isEqual);
     if (rawQuery) {
       throw new Error("Unsupported raw query");
