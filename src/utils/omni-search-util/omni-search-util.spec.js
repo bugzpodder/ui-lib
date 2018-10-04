@@ -20,8 +20,8 @@ const searchDefs: SearchDefs = [
     name: "Lot Number",
     type: FULL_TEXT_SEARCH_TYPE,
     aliases: ["lot"],
-    description: "Lot Num/External Ref",
-    searchFields: ["lotNumber", "externalReference"],
+    description: "Lot Num/Vendor Lot Num",
+    searchFields: ["lotNumber", "vendorLotNumber"],
   },
 ];
 
@@ -104,8 +104,8 @@ describe("getSearchOptions", () => {
       name: "Lot Number",
       type: FULL_TEXT_SEARCH_TYPE,
       aliases: ["lot"],
-      description: "Lot Num/External Ref",
-      searchFields: ["lotNumber", "externalReference"],
+      description: "Lot Num/Vendor Lot Num",
+      searchFields: ["lotNumber", "vendorLotNumber"],
       value: ["2", "", "3", "4"],
     },
   ];
