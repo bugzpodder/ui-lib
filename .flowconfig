@@ -17,5 +17,3 @@ untyped-type-import=error
 emoji=true
 module.name_mapper='^@grail\/\(.*\)$' -> '<PROJECT_ROOT>/../\1'
 module.file_ext=.js
-module.file_ext=.jsx
-module.file_ext=.scss

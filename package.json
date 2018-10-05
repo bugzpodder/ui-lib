@@ -14,7 +14,7 @@
     "preinstall": "node -e 'if(!/yarn\\.js$/.test(process.env.npm_execpath))throw new Error(\"Use yarn install\")'",
     "precommit": "lint-staged",
     "test": "jest --watch",
-    "test:staged": "jest --coverage && echo --findRelatedTests does not work properly with coverage",
+    "test:staged": "jest --coverage --findRelatedTests",
     "test-all": "jest --coverage"
   },
   "dependencies": {
