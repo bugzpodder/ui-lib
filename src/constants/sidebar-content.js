@@ -34,10 +34,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         path: "/lims/batches",
       },
       {
-        name: "Queued Repeats",
-        placeholder: true,
-      },
-      {
         name: "Sample Issues",
         domain: LIMS,
         path: "/lims/sample-issues",
@@ -102,10 +98,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
   {
     name: "Pipeline",
     children: [
-      {
-        name: "New Production Run",
-        placeholder: true,
-      },
       {
         name: "New Experimental Run",
         domain: LIMS,
