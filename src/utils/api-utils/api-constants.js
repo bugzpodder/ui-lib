@@ -8,6 +8,7 @@ export const OMNI_TEXT_SEARCH_TYPE = Symbol("omni-text");
 export const LIKE_TEXT_SEARCH_TYPE = Symbol("like-text");
 export const NUMERIC_SEARCH_TYPE = Symbol("numeric");
 export const BOOLEAN_SEARCH_TYPE = Symbol("boolean");
+export const ENUM_SEARCH_TYPE = Symbol("enum-key");
 export const FULL_TEXT_SEARCH_TYPE = Symbol("full-text");
 export const MULTI_FIELD_TEXT_SEARCH_TYPE = Symbol("multi-field-text-search");
 export const DATE_SEARCH_TYPE = Symbol("date");

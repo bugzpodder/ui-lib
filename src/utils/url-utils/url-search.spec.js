@@ -14,7 +14,7 @@ import {
 
 const singleValues = ["test string", 0, 2.1727, false, true];
 const arrayValues = [["a", "test string"], [0, Math.E, -Math.PI], [false, true], [null, "test"]];
-const placeholder = "SearchOption Dummy Field";
+const placeholder = "OldSearchOption Dummy Field";
 const defaultSearchOptions = new Map().set("name", {
   type: LIKE_TEXT_SEARCH_TYPE,
   value: "test name",
@@ -78,15 +78,16 @@ describe("extractSearchValues", () => {
   });
   arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
+      const expectedValues = values.filter(value => value !== null);
       expect(extractSearchValues(new Map().set("test", { values, placeholder }))).toEqual(
-        new Map().set("test", { value: undefined, values }),
+        new Map().set("test", { value: undefined, values: expectedValues }),
       );
     });
   });
   it("handles array with undefined search values", () => {
     const values = [];
     values[2] = "value 1";
-    const expectedValues = [null, null, values[2]];
+    const expectedValues = [values[2]];
     expect(extractSearchValues(new Map().set("test", { values, placeholder }))).toEqual(
       new Map().set("test", { value: undefined, values: expectedValues }),
     );

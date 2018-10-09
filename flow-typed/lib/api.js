@@ -3,25 +3,23 @@ declare type SortOption = { id: string, desc?: boolean };
 declare type SortOptions = Array<SortOption>;
 
 // Search Options. Used by API calls to build the query:
-declare type SearchOptionValueItem = string | number | boolean | null;
 declare type SearchOptionValue = {
-  value?: SearchOptionValueItem,
-  values?: Array<SearchOptionValueItem>,
+  // TODO(jsingh) Deprecate singular value
+  value?: ?string,
+  values?: Array<string>,
 };
 declare type SearchOptionValues = Map<string, SearchOptionValue>;
 
-declare type SearchOption = {
+declare type OldSearchOption = {
   type?: Symbol,
-  rawQuery?: string,
+  deprecatedRawQuery?: string,
   searchFields?: Array<string>,
-  isEqual?: boolean,
   isCustomRendered?: boolean,
   placeholder?: string,
   searchOperator?: Symbol,
 } & SearchOptionValue;
 
-declare type SearchOptions = Map<string, SearchOption>;
-declare type LegacySearchOptions = { [string]: SearchOption };
+declare type SearchOptions = Map<string, OldSearchOption>;
 declare type PaginationOptions = {
   offset: number,
   count: number,
@@ -47,6 +45,7 @@ declare type GetContentOptionsV2 = {
 
 // PagedTableOptions requires all parameters. It is for paged tables (offset, count, sort, selection)
 declare type PagedTableOptions = {
+  // searchOptions?: SearchOptions | SearchOptionsV2,
   sortOptions: SortOptions,
 } & PaginationOptions;
 
@@ -81,6 +80,8 @@ declare type SearchDef = {
   description?: string,
   searchOperator?: string,
   localStorageKey?: string,
+  // Deprecate deprecatedRawQuery!
+  deprecatedRawQuery?: string,
   // TODO(jrosenfield): support validation in the future?
 };
 
@@ -89,7 +90,10 @@ declare type SearchDefs = Array<SearchDef>;
 declare type SearchValues = Map<number, string>;
 
 declare type SearchOptionV2 = {
-  value: Array<string>,
+  // FIXME (jsingh) deprecate value. Only needed to allow mix of V1 and V2
+  value?: string,
+  // FIXME (jsingh) deprecate values support of SearchOptionValues. Should only be strings.
+  values: Array<string>,
 } & SearchDef;
 
 declare type SearchOptionsV2 = Array<SearchOptionV2>;

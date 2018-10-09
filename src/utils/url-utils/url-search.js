@@ -47,8 +47,7 @@ export const extractSearchValues = (searchOptions: SearchOptions): SearchOptionV
   const searchValues = new Map();
   searchOptions.forEach(({ value, values }, key) => {
     if (values) {
-      // Convert `undefined` values as null, to ensure they are serialized.
-      values = [...values].map(value => (value === undefined ? null : value));
+      values = values.filter(value => value != null);
     }
     searchValues.set(key, { value, values });
   });
@@ -85,14 +84,14 @@ export const updateSearchUrl = ({ location, history, searchOptions }: SearchPara
 };
 
 // Deprecate in favor of `omni` search
-export const getUrlQueryString = (key: string, value: SearchOptionValueItem) => {
+export const getUrlQueryString = (key: string, value: string) => {
   const searchValues = new Map().set(key, { value });
   return `${stringifyQuery(getUrlQuery(searchValues))}`;
 };
 
 export const getOmniUrlQueryString = (keyValues: Array<KeyValue>) => `${stringifyQuery({ omni: getOmniTextFromKeyValues(keyValues) })}`;
 
-export const getUrlQueryStringForValues = (key: string, values: Array<SearchOptionValueItem>) => {
+export const getUrlQueryStringForValues = (key: string, values: Array<string>) => {
   const searchValues = new Map().set(key, { values });
   return `${stringifyQuery(getUrlQuery(searchValues))}`;
 };

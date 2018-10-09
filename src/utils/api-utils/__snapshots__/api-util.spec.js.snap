@@ -344,11 +344,12 @@ Object {
   },
   "output": Array [
     Object {
-      "isValid": true,
+      "isValid": false,
     },
     Object {
-      "isValid": 1,
+      "isValid": 0,
     },
+    Object {},
   ],
 }
 `;
@@ -1294,17 +1295,7 @@ Object {
     Object {
       "labels": Array [
         Object {
-          "name": "bx",
-        },
-        Object {
-          "name": "aa",
-        },
-      ],
-    },
-    Object {
-      "labels": Array [
-        Object {
-          "name": "bb",
+          "name": "gg",
         },
       ],
     },
@@ -1313,10 +1304,10 @@ Object {
         Object {
           "name": "gg",
         },
+        Object {
+          "name": "bg",
+        },
       ],
-    },
-    Object {
-      "labels": Array [],
     },
   ],
 }
@@ -1404,7 +1395,14 @@ Object {
       ],
     },
     Object {
-      "labels": Array [],
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
     },
   ],
 }
@@ -2627,20 +2625,17 @@ Object {
     Object {
       "values": Array [
         Object {
-          "isValid": 1,
+          "isValid": true,
         },
         Object {
-          "isValid": false,
+          "isValid": 1,
         },
       ],
     },
     Object {
-      "values": Array [],
-    },
-    Object {
       "values": Array [
         Object {
-          "isValid": false,
+          "isValid": true,
         },
       ],
     },
@@ -2684,19 +2679,7 @@ Object {
   },
   "output": Array [
     Object {
-      "id": 1,
-    },
-    Object {
-      "id": 5,
-    },
-    Object {
-      "id": 2,
-    },
-    Object {
-      "id": 4,
-    },
-    Object {
-      "id": 0,
+      "id": 3,
     },
   ],
 }
@@ -2762,17 +2745,14 @@ Object {
           "count": 10,
         },
         Object {
-          "count": 3,
+          "count": 30,
         },
       ],
     },
     Object {
-      "values": Array [],
-    },
-    Object {
       "values": Array [
         Object {
-          "count": 8,
+          "count": 30,
         },
       ],
     },
@@ -2840,17 +2820,14 @@ Object {
           "count": 10,
         },
         Object {
-          "count": 3,
+          "count": 30,
         },
       ],
     },
     Object {
-      "values": Array [],
-    },
-    Object {
       "values": Array [
         Object {
-          "count": 8,
+          "count": 30,
         },
       ],
     },
@@ -2915,30 +2892,7 @@ Object {
     Object {
       "labels": Array [
         Object {
-          "name": "bx",
-        },
-        Object {
-          "name": "aa",
-        },
-      ],
-    },
-    Object {
-      "labels": Array [
-        Object {
-          "name": "gg",
-        },
-      ],
-    },
-    Object {
-      "labels": Array [],
-    },
-    Object {
-      "labels": Array [
-        Object {
-          "name": "gg",
-        },
-        Object {
-          "name": "bg",
+          "name": "bb",
         },
       ],
     },
@@ -2979,10 +2933,13 @@ Object {
   },
   "output": Array [
     Object {
-      "name": "aa",
+      "name": "xx",
     },
     Object {
-      "name": "bb",
+      "name": "xy",
+    },
+    Object {
+      "name": "bx",
     },
   ],
 }
@@ -3045,12 +3002,29 @@ Object {
     Object {
       "labels": Array [
         Object {
-          "name": "gg",
+          "name": "bx",
+        },
+        Object {
+          "name": "aa",
         },
       ],
     },
     Object {
-      "labels": Array [],
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "gg",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
     },
   ],
 }

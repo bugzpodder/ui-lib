@@ -5,7 +5,7 @@ import {
 
 const singleValues = ["testString", 0, 2.1727, false, true];
 const arrayValues = [["a", "testString"], [0, Math.E, -Math.PI], [false, true]];
-const placeholder = "SearchOption Dummy Field";
+const placeholder = "OldSearchOption Dummy Field";
 
 const generateValueSearchQuery = (key, value) => `?${key}=${String(value)}`;
 const generateValuesSearchQuery = (key, values) => {

@@ -44,6 +44,7 @@ export {
   DATE_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPES,
+  ENUM_SEARCH_TYPE,
   FULL_TEXT_SEARCH_TYPE,
   LIKE_TEXT_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
@@ -75,10 +76,12 @@ export {
   OMNI_KEY,
   OMNI_ERROR,
   getItemsFromOmniValue,
+  getKeysForSearchDef,
   getSearchValuesFromOmniText,
   getOmniTextFromSearchValues,
   getOmniTextFromKeyValues,
   getSearchOptions,
+  parseValuesFromOmniText,
 } from "./utils/omni-search-util";
 export { generateFilledArray, serializePromises, mapBy } from "./utils/array-utils";
 export { hasKey, hasKeyValue, setKeyValue } from "./utils/key-value-utils";

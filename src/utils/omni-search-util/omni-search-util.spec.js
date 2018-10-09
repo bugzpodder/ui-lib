@@ -1,5 +1,10 @@
 // @flow
-import { FULL_TEXT_SEARCH_TYPE, LIKE_TEXT_SEARCH_TYPE } from "../api-utils/api-constants";
+import {
+  ENUM_SEARCH_TYPE,
+  FULL_TEXT_SEARCH_TYPE,
+  LIKE_TEXT_SEARCH_TYPE,
+  OMNI_TEXT_SEARCH_TYPE,
+} from "../api-utils/api-constants";
 
 import {
   getItemsFromOmniValue,
@@ -10,6 +15,12 @@ import {
 } from "./omni-search-util";
 
 const searchDefs: SearchDefs = [
+  {
+    name: "omni",
+    type: OMNI_TEXT_SEARCH_TYPE,
+    description: "e.g. G0000",
+    searchFields: ["part", "lotNumber"],
+  },
   {
     name: "Part Number",
     type: LIKE_TEXT_SEARCH_TYPE,
@@ -23,26 +34,33 @@ const searchDefs: SearchDefs = [
     description: "Lot Num/Vendor Lot Num",
     searchFields: ["lotNumber", "vendorLotNumber"],
   },
+  {
+    name: "Some Enum",
+    type: ENUM_SEARCH_TYPE,
+    aliases: ["someEnum"],
+    description: "Lot Num/Vendor Lot Num",
+    searchFields: ["anEnum"],
+  },
 ];
 
 describe("getOmniTextFromSearchValues", () => {
   it("accepts stringified arrays", () => {
     const searchValues = new Map();
     searchValues.set(0, "1");
-    searchValues.set(1, "34, 12");
+    searchValues.set(2, "34, 12");
     const expectedOmniText = "1 lot:34, 12";
     expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
   });
   it("skips missing values", () => {
     const searchValues = new Map();
-    searchValues.set(1, "34,");
+    searchValues.set(2, "34,");
     const expectedOmniText = "lot:34,";
     expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
   });
   it("skips empty strings", () => {
     const searchValues = new Map();
     searchValues.set(0, "");
-    searchValues.set(1, "34,");
+    searchValues.set(2, "34,");
     const expectedOmniText = "lot:34,";
     expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
   });
@@ -68,9 +86,14 @@ describe("getOmniTextFromKeyValues", () => {
 describe("getSearchValuesFromOmniText", () => {
   it("should join values of duplicate keys", () => {
     const expectedSearchValues = new Map();
-    expectedSearchValues.set(0, "5");
-    expectedSearchValues.set(1, "12 1, 34");
+    expectedSearchValues.set(1, "5");
+    expectedSearchValues.set(2, "12 1, 34");
     expect(getSearchValuesFromOmniText(searchDefs, "lot:12 1 lot: 34 part:5")).toEqual(expectedSearchValues);
+  });
+  it("should trim whitespace for ENUM_SEARCH_TYPE", () => {
+    const expectedSearchValues = new Map();
+    expectedSearchValues.set(3, "ABC");
+    expect(getSearchValuesFromOmniText(searchDefs, "someEnum:  ABC")).toEqual(expectedSearchValues);
   });
   // it("accepts multiple values under the same key", () => {
   //   const expectedSearchValues = new Map();
@@ -98,7 +121,7 @@ describe("getSearchOptions", () => {
       type: LIKE_TEXT_SEARCH_TYPE,
       description: "e.g. G0000",
       searchFields: ["part"],
-      value: ["1"],
+      values: ["1"],
     },
     {
       name: "Lot Number",
@@ -106,16 +129,16 @@ describe("getSearchOptions", () => {
       aliases: ["lot"],
       description: "Lot Num/Vendor Lot Num",
       searchFields: ["lotNumber", "vendorLotNumber"],
-      value: ["2", "", "3", "4"],
+      values: ["2", "", "3", "4"],
     },
   ];
   const searchValues = new Map();
-  searchValues.set(0, "1");
-  searchValues.set(1, "2,,3,4");
+  searchValues.set(1, "1");
+  searchValues.set(2, "2,,3,4");
   it("should create search options properly", () => {
     expect(getSearchOptions(searchDefs, searchValues)).toEqual(expectedSearchOptions);
   });
-  const invalidSearchValues = new Map().set(2, "1");
+  const invalidSearchValues = new Map().set(32, "1");
   it("should create search options properly", () => {
     expect(getSearchOptions(searchDefs, invalidSearchValues)).toEqual([]);
   });

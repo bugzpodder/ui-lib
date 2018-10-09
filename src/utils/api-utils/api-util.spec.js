@@ -951,25 +951,25 @@ describe("filterResults", () => {
     expect(() => filterResults(testNestedMulti, options)).toThrowError();
   });
 
-  it("should throw rawQuery error", () => {
+  it("should throw deprecatedRawQuery error", () => {
     const options = {
       count: 2,
       offset: 1,
       sortOptions: [],
-      searchOptions: new Map().set("rawQuery", {
-        rawQuery: "invalid_raw_query",
+      searchOptions: new Map().set("deprecatedRawQuery", {
+        deprecatedRawQuery: "invalid_raw_query",
       }),
     };
     expect(() => filterResults(testNestedMulti, options)).toThrowError();
   });
 
-  it("should throw rawQuery error", () => {
+  it("should throw deprecatedRawQuery error", () => {
     const options = {
       count: 2,
       offset: 1,
       sortOptions: [],
-      searchOptions: new Map().set("rawQuery", {
-        rawQuery: "invalid_raw_query",
+      searchOptions: new Map().set("deprecatedRawQuery", {
+        deprecatedRawQuery: "invalid_raw_query",
       }),
     };
     expect(() => filterResults(testNestedMulti, options)).toThrowError();

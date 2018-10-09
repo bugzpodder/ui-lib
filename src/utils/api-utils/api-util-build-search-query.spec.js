@@ -29,22 +29,26 @@ describe("buildSearchQuery", () => {
 describe("buildSearchQuery for full text search", () => {
   it("should generate no query for empty string search", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [""],
           type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual("");
   });
   it("should generate query for one element", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "abc",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc"],
           type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual('(column1=="abc")');
   });
 });
@@ -52,22 +56,26 @@ describe("buildSearchQuery for full text search", () => {
 describe("buildSearchQuery for like text search", () => {
   it("should generate no query for empty string search", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [""],
           type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual("");
   });
   it("should generate query for one element", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "abc",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc"],
           type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual(`(column1=="${percentChar}abc${percentChar}")`);
   });
 });
@@ -75,32 +83,38 @@ describe("buildSearchQuery for like text search", () => {
 describe("buildSearchQuery for full id search", () => {
   it("should generate no query for empty string search", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [""],
           type: FULL_ID_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual("");
   });
   it("should generate query for one element", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "P00100-1",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["P00100-1"],
           type: FULL_ID_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual('(column1=="P00100-1"||column1=="P001001")');
   });
   it("should generate query for one accession label element", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "A00100-1",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["A00100-1"],
           type: FULL_ID_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual('(column1=="A00100-1")');
   });
 });
@@ -108,32 +122,38 @@ describe("buildSearchQuery for full id search", () => {
 describe("buildSearchQuery for like id search", () => {
   it("should generate no query for empty string search", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [""],
           type: LIKE_ID_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual("");
   });
   it("should generate query for one element", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "P00100-1",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["P00100-1"],
           type: LIKE_ID_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual(`(column1=="${percentChar}P00100-1${percentChar}"||column1=="${percentChar}P001001${percentChar}")`);
   });
   it("should generate query for one accession label element", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          value: "A00100-1",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["A00100-1"],
           type: LIKE_ID_SEARCH_TYPE,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual(`(column1=="${percentChar}A00100-1${percentChar}")`);
   });
 });
@@ -428,7 +448,7 @@ describe("buildSearchQuery for raw query", () => {
     expect(
       buildSearchQuery(
         new Map().set("someQueryName", {
-          rawQuery: "(x==6||y==7) && (z==4)",
+          deprecatedRawQuery: "(x==6||y==7) && (z==4)",
         }),
       ),
     ).toEqual("((x==6||y==7) && (z==4))");
@@ -493,55 +513,34 @@ describe("buildSearchQuery for several search items", () => {
   });
 });
 
-describe("buildSearchQuery for full text search utilizing isEqual", () => {
-  it("should generate query for one element equal to value", () => {
-    expect(
-      buildSearchQuery({
-        column1: {
-          value: "abc",
-          type: FULL_TEXT_SEARCH_TYPE,
-          isEqual: true,
-        },
-      }),
-    ).toEqual('(column1=="abc")');
-  });
-  it("should generate query for multiple elements unequal to value", () => {
-    expect(
-      buildSearchQuery({
-        column1: {
-          value: "abc",
-          type: FULL_TEXT_SEARCH_TYPE,
-          isEqual: false,
-        },
-      }),
-    ).toEqual('(column1!="abc")');
-  });
-});
-
 describe("buildSearchQuery is invalid", () => {
   it("should throw an error for an invalid search type", () => {
     const INVALID = Symbol("UNIT_TEST INVALID_SYMBOL");
-    const column1 = {
-      value: "abc",
-      type: INVALID,
-      isEqual: true,
-    };
-    expect(buildSearchQuery.bind(null, { column1 })).toThrow(
+    const searchOptions = [
+      {
+        name: "column1",
+        values: ["abc"],
+        type: INVALID,
+        searchFields: ["column1"],
+      },
+    ];
+    expect(buildSearchQuery.bind(null, searchOptions)).toThrow(
       new Error("Unknown search type: Symbol(UNIT_TEST INVALID_SYMBOL)"),
     );
   });
   it("should return if date search field value is invalid", () => {
     expect(
-      buildSearchQuery({
-        column1: {
-          values: undefined,
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [],
           type: DATETIME_SEARCH_TYPE,
-          isEqual: true,
+          searchFields: ["column1"],
         },
-      }),
+      ]),
     ).toEqual("");
   });
   it("should return if no search options are present", () => {
-    expect(buildSearchQuery({ column1: undefined })).toEqual("");
+    expect(buildSearchQuery([])).toEqual("");
   });
 });

@@ -3,13 +3,13 @@
 
 import debounce from "lodash/debounce";
 import escapeRegExp from "lodash/escapeRegExp";
-import keys from "lodash/keys";
 import moment from "moment";
 import partialRight from "lodash/partialRight";
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
+  ENUM_SEARCH_TYPE,
   FULL_ID_SEARCH_TYPE,
   FULL_TEXT_SEARCH_TYPE,
   LIKE_ID_SEARCH_TYPE,
@@ -63,7 +63,7 @@ export const buildOrderQuery = (sortOptions: SortOptions = []) => {
 };
 
 // $FlowFixMe `value.length` doesn't exist on mixed.
-export const isValueValid = (value: mixed) => value !== "" && value !== undefined && value !== null && value.length !== 0;
+export const isValueValid = (value: mixed) => value !== "" && value != null && value.length !== 0;
 
 /*
 Using a Map or object of searchOptions, this builds a search query that and's each item for the
@@ -76,14 +76,14 @@ ES6 Map keys are iterated by insert order, and therefore iteration is determinis
 Therefore, we should deprecate objects as inputs to improve testability.
 */
 
-const getSearchValues = (searchOption: SearchOption) => {
+const getSearchValues = (searchOption: OldSearchOption | SearchOptionV2) => {
   const { type, value = "", values } = searchOption;
   let searchValues = [];
   if (Array.isArray(values)) {
     searchValues = values;
   } else if (Array.isArray(value)) {
     searchValues = value;
-  } else {
+  } else if (value != null) {
     searchValues = [value];
   }
 
@@ -99,18 +99,20 @@ const getSearchValues = (searchOption: SearchOption) => {
   return searchValues;
 };
 
-export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOptions = new Map()) => {
+export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 = new Map()) => {
   let query = "";
-  const searchKeys = searchOptions instanceof Map ? Array.from(searchOptions.keys()) : keys(searchOptions);
+  // eslint-disable-next-line max-len
+  const searchKeys = searchOptions instanceof Map ? Array.from(searchOptions.keys()) : searchOptions.map(({ name }) => name);
   query = searchKeys.reduce((memo, searchOptionKey) => {
     // eslint-disable-next-line max-len
-    const searchOption = searchOptions instanceof Map ? searchOptions.get(searchOptionKey) : searchOptions[searchOptionKey];
+    const searchOption = searchOptions instanceof Map
+      ? searchOptions.get(searchOptionKey)
+      : searchOptions.find(({ name }) => name === searchOptionKey);
     if (!searchOption) {
       return memo;
     }
     const {
-      rawQuery,
-      isEqual,
+      deprecatedRawQuery,
       type,
       searchFields = [searchOptionKey],
       value = "",
@@ -118,7 +120,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
       searchOperator,
     } = searchOption;
     const searchValues = getSearchValues(searchOption);
-    let equalityField = isEqual === undefined || isEqual ? "==" : "!=";
+    let equalityField = "==";
     equalityField = searchOperator === undefined ? equalityField : searchOperator.toString();
     // eslint-disable-next-line arrow-parens
     const multiValueSearchBuilder = formatter => {
@@ -139,7 +141,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
       return multiValueSearch ? `(${multiValueSearch})` : null;
     };
     const newQuery = (() => {
-      if (!rawQuery) {
+      if (!deprecatedRawQuery) {
         switch (type) {
           case LIKE_TEXT_SEARCH_TYPE:
           case OMNI_TEXT_SEARCH_TYPE:
@@ -149,6 +151,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
           case BOOLEAN_SEARCH_TYPE:
             return multiValueSearchBuilder(value => `${value}`);
           case FULL_TEXT_SEARCH_TYPE:
+          case ENUM_SEARCH_TYPE:
             return multiValueSearchBuilder(value => `"${value.trim()}"`);
           case FULL_ID_SEARCH_TYPE:
             return multiValueSearchBuilder(value => `"${value}"`);
@@ -212,7 +215,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | LegacySearchOpti
           }
         }
       } else {
-        return `(${rawQuery})`;
+        return `(${deprecatedRawQuery})`;
       }
     })();
     if (memo && newQuery) {
@@ -237,11 +240,11 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
     }
 
     const {
-      rawQuery, type, searchFields, isEqual, values,
+      deprecatedRawQuery, type, searchFields, values,
     } = searchOption;
     const searchValues = getSearchValues(searchOption);
-    const shouldEqual = !!(isEqual === undefined || isEqual);
-    if (rawQuery) {
+    const shouldEqual = true;
+    if (deprecatedRawQuery) {
       throw new Error("Unsupported raw query");
     }
 
@@ -290,6 +293,7 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
           case NUMERIC_SEARCH_TYPE:
             // fallthrough
           case FULL_TEXT_SEARCH_TYPE:
+          case ENUM_SEARCH_TYPE:
             return item[itemKey] && item[itemKey].some(e => e[filterKey] === value) === shouldEqual;
           case FULL_ID_SEARCH_TYPE:
             return (
@@ -309,6 +313,7 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
           case NUMERIC_SEARCH_TYPE:
             // fallthrough
           case FULL_TEXT_SEARCH_TYPE:
+          case ENUM_SEARCH_TYPE:
             return shouldEqual ? item[key] === value : item[key] !== value;
           case FULL_ID_SEARCH_TYPE:
             return shouldEqual ? item[key] === sanitizeId(String(value)) : item[key] !== sanitizeId(String(value));
