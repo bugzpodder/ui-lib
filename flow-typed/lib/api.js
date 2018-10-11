@@ -38,12 +38,21 @@ declare type GetContentOptions = {
   sortOptions?: SortOptions,
 };
 
+declare type GetContentOptionsV2 = {
+  offset?: number,
+  count?: number,
+  searchOptions?: SearchOptionsV2,
+  sortOptions?: SortOptions,
+};
+
 // PagedTableOptions requires all parameters. It is for paged tables (offset, count, sort, selection)
 declare type PagedTableOptions = {
   sortOptions: SortOptions,
 } & PaginationOptions;
 
 declare type LegacyApiQueryOptions = {
+  // TODO(jsingh): cleanup flow search definitions
+  // $FlowFixMe
   searchOptions: SearchOptions,
   selectedRowIds: Array<any>,
   isLoading: boolean,
