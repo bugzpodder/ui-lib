@@ -156,11 +156,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
     ],
   },
   {
-    name: "Storage",
-    domain: LIMS,
-    path: "/lims/sample-storage/racks",
-  },
-  {
     name: "Reagents",
     children: [
       {
