@@ -1,7 +1,5 @@
 // @flow
 export {
-  OMNI_KEY,
-  OMNI_ERROR,
   getItemsFromOmniValue,
   getSearchValuesFromOmniText,
   getKeysForSearchDef,

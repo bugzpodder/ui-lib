@@ -102,3 +102,9 @@ declare type SearchApi = {
   searchDefs: SearchDefs,
   setSearchOptions: Function,
 };
+
+type OmniSearchCommand = {
+  command: string,
+  omniFieldName: string,
+  values?: Array<string>,
+};

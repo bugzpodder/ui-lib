@@ -30,3 +30,4 @@ export {
   LIMS, EDC, PIPELINE, EXTERNAL, sidebarItems, adminItems,
 } from "./sidebar-content";
 export { MAX_NOTIFICATIONS, NotificationTypes } from "./notification-center";
+export { OMNI_DELETE_COMMAND, OMNI_KEY, OMNI_ERROR } from "./omni";

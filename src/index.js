@@ -20,6 +20,9 @@ export {
   grailRed,
   grailTan,
   white,
+  OMNI_DELETE_COMMAND,
+  OMNI_KEY,
+  OMNI_ERROR,
   DATE_FORMAT,
   DATE_TIME_FORMAT,
   EPOCH_DATE,
@@ -73,8 +76,6 @@ export {
 } from "./utils/json-utils";
 export { formatDate, formatDateTime } from "./utils/date-utils";
 export {
-  OMNI_KEY,
-  OMNI_ERROR,
   getItemsFromOmniValue,
   getKeysForSearchDef,
   getSearchValuesFromOmniText,

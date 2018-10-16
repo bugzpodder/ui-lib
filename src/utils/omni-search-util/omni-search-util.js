@@ -1,8 +1,6 @@
 // @flow
 import { ENUM_SEARCH_TYPE, OMNI_TEXT_SEARCH_TYPE, isValueValid } from "../api-utils";
-
-export const OMNI_KEY = "omni";
-export const OMNI_ERROR = "OmniError";
+import { OMNI_ERROR, OMNI_KEY } from "../../constants/omni";
 
 // FIXME(jrosenfield): add documentation for regexes
 const validOmniText = /^(([^:]*\s+)?[\w-.]+:)*[^:]*$/;
