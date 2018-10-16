@@ -44,11 +44,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         path: "/lims/sequencing-runs",
       },
       {
-        name: "New Sequencing Run",
-        domain: LIMS,
-        path: "/lims/new-sequencing-run",
-      },
-      {
         name: "Print Labels",
         domain: LIMS,
         path: "/lims/print-labels",
