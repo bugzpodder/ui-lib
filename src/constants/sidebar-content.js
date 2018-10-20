@@ -190,9 +190,9 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         path: "/lims/conditions",
       },
       {
-        name: "Labels",
+        name: "Tags",
         domain: LIMS,
-        path: "/lims/labels",
+        path: "/lims/tags",
       },
     ],
   },
