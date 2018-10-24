@@ -6,8 +6,6 @@ import { OMNI_ERROR, OMNI_KEY } from "../../constants/omni";
 const validOmniText = /^(([^:]*\s+)?[\w-.]+:)*[^:]*$/;
 const searchKey = /(([^:]*\s*)\s)?([\w-.]+):/gm;
 
-const items = /("([^"]*)"?|([^",][^,]*)*),?/gm;
-
 const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Array<string>>) => {
   if (value === "" || isValueValid(value)) {
     const previousValues = arrayMap.get(key);
@@ -118,17 +116,7 @@ export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => 
   if (!isValueValid(omniValue)) {
     return parsedItems;
   }
-  let lastIndex = 0;
-  items.lastIndex = lastIndex;
-  let result = items.exec(omniValue);
-  while (result !== null && lastIndex !== omniValue.length) {
-    // eslint-disable-next-line prefer-destructuring
-    lastIndex = items.lastIndex;
-    const item = result[3] || result[2] || result[1];
-    parsedItems.push(item.trim());
-    result = items.exec(omniValue);
-  }
-  return parsedItems;
+  return omniValue.split(",").map(value => value.trim());
 };
 
 export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {

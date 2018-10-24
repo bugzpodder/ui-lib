@@ -12,6 +12,8 @@ import {
   LIKE_TEXT_SEARCH_TYPE,
   MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
+  STRING_END_CHAR,
+  STRING_START_CHAR,
   doubleAmpersand,
   doublePipe,
   percentChar,
@@ -77,6 +79,42 @@ describe("buildSearchQuery for like text search", () => {
         },
       ]),
     ).toEqual(`(column1=="${percentChar}abc${percentChar}")`);
+  });
+  it("should generate query for one element with STRING_START_CHAR prefix", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [`${STRING_START_CHAR}abc`],
+          type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+        },
+      ]),
+    ).toEqual(`(column1=="abc${percentChar}")`);
+  });
+  it("should generate query for one element with STRING_END_CHAR suffix", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [`abc${STRING_END_CHAR}`],
+          type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+        },
+      ]),
+    ).toEqual(`(column1=="${percentChar}abc")`);
+  });
+  it("should generate query for one element with STRING_START_CHAR prefix and STRING_END_CHAR suffix", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [`${STRING_START_CHAR}abc${STRING_END_CHAR}`],
+          type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+        },
+      ]),
+    ).toEqual('(column1=="abc")');
   });
 });
 

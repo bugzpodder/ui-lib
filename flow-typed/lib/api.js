@@ -79,7 +79,7 @@ declare type SearchDef = {
   aliases?: Array<string>,
   description?: string,
   searchOperator?: string,
-  localStorageKey?: string,
+  localStorageKeySuffix?: string,
   // Deprecate deprecatedRawQuery!
   deprecatedRawQuery?: string,
   // TODO(jrosenfield): support validation in the future?
@@ -106,5 +106,5 @@ declare type SearchApi = {
 type OmniSearchCommand = {
   command: string,
   omniFieldName: string,
-  values?: Array<string>,
+  omniValues?: Array<string>,
 };

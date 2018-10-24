@@ -20,7 +20,7 @@ export {
   grailRed,
   grailTan,
   white,
-  OMNI_DELETE_COMMAND,
+  SET_OMNI_FIELD_COMMAND,
   OMNI_KEY,
   OMNI_ERROR,
   DATE_FORMAT,

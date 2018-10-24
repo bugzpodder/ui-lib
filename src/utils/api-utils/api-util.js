@@ -17,6 +17,8 @@ import {
   MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
+  STRING_END_CHAR,
+  STRING_START_CHAR,
   doubleAmpersand,
   doublePipe,
   percentChar,
@@ -145,7 +147,20 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
         switch (type) {
           case LIKE_TEXT_SEARCH_TYPE:
           case OMNI_TEXT_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `"${percentChar}${value.trim()}${percentChar}"`);
+            return multiValueSearchBuilder((value) => {
+              let searchValue = value.trim();
+              if (searchValue.startsWith(STRING_START_CHAR)) {
+                searchValue = searchValue.substring(1);
+              } else {
+                searchValue = `${percentChar}${searchValue}`;
+              }
+              if (searchValue.endsWith(STRING_END_CHAR)) {
+                searchValue = searchValue.substring(0, searchValue.length - 1);
+              } else {
+                searchValue = `${searchValue}${percentChar}`;
+              }
+              return `"${searchValue}"`;
+            });
           case NUMERIC_SEARCH_TYPE:
           // fallthrough to next case
           case BOOLEAN_SEARCH_TYPE:

@@ -1,3 +1,11 @@
+## 1.0.0 - 2018-11-07
+
+1. Update omni search field and bar:
+
+- localStorage now includes `omni-` prefix.
+- Add support for omni commands. This allows `OmniChip` in tables to request changes in `OmniSearcBar`.
+- Add support for start and end of string support using `^` and `$`.
+
 ## 0.7.0 - 2018-10-24
 
 1.  Add support for `OMNI_TEXT_SEARCH_TYPE`.

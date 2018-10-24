@@ -4,6 +4,9 @@ export const percentChar = "%25"; // %25 is `%`. This provides the LIKE query op
 export const doubleAmpersand = "%26%26"; // %26%26 is `&&`.
 export const doublePipe = "||";
 
+export const STRING_START_CHAR = "^";
+export const STRING_END_CHAR = "$";
+
 export const OMNI_TEXT_SEARCH_TYPE = Symbol("omni-text");
 export const LIKE_TEXT_SEARCH_TYPE = Symbol("like-text");
 export const NUMERIC_SEARCH_TYPE = Symbol("numeric");
