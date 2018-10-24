@@ -1,6 +1,10 @@
-## 0.7.0 - 2018-09-XX
+## 0.7.0 - 2018-10-24
 
 1.  Add support for `OMNI_TEXT_SEARCH_TYPE`.
+2.  Update sidebar content
+3.  Update API utils and search utils to consolidate search options and allow
+    for more flexibility with searching, specifically searching id's with `-`
+4.  Improve testing
 
 ## 0.6.0 - 2018-08-17
 
