@@ -99,7 +99,9 @@ export {
   // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
   formatPercent,
 } from "./utils/string-utils";
-export { sanitizeId, getInputBarcode } from "./utils/id-utils";
+export {
+  sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix,
+} from "./utils/id-utils";
 export {
   expandSearchValues,
   extractSearchValues,

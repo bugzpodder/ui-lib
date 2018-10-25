@@ -14,17 +14,22 @@ export const sanitizeId = (id: string = "") => {
   return id.replace(/-/g, "");
 };
 
+export const getSamplePrefix = (id: string) => id.substr(0, id.length - 1);
+
+const getSampleSuffix = (id: string) => id[id.length - 1];
+
+export const getSampleLabel = (id: string) => `${getSamplePrefix(id)}-${getSampleSuffix(id)}`;
+
 export const getInputBarcode = (id: string = "", previousId: string = "") => {
   id = id.trim();
   if (!previousId) {
     return id;
   }
 
-  const prefix = id.substr(0, id.length - 1);
-  const suffix = id[id.length - 1];
-  const previousLabelPrefix = previousId.substr(0, previousId.length - 1);
+  const prefix = getSamplePrefix(id);
+  const previousLabelPrefix = getSamplePrefix(previousId);
   if (prefix === previousLabelPrefix) {
-    return `${prefix}-${suffix}`;
+    return getSampleLabel(id);
   }
   return id;
 };

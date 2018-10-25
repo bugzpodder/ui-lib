@@ -1,6 +1,8 @@
 // @flow
 
-import { getInputBarcode, sanitizeId } from "./id-util";
+import {
+  getInputBarcode, getSampleLabel, getSamplePrefix, sanitizeId,
+} from "./id-util";
 
 describe("sanitizeId", () => {
   it("should sanitize all normal sample ids", () => {
@@ -30,5 +32,17 @@ describe("getInputBarcode", () => {
   });
   it("should return the given id when the previous id doesn't match", () => {
     expect(getInputBarcode("S000100", "P000100")).toBe("S000100");
+  });
+});
+
+describe("getSampleLabel", () => {
+  it("returns hyphenated sample label", () => {
+    expect(getSampleLabel("P000101")).toBe("P00010-1");
+  });
+});
+
+describe("getSamplePrefix", () => {
+  it("returns sample prefix", () => {
+    expect(getSamplePrefix("P000101")).toBe("P00010");
   });
 });
