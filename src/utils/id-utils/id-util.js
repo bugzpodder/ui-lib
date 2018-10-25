@@ -16,7 +16,7 @@ export const sanitizeId = (id: string = "") => {
 
 export const getSamplePrefix = (id: string) => id.substr(0, id.length - 1);
 
-const getSampleSuffix = (id: string) => id[id.length - 1];
+export const getSampleSuffix = (id: string) => id[id.length - 1];
 
 export const getSampleLabel = (id: string) => `${getSamplePrefix(id)}-${getSampleSuffix(id)}`;
 

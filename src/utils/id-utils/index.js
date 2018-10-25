@@ -1,4 +1,4 @@
 // @flow
 export {
-  sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix,
+  sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix, getSampleSuffix,
 } from "./id-util";
