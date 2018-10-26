@@ -100,7 +100,7 @@ export {
   formatPercent,
 } from "./utils/string-utils";
 export {
-  sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix, getSampleSuffix,
+  sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix,
 } from "./utils/id-utils";
 export {
   expandSearchValues,
