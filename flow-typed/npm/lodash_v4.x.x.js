@@ -1,5 +1,5 @@
-// flow-typed signature: a92d2e79ac5021aaa04dddec79550f33
-// flow-typed version: 59ae0c795e/lodash_v4.x.x/flow_>=v0.63.x
+// flow-typed signature: 911f4ab10b9a871625482b7b6622b76b
+// flow-typed version: a0e86fa7fb/lodash_v4.x.x/flow_>=v0.63.x
 
 declare module "lodash" {
   declare type __CurriedFunction1<A, R, AA: A> = (...r: [AA]) => R;
@@ -209,7 +209,7 @@ declare module "lodash" {
     sortedLastIndexOf<T>(array: Array<T>, value: T): number;
     sortedLastIndexOf<T>(array: void | null, value?: ?T): -1;
     sortedUniq<T>(array?: ?Array<T>): Array<T>;
-    sortedUniqBy<T>(array?: ?Array<T>, iteratee?: ?(value: T) => mixed): Array<T>;
+    sortedUniqBy<T>(array?: ?Array<T>, iteratee?: ?ValueOnlyIteratee<T>): Array<T>;
     tail<T>(array?: ?Array<T>): Array<T>;
     take<T>(array?: ?Array<T>, n?: ?number): Array<T>;
     takeRight<T>(array?: ?Array<T>, n?: ?number): Array<T>;
@@ -1154,8 +1154,7 @@ declare module "lodash/fp" {
     sortedLastIndexOf<T>(value: T): (array: Array<T>) => number;
     sortedLastIndexOf<T>(value: T, array: Array<T>): number;
     sortedUniq<T>(array: Array<T>): Array<T>;
-    sortedUniqBy<T>(iteratee: (value: T) => mixed): (array: Array<T>) => Array<T>;
-    sortedUniqBy<T>(iteratee: (value: T) => mixed, array: Array<T>): Array<T>;
+    sortedUniqBy<T>(iteratee: ValueOnlyIteratee<T>, array: Array<T>): Array<T>;
     tail<T>(array: Array<T>): Array<T>;
     take<T>(n: number): (array: Array<T>) => Array<T>;
     take<T>(n: number, array: Array<T>): Array<T>;

@@ -1,5 +1,5 @@
-// flow-typed signature: 691597c4a5aab83a3b2e6d9ccd01a97d
-// flow-typed version: 71534a866d/jest_v23.x.x/flow_>=v0.39.x
+// flow-typed signature: 78c200acffbcc16bba9478f5396c3a00
+// flow-typed version: b2980740dd/jest_v23.x.x/flow_>=v0.39.x
 
 type JestMockFn<TArguments: $ReadOnlyArray<*>, TReturn> = {
   (...args: TArguments): TReturn,
@@ -187,15 +187,27 @@ type EnzymeMatchersType = {
   toHaveText(text: string): void,
   toHaveValue(value: any): void,
   toIncludeText(text: string): void,
-  toMatchElement(element: React$Element<any>, options?: {| ignoreProps?: boolean |}): void,
+  toMatchElement(element: React$Element<any>, options?: {| ignoreProps?: boolean, verbose?: boolean |}): void,
   toMatchSelector(selector: string): void,
+  // 7.x
+  toHaveDisplayName(name: string): void,
 };
 
 // DOM testing library extensions https://github.com/kentcdodds/dom-testing-library#custom-jest-matchers
 type DomTestingLibraryType = {
-  toBeInTheDOM(): void,
-  toHaveTextContent(content: string): void,
+  toBeDisabled(): void,
+  toBeEmpty(): void,
+  toBeInTheDocument(): void,
+  toBeVisible(): void,
+  toContainElement(element: HTMLElement | null): void,
+  toContainHTML(htmlText: string): void,
   toHaveAttribute(name: string, expectedValue?: string): void,
+  toHaveClass(...classNames: string[]): void,
+  toHaveFocus(): void,
+  toHaveFormValues(expectedValues: { [name: string]: any }): void,
+  toHaveStyle(css: string): void,
+  toHaveTextContent(content: string | RegExp, options?: { normalizeWhitespace: boolean }): void,
+  toBeInTheDOM(): void,
 };
 
 // Jest JQuery Matchers: https://github.com/unindented/custom-jquery-matchers
@@ -905,7 +917,9 @@ declare var describe: {
    *
    * @param {table} table of Test
    */
-  each(table: Array<Array<mixed> | mixed>): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
+  each(
+    ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
+  ): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>, timeout?: number) => void,
 };
 
 /** An individual test unit */
@@ -918,12 +932,7 @@ declare var it: {
    * @param {number} Timeout for the test, in milliseconds.
    */
   (name: JestTestName, fn?: (done: () => void) => ?Promise<mixed>, timeout?: number): void,
-  /**
-   * each runs this test against array of argument arrays per each run
-   *
-   * @param {table} table of Test
-   */
-  each(table: Array<Array<mixed> | mixed>): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
+
   /**
    * Only run this test
    *
@@ -937,9 +946,10 @@ declare var it: {
     timeout?: number,
   ): {
     each(
-      table: Array<Array<mixed> | mixed>,
-    ): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
+      ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
+    ): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>, timeout?: number) => void,
   },
+
   /**
    * Skip running this test
    *
@@ -948,6 +958,7 @@ declare var it: {
    * @param {number} Timeout for the test, in milliseconds.
    */
   skip(name: JestTestName, fn?: (done: () => void) => ?Promise<mixed>, timeout?: number): void,
+
   /**
    * Run the test concurrently
    *
@@ -956,13 +967,17 @@ declare var it: {
    * @param {number} Timeout for the test, in milliseconds.
    */
   concurrent(name: JestTestName, fn?: (done: () => void) => ?Promise<mixed>, timeout?: number): void,
+
   /**
    * each runs this test against array of argument arrays per each run
    *
    * @param {table} table of Test
    */
-  each(table: Array<Array<mixed> | mixed>): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>) => void,
+  each(
+    ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
+  ): (name: JestTestName, fn?: (...args: Array<any>) => ?Promise<mixed>, timeout?: number) => void,
 };
+
 declare function fit(name: JestTestName, fn: (done: () => void) => ?Promise<mixed>, timeout?: number): void;
 /** An individual test unit */
 declare var test: typeof it;
