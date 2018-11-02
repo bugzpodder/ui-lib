@@ -29,6 +29,11 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         path: "/lims/stored-samples",
       },
       {
+        name: "Containers",
+        domain: LIMS,
+        path: "/lims/containers",
+      },
+      {
         name: "Batches",
         domain: LIMS,
         path: "/lims/batches",
