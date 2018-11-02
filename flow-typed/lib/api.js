@@ -66,8 +66,12 @@ declare type ApiQueryOptions = {
 // Search Definitions. Used by OmniSearch to build the UI. Used to build SearchOptions:
 type SearchFieldProps = {
   searchKey: string,
+  placeholder: string,
   searchValue: ?string,
+  searchDefs: SearchDefs,
+  searchValues: SearchValues,
   onChange: (string, any) => any,
+  onSearch: () => any,
   isFullWidth?: boolean,
 };
 

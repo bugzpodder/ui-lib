@@ -124,9 +124,24 @@ export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchVal
   searchDefs.forEach((searchDef, index) => {
     const values = getItemsFromOmniValue(searchValues.get(index));
     if (isValueValid(values)) {
-      // $FlowFixMe: isValueValid call means searchValue is defined
       searchOptions.push({ ...searchDef, values });
     }
   });
   return searchOptions;
+};
+
+// eslint-disable-next-line max-len
+export const getValueItemsFromSearchValues = (
+  searchDefs: SearchDefs,
+  searchValues: SearchValues,
+  key: string,
+): Array<string> => {
+  const matchingSearchDefIndex = searchDefs.findIndex(searchDef => getKeysForSearchDef(searchDef).includes(key));
+  if (matchingSearchDefIndex >= 0) {
+    const omniValues = searchValues.get(matchingSearchDefIndex);
+    if (omniValues) {
+      return getItemsFromOmniValue(omniValues);
+    }
+  }
+  return [];
 };

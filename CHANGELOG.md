@@ -5,6 +5,7 @@
 - localStorage now includes `omni-` prefix.
 - Add support for omni commands. This allows `OmniChip` in tables to request changes in `OmniSearcBar`.
 - Add support for start and end of string support using `^` and `$`.
+- Update api-utils to encode URI characters correctly.
 
 ## 0.7.0 - 2018-10-24
 

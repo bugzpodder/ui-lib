@@ -512,7 +512,7 @@ describe("buildSearchQuery for several search items", () => {
           }),
       ),
     ).toEqual(
-      `(column1==123)${doubleAmpersand}(column2=="def xyz")${doubleAmpersand}(column3=="${percentChar}some string${percentChar}")`,
+      `(column1==123)${doubleAmpersand}(column2=="def%20xyz")${doubleAmpersand}(column3=="${percentChar}some%20string${percentChar}")`,
     );
   });
   it("should generate query for several search elements when one is empty string", () => {
@@ -532,7 +532,7 @@ describe("buildSearchQuery for several search items", () => {
             type: LIKE_TEXT_SEARCH_TYPE,
           }),
       ),
-    ).toEqual(`(column1==123)${doubleAmpersand}(column3=="${percentChar}some string${percentChar}")`);
+    ).toEqual(`(column1==123)${doubleAmpersand}(column3=="${percentChar}some%20string${percentChar}")`);
   });
   it("should generate query for several search elements when the last string is empty string (See T1661)", () => {
     expect(
@@ -580,5 +580,20 @@ describe("buildSearchQuery is invalid", () => {
   });
   it("should return if no search options are present", () => {
     expect(buildSearchQuery([])).toEqual("");
+  });
+});
+
+describe("buildSearchQuery for uri encoding", () => {
+  it("should encode URI query values", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc & 123", "xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+        },
+      ]),
+    ).toEqual(`(column1=="abc%20%26%20123"${doublePipe}column1=="xyz")`);
   });
 });

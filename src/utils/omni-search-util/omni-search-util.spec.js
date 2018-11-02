@@ -12,6 +12,7 @@ import {
   getOmniTextFromSearchValues,
   getSearchOptions,
   getSearchValuesFromOmniText,
+  getValueItemsFromSearchValues,
 } from "./omni-search-util";
 
 const searchDefs: SearchDefs = [
@@ -152,4 +153,19 @@ describe("getItemsFromOmniValue", () => {
     expect(getItemsFromOmniValue(" 12 1,  34")).toEqual(["12 1", "34"]);
   });
   // TODO(jrosenfield): add more testing coverage
+});
+
+describe("getValueItemsFromSearchValues", () => {
+  const searchValues = new Map();
+  searchValues.set(1, "1");
+  searchValues.set(2, "2,,3,4");
+  it("gets no search values for no matching key", () => {
+    expect(getValueItemsFromSearchValues(searchDefs, searchValues, "unknownKey")).toEqual([]);
+  });
+  it("gets no search values for no matching value", () => {
+    expect(getValueItemsFromSearchValues(searchDefs, searchValues, "anEnum")).toEqual([]);
+  });
+  it("gets search values for matching key", () => {
+    expect(getValueItemsFromSearchValues(searchDefs, searchValues, "lot")).toEqual(["2", "", "3", "4"]);
+  });
 });

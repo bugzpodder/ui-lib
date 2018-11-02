@@ -9,6 +9,8 @@ import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
+  ENCODED_STRING_END_CHAR,
+  ENCODED_STRING_START_CHAR,
   ENUM_SEARCH_TYPE,
   FULL_ID_SEARCH_TYPE,
   FULL_TEXT_SEARCH_TYPE,
@@ -17,8 +19,6 @@ import {
   MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
-  STRING_END_CHAR,
-  STRING_START_CHAR,
   doubleAmpersand,
   doublePipe,
   percentChar,
@@ -121,7 +121,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
       values,
       searchOperator,
     } = searchOption;
-    const searchValues = getSearchValues(searchOption);
+    const searchValues = getSearchValues(searchOption).map(global.encodeURIComponent);
     let equalityField = "==";
     equalityField = searchOperator === undefined ? equalityField : searchOperator.toString();
     // eslint-disable-next-line arrow-parens
@@ -149,13 +149,13 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
           case OMNI_TEXT_SEARCH_TYPE:
             return multiValueSearchBuilder((value) => {
               let searchValue = value.trim();
-              if (searchValue.startsWith(STRING_START_CHAR)) {
-                searchValue = searchValue.substring(1);
+              if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
+                searchValue = searchValue.substring(ENCODED_STRING_START_CHAR.length);
               } else {
                 searchValue = `${percentChar}${searchValue}`;
               }
-              if (searchValue.endsWith(STRING_END_CHAR)) {
-                searchValue = searchValue.substring(0, searchValue.length - 1);
+              if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
+                searchValue = searchValue.substring(0, searchValue.length - ENCODED_STRING_END_CHAR.length);
               } else {
                 searchValue = `${searchValue}${percentChar}`;
               }

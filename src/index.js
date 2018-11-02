@@ -84,6 +84,7 @@ export {
   getOmniTextFromSearchValues,
   getOmniTextFromKeyValues,
   getSearchOptions,
+  getValueItemsFromSearchValues,
   parseValuesFromOmniText,
 } from "./utils/omni-search-util";
 export { generateFilledArray, serializePromises, mapBy } from "./utils/array-utils";
