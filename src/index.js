@@ -101,6 +101,10 @@ export {
   upperAlphaChars,
   // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
   formatPercent,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  extractQuotedString,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  unquoteString,
 } from "./utils/string-utils";
 export {
   sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix,

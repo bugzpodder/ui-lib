@@ -116,6 +116,18 @@ describe("buildSearchQuery for like text search", () => {
       ]),
     ).toEqual('(column1=="abc")');
   });
+  it("should generate query for one element with quotes", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ['"abc"'],
+          type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+        },
+      ]),
+    ).toEqual('(column1=="abc")');
+  });
 });
 
 describe("buildSearchQuery for full id search", () => {

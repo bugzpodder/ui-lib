@@ -3,7 +3,13 @@
 import keys from "lodash/keys";
 
 import {
-  formatPercent, makeTitleString, normalizeStr, sentenceCase, upperAlphaChars,
+  extractQuotedString,
+  formatPercent,
+  makeTitleString,
+  normalizeStr,
+  sentenceCase,
+  unquoteString,
+  upperAlphaChars,
 } from "./string-util";
 
 const multiLine = `multiple lines
@@ -80,11 +86,58 @@ describe("makeTitleString", () => {
 });
 
 describe("formatPercent", () => {
-  const tests = [["0.12", "12.00%"], ["0.0123", "1.23%"], ["0.1230", "12.30%"], [0.12, "12.00%"]];
+  const tests = [["0.12", "12.00%"], ["0.0123", "1.23%"], ["0.1230", "12.30%"], [0.12, "12.00%"], ["abc", "-"]];
 
-  tests.forEach(([start, end]) => {
-    it(`should convert ${start} -> ${end}`, () => {
-      expect(formatPercent(start)).toEqual(end);
+  tests.forEach(([input, expectedPercent]) => {
+    it(`should convert ${input} -> ${expectedPercent}`, () => {
+      expect(formatPercent(input)).toEqual(expectedPercent);
     });
   });
+});
+
+['"', global.encodeURIComponent('"')].forEach((quoteChar) => {
+  const nullCases = [
+    "0.12",
+    `${quoteChar}abc`,
+    `1230${quoteChar}`,
+    `abc ${quoteChar} 123`,
+    `a${quoteChar}${quoteChar}23`,
+  ];
+  const testValues = ["", "abc 123", "test"];
+  describe("extractQuotedString", () => {
+    const tests = [
+      ...nullCases.map(testCase => [testCase, null]),
+      ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, value]),
+      ...testValues.map(value => [`   ${quoteChar}${value}${quoteChar}  `, value]),
+    ];
+
+    tests.forEach(([quotedValue, extractedValue]) => {
+      it(`should extract quoted string from '${quotedValue}' -> '${
+        extractedValue != null ? extractedValue : "null"
+      }'`, () => {
+        expect(extractQuotedString(quotedValue, quoteChar)).toEqual(extractedValue);
+      });
+    });
+  });
+  describe("unquoteString", () => {
+    const tests = [
+      ...nullCases.map(testCase => [testCase, testCase]),
+      ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, value]),
+      ...testValues.map(value => [`   ${quoteChar}${value}${quoteChar}  `, value]),
+    ];
+
+    tests.forEach(([quotedValue, extractedValue]) => {
+      it(`should unquote string from '${quotedValue}' -> '${extractedValue != null ? extractedValue : "null"}'`, () => {
+        expect(unquoteString(quotedValue, quoteChar)).toEqual(extractedValue);
+      });
+    });
+  });
+});
+
+describe("extractQuotedString default quote char", () => {
+  expect(extractQuotedString('"abc"')).toEqual("abc");
+});
+
+describe("unquoteString default quote char", () => {
+  expect(unquoteString('"abc"')).toEqual("abc");
 });

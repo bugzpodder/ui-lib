@@ -2,6 +2,7 @@
 import camelCase from "lodash/camelCase";
 import startCase from "lodash/startCase";
 
+import { ENCODED_QUOTE_CHAR } from "../api-utils/api-constants";
 import { generateFilledArray } from "../array-utils";
 
 // Map of sentence case key words to their desired display string.
@@ -62,4 +63,33 @@ export const formatPercent = (value: string | number) => {
     return "-";
   }
   return `${(floatValue * 100.0).toFixed(2)}%`;
+};
+
+/**
+ * Extract the quoted contents from a string. Examples:
+ * `abc \" 123` returns null
+ * `abc \"\" 123` returns null
+ * `"abc \" 123"` returns null
+ * `"abc \" 123"` returns null
+ * `"abc 123"` returns `abc 123`
+ * `  "abc 123"  ` returns `abc 123`
+ */
+export const extractQuotedString = (value: string, quoteChar?: string = '"'): string | null => {
+  if (quoteChar === ENCODED_QUOTE_CHAR) {
+    value = value.replace(new RegExp(ENCODED_QUOTE_CHAR, "g"), '"');
+    quoteChar = '"';
+  }
+  const match = new RegExp(`^ *${quoteChar}(([^${quoteChar}])*)${quoteChar} *$`).exec(value);
+  if (match) {
+    return match[1];
+  }
+  return null;
+};
+
+/**
+ * Remove surrounding quotes from a string, if surrounded, else return string.
+ */
+export const unquoteString = (value: string, quoteChar?: string = '"'): string => {
+  const possibleString = extractQuotedString(value, quoteChar);
+  return possibleString != null ? possibleString : value;
 };

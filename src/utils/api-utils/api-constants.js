@@ -8,6 +8,7 @@ export const STRING_START_CHAR = "^";
 export const STRING_END_CHAR = "$";
 export const ENCODED_STRING_START_CHAR = global.encodeURIComponent(STRING_START_CHAR);
 export const ENCODED_STRING_END_CHAR = global.encodeURIComponent(STRING_END_CHAR);
+export const ENCODED_QUOTE_CHAR = global.encodeURIComponent('"');
 
 export const OMNI_TEXT_SEARCH_TYPE = Symbol("omni-text");
 export const LIKE_TEXT_SEARCH_TYPE = Symbol("like-text");

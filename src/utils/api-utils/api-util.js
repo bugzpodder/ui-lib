@@ -9,6 +9,7 @@ import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
+  ENCODED_QUOTE_CHAR,
   ENCODED_STRING_END_CHAR,
   ENCODED_STRING_START_CHAR,
   ENUM_SEARCH_TYPE,
@@ -24,6 +25,7 @@ import {
   percentChar,
 } from "./api-constants";
 import { DATE_FORMAT } from "../../constants";
+import { extractQuotedString } from "../string-utils";
 import { sanitizeId } from "../id-utils";
 
 /*
@@ -149,15 +151,20 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
           case OMNI_TEXT_SEARCH_TYPE:
             return multiValueSearchBuilder((value) => {
               let searchValue = value.trim();
-              if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
-                searchValue = searchValue.substring(ENCODED_STRING_START_CHAR.length);
+              const quotedValue = extractQuotedString(searchValue, ENCODED_QUOTE_CHAR);
+              if (quotedValue != null) {
+                searchValue = quotedValue;
               } else {
-                searchValue = `${percentChar}${searchValue}`;
-              }
-              if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
-                searchValue = searchValue.substring(0, searchValue.length - ENCODED_STRING_END_CHAR.length);
-              } else {
-                searchValue = `${searchValue}${percentChar}`;
+                if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
+                  searchValue = searchValue.substring(ENCODED_STRING_START_CHAR.length);
+                } else {
+                  searchValue = `${percentChar}${searchValue}`;
+                }
+                if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
+                  searchValue = searchValue.substring(0, searchValue.length - ENCODED_STRING_END_CHAR.length);
+                } else {
+                  searchValue = `${searchValue}${percentChar}`;
+                }
               }
               return `"${searchValue}"`;
             });
