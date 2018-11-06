@@ -8,7 +8,8 @@ const searchKey = /(([^:]*\s*)\s)?([\w-.]+):/gm;
 
 const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Array<string>>) => {
   if (value === "" || isValueValid(value)) {
-    value = value.trim();
+    const removedLeadingWhitespaceMatch = /\s*(.*)/.exec(value);
+    value = removedLeadingWhitespaceMatch ? removedLeadingWhitespaceMatch[1] : value;
     const previousValues = arrayMap.get(key);
     if (previousValues === undefined) {
       arrayMap.set(key, [value]);
