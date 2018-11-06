@@ -8,6 +8,7 @@ const searchKey = /(([^:]*\s*)\s)?([\w-.]+):/gm;
 
 const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Array<string>>) => {
   if (value === "" || isValueValid(value)) {
+    value = value.trim();
     const previousValues = arrayMap.get(key);
     if (previousValues === undefined) {
       arrayMap.set(key, [value]);
@@ -76,8 +77,7 @@ export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: st
       values = values.map(value => value.trim());
     }
     if (values.length) {
-      // TODO: consider including a space (", ") when joining.
-      const searchValue = values.join(",");
+      const searchValue = values.join(", ");
       searchValues.set(index, searchValue);
     }
   });
@@ -101,7 +101,7 @@ export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues
       if (index !== 0) {
         const key = getKeysForSearchDef(searchDef)[0];
         // $FlowFixMe: isValueValid call means omniValue is defined
-        omniValue = `${key}:${omniValue}`;
+        omniValue = `${key}: ${omniValue}`;
       }
       omniValues.push(omniValue);
     }
@@ -109,14 +109,17 @@ export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues
   return omniValues.join(" ");
 };
 
-export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => keyValues.map(({ key, value }) => `${key}:${value}`).join(" ");
+export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => keyValues.map(({ key, value }) => `${key}: ${value}`).join(" ");
 
 export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => {
   const parsedItems: Array<string> = [];
   if (!isValueValid(omniValue)) {
     return parsedItems;
   }
-  return omniValue.split(",").map(value => value.trim());
+  return omniValue
+    .split(",")
+    .map(value => value.trim())
+    .filter(value => value !== "");
 };
 
 export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {

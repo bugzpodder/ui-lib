@@ -54,7 +54,7 @@ export const extractSearchValues = (searchOptions: SearchOptions): SearchOptionV
   return searchValues;
 };
 
-export const mergeSearchOptions = (searchOptions: SearchOptions, searchValues?: SearchOptionValues) => {
+export const mergeSearchOptions = (searchOptions: SearchOptions, searchValues?: SearchOptionValues): SearchOptions => {
   if (!searchValues) {
     return searchOptions;
   }

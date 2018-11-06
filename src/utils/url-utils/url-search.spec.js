@@ -138,6 +138,6 @@ describe("getUrlQueryForOptions", () => {
 describe("getOmniUrlQueryString", () => {
   it("should get url query", () => {
     const test = getOmniUrlQueryString([{ key: "test", value: "name" }]);
-    expect(test).toBe("omni=test%3Aname");
+    expect(test).toBe("omni=test%3A%20name");
   });
 });
