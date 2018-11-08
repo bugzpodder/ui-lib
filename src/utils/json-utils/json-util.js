@@ -69,10 +69,12 @@ export const trimObjectValues = (object: Object) => {
   if (!isObject(object) || object.constructor !== Object) {
     return object;
   }
-  const formattedObject = {};
-  Object.entries(object).forEach((entry) => {
+  const formattedObject = { ...object };
+  Object.entries(formattedObject).forEach((entry) => {
     // $FlowFixMe: property trim is missing in "mixed";
-    formattedObject[entry[0]] = entry[1].trim();
+    if (typeof entry[1] === "string") {
+      formattedObject[entry[0]] = entry[1].trim();
+    }
   });
   return formattedObject;
 };
