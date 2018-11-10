@@ -113,11 +113,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         domain: LIMS,
         path: "/pipeline/sample-sheets/upload",
       },
-      {
-        name: "Assay Analysis",
-        domain: LIMS,
-        path: "/pipeline/assay-analysis",
-      },
     ],
   },
   {
@@ -230,6 +225,11 @@ export const adminItems = {
       name: "Printer Labels",
       domain: LIMS,
       path: "/admin/printer-labels",
+    },
+    {
+      name: "Assay Analysis",
+      domain: LIMS,
+      path: "/admin/assay-analysis",
     },
     {
       name: "Import BST Samples",
