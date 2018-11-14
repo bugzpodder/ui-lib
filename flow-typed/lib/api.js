@@ -20,10 +20,12 @@ declare type OldSearchOption = {
 } & SearchOptionValue;
 
 declare type SearchOptions = Map<string, OldSearchOption>;
+
 declare type PaginationOptions = {
   offset: number,
   count: number,
 };
+
 declare type FilterOptions = {
   sortOptions: SortOptions,
   searchOptions: SearchOptions,
@@ -43,25 +45,23 @@ declare type GetContentOptionsV2 = {
   sortOptions?: SortOptions,
 };
 
-// PagedTableOptions requires all parameters. It is for paged tables (offset, count, sort, selection)
-declare type PagedTableOptions = {
-  // searchOptions?: SearchOptions | SearchOptionsV2,
+// TODO(jsingh): simplify all these types!
+declare type BaseQueryOptions = {
+  searchOptions?: SearchOptions | SearchOptionsV2,
   sortOptions: SortOptions,
+  selectedRowIds: Array<any>,
+  isLoading: boolean,
 } & PaginationOptions;
 
 declare type LegacyApiQueryOptions = {
   // TODO(jsingh): cleanup flow search definitions
   // $FlowFixMe
   searchOptions: SearchOptions,
-  selectedRowIds: Array<any>,
-  isLoading: boolean,
-} & PagedTableOptions;
+} & BaseQueryOptions;
 
 declare type ApiQueryOptions = {
   searchOptions: SearchOptionsV2,
-  selectedRowIds: Array<any>,
-  isLoading: boolean,
-} & PagedTableOptions;
+} & BaseQueryOptions;
 
 // Search Definitions. Used by OmniSearch to build the UI. Used to build SearchOptions:
 type SearchFieldProps = {
