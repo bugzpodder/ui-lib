@@ -116,12 +116,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
       return memo;
     }
     const {
-      deprecatedRawQuery,
-      type,
-      searchFields = [searchOptionKey],
-      value = "",
-      values,
-      searchOperator,
+      type, searchFields = [searchOptionKey], value = "", values, searchOperator,
     } = searchOption;
     const searchValues = getSearchValues(searchOption).map(global.encodeURIComponent);
     let equalityField = "==";
@@ -145,99 +140,95 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
       return multiValueSearch ? `(${multiValueSearch})` : null;
     };
     const newQuery = (() => {
-      if (!deprecatedRawQuery) {
-        switch (type) {
-          case LIKE_TEXT_SEARCH_TYPE:
-          case OMNI_TEXT_SEARCH_TYPE:
-            return multiValueSearchBuilder((value) => {
-              let searchValue = value.trim();
-              const quotedValue = extractQuotedString(searchValue, ENCODED_QUOTE_CHAR);
-              if (quotedValue != null) {
-                searchValue = quotedValue;
+      switch (type) {
+        case LIKE_TEXT_SEARCH_TYPE:
+        case OMNI_TEXT_SEARCH_TYPE:
+          return multiValueSearchBuilder((value) => {
+            let searchValue = value.trim();
+            const quotedValue = extractQuotedString(searchValue, ENCODED_QUOTE_CHAR);
+            if (quotedValue != null) {
+              searchValue = quotedValue;
+            } else {
+              if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
+                searchValue = searchValue.substring(ENCODED_STRING_START_CHAR.length);
               } else {
-                if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
-                  searchValue = searchValue.substring(ENCODED_STRING_START_CHAR.length);
-                } else {
-                  searchValue = `${percentChar}${searchValue}`;
-                }
-                if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
-                  searchValue = searchValue.substring(0, searchValue.length - ENCODED_STRING_END_CHAR.length);
-                } else {
-                  searchValue = `${searchValue}${percentChar}`;
-                }
+                searchValue = `${percentChar}${searchValue}`;
               }
-              return `"${searchValue}"`;
-            });
-          case NUMERIC_SEARCH_TYPE:
-          // fallthrough to next case
-          case BOOLEAN_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `${value}`);
-          case FULL_TEXT_SEARCH_TYPE:
-          case ENUM_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `"${value.trim()}"`);
-          case FULL_ID_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `"${value}"`);
-          case LIKE_ID_SEARCH_TYPE:
-            return multiValueSearchBuilder(value => `"${percentChar}${value}${percentChar}"`);
-          case MULTI_FIELD_TEXT_SEARCH_TYPE: {
-            // FIXME(jrosenfield) - Deprecate MULTI_FIELD_TEXT_SEARCH_TYPE since it
-            // can be replaced with LIKE_TEXT_SEARCH_TYPE
-            if (!isValueValid(value)) {
-              return null;
-            }
-            const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
-              if (multiFieldSearchMemo) {
-                multiFieldSearchMemo += doublePipe;
-              }
-              return `${multiFieldSearchMemo}(${searchField}${equalityField}"${percentChar}${String(
-                value,
-              ).trim()}${percentChar}")`;
-            }, "");
-            return `(${multiFieldSearch})`;
-          }
-          // Note: multiField is not implemented for date search.
-          case DATE_SEARCH_TYPE:
-          case DATETIME_SEARCH_TYPE: {
-            if (!values && !Array.isArray(value)) {
-              return null;
-            }
-            // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-            // $FlowFixMe: we know value is an array from above if statement.
-            let [startDate, endDate] = values || value;
-            if (startDate && endDate) {
-              if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
-                [startDate, endDate] = [endDate, startDate];
-              }
-            }
-            let dateSearch = "";
-            if (isValueValid(startDate) && String(startDate).trim() !== "") {
-              if (type === DATETIME_SEARCH_TYPE) {
-                startDate = moment(String(startDate))
-                  .startOf("day")
-                  .toISOString();
+              if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
+                searchValue = searchValue.substring(0, searchValue.length - ENCODED_STRING_END_CHAR.length);
               } else {
-                startDate = moment(String(startDate)).format(DATE_FORMAT);
+                searchValue = `${searchValue}${percentChar}`;
               }
-              dateSearch = `${searchFields[0]}>="${startDate}"`;
             }
-            if (isValueValid(endDate) && String(endDate).trim() !== "") {
-              if (type === DATETIME_SEARCH_TYPE) {
-                endDate = moment(String(endDate))
-                  .endOf("day")
-                  .toISOString();
-              } else {
-                endDate = moment(String(endDate)).format(DATE_FORMAT);
-              }
-              dateSearch = `${dateSearch}${dateSearch && doubleAmpersand}${searchFields[0]}<="${endDate}"`;
+            return `"${searchValue}"`;
+          });
+        case NUMERIC_SEARCH_TYPE:
+        // fallthrough to next case
+        case BOOLEAN_SEARCH_TYPE:
+          return multiValueSearchBuilder(value => `${value}`);
+        case FULL_TEXT_SEARCH_TYPE:
+        case ENUM_SEARCH_TYPE:
+          return multiValueSearchBuilder(value => `"${value.trim()}"`);
+        case FULL_ID_SEARCH_TYPE:
+          return multiValueSearchBuilder(value => `"${value}"`);
+        case LIKE_ID_SEARCH_TYPE:
+          return multiValueSearchBuilder(value => `"${percentChar}${value}${percentChar}"`);
+        case MULTI_FIELD_TEXT_SEARCH_TYPE: {
+          // FIXME(jrosenfield) - Deprecate MULTI_FIELD_TEXT_SEARCH_TYPE since it
+          // can be replaced with LIKE_TEXT_SEARCH_TYPE
+          if (!isValueValid(value)) {
+            return null;
+          }
+          const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
+            if (multiFieldSearchMemo) {
+              multiFieldSearchMemo += doublePipe;
             }
-            return dateSearch ? `(${dateSearch})` : null;
-          }
-          default: {
-            throw new Error(`Unknown search type: ${String(type)}`);
-          }
+            return `${multiFieldSearchMemo}(${searchField}${equalityField}"${percentChar}${String(
+              value,
+            ).trim()}${percentChar}")`;
+          }, "");
+          return `(${multiFieldSearch})`;
         }
-      } else {
-        return `(${deprecatedRawQuery})`;
+        // Note: multiField is not implemented for date search.
+        case DATE_SEARCH_TYPE:
+        case DATETIME_SEARCH_TYPE: {
+          if (!values && !Array.isArray(value)) {
+            return null;
+          }
+          // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
+          // $FlowFixMe: we know value is an array from above if statement.
+          let [startDate, endDate] = values || value;
+          if (startDate && endDate) {
+            if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
+              [startDate, endDate] = [endDate, startDate];
+            }
+          }
+          let dateSearch = "";
+          if (isValueValid(startDate) && String(startDate).trim() !== "") {
+            if (type === DATETIME_SEARCH_TYPE) {
+              startDate = moment(String(startDate))
+                .startOf("day")
+                .toISOString();
+            } else {
+              startDate = moment(String(startDate)).format(DATE_FORMAT);
+            }
+            dateSearch = `${searchFields[0]}>="${startDate}"`;
+          }
+          if (isValueValid(endDate) && String(endDate).trim() !== "") {
+            if (type === DATETIME_SEARCH_TYPE) {
+              endDate = moment(String(endDate))
+                .endOf("day")
+                .toISOString();
+            } else {
+              endDate = moment(String(endDate)).format(DATE_FORMAT);
+            }
+            dateSearch = `${dateSearch}${dateSearch && doubleAmpersand}${searchFields[0]}<="${endDate}"`;
+          }
+          return dateSearch ? `(${dateSearch})` : null;
+        }
+        default: {
+          throw new Error(`Unknown search type: ${String(type)}`);
+        }
       }
     })();
     if (memo && newQuery) {
@@ -261,14 +252,9 @@ export const filterResults = (items: Array<any>, options: FilterOptions): Array<
       return false;
     }
 
-    const {
-      deprecatedRawQuery, type, searchFields, values,
-    } = searchOption;
+    const { type, searchFields, values } = searchOption;
     const searchValues = getSearchValues(searchOption);
     const shouldEqual = true;
-    if (deprecatedRawQuery) {
-      throw new Error("Unsupported raw query");
-    }
 
     if (type === DATETIME_SEARCH_TYPE || type === DATE_SEARCH_TYPE) {
       if (!item[key]) {

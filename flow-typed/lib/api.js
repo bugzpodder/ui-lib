@@ -12,7 +12,6 @@ declare type SearchOptionValues = Map<string, SearchOptionValue>;
 
 declare type OldSearchOption = {
   type?: Symbol,
-  deprecatedRawQuery?: string,
   searchFields?: Array<string>,
   isCustomRendered?: boolean,
   placeholder?: string,
@@ -84,8 +83,6 @@ declare type SearchDef = {
   description?: string,
   searchOperator?: string,
   localStorageKeySuffix?: string,
-  // Deprecate deprecatedRawQuery!
-  deprecatedRawQuery?: string,
   // TODO(jrosenfield): support validation in the future?
 };
 

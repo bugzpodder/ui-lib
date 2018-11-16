@@ -14,7 +14,7 @@ import {
 
 const singleValues = ["test string", 0, 2.1727, false, true];
 const arrayValues = [["a", "test string"], [0, Math.E, -Math.PI], [false, true], [null, "test"]];
-const placeholder = "OldSearchOption Dummy Field";
+const placeholder = "Dummy Field";
 const defaultSearchOptions = new Map().set("name", {
   type: LIKE_TEXT_SEARCH_TYPE,
   value: "test name",

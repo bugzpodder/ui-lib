@@ -493,18 +493,6 @@ describe("buildSearchQuery for date search", () => {
   });
 });
 
-describe("buildSearchQuery for raw query", () => {
-  it("should generate query for given query", () => {
-    expect(
-      buildSearchQuery(
-        new Map().set("someQueryName", {
-          deprecatedRawQuery: "(x==6||y==7) && (z==4)",
-        }),
-      ),
-    ).toEqual("((x==6||y==7) && (z==4))");
-  });
-});
-
 describe("buildSearchQuery for several search items", () => {
   it("should generate query for several search elements", () => {
     expect(
