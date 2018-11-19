@@ -54,12 +54,12 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         path: "/lims/print-labels",
       },
       {
-        name: "Study Samples",
+        name: "Non-Patient Samples",
         domain: LIMS,
         path: "/lims/study-samples",
       },
       {
-        name: "Create Study Samples",
+        name: "Create Non-Patient Samples",
         domain: LIMS,
         path: "/lims/create-study-samples",
       },
