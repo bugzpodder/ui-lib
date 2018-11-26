@@ -97,7 +97,7 @@ describe("filterResults", () => {
       count: 10,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult([1, 5, 3, 2, 4], options);
   });
@@ -107,7 +107,7 @@ describe("filterResults", () => {
       count: 3,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult([1, 2, 3, 4, 5], options);
   });
@@ -117,7 +117,7 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult([1, 2, 3, 4, 5], options);
   });
@@ -127,7 +127,7 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [{ id: "id" }],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
@@ -137,7 +137,7 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [{ id: "id", desc: true }],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
@@ -147,7 +147,7 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [{ id: "id" }],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
@@ -157,7 +157,7 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [{ id: "name" }, { id: "id" }],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult(testObjs3, options);
   });
@@ -167,7 +167,7 @@ describe("filterResults", () => {
       count: 5,
       offset: 3,
       sortOptions: [{ id: "id", desc: true }],
-      searchOptions: new Map(),
+      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
@@ -177,10 +177,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("id", {
-        value: undefined,
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "id",
+          value: undefined,
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs3, options);
   });
@@ -190,10 +193,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("id", {
-        value: 3,
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "id",
+          value: 3,
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testSimple, options);
   });
@@ -203,11 +209,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("id", {
-        value: 3,
-        type: NUMERIC_SEARCH_TYPE,
-        isEqual: true,
-      }),
+      searchOptions: [
+        {
+          name: "id",
+          value: 3,
+          type: NUMERIC_SEARCH_TYPE,
+          isEqual: true,
+        },
+      ],
     };
     checkResult(testSimple, options);
   });
@@ -217,11 +226,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("id", {
-        value: 3,
-        type: NUMERIC_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "id",
+          value: 3,
+          type: NUMERIC_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testSimple, options);
   });
@@ -231,10 +243,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("id", {
-        values: [3, 4],
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "id",
+          values: [3, 4],
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testSimple, options);
   });
@@ -244,10 +259,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("id", {
-        value: 0,
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "id",
+          value: 0,
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testSimple, options);
   });
@@ -257,10 +275,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "",
-        type: FULL_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "",
+          type: FULL_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs3, options);
   });
@@ -270,10 +291,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "xy",
-        type: FULL_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "xy",
+          type: FULL_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs2, options);
   });
@@ -283,10 +307,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        values: ["xy", "aa"],
-        type: FULL_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          values: ["xy", "aa"],
+          type: FULL_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs2, options);
   });
@@ -296,10 +323,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "bb",
-        type: FULL_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "bb",
+          type: FULL_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -309,10 +339,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        values: ["bb", "gg"],
-        type: FULL_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          values: ["bb", "gg"],
+          type: FULL_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -322,11 +355,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "bb",
-        type: FULL_TEXT_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "bb",
+          type: FULL_TEXT_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -336,11 +372,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        values: ["bg", "gg"],
-        type: FULL_TEXT_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          values: ["bg", "gg"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -350,10 +389,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "x",
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "x",
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -363,11 +405,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "x",
-        type: LIKE_TEXT_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "x",
+          type: LIKE_TEXT_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -377,10 +422,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "",
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "",
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs3, options);
   });
@@ -390,10 +438,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "b",
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "b",
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -403,10 +454,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        values: ["a", "g"],
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          values: ["a", "g"],
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -416,11 +470,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "b",
-        type: LIKE_TEXT_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "b",
+          type: LIKE_TEXT_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -430,11 +487,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        values: ["b", "g"],
-        type: LIKE_TEXT_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          values: ["b", "g"],
+          type: LIKE_TEXT_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testNested, options);
   });
@@ -444,10 +504,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.count", {
-        value: 10,
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "values.count",
+          value: 10,
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedNumeric, options);
   });
@@ -457,10 +520,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.count", {
-        values: [10, 30],
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "values.count",
+          values: [10, 30],
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedNumeric, options);
   });
@@ -470,11 +536,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.count", {
-        value: 30,
-        type: NUMERIC_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "values.count",
+          value: 30,
+          type: NUMERIC_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testNestedNumeric, options);
   });
@@ -484,10 +553,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.isValid", {
-        value: true,
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "values.isValid",
+          value: true,
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedBoolean, options);
   });
@@ -497,10 +569,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.isValid", {
-        value: false,
-        type: BOOLEAN_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "values.isValid",
+          value: false,
+          type: BOOLEAN_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedBoolean, options);
   });
@@ -510,11 +585,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.isValid", {
-        value: true,
-        isEqual: false,
-        type: NUMERIC_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "values.isValid",
+          value: true,
+          isEqual: false,
+          type: NUMERIC_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedBoolean, options);
   });
@@ -524,11 +602,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("values.count", {
-        value: 30,
-        type: NUMERIC_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "values.count",
+          value: 30,
+          type: NUMERIC_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testNestedNumeric, options);
   });
@@ -538,10 +619,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("isValid", {
-        value: true,
-        type: BOOLEAN_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "isValid",
+          value: true,
+          type: BOOLEAN_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testBoolean, options);
   });
@@ -551,11 +635,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("isValid", {
-        value: false,
-        type: BOOLEAN_SEARCH_TYPE,
-        isEqual: false,
-      }),
+      searchOptions: [
+        {
+          name: "isValid",
+          value: false,
+          type: BOOLEAN_SEARCH_TYPE,
+          isEqual: false,
+        },
+      ],
     };
     checkResult(testBoolean, options);
   });
@@ -565,11 +652,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("multi", {
-        value: "aa",
-        type: MULTI_FIELD_TEXT_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "omni",
+          value: "aa",
+          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          searchFields: ["id", "name"],
+        },
+      ],
     };
     checkResult(testMulti, options);
   });
@@ -579,11 +669,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("multi", {
-        values: ["aa", "bb"],
-        type: MULTI_FIELD_TEXT_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "omni",
+          values: ["aa", "bb"],
+          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          searchFields: ["id", "name"],
+        },
+      ],
     };
     checkResult(testMulti, options);
   });
@@ -593,11 +686,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("multi", {
-        value: "",
-        type: MULTI_FIELD_TEXT_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "omni",
+          value: "",
+          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          searchFields: ["id", "name"],
+        },
+      ],
     };
     checkResult(testMulti, options);
   });
@@ -607,11 +703,14 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("multi", {
-        value: "bb",
-        type: MULTI_FIELD_TEXT_SEARCH_TYPE,
-        searchFields: ["name", "labels.name"],
-      }),
+      searchOptions: [
+        {
+          name: "omni",
+          value: "bb",
+          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          searchFields: ["name", "labels.name"],
+        },
+      ],
     };
     checkResult(testNestedMulti, options);
   });
@@ -621,26 +720,16 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("multi", {
-        values: ["ab", "bb"],
-        type: MULTI_FIELD_TEXT_SEARCH_TYPE,
-        searchFields: ["name", "labels.name"],
-      }),
+      searchOptions: [
+        {
+          name: "omni",
+          values: ["ab", "bb"],
+          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          searchFields: ["name", "labels.name"],
+        },
+      ],
     };
     checkResult(testNestedMulti, options);
-  });
-
-  it("should throw error if no searchFields parameter", () => {
-    const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
-      searchOptions: new Map().set("multi", {
-        values: ["ab", "bb"],
-        type: MULTI_FIELD_TEXT_SEARCH_TYPE,
-      }),
-    };
-    expect(() => filterResults(testNestedMulti, options)).toThrowError();
   });
 
   it("should filter start datetime", () => {
@@ -649,10 +738,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: [date],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: [date],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -663,10 +755,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: [null, date],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: [null, date],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -677,10 +772,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: ["", date],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: ["", date],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -691,10 +789,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: ["2017-09-01", date],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: ["2017-09-01", date],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -704,10 +805,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: [],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: [],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -717,10 +821,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("missingDate", {
-        values: ["2017-10-03", "2017-10-30"],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "missingDate",
+          values: ["2017-10-03", "2017-10-30"],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -731,10 +838,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: [date],
-        type: DATE_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: [date],
+          type: DATE_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -745,10 +855,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: [null, date],
-        type: DATE_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: [null, date],
+          type: DATE_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -759,10 +872,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: ["", date],
-        type: DATE_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: ["", date],
+          type: DATE_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -773,10 +889,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: ["2017-09-01", date],
-        type: DATE_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: ["2017-09-01", date],
+          type: DATE_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -786,10 +905,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: [],
-        type: DATE_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: [],
+          type: DATE_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -799,10 +921,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("missingDate", {
-        values: ["2017-10-03", "2017-10-30"],
-        type: DATE_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "missingDate",
+          values: ["2017-10-03", "2017-10-30"],
+          type: DATE_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -812,9 +937,12 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -824,10 +952,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("date", {
-        values: ["2018-10-03", "2017-10-30"],
-        type: DATETIME_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "date",
+          values: ["2018-10-03", "2017-10-30"],
+          type: DATETIME_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testDates, options);
   });
@@ -837,15 +968,18 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map()
-        .set("name", {
+      searchOptions: [
+        {
+          name: "name",
           value: "x",
           type: LIKE_TEXT_SEARCH_TYPE,
-        })
-        .set("id", {
+        },
+        {
+          name: "id",
           values: [1, 3, 5],
           type: NUMERIC_SEARCH_TYPE,
-        }),
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -855,15 +989,18 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map()
-        .set("name", {
+      searchOptions: [
+        {
+          name: "name",
           value: "",
           type: LIKE_TEXT_SEARCH_TYPE,
-        })
-        .set("id", {
+        },
+        {
+          name: "id",
           values: [1, 3, 5],
           type: NUMERIC_SEARCH_TYPE,
-        }),
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -873,15 +1010,18 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map()
-        .set("id", {
+      searchOptions: [
+        {
+          name: "id",
           values: [1, 3, 5],
           type: NUMERIC_SEARCH_TYPE,
-        })
-        .set("name", {
+        },
+        {
+          name: "name",
           value: "",
           type: LIKE_TEXT_SEARCH_TYPE,
-        }),
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -891,10 +1031,13 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "x",
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "x",
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -904,10 +1047,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [{ id: "name" }],
-      searchOptions: new Map().set("name", {
-        value: "x",
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "x",
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -917,10 +1063,13 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [{ id: "name" }],
-      searchOptions: new Map().set("name", {
-        value: "x",
-        type: LIKE_TEXT_SEARCH_TYPE,
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "x",
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testObjs, options);
   });
@@ -930,10 +1079,13 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [{ id: "name" }],
-      searchOptions: new Map().set("name", {
-        value: "x",
-        type: "INVALID",
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "x",
+          type: "INVALID",
+        },
+      ],
     };
     expect(() => filterResults(testNestedMulti, options)).toThrowError();
   });
@@ -943,10 +1095,13 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [{ id: "name" }],
-      searchOptions: new Map().set("labels.name", {
-        value: "x",
-        type: "INVALID",
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "x",
+          type: "INVALID",
+        },
+      ],
     };
     expect(() => filterResults(testNestedMulti, options)).toThrowError();
   });
@@ -956,11 +1111,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "P00100-1",
-        type: FULL_ID_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "P00100-1",
+          type: FULL_ID_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testId, options);
   });
@@ -969,11 +1126,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "A00100-1",
-        type: FULL_ID_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "A00100-1",
+          type: FULL_ID_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testId, options);
   });
@@ -982,11 +1141,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("name", {
-        value: "P001",
-        type: LIKE_ID_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "name",
+          value: "P001",
+          type: LIKE_ID_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testId, options);
   });
@@ -995,11 +1156,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "P00100-1",
-        type: FULL_ID_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "P00100-1",
+          type: FULL_ID_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedId, options);
   });
@@ -1008,11 +1171,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "A00100-1",
-        type: FULL_ID_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "A00100-1",
+          type: FULL_ID_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedId, options);
   });
@@ -1021,11 +1186,13 @@ describe("filterResults", () => {
       count: 5,
       offset: 0,
       sortOptions: [],
-      searchOptions: new Map().set("labels.name", {
-        value: "P001",
-        type: LIKE_ID_SEARCH_TYPE,
-        searchFields: ["id", "name"],
-      }),
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "P001",
+          type: LIKE_ID_SEARCH_TYPE,
+        },
+      ],
     };
     checkResult(testNestedId, options);
   });

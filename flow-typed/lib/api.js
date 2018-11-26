@@ -52,12 +52,6 @@ declare type BaseQueryOptions = {
   isLoading: boolean,
 } & PaginationOptions;
 
-declare type LegacyApiQueryOptions = {
-  // TODO(jsingh): cleanup flow search definitions
-  // $FlowFixMe
-  searchOptions: SearchOptions,
-} & BaseQueryOptions;
-
 declare type ApiQueryOptions = {
   searchOptions: SearchOptionsV2,
 } & BaseQueryOptions;
