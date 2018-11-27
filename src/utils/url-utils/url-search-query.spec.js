@@ -1,7 +1,5 @@
 // @flow
-import {
-  getSearchValues, getUrlQueryString, getUrlQueryStringForValues, updateSearchUrl,
-} from "./url-search";
+import { getSearchValues, updateSearchUrl } from "./url-search";
 
 const singleValues = ["testString", 0, 2.1727, false, true];
 const arrayValues = [["a", "testString"], [0, Math.E, -Math.PI], [false, true]];
@@ -84,28 +82,6 @@ describe("updateSearchUrl", () => {
       updateSearchUrl({ location, history, searchOptions: new Map().set("test", { values, placeholder }) });
       const search = generateValuesSearchQuery("test", values);
       expect(history.replace).toBeCalledWith({ search });
-    });
-  });
-});
-
-describe("getUrlQueryString", () => {
-  it("handles no search values", () => {
-    expect(getUrlQueryString("test", "")).toEqual("");
-  });
-  singleValues.forEach((value) => {
-    it(`handles ${String(value)} search value`, () => {
-      expect(`?${getUrlQueryString("test", value)}`).toEqual(generateValueSearchQuery("test", value));
-    });
-  });
-});
-
-describe("getUrlQueryStringForValues", () => {
-  it("handles no search values", () => {
-    expect(getUrlQueryStringForValues("test", [])).toEqual("");
-  });
-  arrayValues.forEach((values) => {
-    it(`handles array ${String(values)} search values`, () => {
-      expect(`?${getUrlQueryStringForValues("test", values)}`).toEqual(generateValuesSearchQuery("test", values));
     });
   });
 });

@@ -83,20 +83,4 @@ export const updateSearchUrl = ({ location, history, searchOptions }: SearchPara
   });
 };
 
-// Deprecate in favor of `omni` search
-export const getUrlQueryString = (key: string, value: string) => {
-  const searchValues = new Map().set(key, { value });
-  return `${stringifyQuery(getUrlQuery(searchValues))}`;
-};
-
 export const getOmniUrlQueryString = (keyValues: Array<KeyValue>) => `${stringifyQuery({ omni: getOmniTextFromKeyValues(keyValues) })}`;
-
-export const getUrlQueryStringForValues = (key: string, values: Array<string>) => {
-  const searchValues = new Map().set(key, { values });
-  return `${stringifyQuery(getUrlQuery(searchValues))}`;
-};
-
-export const getUrlQueryForOptions = (searchOptions: SearchOptions) => {
-  const searchValues = extractSearchValues(searchOptions);
-  return `${stringifyQuery(getUrlQuery(searchValues))}`;
-};

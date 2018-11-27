@@ -1,25 +1,18 @@
 // @flow
 import mockConsole from "jest-mock-console";
 
-import { LIKE_TEXT_SEARCH_TYPE } from "../api-utils";
-
 import {
   expandSearchValues,
   extractSearchValues,
   flattenSearchValues,
   getOmniUrlQueryString,
-  getUrlQueryForOptions,
   mergeSearchOptions,
 } from "./url-search";
 
 const singleValues = ["test string", 0, 2.1727, false, true];
 const arrayValues = [["a", "test string"], [0, Math.E, -Math.PI], [false, true], [null, "test"]];
 const placeholder = "Dummy Field";
-const defaultSearchOptions = new Map().set("name", {
-  type: LIKE_TEXT_SEARCH_TYPE,
-  value: "test name",
-  placeholder: "Name",
-});
+
 const undefinedSearchValues = new Map().set("test", {
   value: undefined,
   values: undefined,
@@ -125,13 +118,6 @@ describe("mergeSearchOptions", () => {
         new Map().set("test", { placeholder, values }),
       );
     });
-  });
-});
-
-describe("getUrlQueryForOptions", () => {
-  it("should get url query", () => {
-    const test = getUrlQueryForOptions(defaultSearchOptions);
-    expect(test).toBe("name=test%20name");
   });
 });
 

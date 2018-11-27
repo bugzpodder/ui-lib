@@ -239,7 +239,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
   return query;
 };
 
-export const filterResults = (items: Array<any>, options: FilterOptions): Array<any> => {
+export const filterResults = (items: Array<any>, options: ApiQueryOptions): Array<any> => {
   const {
     count, offset, sortOptions, searchOptions,
   } = options;
