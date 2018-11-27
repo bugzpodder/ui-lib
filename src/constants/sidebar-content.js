@@ -39,7 +39,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         path: "/lims/batches",
       },
       {
-        name: "Sample Issues",
+        name: "Issues",
         domain: LIMS,
         path: "/lims/sample-issues",
       },
