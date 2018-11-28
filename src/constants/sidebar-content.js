@@ -41,7 +41,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Issues",
         domain: LIMS,
-        path: "/lims/sample-issues",
+        path: "/lims/issues",
       },
       {
         name: "Sequencing Runs",
