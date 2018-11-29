@@ -76,7 +76,9 @@ export {
   titleizeObjectKeys,
   trimObjectValues,
 } from "./utils/json-utils";
-export { formatDate, formatDateTime } from "./utils/date-utils";
+export {
+  buildDateRangeString, extractDateRange, formatDate, formatDateTime,
+} from "./utils/date-utils";
 export {
   getItemsFromOmniValue,
   getKeysForSearchDef,

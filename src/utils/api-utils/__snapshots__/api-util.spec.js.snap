@@ -117,8 +117,7 @@ Object {
         "name": "date",
         "type": Symbol(datetime),
         "values": Array [
-          "",
-          "2017-10-03T16:20:00.000Z",
+          "to 2017-10-03T16:20:00.000Z",
         ],
       },
     ],
@@ -165,101 +164,7 @@ Object {
         "name": "date",
         "type": Symbol(date),
         "values": Array [
-          "",
-          "2017-10-03",
-        ],
-      },
-    ],
-    "sortOptions": Array [],
-  },
-  "output": Array [
-    Object {
-      "date": "2017-08-23",
-    },
-    Object {
-      "date": "2017-10-02",
-    },
-  ],
-}
-`;
-
-exports[`filterResults should filter end date with null startDate 1`] = `
-Object {
-  "input": Array [
-    Object {
-      "date": "2017-08-23",
-    },
-    Object {
-      "date": "2017-10-02",
-    },
-    Object {
-      "date": "2017-10-03",
-    },
-    Object {
-      "date": "2017-10-30",
-    },
-    Object {
-      "date": "2017-11-23",
-    },
-  ],
-  "options": Object {
-    "count": 5,
-    "offset": 0,
-    "searchOptions": Array [
-      Object {
-        "name": "date",
-        "type": Symbol(datetime),
-        "values": Array [
-          null,
-          "2017-10-03T16:20:00.000Z",
-        ],
-      },
-    ],
-    "sortOptions": Array [],
-  },
-  "output": Array [
-    Object {
-      "date": "2017-08-23",
-    },
-    Object {
-      "date": "2017-10-02",
-    },
-    Object {
-      "date": "2017-10-03",
-    },
-  ],
-}
-`;
-
-exports[`filterResults should filter end date with null startDate 2`] = `
-Object {
-  "input": Array [
-    Object {
-      "date": "2017-08-23",
-    },
-    Object {
-      "date": "2017-10-02",
-    },
-    Object {
-      "date": "2017-10-03",
-    },
-    Object {
-      "date": "2017-10-30",
-    },
-    Object {
-      "date": "2017-11-23",
-    },
-  ],
-  "options": Object {
-    "count": 5,
-    "offset": 0,
-    "searchOptions": Array [
-      Object {
-        "name": "date",
-        "type": Symbol(date),
-        "values": Array [
-          null,
-          "2017-10-03",
+          "to 2017-10-03",
         ],
       },
     ],
@@ -1911,14 +1816,16 @@ Object {
         "name": "date",
         "type": Symbol(datetime),
         "values": Array [
-          "2018-10-03",
-          "2017-10-30",
+          "2018-10-03 to 2017-10-03",
         ],
       },
     ],
     "sortOptions": Array [],
   },
   "output": Array [
+    Object {
+      "date": "2017-10-30",
+    },
     Object {
       "date": "2017-11-23",
     },
@@ -1953,8 +1860,7 @@ Object {
         "name": "date",
         "type": Symbol(date),
         "values": Array [
-          "2017-09-01",
-          "2017-10-03",
+          "2017-09-01 to 2017-10-03",
         ],
       },
     ],
@@ -1995,8 +1901,7 @@ Object {
         "name": "date",
         "type": Symbol(datetime),
         "values": Array [
-          "2017-09-01",
-          "2017-10-03T16:20:00.000Z",
+          "2017-09-01 to 2017-10-03T16:20:00.000Z",
         ],
       },
     ],
@@ -3305,8 +3210,7 @@ Object {
         "name": "missingDate",
         "type": Symbol(date),
         "values": Array [
-          "2017-10-03",
-          "2017-10-30",
+          "2017-10-03 to 2017-10-03",
         ],
       },
     ],
@@ -3359,8 +3263,7 @@ Object {
         "name": "missingDate",
         "type": Symbol(datetime),
         "values": Array [
-          "2017-10-03",
-          "2017-10-30",
+          "2017-10-03 to 2017-10-30",
         ],
       },
     ],

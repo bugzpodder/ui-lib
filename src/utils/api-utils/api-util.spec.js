@@ -749,23 +749,6 @@ describe("filterResults", () => {
     checkResult(testDates, options);
   });
 
-  it("should filter end date with null startDate", () => {
-    const date = "2017-10-03T16:20:00.000Z";
-    const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
-      searchOptions: [
-        {
-          name: "date",
-          values: [null, date],
-          type: DATETIME_SEARCH_TYPE,
-        },
-      ],
-    };
-    checkResult(testDates, options);
-  });
-
   it("should filter end date with empty string startDate", () => {
     const date = "2017-10-03T16:20:00.000Z";
     const options = {
@@ -775,7 +758,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "date",
-          values: ["", date],
+          values: [`to ${date}`],
           type: DATETIME_SEARCH_TYPE,
         },
       ],
@@ -792,7 +775,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "date",
-          values: ["2017-09-01", date],
+          values: [`2017-09-01 to ${date}`],
           type: DATETIME_SEARCH_TYPE,
         },
       ],
@@ -824,7 +807,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "missingDate",
-          values: ["2017-10-03", "2017-10-30"],
+          values: ["2017-10-03 to 2017-10-30"],
           type: DATETIME_SEARCH_TYPE,
         },
       ],
@@ -849,23 +832,6 @@ describe("filterResults", () => {
     checkResult(testDates, options);
   });
 
-  it("should filter end date with null startDate", () => {
-    const date = "2017-10-03";
-    const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
-      searchOptions: [
-        {
-          name: "date",
-          values: [null, date],
-          type: DATE_SEARCH_TYPE,
-        },
-      ],
-    };
-    checkResult(testDates, options);
-  });
-
   it("should filter end date with empty string startDate", () => {
     const date = "2017-10-03";
     const options = {
@@ -875,7 +841,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "date",
-          values: ["", date],
+          values: [`to ${date}`],
           type: DATE_SEARCH_TYPE,
         },
       ],
@@ -892,7 +858,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "date",
-          values: ["2017-09-01", date],
+          values: [`2017-09-01 to ${date}`],
           type: DATE_SEARCH_TYPE,
         },
       ],
@@ -924,7 +890,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "missingDate",
-          values: ["2017-10-03", "2017-10-30"],
+          values: ["2017-10-03 to 2017-10-03"],
           type: DATE_SEARCH_TYPE,
         },
       ],
@@ -955,7 +921,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "date",
-          values: ["2018-10-03", "2017-10-30"],
+          values: ["2018-10-03 to 2017-10-03"],
           type: DATETIME_SEARCH_TYPE,
         },
       ],

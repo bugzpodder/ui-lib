@@ -2,7 +2,9 @@
 import moment from "moment-timezone";
 import { EPOCH_DATE, EPOCH_DATE_TIME } from "../../constants/date-constants";
 
-import { formatDate, formatDateTime } from "./date-util";
+import {
+  buildDateRangeString, extractDateRange, formatDate, formatDateTime,
+} from "./date-util";
 
 moment.tz.setDefault("America/Los_Angeles");
 
@@ -49,5 +51,62 @@ describe("datetime formatting", () => {
 
   it("converts null to null", () => {
     expect(formatDateTime(null)).toEqual(null);
+  });
+});
+
+const DATE_RANGE_OPTIONS = [
+  { startDate: "2018-04-20", endDate: "2019-04-20" },
+  { startDate: "2018-04-20T16:20:00Z", endDate: "2019-04-20T16:20:00Z" },
+];
+
+describe("extractDateRange", () => {
+  it("extracts no dates", () => {
+    expect(extractDateRange("")).toEqual({ startDate: "" });
+  });
+  it("extracts end datetime", () => {
+    expect(extractDateRange("to 2018-04-20T16:20:00Z")).toEqual({ endDate: "2018-04-20T16:20:00Z" });
+  });
+  DATE_RANGE_OPTIONS.forEach((dateRangeOption) => {
+    const { startDate, endDate } = dateRangeOption;
+    it(`extracts startDate ${startDate}`, () => {
+      expect(extractDateRange(startDate)).toEqual({ startDate });
+    });
+    it(`extracts endDate ${endDate}`, () => {
+      expect(extractDateRange(`to ${endDate}`)).toEqual({ endDate });
+    });
+    [" ", "  ", "   "].forEach((spaces) => {
+      ["-", "to"].forEach((delimiter) => {
+        it(`extracts startDate ${startDate} using delimter: "${spaces}${delimiter}"`, () => {
+          expect(extractDateRange(`${startDate}${spaces}${delimiter}`)).toEqual({ startDate });
+        });
+        it(`extracts startDate ${startDate} and endDate ${endDate} using delimter: "${spaces}${delimiter}${spaces}"`, () => {
+          expect(extractDateRange(`${startDate}${spaces}${delimiter}${spaces}${endDate}`)).toEqual({
+            startDate,
+            endDate,
+          });
+        });
+        it(`extracts endDate ${endDate} using delimter: "${delimiter}${spaces}"`, () => {
+          expect(extractDateRange(`${spaces}${delimiter}${spaces}${endDate}`)).toEqual({ endDate });
+        });
+      });
+    });
+  });
+});
+
+describe("buildDateRangeString", () => {
+  it("builds with no dates", () => {
+    expect(buildDateRangeString({})).toEqual("");
+  });
+  DATE_RANGE_OPTIONS.forEach((dateRangeOption) => {
+    const { startDate, endDate } = dateRangeOption;
+    it(`builds with startDate ${startDate}`, () => {
+      expect(buildDateRangeString({ startDate })).toEqual(startDate);
+    });
+    it(`builds with endDate ${endDate}`, () => {
+      expect(buildDateRangeString({ endDate })).toEqual(`to ${endDate}`);
+    });
+    it(`builds with startDate ${startDate} endDate ${endDate}`, () => {
+      expect(buildDateRangeString({ startDate, endDate })).toEqual(`${startDate} to ${endDate}`);
+    });
   });
 });

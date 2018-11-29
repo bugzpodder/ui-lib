@@ -9,6 +9,7 @@ import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
+  DATE_SEARCH_TYPES,
   ENCODED_QUOTE_CHAR,
   ENCODED_STRING_END_CHAR,
   ENCODED_STRING_START_CHAR,
@@ -25,6 +26,7 @@ import {
   percentChar,
 } from "./api-constants";
 import { DATE_FORMAT } from "../../constants";
+import { extractDateRange } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
 import { sanitizeId } from "../id-utils";
 
@@ -115,9 +117,12 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
       return memo;
     }
     const {
-      type, searchFields = [searchOptionKey], value = "", values, searchOperator,
+      type, searchFields = [searchOptionKey], value = "", searchOperator,
     } = searchOption;
-    const searchValues = getSearchValues(searchOption).map(global.encodeURIComponent);
+    const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
+    const searchValues = getSearchValues(searchOption).map(
+      isDateSearchType ? values => values : global.encodeURIComponent,
+    );
     let equalityField = "==";
     equalityField = searchOperator === undefined ? equalityField : searchOperator.toString();
     // eslint-disable-next-line arrow-parens
@@ -127,16 +132,20 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
           return multiValueSearchMemo;
         }
         const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
+          const formattedResult = `${formatter(String(value).trim())}`;
+          const subQuery = isDateSearchType ? formattedResult : `${searchField}${equalityField}${formattedResult}`;
           if (multiFieldSearchMemo) {
             multiFieldSearchMemo += doublePipe;
-            return `${multiFieldSearchMemo}(${searchField}${equalityField}${formatter(String(value).trim())})`;
+            return `${multiFieldSearchMemo}(${subQuery})`;
           }
-          const result = `${searchField}${equalityField}${formatter(String(value).trim())}`;
-          return searchFields.length > 1 ? `(${result})` : result;
+          return searchFields.length > 1 ? `(${subQuery})` : subQuery;
         }, "");
         return `${multiValueSearchMemo}${multiValueSearchMemo && doublePipe}${multiFieldSearch}`;
       }, "");
-      return multiValueSearch ? `(${multiValueSearch})` : null;
+      if (!multiValueSearch) {
+        return null;
+      }
+      return searchKeys.length > 1 ? `(${multiValueSearch})` : multiValueSearch;
     };
     const newQuery = (() => {
       switch (type) {
@@ -188,42 +197,40 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
           }, "");
           return `(${multiFieldSearch})`;
         }
-        // Note: multiField is not implemented for date search.
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
-          if (!values && !Array.isArray(value)) {
-            return null;
-          }
-          // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-          // $FlowFixMe: we know value is an array from above if statement.
-          let [startDate, endDate] = values || value;
-          if (startDate && endDate) {
-            if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
-              [startDate, endDate] = [endDate, startDate];
+          return multiValueSearchBuilder((dateRangeString) => {
+            // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
+            let { startDate, endDate } = extractDateRange(dateRangeString || "");
+            if (startDate && endDate) {
+              if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
+                [startDate, endDate] = [endDate, startDate];
+              }
             }
-          }
-          let dateSearch = "";
-          if (isValueValid(startDate) && String(startDate).trim() !== "") {
-            if (type === DATETIME_SEARCH_TYPE) {
-              startDate = moment(String(startDate))
-                .startOf("day")
-                .toISOString();
-            } else {
-              startDate = moment(String(startDate)).format(DATE_FORMAT);
+            let dateSearch = "";
+            if (isValueValid(startDate) && String(startDate).trim() !== "") {
+              if (type === DATETIME_SEARCH_TYPE) {
+                startDate = moment(String(startDate))
+                  .startOf("day")
+                  .toISOString();
+              } else {
+                startDate = moment(String(startDate)).format(DATE_FORMAT);
+              }
+              dateSearch = `${searchFields[0]}>="${startDate}"`;
             }
-            dateSearch = `${searchFields[0]}>="${startDate}"`;
-          }
-          if (isValueValid(endDate) && String(endDate).trim() !== "") {
-            if (type === DATETIME_SEARCH_TYPE) {
-              endDate = moment(String(endDate))
-                .endOf("day")
-                .toISOString();
-            } else {
-              endDate = moment(String(endDate)).format(DATE_FORMAT);
+            if (isValueValid(endDate) && String(endDate).trim() !== "") {
+              if (type === DATETIME_SEARCH_TYPE) {
+                endDate = moment(String(endDate))
+                  .endOf("day")
+                  .toISOString();
+              } else {
+                endDate = moment(String(endDate)).format(DATE_FORMAT);
+              }
+              dateSearch = `${dateSearch}${dateSearch && doubleAmpersand}${searchFields[0]}<="${endDate}"`;
             }
-            dateSearch = `${dateSearch}${dateSearch && doubleAmpersand}${searchFields[0]}<="${endDate}"`;
-          }
-          return dateSearch ? `(${dateSearch})` : null;
+            // NOTE: Must wrap the dateSearch in brackets, since it could be or'd in the wrapper.
+            return dateSearch ? `(${dateSearch})` : "";
+          });
         }
         default: {
           throw new Error(`Unknown search type: ${String(type)}`);
@@ -258,7 +265,7 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
     const { type, searchFields = [searchOptionKey], values } = searchOption;
     const searchValues = getSearchValues(searchOption);
 
-    if (type === DATETIME_SEARCH_TYPE || type === DATE_SEARCH_TYPE) {
+    if (DATE_SEARCH_TYPES.includes(type)) {
       if (searchFields.length === 0 || !item[searchFields[0]]) {
         return true;
       }
@@ -266,7 +273,7 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
         return true;
       }
       // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-      let [startDate, endDate] = values;
+      let { startDate, endDate } = extractDateRange(values[0] || "");
       if (startDate && endDate) {
         if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
           [startDate, endDate] = [endDate, startDate];

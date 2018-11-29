@@ -51,7 +51,7 @@ describe("buildSearchQuery for full text search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual('(column1=="abc")');
+    ).toEqual('column1=="abc"');
   });
 });
 
@@ -78,7 +78,7 @@ describe("buildSearchQuery for like text search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual(`(column1=="${percentChar}abc${percentChar}")`);
+    ).toEqual(`column1=="${percentChar}abc${percentChar}"`);
   });
   it("should generate query for one element with STRING_START_CHAR prefix", () => {
     expect(
@@ -90,7 +90,7 @@ describe("buildSearchQuery for like text search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual(`(column1=="abc${percentChar}")`);
+    ).toEqual(`column1=="abc${percentChar}"`);
   });
   it("should generate query for one element with STRING_END_CHAR suffix", () => {
     expect(
@@ -102,7 +102,7 @@ describe("buildSearchQuery for like text search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual(`(column1=="${percentChar}abc")`);
+    ).toEqual(`column1=="${percentChar}abc"`);
   });
   it("should generate query for one element with STRING_START_CHAR prefix and STRING_END_CHAR suffix", () => {
     expect(
@@ -114,7 +114,7 @@ describe("buildSearchQuery for like text search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual('(column1=="abc")');
+    ).toEqual('column1=="abc"');
   });
   it("should generate query for one element with quotes", () => {
     expect(
@@ -126,7 +126,7 @@ describe("buildSearchQuery for like text search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual('(column1=="abc")');
+    ).toEqual('column1=="abc"');
   });
 });
 
@@ -153,7 +153,7 @@ describe("buildSearchQuery for full id search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual('(column1=="P00100-1"||column1=="P001001")');
+    ).toEqual('column1=="P00100-1"||column1=="P001001"');
   });
   it("should generate query for one accession label element", () => {
     expect(
@@ -165,7 +165,7 @@ describe("buildSearchQuery for full id search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual('(column1=="A00100-1")');
+    ).toEqual('column1=="A00100-1"');
   });
 });
 
@@ -192,7 +192,23 @@ describe("buildSearchQuery for like id search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual(`(column1=="${percentChar}P00100-1${percentChar}"||column1=="${percentChar}P001001${percentChar}")`);
+    ).toEqual(
+      `column1=="${percentChar}P00100-1${percentChar}"${doublePipe}column1=="${percentChar}P001001${percentChar}"`,
+    );
+  });
+  it("should generate query for one element, two fields", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["P00100-1"],
+          type: LIKE_ID_SEARCH_TYPE,
+          searchFields: ["column1", "column2"],
+        },
+      ]),
+    ).toEqual(
+      `(column1=="${percentChar}P00100-1${percentChar}")${doublePipe}(column2=="${percentChar}P00100-1${percentChar}")${doublePipe}(column1=="${percentChar}P001001${percentChar}")${doublePipe}(column2=="${percentChar}P001001${percentChar}")`,
+    );
   });
   it("should generate query for one accession label element", () => {
     expect(
@@ -204,7 +220,7 @@ describe("buildSearchQuery for like id search", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual(`(column1=="${percentChar}A00100-1${percentChar}")`);
+    ).toEqual(`column1=="${percentChar}A00100-1${percentChar}"`);
   });
 });
 
@@ -227,7 +243,7 @@ describe("buildSearchQuery for numeric search", () => {
           type: NUMERIC_SEARCH_TYPE,
         }),
       ),
-    ).toEqual("(column1==0)");
+    ).toEqual("column1==0");
   });
   it("should generate query for one element", () => {
     expect(
@@ -237,7 +253,7 @@ describe("buildSearchQuery for numeric search", () => {
           type: NUMERIC_SEARCH_TYPE,
         }),
       ),
-    ).toEqual("(column1==123)");
+    ).toEqual("column1==123");
   });
 });
 
@@ -260,7 +276,7 @@ describe("buildSearchQuery for boolean search", () => {
           type: BOOLEAN_SEARCH_TYPE,
         }),
       ),
-    ).toEqual("(column1==false)");
+    ).toEqual("column1==false");
   });
   it("should generate query for one element", () => {
     expect(
@@ -270,7 +286,7 @@ describe("buildSearchQuery for boolean search", () => {
           type: BOOLEAN_SEARCH_TYPE,
         }),
       ),
-    ).toEqual("(column1==true)");
+    ).toEqual("column1==true");
   });
 });
 
@@ -299,6 +315,25 @@ describe("buildSearchQuery for multi field search", () => {
       `((column1=="${percentChar}123${percentChar}")${doublePipe}(column2=="${percentChar}123${percentChar}"))`,
     );
   });
+  it("should generate query for elements, and multiple options", () => {
+    expect(
+      buildSearchQuery(
+        new Map()
+          .set("column1", {
+            value: "123",
+            type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+            searchFields: ["column1", "column2"],
+          })
+          .set("column3", {
+            value: "456",
+            type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+            searchFields: ["column3"],
+          }),
+      ),
+    ).toEqual(
+      `((column1=="${percentChar}123${percentChar}")${doublePipe}(column2=="${percentChar}123${percentChar}"))${doubleAmpersand}((column3=="${percentChar}456${percentChar}"))`,
+    );
+  });
 });
 
 describe("buildSearchQuery for multi value search", () => {
@@ -320,7 +355,7 @@ describe("buildSearchQuery for multi value search", () => {
           values: ["123", "345"],
         }),
       ),
-    ).toEqual(`(column1=="${percentChar}123${percentChar}"${doublePipe}column1=="${percentChar}345${percentChar}")`);
+    ).toEqual(`column1=="${percentChar}123${percentChar}"${doublePipe}column1=="${percentChar}345${percentChar}"`);
   });
   it("should generate query for Numeric text search elements", () => {
     expect(
@@ -330,7 +365,7 @@ describe("buildSearchQuery for multi value search", () => {
           values: [123, 345.6],
         }),
       ),
-    ).toEqual(`(column1==123${doublePipe}column1==345.6)`);
+    ).toEqual(`column1==123${doublePipe}column1==345.6`);
   });
   it("should generate query for Boolean text search elements", () => {
     expect(
@@ -340,7 +375,7 @@ describe("buildSearchQuery for multi value search", () => {
           values: [true, false], // Technically, this is silly...
         }),
       ),
-    ).toEqual(`(column1==true${doublePipe}column1==false)`);
+    ).toEqual(`column1==true${doublePipe}column1==false`);
   });
   it("should generate query for Full text search elements", () => {
     expect(
@@ -350,7 +385,7 @@ describe("buildSearchQuery for multi value search", () => {
           values: ["123", "345"],
         }),
       ),
-    ).toEqual(`(column1=="123"${doublePipe}column1=="345")`);
+    ).toEqual(`column1=="123"${doublePipe}column1=="345"`);
   });
 });
 
@@ -366,27 +401,27 @@ describe("buildSearchQuery for datetime search", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [date, undefined],
+          values: [`${date}`],
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
     ).toEqual(`(date>="${startOfDay}")`);
   });
-  it("should generate query for end date with null startDate", () => {
+  it("should generate query for start date to", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [null, date],
+          values: [`${date} to`],
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
-    ).toEqual(`(date<="${endOfDay}")`);
+    ).toEqual(`(date>="${startOfDay}")`);
   });
-  it("should generate query for end date with empty string startDate", () => {
+  it("should generate query for end date with no string startDate", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: ["", date],
+          values: [`to ${date}`],
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
@@ -400,7 +435,7 @@ describe("buildSearchQuery for datetime search", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [newStartDate, date],
+          values: [`${newStartDate} to ${date}`],
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
@@ -410,7 +445,7 @@ describe("buildSearchQuery for datetime search", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [date, newStartDate],
+          values: [`${date} to ${newStartDate}`],
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
@@ -434,27 +469,27 @@ describe("buildSearchQuery for date search", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [date, undefined],
+          values: [`${date}`],
           type: DATE_SEARCH_TYPE,
         }),
       ),
     ).toEqual(`(date>="${date}")`);
   });
-  it("should generate query for end date with null startDate", () => {
+  it("should generate query for start date to", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [null, date],
+          values: [`${date} to`],
           type: DATE_SEARCH_TYPE,
         }),
       ),
-    ).toEqual(`(date<="${date}")`);
+    ).toEqual(`(date>="${date}")`);
   });
-  it("should generate query for end date with empty string startDate", () => {
+  it("should generate query for end date with no string startDate", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: ["", date],
+          values: [`to ${date}`],
           type: DATE_SEARCH_TYPE,
         }),
       ),
@@ -465,7 +500,7 @@ describe("buildSearchQuery for date search", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [newStartDate, date],
+          values: [`${newStartDate} - ${date}`],
           type: DATE_SEARCH_TYPE,
         }),
       ),
@@ -475,7 +510,7 @@ describe("buildSearchQuery for date search", () => {
     expect(
       buildSearchQuery(
         new Map().set("date", {
-          values: [date, newStartDate],
+          values: [`${date} - ${newStartDate}`],
           type: DATE_SEARCH_TYPE,
         }),
       ),
@@ -572,7 +607,7 @@ describe("buildSearchQuery is invalid", () => {
         {
           name: "column1",
           values: [],
-          type: DATETIME_SEARCH_TYPE,
+          type: DATE_SEARCH_TYPE,
           searchFields: ["column1"],
         },
       ]),
@@ -594,6 +629,6 @@ describe("buildSearchQuery for uri encoding", () => {
           searchFields: ["column1"],
         },
       ]),
-    ).toEqual(`(column1=="abc%20%26%20123"${doublePipe}column1=="xyz")`);
+    ).toEqual(`column1=="abc%20%26%20123"${doublePipe}column1=="xyz"`);
   });
 });
