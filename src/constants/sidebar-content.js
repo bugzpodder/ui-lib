@@ -161,12 +161,12 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Part Numbers",
         domain: LIMS,
-        path: "/lims/reagents/part-numbers",
+        path: "/lims/part-numbers",
       },
       {
         name: "Reagent Lots",
         domain: LIMS,
-        path: "/lims/reagents",
+        path: "/lims/reagent-lots",
         exact: true,
       },
     ],
