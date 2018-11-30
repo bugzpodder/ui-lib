@@ -13,7 +13,36 @@ import {
   getSearchOptions,
   getSearchValuesFromOmniText,
   getValueItemsFromSearchValues,
+  parseValuesFromOmniText,
 } from "./omni-search-util";
+
+describe("parseValuesFromOmniText", () => {
+  it("should parse no values", () => {
+    expect(parseValuesFromOmniText("")).toEqual(new Map().set("omni", [""]));
+  });
+  it("should parse omni values", () => {
+    expect(parseValuesFromOmniText("abc")).toEqual(new Map().set("omni", ["abc"]));
+  });
+  it("should parse one value", () => {
+    expect(parseValuesFromOmniText("test: abc")).toEqual(new Map().set("test", ["abc"]));
+  });
+  it("should parse two values", () => {
+    expect(parseValuesFromOmniText("test: abc, def")).toEqual(new Map().set("test", ["abc", " def"]));
+  });
+  it("should parse two keys", () => {
+    expect(parseValuesFromOmniText("test: abc, def test2: x")).toEqual(
+      new Map().set("test", ["abc", " def"]).set("test2", ["x"]),
+    );
+  });
+  it("should parse key with omni", () => {
+    expect(parseValuesFromOmniText("123 test: abc, def")).toEqual(
+      new Map().set("test", ["abc", " def"]).set("omni", ["123"]),
+    );
+  });
+  it("should parse duplicate keys", () => {
+    expect(parseValuesFromOmniText("test: abc, def test: x")).toEqual(new Map().set("test", ["abc", " def", "x"]));
+  });
+});
 
 const searchDefs: SearchDefs = [
   {

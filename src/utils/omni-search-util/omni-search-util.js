@@ -39,6 +39,18 @@ export const parseValuesFromOmniText = (omniText: string): Map<string, Array<str
     result = searchKey.exec(omniText);
   }
   addItemToArrayMap(key, omniText.slice(lastIndex), parsed);
+  // parsed values contain comma delimited values.
+  // Note - the values could be an array of comma delimited strings. Split to array of strings.
+  // At this point:
+  // omni text of `assay: npc, ngs, qpcr` generated a map like `assay` => `["npc, ngs, qpcr"]`
+  // omni text of `assay: npc assay: ngs, qpcr` generated a map like `assay`=> `["npc", "ngs, qpcr"]`
+  // Make both options generate a map like `assay` => `["npc", "ngs", "qpcr"]`
+  //
+  // This is probably more desirable, however, it does lose the ability to regenerate the original omni text.
+  parsed.forEach((values, key) => {
+    values = values.reduce((acc, value) => [...acc, ...value.split(",")], []);
+    parsed.set(key, values);
+  });
   return parsed;
 };
 
