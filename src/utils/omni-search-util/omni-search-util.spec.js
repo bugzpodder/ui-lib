@@ -117,7 +117,7 @@ describe("getSearchValuesFromOmniText", () => {
   it("should join values of duplicate keys", () => {
     const expectedSearchValues = new Map();
     expectedSearchValues.set(1, "5");
-    expectedSearchValues.set(2, "12 1, 34");
+    expectedSearchValues.set(2, "12 1,34");
     expect(getSearchValuesFromOmniText(searchDefs, "lot:12 1 lot: 34 part:5")).toEqual(expectedSearchValues);
   });
   it("should trim whitespace for ENUM_SEARCH_TYPE", () => {

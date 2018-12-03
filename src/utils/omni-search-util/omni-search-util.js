@@ -90,7 +90,7 @@ export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: st
       values = values.map(value => value.trim());
     }
     if (values.length) {
-      const searchValue = values.join(", ");
+      const searchValue = values.join(",");
       searchValues.set(index, searchValue);
     }
   });
