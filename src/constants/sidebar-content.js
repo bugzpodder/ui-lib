@@ -88,11 +88,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
         domain: LIMS,
         path: "/automation/program-regex-tester",
       },
-      {
-        name: "Tasks",
-        domain: LIMS,
-        path: "/automation/tasks",
-      },
     ],
   },
   {
