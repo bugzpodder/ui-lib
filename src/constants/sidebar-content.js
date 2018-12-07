@@ -11,7 +11,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Commercial Accessioning",
         domain: EDC,
-        path: "/v2/trfs/table",
+        path: "/v2/trfs",
       },
       {
         name: "Research Accessioning",
@@ -116,7 +116,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Tests",
         domain: EDC,
-        path: "/v2/trfs/table",
+        path: "/v2/trfs",
       },
       {
         name: "Healthcare Providers",
@@ -126,7 +126,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Invoices",
         domain: EDC,
-        path: "/v2/invoices/table",
+        path: "/v2/invoices",
       },
       {
         name: "Adjustments",
