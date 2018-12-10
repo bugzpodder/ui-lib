@@ -40,7 +40,7 @@ export const extractDateRange = (dateRangeString: string) => {
       endDate: undefined,
     };
   }
-  const [__, startDate, endDate] = match;
+  const [, startDate, endDate] = match;
   return {
     startDate,
     endDate,
