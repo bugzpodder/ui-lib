@@ -1,4 +1,6 @@
-## 0.9.0 - 2018-11-21
+## 0.9.0
+
+1. Add `includeNulls` to query builder and filter builder
 
 ## 0.8.0 - 2018-11-07
 
