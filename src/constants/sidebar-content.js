@@ -94,9 +94,9 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
     name: "Pipeline",
     children: [
       {
-        name: "New Experimental Run",
+        name: "New Run",
         domain: LIMS,
-        path: "/pipeline/analysis-runs/new",
+        path: "/pipeline/analysis-runs/new-run",
       },
       {
         name: "Previous Runs",
