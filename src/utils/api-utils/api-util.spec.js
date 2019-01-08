@@ -16,7 +16,7 @@ import { filterResults } from "./api-util";
 const testSimple = [{ id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }, { id: 3 }, { id: 0 }];
 const testObjs = [{ name: "xx" }, { name: "xy" }, { name: "aa" }, { name: "bb" }, { name: "bx" }];
 
-const testObjs2 = [{ name: "xx" }, { name: "xy" }, { name: "xy" }, { name: "bb" }, { name: "aa" }];
+const testObjs2 = [{ name: "xx" }, { name: "xy" }, { name: "xy" }, { name: "bb" }, { name: "aa" }, { name: null }];
 
 const testObjs3 = [{ name: "x" }, { name: "x" }, { name: "b" }, { name: "b" }, { name: "a" }];
 
@@ -82,6 +82,7 @@ const testNestedId = [
   { name: "xy", labels: [{ name: "A00100-1" }] },
   { name: "A00100-1", labels: [] },
   { name: "cd", labels: [{ name: "P001002" }, { name: "bg" }] },
+  { name: "A00100-2", labels: [{ name: "abc" }, { name: null }] },
 ];
 
 const testBoolean = [{ isValid: true }, { isValid: false }, { isValid: 1 }, { isValid: 0 }, {}];
@@ -296,6 +297,23 @@ describe("filterResults", () => {
           name: "name",
           value: "xy",
           type: FULL_TEXT_SEARCH_TYPE,
+        },
+      ],
+    };
+    checkResult(testObjs2, options);
+  });
+
+  it("should filter string including NULL", () => {
+    const options = {
+      count: 5,
+      offset: 0,
+      sortOptions: [],
+      searchOptions: [
+        {
+          name: "name",
+          value: "xy",
+          type: FULL_TEXT_SEARCH_TYPE,
+          includeNulls: true,
         },
       ],
     };
@@ -1127,6 +1145,22 @@ describe("filterResults", () => {
           name: "labels.name",
           value: "P00100-1",
           type: FULL_ID_SEARCH_TYPE,
+        },
+      ],
+    };
+    checkResult(testNestedId, options);
+  });
+  it("should filter id field with filterKey including NULL", () => {
+    const options = {
+      count: 5,
+      offset: 0,
+      sortOptions: [],
+      searchOptions: [
+        {
+          name: "labels.name",
+          value: "P00100-1",
+          type: FULL_ID_SEARCH_TYPE,
+          includeNulls: true,
         },
       ],
     };

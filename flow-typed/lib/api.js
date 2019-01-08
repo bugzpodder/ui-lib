@@ -15,7 +15,8 @@ declare type OldSearchOption = {
   searchFields?: Array<string>,
   isCustomRendered?: boolean,
   placeholder?: string,
-  searchOperator?: Symbol,
+  searchOperator?: string,
+  includeNulls?: boolean,
 } & SearchOptionValue;
 
 declare type SearchOptions = Map<string, OldSearchOption>;
@@ -76,6 +77,7 @@ declare type SearchDef = {
   aliases?: Array<string>,
   description?: string,
   searchOperator?: string,
+  includeNulls?: boolean,
   localStorageKeySuffix?: string,
   // TODO(jrosenfield): support validation in the future?
 };

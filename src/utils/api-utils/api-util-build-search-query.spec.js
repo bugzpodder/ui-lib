@@ -632,3 +632,120 @@ describe("buildSearchQuery for uri encoding", () => {
     ).toEqual(`column1=="abc%20%26%20123"${doublePipe}column1=="xyz"`);
   });
 });
+
+describe("buildSearchQuery for searchOperator", () => {
+  it("should set searchOperator for one search field", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc & 123", "xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+          searchOperator: "!=",
+        },
+      ]),
+    ).toEqual(`column1!="abc%20%26%20123"${doublePipe}column1!="xyz"`);
+  });
+  it("should set searchOperator for two search fields", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc & 123", "xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1", "column2"],
+          searchOperator: "!=",
+        },
+      ]),
+    ).toEqual(
+      `(column1!="abc%20%26%20123")${doublePipe}(column2!="abc%20%26%20123")${doublePipe}(column1!="xyz")${doublePipe}(column2!="xyz")`,
+    );
+  });
+});
+
+describe("buildSearchQuery for includeNulls", () => {
+  it("should search for null for one search field and no value", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+          includeNulls: true,
+        },
+      ]),
+    ).toEqual('column1=="NULL"');
+  });
+  it("should search for null for one search field and one value", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+          includeNulls: true,
+        },
+      ]),
+    ).toEqual(`column1=="NULL"${doublePipe}column1=="abc"`);
+  });
+  it("should search for null for one search field and two values", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc & 123", "xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+          includeNulls: true,
+        },
+      ]),
+    ).toEqual(`column1=="NULL"${doublePipe}column1=="abc%20%26%20123"${doublePipe}column1=="xyz"`);
+  });
+  it("should search for NULL for two search fields", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["abc & 123", "xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1", "column2"],
+          includeNulls: true,
+        },
+      ]),
+    ).toEqual(
+      `(column1=="NULL")${doublePipe}(column2=="NULL")${doublePipe}(column1=="abc%20%26%20123")${doublePipe}(column2=="abc%20%26%20123")${doublePipe}(column1=="xyz")${doublePipe}(column2=="xyz")`,
+    );
+  });
+  it("should search for NULL for several search options", () => {
+    expect(
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column1"],
+          includeNulls: true,
+        },
+        {
+          name: "columnc",
+          values: ["xyz"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column2"],
+          includeNulls: false,
+        },
+        {
+          name: "columnd",
+          values: ["abc"],
+          type: FULL_TEXT_SEARCH_TYPE,
+          searchFields: ["column3"],
+          includeNulls: true,
+        },
+      ]),
+    ).toEqual(
+      `(column1=="NULL"${doublePipe}column1=="xyz")${doubleAmpersand}(column2=="xyz")${doubleAmpersand}(column3=="NULL"${doublePipe}column3=="abc")`,
+    );
+  });
+});

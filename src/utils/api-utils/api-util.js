@@ -117,23 +117,32 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
       return memo;
     }
     const {
-      type, searchFields = [searchOptionKey], value = "", searchOperator,
+      type, searchFields = [searchOptionKey], value = "", includeNulls,
     } = searchOption;
     const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
     const searchValues = getSearchValues(searchOption).map(
       isDateSearchType ? values => values : global.encodeURIComponent,
     );
-    let equalityField = "==";
-    equalityField = searchOperator === undefined ? equalityField : searchOperator.toString();
+    const { searchOperator = "==" } = searchOption;
     // eslint-disable-next-line arrow-parens
-    const multiValueSearchBuilder = formatter => {
+    let initialSubQuery = "";
+    if (includeNulls) {
+      initialSubQuery = searchFields.reduce((memo, searchField) => {
+        const nullQuery = `${searchField}=="NULL"`;
+        if (memo) {
+          return `${memo}${doublePipe}(${nullQuery})`;
+        }
+        return searchFields.length > 1 ? `(${nullQuery})` : nullQuery;
+      }, "");
+    }
+    const multiValueSearchBuilder = (formatter) => {
       const multiValueSearch = searchValues.reduce((multiValueSearchMemo, value) => {
         if (!isValueValid(value)) {
           return multiValueSearchMemo;
         }
         const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
           const formattedResult = `${formatter(String(value).trim())}`;
-          const subQuery = isDateSearchType ? formattedResult : `${searchField}${equalityField}${formattedResult}`;
+          const subQuery = isDateSearchType ? formattedResult : `${searchField}${searchOperator}${formattedResult}`;
           if (multiFieldSearchMemo) {
             multiFieldSearchMemo += doublePipe;
             return `${multiFieldSearchMemo}(${subQuery})`;
@@ -141,7 +150,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
           return searchFields.length > 1 ? `(${subQuery})` : subQuery;
         }, "");
         return `${multiValueSearchMemo}${multiValueSearchMemo && doublePipe}${multiFieldSearch}`;
-      }, "");
+      }, initialSubQuery);
       if (!multiValueSearch) {
         return null;
       }
@@ -175,6 +184,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
         case BOOLEAN_SEARCH_TYPE:
           return multiValueSearchBuilder(value => `${value}`);
         case FULL_TEXT_SEARCH_TYPE:
+        // fallthrough to next case
         case ENUM_SEARCH_TYPE:
           return multiValueSearchBuilder(value => `"${value.trim()}"`);
         case FULL_ID_SEARCH_TYPE:
@@ -191,7 +201,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
             if (multiFieldSearchMemo) {
               multiFieldSearchMemo += doublePipe;
             }
-            return `${multiFieldSearchMemo}(${searchField}${equalityField}"${percentChar}${String(
+            return `${multiFieldSearchMemo}(${searchField}${searchOperator}"${percentChar}${String(
               value,
             ).trim()}${percentChar}")`;
           }, "");
@@ -262,7 +272,9 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
       return false;
     }
 
-    const { type, searchFields = [searchOptionKey], values } = searchOption;
+    const {
+      type, searchFields = [searchOptionKey], values, includeNulls,
+    } = searchOption;
     const searchValues = getSearchValues(searchOption);
 
     if (DATE_SEARCH_TYPES.includes(type)) {
@@ -322,11 +334,22 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
       if (searchResult || !isValueValid(value)) {
         return searchResult;
       }
-
       return searchFields.reduce((found, field) => {
         const [itemKey, filterKey] = field.split(".");
         if (filterKey) {
-          return found || (item[itemKey] && item[itemKey].some(e => compare(e[filterKey], value)));
+          return (
+            found
+              || (item[itemKey]
+                && item[itemKey].some((e) => {
+                  if (includeNulls && e[filterKey] == null) {
+                    return true;
+                  }
+                  return compare(e[filterKey], value);
+                }))
+          );
+        }
+        if (includeNulls && item[field] == null) {
+          return true;
         }
         return found || (isValueValid(item[field]) && compare(item[field], value));
       }, false);
