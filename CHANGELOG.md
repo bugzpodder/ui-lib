@@ -1,6 +1,12 @@
 ## 0.9.0
 
 1. Add `includeNulls` to query builder and filter builder
+2. Allow omni search to search by end date only.
+3. Include flow definitions in build.
+4. Clean up Flow types.
+5. Update sidebar content.
+6. Cleanup search API definitions and functionality.
+7. Bug fixes.
 
 ## 0.8.0 - 2018-11-07
 
