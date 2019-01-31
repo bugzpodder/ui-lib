@@ -96,6 +96,7 @@ declare type SearchOptionsV2 = Array<SearchOptionV2>;
 declare type SearchApi = {
   searchDefs: OmniSearchDefs,
   setSearchOptions: Function,
+  getInitialValues?: Function,
 };
 
 type OmniSearchCommand = {
