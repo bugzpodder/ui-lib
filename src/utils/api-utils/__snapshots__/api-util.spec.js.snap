@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports["filterResults should be identity 1"] = `
+exports[`filterResults should be identity 1`] = `
 Object {
   "input": Array [
     1,
@@ -25,7 +25,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter empty multi-field 1"] = `
+exports[`filterResults should filter empty multi-field 1`] = `
 Object {
   "input": Array [
     Object {
@@ -59,8 +59,10 @@ Object {
           "id",
           "name",
         ],
-        "type": Symbol(multi-field-text-search),
-        "value": "",
+        "type": Symbol(like-text),
+        "values": Array [
+          "",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -90,7 +92,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter end date with empty string startDate 1"] = `
+exports[`filterResults should filter end date with empty string startDate 1`] = `
 Object {
   "input": Array [
     Object {
@@ -137,7 +139,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter end date with empty string startDate 2"] = `
+exports[`filterResults should filter end date with empty string startDate 2`] = `
 Object {
   "input": Array [
     Object {
@@ -181,7 +183,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter equal number 1"] = `
+exports[`filterResults should filter equal number 1`] = `
 Object {
   "input": Array [
     Object {
@@ -211,7 +213,9 @@ Object {
         "isEqual": true,
         "name": "id",
         "type": Symbol(numeric),
-        "value": 3,
+        "values": Array [
+          3,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -224,7 +228,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter false boolean 1"] = `
+exports[`filterResults should filter false boolean 1`] = `
 Object {
   "input": Array [
     Object {
@@ -249,7 +253,9 @@ Object {
         "isEqual": false,
         "name": "isValid",
         "type": Symbol(boolean),
-        "value": false,
+        "values": Array [
+          false,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -265,7 +271,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter false for nested 1"] = `
+exports[`filterResults should filter false for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -313,7 +319,9 @@ Object {
       Object {
         "name": "values.isValid",
         "type": Symbol(boolean),
-        "value": false,
+        "values": Array [
+          false,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -340,7 +348,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter id field 1"] = `
+exports[`filterResults should filter id field 1`] = `
 Object {
   "input": Array [
     Object {
@@ -371,7 +379,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(full-id),
-        "value": "P00100-1",
+        "values": Array [
+          "P00100-1",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -385,7 +395,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter id field with filterKey 1"] = `
+exports[`filterResults should filter id field with filterKey 1`] = `
 Object {
   "input": Array [
     Object {
@@ -449,7 +459,9 @@ Object {
       Object {
         "name": "labels.name",
         "type": Symbol(full-id),
-        "value": "P00100-1",
+        "values": Array [
+          "P00100-1",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -470,7 +482,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter id field with filterKey including NULL 1"] = `
+exports[`filterResults should filter id field with filterKey including NULL 1`] = `
 Object {
   "input": Array [
     Object {
@@ -535,7 +547,9 @@ Object {
         "includeNulls": true,
         "name": "labels.name",
         "type": Symbol(full-id),
-        "value": "P00100-1",
+        "values": Array [
+          "P00100-1",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -567,7 +581,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter lab test accession label id field 1"] = `
+exports[`filterResults should filter lab test accession label id field 1`] = `
 Object {
   "input": Array [
     Object {
@@ -598,7 +612,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(full-id),
-        "value": "A00100-1",
+        "values": Array [
+          "A00100-1",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -612,7 +628,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter lab test accession label id field with filterKey 1"] = `
+exports[`filterResults should filter lab test accession label id field with filterKey 1`] = `
 Object {
   "input": Array [
     Object {
@@ -676,7 +692,9 @@ Object {
       Object {
         "name": "labels.name",
         "type": Symbol(full-id),
-        "value": "A00100-1",
+        "values": Array [
+          "A00100-1",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -694,7 +712,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter like id field 1"] = `
+exports[`filterResults should filter like id field 1`] = `
 Object {
   "input": Array [
     Object {
@@ -725,7 +743,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-id),
-        "value": "P001",
+        "values": Array [
+          "P001",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -743,7 +763,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter like id field with filterKey 1"] = `
+exports[`filterResults should filter like id field with filterKey 1`] = `
 Object {
   "input": Array [
     Object {
@@ -807,7 +827,9 @@ Object {
       Object {
         "name": "labels.name",
         "type": Symbol(like-id),
-        "value": "P001",
+        "values": Array [
+          "P001",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -839,7 +861,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many multi-fields 1"] = `
+exports[`filterResults should filter many multi-fields 1`] = `
 Object {
   "input": Array [
     Object {
@@ -873,7 +895,7 @@ Object {
           "id",
           "name",
         ],
-        "type": Symbol(multi-field-text-search),
+        "type": Symbol(like-text),
         "values": Array [
           "aa",
           "bb",
@@ -903,7 +925,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many nested multi-fields 1"] = `
+exports[`filterResults should filter many nested multi-fields 1`] = `
 Object {
   "input": Array [
     Object {
@@ -959,7 +981,7 @@ Object {
           "name",
           "labels.name",
         ],
-        "type": Symbol(multi-field-text-search),
+        "type": Symbol(like-text),
         "values": Array [
           "ab",
           "bb",
@@ -996,7 +1018,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many numbers 1"] = `
+exports[`filterResults should filter many numbers 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1044,7 +1066,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many strings 1"] = `
+exports[`filterResults should filter many strings 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1095,7 +1117,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many strings for nested 1"] = `
+exports[`filterResults should filter many strings for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1180,7 +1202,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many substrings for nested 1"] = `
+exports[`filterResults should filter many substrings for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1268,7 +1290,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many unequal strings for nested 1"] = `
+exports[`filterResults should filter many unequal strings for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1347,7 +1369,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter many unequal substrings for nested 1"] = `
+exports[`filterResults should filter many unequal substrings for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1443,7 +1465,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter multi numeric for nested 1"] = `
+exports[`filterResults should filter multi numeric for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1531,7 +1553,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter multi search 1"] = `
+exports[`filterResults should filter multi search 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1557,7 +1579,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "x",
+        "values": Array [
+          "x",
+        ],
       },
       Object {
         "name": "id",
@@ -1575,7 +1599,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter multi search with empty value 1"] = `
+exports[`filterResults should filter multi search with empty value 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1601,7 +1625,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "",
+        "values": Array [
+          "",
+        ],
       },
       Object {
         "name": "id",
@@ -1619,7 +1645,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter multi search with starting empty value 1"] = `
+exports[`filterResults should filter multi search with starting empty value 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1654,7 +1680,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "",
+        "values": Array [
+          "",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -1663,7 +1691,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter multi-field 1"] = `
+exports[`filterResults should filter multi-field 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1697,8 +1725,10 @@ Object {
           "id",
           "name",
         ],
-        "type": Symbol(multi-field-text-search),
-        "value": "aa",
+        "type": Symbol(like-text),
+        "values": Array [
+          "aa",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -1716,7 +1746,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter nested multi-field 1"] = `
+exports[`filterResults should filter nested multi-field 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1772,8 +1802,10 @@ Object {
           "name",
           "labels.name",
         ],
-        "type": Symbol(multi-field-text-search),
-        "value": "bb",
+        "type": Symbol(like-text),
+        "values": Array [
+          "bb",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -1802,7 +1834,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter number 1"] = `
+exports[`filterResults should filter number 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1831,7 +1863,9 @@ Object {
       Object {
         "name": "id",
         "type": Symbol(numeric),
-        "value": 3,
+        "values": Array [
+          3,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -1844,7 +1878,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter numeric for nested 1"] = `
+exports[`filterResults should filter numeric for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1892,7 +1926,9 @@ Object {
       Object {
         "name": "values.count",
         "type": Symbol(numeric),
-        "value": 10,
+        "values": Array [
+          10,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -1922,7 +1958,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter results for reverse start and end date 1"] = `
+exports[`filterResults should filter results for reverse start and end date 1`] = `
 Object {
   "input": Array [
     Object {
@@ -1966,7 +2002,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter start and end date 1"] = `
+exports[`filterResults should filter start and end date 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2007,7 +2043,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter start and end datetime 1"] = `
+exports[`filterResults should filter start and end datetime 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2051,7 +2087,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter start date 1"] = `
+exports[`filterResults should filter start date 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2095,7 +2131,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter start datetime 1"] = `
+exports[`filterResults should filter start datetime 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2139,7 +2175,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter string 1"] = `
+exports[`filterResults should filter string 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2168,7 +2204,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(full-text),
-        "value": "xy",
+        "values": Array [
+          "xy",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2184,7 +2222,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter string for nested 1"] = `
+exports[`filterResults should filter string for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2232,7 +2270,9 @@ Object {
       Object {
         "name": "labels.name",
         "type": Symbol(full-text),
-        "value": "bb",
+        "values": Array [
+          "bb",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2249,7 +2289,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter string including NULL 1"] = `
+exports[`filterResults should filter string including NULL 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2279,7 +2319,9 @@ Object {
         "includeNulls": true,
         "name": "name",
         "type": Symbol(full-text),
-        "value": "xy",
+        "values": Array [
+          "xy",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2298,7 +2340,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter substring 1"] = `
+exports[`filterResults should filter substring 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2324,7 +2366,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "x",
+        "values": Array [
+          "x",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2343,7 +2387,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter substring for nested 1"] = `
+exports[`filterResults should filter substring for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2391,7 +2435,9 @@ Object {
       Object {
         "name": "labels.name",
         "type": Symbol(like-text),
-        "value": "b",
+        "values": Array [
+          "b",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2428,7 +2474,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter then offset 1"] = `
+exports[`filterResults should filter then offset 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2454,7 +2500,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "x",
+        "values": Array [
+          "x",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2470,7 +2518,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter then sort 1"] = `
+exports[`filterResults should filter then sort 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2496,7 +2544,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "x",
+        "values": Array [
+          "x",
+        ],
       },
     ],
     "sortOptions": Array [
@@ -2519,7 +2569,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter then sort then offset 1"] = `
+exports[`filterResults should filter then sort then offset 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2545,7 +2595,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "x",
+        "values": Array [
+          "x",
+        ],
       },
     ],
     "sortOptions": Array [
@@ -2565,7 +2617,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter true boolean 1"] = `
+exports[`filterResults should filter true boolean 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2589,7 +2641,9 @@ Object {
       Object {
         "name": "isValid",
         "type": Symbol(boolean),
-        "value": true,
+        "values": Array [
+          true,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2605,7 +2659,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter true for nested 1"] = `
+exports[`filterResults should filter true for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2653,7 +2707,9 @@ Object {
       Object {
         "name": "values.isValid",
         "type": Symbol(numeric),
-        "value": true,
+        "values": Array [
+          true,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2680,7 +2736,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal boolean for nested 1"] = `
+exports[`filterResults should filter unequal boolean for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2729,7 +2785,9 @@ Object {
         "isEqual": false,
         "name": "values.isValid",
         "type": Symbol(numeric),
-        "value": true,
+        "values": Array [
+          true,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2756,7 +2814,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal number 1"] = `
+exports[`filterResults should filter unequal number 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2786,7 +2844,9 @@ Object {
         "isEqual": false,
         "name": "id",
         "type": Symbol(numeric),
-        "value": 3,
+        "values": Array [
+          3,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2799,7 +2859,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal numeric for nested 1"] = `
+exports[`filterResults should filter unequal numeric for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -2848,7 +2908,9 @@ Object {
         "isEqual": false,
         "name": "values.count",
         "type": Symbol(numeric),
-        "value": 30,
+        "values": Array [
+          30,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2875,7 +2937,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal numeric for nested 2"] = `
+exports[`filterResults should filter unequal numeric for nested 2`] = `
 Object {
   "input": Array [
     Object {
@@ -2924,7 +2986,9 @@ Object {
         "isEqual": false,
         "name": "values.count",
         "type": Symbol(numeric),
-        "value": 30,
+        "values": Array [
+          30,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -2951,7 +3015,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal string for nested 1"] = `
+exports[`filterResults should filter unequal string for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3000,7 +3064,9 @@ Object {
         "isEqual": false,
         "name": "labels.name",
         "type": Symbol(full-text),
-        "value": "bb",
+        "values": Array [
+          "bb",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -3017,7 +3083,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal substring 1"] = `
+exports[`filterResults should filter unequal substring 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3044,7 +3110,9 @@ Object {
         "isEqual": false,
         "name": "name",
         "type": Symbol(like-text),
-        "value": "x",
+        "values": Array [
+          "x",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -3063,7 +3131,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter unequal substring for nested 1"] = `
+exports[`filterResults should filter unequal substring for nested 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3112,7 +3180,9 @@ Object {
         "isEqual": false,
         "name": "labels.name",
         "type": Symbol(like-text),
-        "value": "b",
+        "values": Array [
+          "b",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -3149,7 +3219,7 @@ Object {
 }
 `;
 
-exports["filterResults should filter zero 1"] = `
+exports[`filterResults should filter zero 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3178,7 +3248,9 @@ Object {
       Object {
         "name": "id",
         "type": Symbol(numeric),
-        "value": 0,
+        "values": Array [
+          0,
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -3191,7 +3263,7 @@ Object {
 }
 `;
 
-exports["filterResults should limit 1"] = `
+exports[`filterResults should limit 1`] = `
 Object {
   "input": Array [
     1,
@@ -3214,7 +3286,7 @@ Object {
 }
 `;
 
-exports["filterResults should multi-sort 1"] = `
+exports[`filterResults should multi-sort 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3266,7 +3338,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter empty string 1"] = `
+exports[`filterResults should not filter empty string 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3292,7 +3364,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(full-text),
-        "value": "",
+        "values": Array [
+          "",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -3317,7 +3391,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter empty substring 1"] = `
+exports[`filterResults should not filter empty substring 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3343,7 +3417,9 @@ Object {
       Object {
         "name": "name",
         "type": Symbol(like-text),
-        "value": "",
+        "values": Array [
+          "",
+        ],
       },
     ],
     "sortOptions": Array [],
@@ -3368,7 +3444,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter missing date 1"] = `
+exports[`filterResults should not filter missing date 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3421,7 +3497,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter missing datetime 1"] = `
+exports[`filterResults should not filter missing datetime 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3474,7 +3550,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter undefined 1"] = `
+exports[`filterResults should not filter undefined 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3500,7 +3576,7 @@ Object {
       Object {
         "name": "id",
         "type": Symbol(numeric),
-        "value": undefined,
+        "values": Array [],
       },
     ],
     "sortOptions": Array [],
@@ -3525,7 +3601,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter without date 1"] = `
+exports[`filterResults should not filter without date 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3576,7 +3652,7 @@ Object {
 }
 `;
 
-exports["filterResults should not filter without datetime 1"] = `
+exports[`filterResults should not filter without datetime 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3627,7 +3703,7 @@ Object {
 }
 `;
 
-exports["filterResults should offset 1"] = `
+exports[`filterResults should offset 1`] = `
 Object {
   "input": Array [
     1,
@@ -3649,7 +3725,7 @@ Object {
 }
 `;
 
-exports["filterResults should return true if no values 1"] = `
+exports[`filterResults should return true if no values 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3675,6 +3751,7 @@ Object {
       Object {
         "name": "date",
         "type": Symbol(datetime),
+        "values": Array [],
       },
     ],
     "sortOptions": Array [],
@@ -3699,7 +3776,7 @@ Object {
 }
 `;
 
-exports["filterResults should sort 1"] = `
+exports[`filterResults should sort 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3751,7 +3828,7 @@ Object {
 }
 `;
 
-exports["filterResults should sort and offset 1"] = `
+exports[`filterResults should sort and offset 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3794,7 +3871,7 @@ Object {
 }
 `;
 
-exports["filterResults should sort desc 1"] = `
+exports[`filterResults should sort desc 1`] = `
 Object {
   "input": Array [
     Object {
@@ -3847,7 +3924,7 @@ Object {
 }
 `;
 
-exports["filterResults should sort desc and offset 1"] = `
+exports[`filterResults should sort desc and offset 1`] = `
 Object {
   "input": Array [
     Object {

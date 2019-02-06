@@ -54,7 +54,7 @@ export const parseValuesFromOmniText = (omniText: string): Map<string, Array<str
   return parsed;
 };
 
-export const getKeysForSearchDef = (searchDef: SearchDef): Array<string> => {
+export const getKeysForSearchDef = (searchDef: OmniSearchDef): Array<string> => {
   const { aliases } = searchDef;
   if (aliases !== undefined && aliases.length) {
     return [...aliases, ...searchDef.searchFields];
@@ -63,7 +63,7 @@ export const getKeysForSearchDef = (searchDef: SearchDef): Array<string> => {
 };
 
 /** Go through searchDefs extract values from omniText */
-export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: string): SearchValues => {
+export const getSearchValuesFromOmniText = (searchDefs: OmniSearchDefs, omniText: string): OmniSearchValues => {
   if (!isValueValid(omniText) || !searchDefs || searchDefs.length === 0) {
     return new Map();
   }
@@ -105,7 +105,7 @@ export const getSearchValuesFromOmniText = (searchDefs: SearchDefs, omniText: st
   return searchValues;
 };
 
-export const getOmniTextFromSearchValues = (searchDefs: SearchDefs, searchValues: SearchValues): string => {
+export const getOmniTextFromSearchValues = (searchDefs: OmniSearchDefs, searchValues: OmniSearchValues): string => {
   const omniValues = [];
   searchDefs.forEach((searchDef, index) => {
     const searchValue = searchValues.get(index);
@@ -135,7 +135,7 @@ export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => 
     .filter(value => value !== "");
 };
 
-export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchValues): SearchOptionsV2 => {
+export const getSearchOptions = (searchDefs: OmniSearchDefs, searchValues: OmniSearchValues): SearchOptionsV2 => {
   const searchOptions: SearchOptionsV2 = [];
   searchDefs.forEach((searchDef, index) => {
     const values = getItemsFromOmniValue(searchValues.get(index));
@@ -148,8 +148,8 @@ export const getSearchOptions = (searchDefs: SearchDefs, searchValues: SearchVal
 
 // eslint-disable-next-line max-len
 export const getValueItemsFromSearchValues = (
-  searchDefs: SearchDefs,
-  searchValues: SearchValues,
+  searchDefs: OmniSearchDefs,
+  searchValues: OmniSearchValues,
   key: string,
 ): Array<string> => {
   const matchingSearchDefIndex = searchDefs.findIndex(searchDef => getKeysForSearchDef(searchDef).includes(key));

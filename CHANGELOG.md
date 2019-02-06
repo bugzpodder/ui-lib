@@ -1,3 +1,10 @@
+## 0.10.0 - 2019-01-30
+
+1. Refactor to use new Api search types like `SearchOptionsV2`. See D24185
+1. Mark old `SearchOption` types as Deprecated or Old.
+1. Deprecated `MULTI_FIELD_TEXT_SEARCH_TYPE` (Use `LIKE_TEXT_SEARCH_TYPE` instead.)
+1. Make `searchFields` optional. (Use `name` as a singular `searchField`).
+
 ## 0.9.0
 
 1. Add `includeNulls` to query builder and filter builder

@@ -44,7 +44,7 @@ describe("parseValuesFromOmniText", () => {
   });
 });
 
-const searchDefs: SearchDefs = [
+const searchDefs: OmniSearchDefs = [
   {
     name: "omni",
     type: OMNI_TEXT_SEARCH_TYPE,

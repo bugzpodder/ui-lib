@@ -3,7 +3,7 @@ import isArray from "lodash/isArray";
 import { getOmniTextFromKeyValues } from "../omni-search-util";
 import { getQuery, stringifyQuery, updateQuery } from "./url-util";
 
-type SearchParams = { location: Location, history: HistoryFunctions, searchOptions: SearchOptions };
+type SearchParams = { location: Location, history: HistoryFunctions, searchOptions: DeprecatedSearchOptions };
 
 const isDefinedNotNull = (value: mixed) => value !== undefined && value !== null;
 
@@ -43,7 +43,7 @@ export const expandSearchValues = (validSearchValues: Object): SearchOptionValue
   }
 };
 
-export const extractSearchValues = (searchOptions: SearchOptions): SearchOptionValues => {
+export const extractSearchValues = (searchOptions: DeprecatedSearchOptions): SearchOptionValues => {
   const searchValues = new Map();
   searchOptions.forEach(({ value, values }, key) => {
     if (values) {
@@ -54,11 +54,14 @@ export const extractSearchValues = (searchOptions: SearchOptions): SearchOptionV
   return searchValues;
 };
 
-export const mergeSearchOptions = (searchOptions: SearchOptions, searchValues?: SearchOptionValues): SearchOptions => {
+export const mergeSearchOptions = (
+  searchOptions: DeprecatedSearchOptions,
+  searchValues?: SearchOptionValues,
+): DeprecatedSearchOptions => {
   if (!searchValues) {
     return searchOptions;
   }
-  const newSearchOptions: SearchOptions = new Map(searchOptions);
+  const newSearchOptions: DeprecatedSearchOptions = new Map(searchOptions);
   searchOptions.forEach((searchOption, key) => {
     if (searchValues && searchValues.has(key)) {
       const { value, values } = searchValues.get(key) || {};

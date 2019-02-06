@@ -10,8 +10,8 @@ declare type SearchOptionValue = {
 };
 declare type SearchOptionValues = Map<string, SearchOptionValue>;
 
-declare type OldSearchOption = {
-  type?: Symbol,
+declare type DeprecatedSearchOption = {
+  type: Symbol,
   searchFields?: Array<string>,
   isCustomRendered?: boolean,
   placeholder?: string,
@@ -19,22 +19,17 @@ declare type OldSearchOption = {
   includeNulls?: boolean,
 } & SearchOptionValue;
 
-declare type SearchOptions = Map<string, OldSearchOption>;
+declare type DeprecatedSearchOptions = Map<string, DeprecatedSearchOption>;
 
 declare type PaginationOptions = {
   offset: number,
   count: number,
 };
 
-declare type FilterOptions = {
-  sortOptions: SortOptions,
-  searchOptions: SearchOptions,
-} & PaginationOptions;
-
-declare type GetContentOptions = {
+declare type DeprecatedGetContentOptions = {
   offset?: number,
   count?: number,
-  searchOptions?: SearchOptions,
+  searchOptions?: DeprecatedSearchOptions,
   sortOptions?: SortOptions,
 };
 
@@ -46,24 +41,20 @@ declare type GetContentOptionsV2 = {
 };
 
 // TODO(jsingh): simplify all these types!
-declare type BaseQueryOptions = {
-  searchOptions?: SearchOptions | SearchOptionsV2,
+declare type ApiQueryOptions = {
+  searchOptions: SearchOptionsV2,
   sortOptions: SortOptions,
   selectedRowIds: Array<any>,
   isLoading: boolean,
 } & PaginationOptions;
 
-declare type ApiQueryOptions = {
-  searchOptions: SearchOptionsV2,
-} & BaseQueryOptions;
-
-// Search Definitions. Used by OmniSearch to build the UI. Used to build SearchOptions:
+// Search Definitions. Used by OmniSearch to build the UI. Used to build DeprecatedSearchOptions:
 type SearchFieldProps = {
   searchKey: string,
   placeholder: string,
   searchValue: ?string,
-  searchDefs: SearchDefs,
-  searchValues: SearchValues,
+  searchDefs: OmniSearchDefs,
+  searchValues: OmniSearchValues,
   onChange: (string, any) => any,
   onSearch: () => any,
   isFullWidth?: boolean,
@@ -72,31 +63,38 @@ type SearchFieldProps = {
 declare type SearchDef = {
   name: string,
   type: Symbol,
-  searchFields: Array<string>,
+  searchFields?: Array<string>,
   Component?: React$StatelessFunctionalComponent<SearchFieldProps>,
   aliases?: Array<string>,
   description?: string,
   searchOperator?: string,
   includeNulls?: boolean,
   localStorageKeySuffix?: string,
-  // TODO(jrosenfield): support validation in the future?
 };
 
-declare type SearchDefs = Array<SearchDef>;
+declare type OmniSearchDef = {
+  name: string,
+  searchFields: Array<string>,
+  Component?: React$StatelessFunctionalComponent<SearchFieldProps>,
+  aliases?: Array<string>,
+  description?: string,
+  localStorageKeySuffix?: string,
+  // TODO(jrosenfield): support validation in the future?
+} & SearchDef;
 
-declare type SearchValues = Map<number, string>;
+declare type SearchDefs = Array<SearchDef>;
+declare type OmniSearchDefs = Array<OmniSearchDef>;
+
+declare type OmniSearchValues = Map<number, string>;
 
 declare type SearchOptionV2 = {
-  // FIXME (jsingh) deprecate value. Only needed to allow mix of V1 and V2
-  value?: string,
-  // FIXME (jsingh) deprecate values support of SearchOptionValues. Should only be strings.
   values: Array<string>,
 } & SearchDef;
 
 declare type SearchOptionsV2 = Array<SearchOptionV2>;
 
 declare type SearchApi = {
-  searchDefs: SearchDefs,
+  searchDefs: OmniSearchDefs,
   setSearchOptions: Function,
 };
 

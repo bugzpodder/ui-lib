@@ -18,7 +18,6 @@ import {
   FULL_TEXT_SEARCH_TYPE,
   LIKE_ID_SEARCH_TYPE,
   LIKE_TEXT_SEARCH_TYPE,
-  MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
   doubleAmpersand,
@@ -75,19 +74,8 @@ export const isValueValid = (value: mixed) => {
   return value !== "" && value != null;
 };
 
-/*
-Using a Map or object of searchOptions, this builds a search query that and's each item for the
-q query URL parameter of form:
-q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
-
-Note that an object's key order is not necessarily the same as the order it is defined in code.
-It may often be, but that is implementation dependent and subject to change between browsers.
-ES6 Map keys are iterated by insert order, and therefore iteration is deterministic.
-Therefore, we should deprecate objects as inputs to improve testability.
-*/
-
-const getSearchValues = (searchOption: OldSearchOption | SearchOptionV2) => {
-  const { type, value = "", values } = searchOption;
+const getSearchValues = (searchOption: DeprecatedSearchOption): Array<string> => {
+  const { value = "", values } = searchOption;
   let searchValues = [];
   if (Array.isArray(values)) {
     searchValues = values;
@@ -96,7 +84,12 @@ const getSearchValues = (searchOption: OldSearchOption | SearchOptionV2) => {
   } else if (value != null) {
     searchValues = [value];
   }
+  return searchValues;
+};
 
+const getEscapedSearchValues = (searchOption: SearchOptionV2) => {
+  const { values, type } = searchOption;
+  let searchValues = values;
   if (type === FULL_ID_SEARCH_TYPE || type === LIKE_ID_SEARCH_TYPE) {
     searchValues = searchValues.reduce((memo, currValue) => {
       const sanitizedValue = sanitizeId(String(currValue));
@@ -109,26 +102,42 @@ const getSearchValues = (searchOption: OldSearchOption | SearchOptionV2) => {
   return searchValues;
 };
 
-export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 = new Map()) => {
+const getSearchOptionsV2 = (deprecatedSearchOptions: DeprecatedSearchOptions = new Map()) => {
+  const searchOptionsV2: SearchOptionsV2 = [];
+  deprecatedSearchOptions.forEach((searchOption, name) => {
+    const values = getSearchValues(searchOption);
+    const {
+      type, searchFields, searchOperator, includeNulls,
+    } = searchOption;
+    searchOptionsV2.push({
+      name,
+      type,
+      searchFields: searchFields || [name],
+      values,
+      searchOperator,
+      includeNulls,
+    });
+  });
+  return searchOptionsV2;
+};
+
+/*
+Using an array of searchOptionsV2, this builds a search query that and's each item for the
+q query URL parameter of form:
+q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
+*/
+export const buildSearchQuery = (searchOptions: SearchOptionsV2 = []) => {
   let query = "";
-  // eslint-disable-next-line max-len
-  const searchKeys = searchOptions instanceof Map ? Array.from(searchOptions.keys()) : searchOptions.map(({ name }) => name);
-  query = searchKeys.reduce((memo, searchOptionKey) => {
-    const searchOption = searchOptions instanceof Map
-      ? searchOptions.get(searchOptionKey)
-      : searchOptions.find(({ name }) => name === searchOptionKey);
+  query = searchOptions.reduce((memo, searchOption) => {
     if (!searchOption) {
       return memo;
     }
-    const {
-      type, searchFields = [searchOptionKey], value = "", includeNulls,
-    } = searchOption;
+    const { type, searchFields = [searchOption.name], includeNulls } = searchOption;
     const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
-    const searchValues = getSearchValues(searchOption).map(
+    const searchValues = getEscapedSearchValues(searchOption).map(
       isDateSearchType ? values => values : global.encodeURIComponent,
     );
     const { searchOperator = "==" } = searchOption;
-    // eslint-disable-next-line arrow-parens
     let initialSubQuery = "";
     if (includeNulls) {
       initialSubQuery = searchFields.reduce((memo, searchField) => {
@@ -158,7 +167,7 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
       if (!multiValueSearch) {
         return null;
       }
-      return searchKeys.length > 1 ? `(${multiValueSearch})` : multiValueSearch;
+      return searchOptions.length > 1 ? `(${multiValueSearch})` : multiValueSearch;
     };
     const newQuery = (() => {
       switch (type) {
@@ -195,22 +204,6 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
           return multiValueSearchBuilder(value => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
           return multiValueSearchBuilder(value => `"${percentChar}${value}${percentChar}"`);
-        case MULTI_FIELD_TEXT_SEARCH_TYPE: {
-          // FIXME(jrosenfield) - Deprecate MULTI_FIELD_TEXT_SEARCH_TYPE since it
-          // can be replaced with LIKE_TEXT_SEARCH_TYPE
-          if (!isValueValid(value)) {
-            return null;
-          }
-          const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
-            if (multiFieldSearchMemo) {
-              multiFieldSearchMemo += doublePipe;
-            }
-            return `${multiFieldSearchMemo}(${searchField}${searchOperator}"${percentChar}${String(
-              value,
-            ).trim()}${percentChar}")`;
-          }, "");
-          return `(${multiFieldSearch})`;
-        }
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
           return multiValueSearchBuilder((dateRangeString) => {
@@ -260,26 +253,28 @@ export const buildSearchQuery = (searchOptions: SearchOptions | SearchOptionsV2 
   return query;
 };
 
+/*
+Using a Map of searchOptions, this builds a search query that and's each item for the
+q query URL parameter of form:
+q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
+*/
+// eslint-disable-next-line max-len
+export const deprecatedBuildSearchQuery = (deprecatedSearchOptions: DeprecatedSearchOptions) => buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
+
 export const filterResults = (items: Array<any>, options: ApiQueryOptions): Array<any> => {
   const {
     count, offset, sortOptions, searchOptions,
   } = options;
-  // eslint-disable-next-line max-len
-  const searchKeys = searchOptions instanceof Map ? Array.from(searchOptions.keys()) : searchOptions.map(({ name }) => name);
 
-  const filteredResults = items.filter(item => searchKeys.reduce((result, searchOptionKey) => {
-    const searchOption = searchOptions instanceof Map
-      ? searchOptions.get(searchOptionKey)
-      : searchOptions.find(({ name }) => name === searchOptionKey);
-
+  const filteredResults = items.filter(item => searchOptions.reduce((result, searchOption) => {
     if (!result || !searchOption) {
       return false;
     }
 
     const {
-      type, searchFields = [searchOptionKey], values, includeNulls,
+      type, searchFields = [searchOption.name], values, includeNulls,
     } = searchOption;
-    const searchValues = getSearchValues(searchOption);
+    const searchValues = getEscapedSearchValues(searchOption);
 
     if (DATE_SEARCH_TYPES.includes(type)) {
       if (searchFields.length === 0 || !item[searchFields[0]]) {
@@ -310,7 +305,6 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
 
     let compare;
     switch (type) {
-      case MULTI_FIELD_TEXT_SEARCH_TYPE:
       case LIKE_TEXT_SEARCH_TYPE:
       case OMNI_TEXT_SEARCH_TYPE:
         compare = (e, value) => new RegExp(escapeRegExp(String(value)), "i").test(e);

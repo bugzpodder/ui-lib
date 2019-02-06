@@ -8,7 +8,6 @@ import {
   FULL_TEXT_SEARCH_TYPE,
   LIKE_ID_SEARCH_TYPE,
   LIKE_TEXT_SEARCH_TYPE,
-  MULTI_FIELD_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
 } from "./api-constants";
 import { filterResults } from "./api-util";
@@ -181,7 +180,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "id",
-          value: undefined,
+          values: [],
           type: NUMERIC_SEARCH_TYPE,
         },
       ],
@@ -197,7 +196,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "id",
-          value: 3,
+          values: [3],
           type: NUMERIC_SEARCH_TYPE,
         },
       ],
@@ -213,7 +212,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "id",
-          value: 3,
+          values: [3],
           type: NUMERIC_SEARCH_TYPE,
           isEqual: true,
         },
@@ -230,7 +229,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "id",
-          value: 3,
+          values: [3],
           type: NUMERIC_SEARCH_TYPE,
           isEqual: false,
         },
@@ -263,7 +262,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "id",
-          value: 0,
+          values: [0],
           type: NUMERIC_SEARCH_TYPE,
         },
       ],
@@ -279,7 +278,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "",
+          values: [""],
           type: FULL_TEXT_SEARCH_TYPE,
         },
       ],
@@ -295,7 +294,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "xy",
+          values: ["xy"],
           type: FULL_TEXT_SEARCH_TYPE,
         },
       ],
@@ -311,7 +310,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "xy",
+          values: ["xy"],
           type: FULL_TEXT_SEARCH_TYPE,
           includeNulls: true,
         },
@@ -344,7 +343,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "bb",
+          values: ["bb"],
           type: FULL_TEXT_SEARCH_TYPE,
         },
       ],
@@ -376,7 +375,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "bb",
+          values: ["bb"],
           type: FULL_TEXT_SEARCH_TYPE,
           isEqual: false,
         },
@@ -410,7 +409,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -426,7 +425,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: LIKE_TEXT_SEARCH_TYPE,
           isEqual: false,
         },
@@ -443,7 +442,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "",
+          values: [""],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -459,7 +458,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "b",
+          values: ["b"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -491,7 +490,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "b",
+          values: ["b"],
           type: LIKE_TEXT_SEARCH_TYPE,
           isEqual: false,
         },
@@ -525,7 +524,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "values.count",
-          value: 10,
+          values: [10],
           type: NUMERIC_SEARCH_TYPE,
         },
       ],
@@ -557,7 +556,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "values.count",
-          value: 30,
+          values: [30],
           type: NUMERIC_SEARCH_TYPE,
           isEqual: false,
         },
@@ -574,7 +573,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "values.isValid",
-          value: true,
+          values: [true],
           type: NUMERIC_SEARCH_TYPE,
         },
       ],
@@ -590,7 +589,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "values.isValid",
-          value: false,
+          values: [false],
           type: BOOLEAN_SEARCH_TYPE,
         },
       ],
@@ -606,7 +605,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "values.isValid",
-          value: true,
+          values: [true],
           isEqual: false,
           type: NUMERIC_SEARCH_TYPE,
         },
@@ -623,7 +622,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "values.count",
-          value: 30,
+          values: [30],
           type: NUMERIC_SEARCH_TYPE,
           isEqual: false,
         },
@@ -640,7 +639,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "isValid",
-          value: true,
+          values: [true],
           type: BOOLEAN_SEARCH_TYPE,
         },
       ],
@@ -656,7 +655,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "isValid",
-          value: false,
+          values: [false],
           type: BOOLEAN_SEARCH_TYPE,
           isEqual: false,
         },
@@ -673,8 +672,8 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "omni",
-          value: "aa",
-          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          values: ["aa"],
+          type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["id", "name"],
         },
       ],
@@ -691,7 +690,7 @@ describe("filterResults", () => {
         {
           name: "omni",
           values: ["aa", "bb"],
-          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["id", "name"],
         },
       ],
@@ -707,8 +706,8 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "omni",
-          value: "",
-          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          values: [""],
+          type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["id", "name"],
         },
       ],
@@ -724,8 +723,8 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "omni",
-          value: "bb",
-          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          values: ["bb"],
+          type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["name", "labels.name"],
         },
       ],
@@ -742,7 +741,7 @@ describe("filterResults", () => {
         {
           name: "omni",
           values: ["ab", "bb"],
-          type: MULTI_FIELD_TEXT_SEARCH_TYPE,
+          type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["name", "labels.name"],
         },
       ],
@@ -924,6 +923,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "date",
+          values: [],
           type: DATETIME_SEARCH_TYPE,
         },
       ],
@@ -955,7 +955,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
         {
@@ -976,7 +976,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "",
+          values: [""],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
         {
@@ -1002,7 +1002,7 @@ describe("filterResults", () => {
         },
         {
           name: "name",
-          value: "",
+          values: [""],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -1018,7 +1018,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -1034,7 +1034,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -1050,7 +1050,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
       ],
@@ -1066,7 +1066,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "x",
+          values: ["x"],
           type: "INVALID",
         },
       ],
@@ -1082,7 +1082,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "x",
+          values: ["x"],
           type: "INVALID",
         },
       ],
@@ -1098,7 +1098,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "P00100-1",
+          values: ["P00100-1"],
           type: FULL_ID_SEARCH_TYPE,
         },
       ],
@@ -1113,7 +1113,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "A00100-1",
+          values: ["A00100-1"],
           type: FULL_ID_SEARCH_TYPE,
         },
       ],
@@ -1128,7 +1128,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "name",
-          value: "P001",
+          values: ["P001"],
           type: LIKE_ID_SEARCH_TYPE,
         },
       ],
@@ -1143,7 +1143,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "P00100-1",
+          values: ["P00100-1"],
           type: FULL_ID_SEARCH_TYPE,
         },
       ],
@@ -1158,7 +1158,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "P00100-1",
+          values: ["P00100-1"],
           type: FULL_ID_SEARCH_TYPE,
           includeNulls: true,
         },
@@ -1174,7 +1174,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "A00100-1",
+          values: ["A00100-1"],
           type: FULL_ID_SEARCH_TYPE,
         },
       ],
@@ -1189,7 +1189,7 @@ describe("filterResults", () => {
       searchOptions: [
         {
           name: "labels.name",
-          value: "P001",
+          values: ["P001"],
           type: LIKE_ID_SEARCH_TYPE,
         },
       ],
