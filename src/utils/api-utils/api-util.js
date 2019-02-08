@@ -68,8 +68,12 @@ export const buildOrderQuery = (sortOptions: SortOptions = []) => {
   return order;
 };
 
-// $FlowFixMe `value.length` doesn't exist on mixed.
-export const isValueValid = (value: mixed) => value !== "" && value != null && value.length !== 0;
+export const isValueValid = (value: mixed) => {
+  if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+  return value !== "" && value != null;
+};
 
 /*
 Using a Map or object of searchOptions, this builds a search query that and's each item for the
