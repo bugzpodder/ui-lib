@@ -126,17 +126,30 @@ Using an array of searchOptionsV2, this builds a search query that and's each it
 q query URL parameter of form:
 q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
-export const buildSearchQuery = (searchOptions: SearchOptionsV2 = []) => {
-  let query = "";
-  query = searchOptions.reduce((memo, searchOption) => {
-    if (!searchOption) {
-      return memo;
-    }
-    const { type, searchFields = [searchOption.name], includeNulls } = searchOption;
+export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
+  searchOptions = searchOptions.filter(searchOption => searchOption);
+  const resolvedSearchOptions = await Promise.all(
+    searchOptions.map(async (searchOption) => {
+      const { type, mapValues } = searchOption;
+      let { values } = searchOption;
+      const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
+      if (mapValues) {
+        values = await mapValues(values);
+      }
+      values = getEscapedSearchValues({ ...searchOption, values }).map((value) => {
+        if (isDateSearchType) {
+          return value;
+        }
+        return global.encodeURIComponent(value);
+      });
+      return { ...searchOption, values };
+    }),
+  );
+  const query = resolvedSearchOptions.reduce((memo, searchOption) => {
+    const {
+      type, values, searchFields = [searchOption.name], includeNulls,
+    } = searchOption;
     const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
-    const searchValues = getEscapedSearchValues(searchOption).map(
-      isDateSearchType ? values => values : global.encodeURIComponent,
-    );
     const { searchOperator = "==" } = searchOption;
     let initialSubQuery = "";
     if (includeNulls) {
@@ -149,7 +162,7 @@ export const buildSearchQuery = (searchOptions: SearchOptionsV2 = []) => {
       }, "");
     }
     const multiValueSearchBuilder = (formatter) => {
-      const multiValueSearch = searchValues.reduce((multiValueSearchMemo, value) => {
+      const multiValueSearch = values.reduce((multiValueSearchMemo, value) => {
         if (!isValueValid(value)) {
           return multiValueSearchMemo;
         }
@@ -249,7 +262,7 @@ export const buildSearchQuery = (searchOptions: SearchOptionsV2 = []) => {
     }
 
     return newQuery ? `${memo}${newQuery}` : memo;
-  }, query);
+  }, "");
   return query;
 };
 

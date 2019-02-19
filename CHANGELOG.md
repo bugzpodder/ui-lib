@@ -4,6 +4,8 @@
 1. Mark old `SearchOption` types as Deprecated or Old.
 1. Deprecated `MULTI_FIELD_TEXT_SEARCH_TYPE` (Use `LIKE_TEXT_SEARCH_TYPE` instead.)
 1. Make `searchFields` optional. (Use `name` as a singular `searchField`).
+1. Add ability to define `mapValues` function in `searchDefs`. This allows conversion from human readable omni text to enums, or string matching.
+1. Make `buildSearchQuery` be `async`. All callers need to `await` or similar.
 
 ## 0.9.0
 

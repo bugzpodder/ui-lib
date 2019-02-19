@@ -70,6 +70,7 @@ declare type SearchDef = {
   searchOperator?: string,
   includeNulls?: boolean,
   localStorageKeySuffix?: string,
+  mapValues?: (Array<string>) => Promise<Array<string>>,
 };
 
 declare type OmniSearchDef = {
