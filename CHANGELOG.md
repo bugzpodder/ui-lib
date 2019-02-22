@@ -1,11 +1,13 @@
 ## 0.10.0 - 2019-01-30
 
 1. Refactor to use new Api search types like `SearchOptionsV2`. See D24185
-1. Mark old `SearchOption` types as Deprecated or Old.
-1. Deprecated `MULTI_FIELD_TEXT_SEARCH_TYPE` (Use `LIKE_TEXT_SEARCH_TYPE` instead.)
-1. Make `searchFields` optional. (Use `name` as a singular `searchField`).
-1. Add ability to define `mapValues` function in `searchDefs`. This allows conversion from human readable omni text to enums, or string matching.
-1. Make `buildSearchQuery` be `async`. All callers need to `await` or similar.
+2. Mark old `SearchOption` types as Deprecated or Old.
+3. Deprecated `MULTI_FIELD_TEXT_SEARCH_TYPE` (Use `LIKE_TEXT_SEARCH_TYPE` instead.)
+4. Make `searchFields` optional. (Use `name` as a singular `searchField`).
+5. Add ability to define `mapValues` function in `searchDefs`.
+   This allows conversion from human readable omni text to enums, or string matching.
+6. Make `buildSearchQuery` be `async`. All callers need to `await` or similar.
+7. Add `valueToSuggestions` and `valuesToSuggestions`
 
 ## 0.9.0
 

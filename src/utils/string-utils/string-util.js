@@ -65,6 +65,14 @@ export const formatPercent = (value: string | number) => {
   return `${(floatValue * 100.0).toFixed(2)}%`;
 };
 
+export const isQuotedString = (value: string, quoteChar?: string = '"'): boolean => {
+  if (quoteChar === ENCODED_QUOTE_CHAR) {
+    value = value.replace(new RegExp(ENCODED_QUOTE_CHAR, "g"), '"');
+    quoteChar = '"';
+  }
+  return new RegExp(`^ *${quoteChar}(([^${quoteChar}])*)${quoteChar} *$`).test(value);
+};
+
 /**
  * Extract the quoted contents from a string. Examples:
  * `abc \" 123` returns null

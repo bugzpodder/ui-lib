@@ -104,9 +104,15 @@ export {
   // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
   formatPercent,
   // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  isQuotedString,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
   extractQuotedString,
   // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
   unquoteString,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  valueToSuggestions,
+  // $FlowFixMe: exports are missing in ModuleNamespace for export {} from
+  valuesToSuggestions,
 } from "./utils/string-utils";
 export {
   sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix,

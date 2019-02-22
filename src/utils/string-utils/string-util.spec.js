@@ -5,6 +5,7 @@ import keys from "lodash/keys";
 import {
   extractQuotedString,
   formatPercent,
+  isQuotedString,
   makeTitleString,
   normalizeStr,
   sentenceCase,
@@ -132,6 +133,19 @@ describe("formatPercent", () => {
       });
     });
   });
+  describe("isQuotedString", () => {
+    const tests = [
+      ...nullCases.map(testCase => [testCase, false]),
+      ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, true]),
+      ...testValues.map(value => [`   ${quoteChar}${value}${quoteChar}  `, true]),
+    ];
+
+    tests.forEach(([quotedValue, expectedResult]) => {
+      it(`should determine isQuotedString from '${quotedValue}' -> '${expectedResult}'`, () => {
+        expect(isQuotedString(quotedValue, quoteChar)).toEqual(expectedResult);
+      });
+    });
+  });
 });
 
 describe("extractQuotedString default quote char", () => {
@@ -140,4 +154,8 @@ describe("extractQuotedString default quote char", () => {
 
 describe("unquoteString default quote char", () => {
   expect(unquoteString('"abc"')).toEqual("abc");
+});
+
+describe("isQuotedString default quote char", () => {
+  expect(isQuotedString('"abc"')).toEqual(true);
 });

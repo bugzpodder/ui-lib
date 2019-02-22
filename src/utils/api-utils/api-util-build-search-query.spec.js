@@ -584,9 +584,9 @@ describe("buildSearchQuery is invalid", () => {
         searchFields: ["column1"],
       },
     ];
-    expect(buildSearchQuery(searchOptions)).rejects.toEqual({
-      error: "Unknown search type: Symbol(UNIT_TEST INVALID_SYMBOL)",
-    });
+    expect(buildSearchQuery(searchOptions)).rejects.toEqual(
+      new Error("Unknown search type: Symbol(UNIT_TEST INVALID_SYMBOL)"),
+    );
   });
   it("should return if date search field value is invalid", () => {
     expect(
