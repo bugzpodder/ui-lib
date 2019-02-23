@@ -96,22 +96,17 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Pipeline Runs",
         domain: LIMS,
-        path: "/pipeline/analysis-runs",
+        path: "/pipeline/pipeline-runs",
       },
       {
         name: "New Run",
         domain: LIMS,
-        path: "/pipeline/analysis-runs/new-run",
+        path: "/pipeline/new-analysis-run",
       },
       {
         name: "Previous Runs",
         domain: LIMS,
         path: "/pipeline-ui",
-      },
-      {
-        name: "Sample Sheets",
-        domain: LIMS,
-        path: "/pipeline/sample-sheets/upload",
       },
     ],
   },
