@@ -141,7 +141,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPla
       {
         name: "Dashboards",
         domain: EXTERNAL,
-        path: "https://ccga-pm-dashboard.eng.aws.grail.com/#/dashboards/ccga2/tmMD",
+        path: "https://ccga-pm-dashboard.eng.aws.grail.com/#/dashboards/ccga2/tmOD",
       },
       {
         name: "Reports",
