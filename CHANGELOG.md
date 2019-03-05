@@ -8,6 +8,7 @@
    This allows conversion from human readable omni text to enums, or string matching.
 6. Make `buildSearchQuery` be `async`. All callers need to `await` or similar.
 7. Add `valueToSuggestions` and `valuesToSuggestions`
+8. Add `toDelimitedReport` and other table utils to convert a table to CSV.
 
 ## 0.9.0
 
