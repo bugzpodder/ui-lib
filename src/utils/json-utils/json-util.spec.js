@@ -18,6 +18,7 @@ const testObject: { [string]: mixed } = {
   ENUMCASE6: "test with uppercase numeric ENUM type",
   ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
   ENUMCASETEXT: "test with uppercase ENUM type",
+  lower_case_8: "test with lower case and under score",
   NoN_Enum_Case: "test with mixed case and underscores",
   caseNested: {
     testArray: [1, 2, 3],
@@ -26,6 +27,7 @@ const testObject: { [string]: mixed } = {
     ENUMCASE6: "test with uppercase numeric ENUM type",
     ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
     ENUMCASETEXT: "test with uppercase ENUM type",
+    lower_case_8: "test with lower case and under score",
   },
   // "OutputState" is a magic value for camelize and titleize.
   // See json-util.js.
@@ -53,6 +55,7 @@ describe("convertObjectKeys", () => {
       ENUMCASE6: "test with uppercase numeric ENUM type",
       ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
       ENUMCASETEXT: "test with uppercase ENUM type",
+      lower_case_8: "test with lower case and under score",
       NoN_Enum_CaseMutated: "test with mixed case and underscores",
       caseNestedMutated: {
         testArrayMutated: [1, 2, 3],
@@ -61,6 +64,7 @@ describe("convertObjectKeys", () => {
         ENUMCASE6: "test with uppercase numeric ENUM type",
         ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
         ENUMCASETEXT: "test with uppercase ENUM type",
+        lower_case_8: "test with lower case and under score",
       },
       OutputStateMutated: {
         TestObjectMutated: { SubKeyMutated: 1 },
@@ -95,6 +99,7 @@ describe("camelizeObjectKeys", () => {
       ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
       ENUMCASETEXT: "test with uppercase ENUM type",
       noNEnumCase: "test with mixed case and underscores",
+      lower_case_8: "test with lower case and under score",
       caseNested: {
         testArray: [1, 2, 3],
         testWithSpaces: 123,
@@ -102,6 +107,7 @@ describe("camelizeObjectKeys", () => {
         ENUMCASE6: "test with uppercase numeric ENUM type",
         ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
         ENUMCASETEXT: "test with uppercase ENUM type",
+        lower_case_8: "test with lower case and under score",
       },
       outputState: {
         TestObject: { SubKey: 1 },
@@ -127,6 +133,7 @@ describe("titleizeObjectKeys", () => {
       ENUMCASE6: "test with uppercase numeric ENUM type",
       ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
       ENUMCASETEXT: "test with uppercase ENUM type",
+      lower_case_8: "test with lower case and under score",
       NoNEnumCase: "test with mixed case and underscores",
       CaseNested: {
         TestArray: [1, 2, 3],
@@ -135,6 +142,7 @@ describe("titleizeObjectKeys", () => {
         ENUMCASE6: "test with uppercase numeric ENUM type",
         ENUM_CASE_ABC_7: "test with underscore uppercase numeric ENUM type",
         ENUMCASETEXT: "test with uppercase ENUM type",
+        lower_case_8: "test with lower case and under score",
       },
       OutputState: {
         TestObject: { SubKey: 1 },

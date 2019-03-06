@@ -21,7 +21,7 @@ export const convertObjectKeys = (keyMutator: Function, ignoredKeys: Array<strin
       if (typeof value === "object" && !ignoredKeys.includes(key)) {
         value = convertObjectKeys(keyMutator, ignoredKeys, value);
       }
-      if (/^[A-Z0-9_]*$/.test(key)) {
+      if (/^[A-Z0-9_]*$/.test(key) || (/^[a-z0-9_]*$/.test(key) && key.includes("_"))) {
         // When parsing JSON, don't mutate uppercase keys to lowercase.
         // This is frequently a problem for maps where the key is an `UPPER` cased enum.
         convertedObject[key] = value;
