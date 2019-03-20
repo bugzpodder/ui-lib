@@ -28,7 +28,7 @@ describe("getAccessors", () => {
 In order to compare output from `toDelimitedReport`, it is easier to compare test failure logs if we replace
 all <enter> keys with <ENTER>  Because whitespaces are not obvious in the test diffs, etc
 */
-const expectWithEnter = expected => expect(expected.replace(/\n/g, "<ENTER>"));
+const expectWithEnter = expected => expect(expected.replace(/\r\n/g, "<ENTER>"));
 
 describe("toDelimitedReport", () => {
   const data = [
@@ -56,7 +56,29 @@ describe("toDelimitedReport", () => {
   });
   it("test empty data array", () => {
     const data = [];
-    expectWithEnter(toDelimitedReport(columns, data)).toEqual("abc,ONE_TWO_THREE,2<ENTER>");
+    expectWithEnter(toDelimitedReport(columns, data)).toEqual("abc,ONE_TWO_THREE,2<ENTER><ENTER>");
+  });
+  it("test data with odd values", () => {
+    const data = [
+      {
+        abc: '"',
+        123: " ' ",
+        accessibleValue: 'ab,c " 1234 ',
+      },
+    ];
+    expectWithEnter(toDelimitedReport(columns, data)).toEqual(
+      'abc,ONE_TWO_THREE,2<ENTER>"""", \' ,"ab,c "" 1234 "<ENTER>',
+    );
+  });
+  it("test data with no or comma only values", () => {
+    const data = [
+      {
+        abc: "",
+        123: ",",
+        accessibleValue: ",,",
+      },
+    ];
+    expectWithEnter(toDelimitedReport(columns, data)).toEqual('abc,ONE_TWO_THREE,2<ENTER>,",",",,"<ENTER>');
   });
   it("test empty columns array", () => {
     const columns = [];
