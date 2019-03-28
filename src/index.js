@@ -132,5 +132,4 @@ export {
   updateSearchUrl,
 } from "./utils/url-utils";
 export { Warning } from "./utils/warning-utils";
-
 export { toDelimitedReport, toTableRow } from "./utils/table-utils";
