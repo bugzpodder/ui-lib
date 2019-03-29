@@ -89,7 +89,9 @@ export {
   getValueItemsFromSearchValues,
   parseValuesFromOmniText,
 } from "./utils/omni-search-util";
-export { generateFilledArray, serializePromises, mapBy } from "./utils/array-utils";
+export {
+  generateFilledArray, serializePromises, mapBy, toPairWise,
+} from "./utils/array-utils";
 export { hasKey, hasKeyValue, setKeyValue } from "./utils/key-value-utils";
 export { fnv1 } from "./utils/hash-utils";
 export {

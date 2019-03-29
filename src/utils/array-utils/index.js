@@ -1,2 +1,4 @@
 // @flow
-export { generateFilledArray, serializePromises, mapBy } from "./array-util";
+export {
+  generateFilledArray, serializePromises, mapBy, toPairWise,
+} from "./array-util";

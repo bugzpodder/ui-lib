@@ -9,6 +9,7 @@
 6. Make `buildSearchQuery` be `async`. All callers need to `await` or similar.
 7. Add `valueToSuggestions` and `valuesToSuggestions`
 8. Add `toDelimitedReport` and other table utils to convert a table to CSV.
+9. Add `toPairWise` array util.
 
 ## 0.9.0
 

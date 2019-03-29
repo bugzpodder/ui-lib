@@ -1,5 +1,7 @@
 // @flow
-import { generateFilledArray, mapBy, serializePromises } from "./array-util";
+import {
+  generateFilledArray, mapBy, serializePromises, toPairWise,
+} from "./array-util";
 
 describe("generateFilledArray", () => {
   it("shall generate an empty array", () => {
@@ -74,5 +76,39 @@ describe("mapBy", () => {
       },
     ];
     expect(mapBy(array, "someKey")).toEqual(new Map().set("x", array[0]).set("c", array[1]));
+  });
+});
+
+describe("toPairWise", () => {
+  it("returns empty array when passed empty array", () => {
+    const arr = [];
+    expect(toPairWise(arr)).toEqual([]);
+  });
+
+  it("returns empty array when passed array with one elements", () => {
+    const arr = [1];
+    expect(toPairWise(arr)).toEqual([]);
+  });
+
+  it("returns single pair when passed array with two elements", () => {
+    const arr = [1, 2];
+    expect(toPairWise(arr)).toEqual([[1, 2]]);
+  });
+
+  it("returns two pairs when passed array with three elements", () => {
+    const arr = [1, 2, 3];
+    expect(toPairWise(arr)).toEqual([[1, 2], [2, 3]]);
+  });
+
+  it("returns three pairs when passed array with four elements", () => {
+    const arr = [1, 2, 3, 4];
+    expect(toPairWise(arr)).toEqual([[1, 2], [2, 3], [3, 4]]);
+  });
+
+  it("throws an error when passed something that isn't an array", () => {
+    const notAnArray = "hey";
+    expect(() => toPairWise(notAnArray)).toThrowError();
+    const alsoNotAnArray = { whats: "up" };
+    expect(() => toPairWise(alsoNotAnArray)).toThrowError();
   });
 });
