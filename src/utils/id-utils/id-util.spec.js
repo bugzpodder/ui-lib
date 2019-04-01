@@ -9,6 +9,14 @@ describe("sanitizeId", () => {
     expect(sanitizeId("S00010-1")).toBe("S000101");
     expect(sanitizeId("P00010-1")).toBe("P000101");
   });
+  const dashTypes = "-‑\u002D\u058A\u05BE\u1806\u2010\u2011\u2012\u2013\u2014\u2015\u2E3A\u2E3B\uFE58\uFE63\uFF0D".split(
+    "",
+  );
+  dashTypes.forEach((dash, index) => {
+    it(`should sanitize dash type ${dash} (${index})`, () => {
+      expect(sanitizeId(`S00010${dash}1`)).toBe("S000101");
+    });
+  });
   it("shouldn't sanitize accession ids or mock sample ids", () => {
     expect(sanitizeId("A00014L-1")).toBe("A00014L-1");
     expect(sanitizeId("NPC-NGS-1")).toBe("NPC-NGS-1");

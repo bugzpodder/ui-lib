@@ -4,6 +4,8 @@ const SANITIZATION_EXCEPTIONS = [
   /^NPC/, // Mock NPC qPCR/NGS samples (ex: NPC-QPCR-1A, NPC-NGS-1)
   /^A/, // Accession labels (ex: A00014L-1)
 ];
+const DASH_TYPES_REGEXP = /[\u002D\u058A\u05BE\u1806\u2010\u2011\u2012\u2013\u2014\u2015\u2E3A\u2E3B\uFE58\uFE63\uFF0D]/g;
+
 export const sanitizeId = (id: string = "") => {
   id = id.trim();
 
@@ -11,7 +13,9 @@ export const sanitizeId = (id: string = "") => {
   if (SANITIZATION_EXCEPTIONS.some(regex => regex.test(id))) {
     return id;
   }
-  return id.replace(/-/g, "");
+  // Note there are many types of dashes to sanitize here. Turns out our UI often shows U+2011 Non-breaking Hyphen
+  // Including hyphen looking characters from: https://www.fileformat.info/info/unicode/category/Pd/list.htm
+  return id.replace(DASH_TYPES_REGEXP, "");
 };
 
 export const getSamplePrefix = (id: string) => id.substr(0, id.length - 1);
