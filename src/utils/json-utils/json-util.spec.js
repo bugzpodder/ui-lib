@@ -29,8 +29,6 @@ const testObject: { [string]: mixed } = {
     ENUMCASETEXT: "test with uppercase ENUM type",
     lower_case_8: "test with lower case and under score",
   },
-  // "OutputState" is a magic value for camelize and titleize.
-  // See json-util.js.
   OutputState: {
     TestObject: { SubKey: 1 },
     TestArray: [{ SubKey: 1 }],
@@ -89,7 +87,7 @@ describe("convertObjectKeys", () => {
 
 describe("camelizeObjectKeys", () => {
   it("should mutate object keys", () => {
-    expect(camelizeObjectKeys(testObject)).toEqual({
+    expect(camelizeObjectKeys(testObject, ["OutputState"])).toEqual({
       case1: "test",
       cAsE2: "test",
       case3: "may overwrite case3",
@@ -124,7 +122,7 @@ describe("camelizeObjectKeys", () => {
 
 describe("titleizeObjectKeys", () => {
   it("should mutate object keys", () => {
-    expect(titleizeObjectKeys(testObject)).toEqual({
+    expect(titleizeObjectKeys(testObject, "OutputState")).toEqual({
       Case1: "test",
       CAsE2: "test",
       Case3: "may overwrite case3",
