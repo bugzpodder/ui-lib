@@ -79,6 +79,7 @@ export {
 export {
   buildDateRangeString, extractDateRange, formatDate, formatDateTime,
 } from "./utils/date-utils";
+export { getColHeader, getGridCellPosition, getRowHeader } from "./utils/grid-utils";
 export {
   getItemsFromOmniValue,
   getKeysForSearchDef,

@@ -2,6 +2,7 @@
 
 1. Include all dash-looking characters when sanitizing ids in `id-util.js`
 2. Removed hard-coded blacklist in camelizeObjectKeys and titlizeObjectKeys.
+3. Added grid util functions: `getColHeader`, `getRowHeader`, and `getGridCellPosition`.
 
 ## 0.10.0 - 2019-04-01
 
