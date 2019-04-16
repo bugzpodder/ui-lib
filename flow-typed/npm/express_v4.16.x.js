@@ -1,7 +1,7 @@
-// flow-typed signature: 106bbf49ff0c0b351c95d483d617ffba
-// flow-typed version: 7fe23c8e85/express_v4.16.x/flow_>=v0.32.x
+// flow-typed signature: 164dcf1c9105e51cb17a374a807146a7
+// flow-typed version: c7f4cf7a4d/express_v4.16.x/flow_>=v0.93.x
 
-import type { Server } from "http";
+import * as http from "http";
 import type { Socket } from "net";
 
 declare type express$RouterOptions = {
@@ -151,13 +151,12 @@ declare class express$Router extends express$Route {
   use(...middleware: Array<express$Middleware>): this;
   use(path: express$Path | express$Path[], ...middleware: Array<express$Middleware>): this;
   use(path: string, router: express$Router): this;
-  handle(req: http$IncomingMessage, res: http$ServerResponse, next: express$NextFunction): void;
+  handle(req: http$IncomingMessage<>, res: http$ServerResponse, next: express$NextFunction): void;
   param(
     param: string,
     callback: (req: $Subtype<express$Request>, res: express$Response, next: express$NextFunction, id: string) => mixed,
   ): void;
-
-  (req: http$IncomingMessage, res: http$ServerResponse, next?: ?express$NextFunction): void;
+  (req: http$IncomingMessage<>, res: http$ServerResponse, next?: ?express$NextFunction): void;
 }
 
 /*
@@ -172,11 +171,11 @@ declare class express$Application extends express$Router mixins events$EventEmit
   constructor(): void;
   locals: { [name: string]: mixed };
   mountpath: string;
-  listen(port: number, hostname?: string, backlog?: number, callback?: (err?: ?Error) => mixed): ?Server;
-  listen(port: number, hostname?: string, callback?: (err?: ?Error) => mixed): ?Server;
-  listen(port: number, callback?: (err?: ?Error) => mixed): ?Server;
-  listen(path: string, callback?: (err?: ?Error) => mixed): ?Server;
-  listen(handle: Object, callback?: (err?: ?Error) => mixed): ?Server;
+  listen(port: number, hostname?: string, backlog?: number, callback?: (err?: ?Error) => mixed): ?http.Server;
+  listen(port: number, hostname?: string, callback?: (err?: ?Error) => mixed): ?http.Server;
+  listen(port: number, callback?: (err?: ?Error) => mixed): ?http.Server;
+  listen(path: string, callback?: (err?: ?Error) => mixed): ?http.Server;
+  listen(handle: Object, callback?: (err?: ?Error) => mixed): ?http.Server;
   disable(name: string): void;
   disabled(name: string): boolean;
   enable(name: string): express$Application;
@@ -188,7 +187,9 @@ declare class express$Application extends express$Router mixins events$EventEmit
   //   get(name: string): mixed;
   set(name: string, value: mixed): mixed;
   render(name: string, optionsOrFunction: { [name: string]: mixed }, callback: express$RenderCallback): void;
-  handle(req: http$IncomingMessage, res: http$ServerResponse, next?: ?express$NextFunction): void;
+  handle(req: http$IncomingMessage<>, res: http$ServerResponse, next?: ?express$NextFunction): void;
+  // callable signature is not inherited
+  (req: http$IncomingMessage<>, res: http$ServerResponse, next?: ?express$NextFunction): void;
 }
 
 declare type JsonOptions = {
