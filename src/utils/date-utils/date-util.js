@@ -2,6 +2,7 @@
 import moment from "moment";
 import { DATE_FORMAT, EPOCH_DATE, EPOCH_DATE_TIME } from "../../constants/date-constants";
 
+// TODO(nsawas): consolidate/rename with function from @grail/components/date
 export const formatDate = (date: string | Date | moment$Moment) => {
   if (date === null) {
     return null;
