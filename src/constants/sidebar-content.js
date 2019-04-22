@@ -4,7 +4,7 @@ export const EDC = "EDC";
 export const PIPELINE = "pipeline";
 export const EXTERNAL = "external";
 
-export const sidebarItems: (SidebarItemLink | SidebarItemParent | SidebarItemPlaceholder)[] = [
+export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
   {
     name: "Sample Management",
     children: [

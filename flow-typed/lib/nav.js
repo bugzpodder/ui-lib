@@ -1,4 +1,4 @@
-declare type SidebarItemChild = SidebarItemLink | SidebarItemPlaceholder;
+declare type SidebarItemChild = SidebarItemLink;
 declare type SidebarItem = SidebarItemParent | SidebarItemChild;
 
 declare type SidebarItemLink = {|
@@ -6,11 +6,6 @@ declare type SidebarItemLink = {|
   domain: string,
   path: string,
   exact?: boolean,
-|};
-
-declare type SidebarItemPlaceholder = {|
-  name: string,
-  placeholder: true,
 |};
 
 declare type SidebarItemParent = {|
