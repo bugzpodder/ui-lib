@@ -1,8 +1,10 @@
 ## 1.x.x - 2019-##-
 
 1. Include all dash-looking characters when sanitizing ids in `id-util.js`
-2. Removed hard-coded blacklist in camelizeObjectKeys and titlizeObjectKeys.
-3. Added grid util functions: `getColHeader`, `getRowHeader`, and `getGridCellPosition`.
+2. Remove hard-coded blacklist in camelizeObjectKeys and titlizeObjectKeys.
+3. Add grid util functions: `getColHeader`, `getRowHeader`, and `getGridCellPosition`.
+4. Add type `mapValuesDispatcher` function to allow coders the option of dispatching
+   value mapper in Omni Search fields.
 
 ## 0.10.0 - 2019-04-01
 

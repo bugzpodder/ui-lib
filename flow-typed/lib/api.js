@@ -71,6 +71,7 @@ declare type SearchDef = {
   includeNulls?: boolean,
   localStorageKeySuffix?: string,
   mapValues?: (Array<string>) => Promise<Array<string>>,
+  mapValuesDispatcher?: any /*Dispatch*/ => (Array<string>) => Promise<Array<string>>,
 };
 
 declare type OmniSearchDef = {
