@@ -232,9 +232,9 @@ export const adminItems = {
       path: "/lims/import-samples",
     },
     {
-      name: "Import Mock Samples",
+      name: "Import New Patient Samples",
       domain: LIMS,
-      path: "/lims/import-mock-samples",
+      path: "/lims/import-new-patient-samples",
     },
     {
       name: "Config",
