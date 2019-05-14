@@ -11,7 +11,7 @@ export {
   grailGrayMedium,
   grailGreen,
   grailCobalt,
-  grailSeafoam,
+  grailGreenLight,
   grailAzure,
   grailPurple,
   grailPurpleDark,

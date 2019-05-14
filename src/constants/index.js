@@ -5,7 +5,7 @@ export {
   grailBlue,
   grailGold,
   grailCobalt,
-  grailSeafoam,
+  grailGreenLight,
   grailAzure,
   grailGrayDark,
   grailGrayDarkest,
