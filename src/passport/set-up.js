@@ -6,6 +6,7 @@ import { GoogleJwtStrategy } from "./google-strategy";
 import { extractUser } from "./passport-utils";
 
 export const setUpPassport = (passport: Passport, googleAuthConfig: GoogleAuthConfig) => {
+  console.warn("`setUpPassport` has moved to `@grail/server-lib`");
   // required for persistent login sessions
   // passport needs ability to serialize and deserialize users out of session
   passport.serializeUser((user, done) => {

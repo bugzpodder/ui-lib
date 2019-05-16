@@ -10,6 +10,7 @@ import {
 } from "./passport-utils";
 
 export const refreshAccessToken = async (user: User, googleAuthConfig: GoogleAuthConfig) => {
+  console.warn("`refreshAccessToken` has moved to `@grail/server-lib`");
   const postData = {
     client_id: googleAuthConfig.clientId,
     client_secret: googleAuthConfig.clientSecret,

@@ -5,8 +5,7 @@
 3. Add grid util functions: `getColHeader`, `getRowHeader`, and `getGridCellPosition`.
 4. Add type `mapValuesDispatcher` function to allow coders the option of dispatching
    value mapper in Omni Search fields.
-5. Add `parseCommandLineArguments` utility to handle common node command
-   line argument parsing.
+5. Move node server lib code like `passport` utils and `commandLine` utils to `@grail/server-lib`.
 
 ## 0.10.0 - 2019-04-01
 
