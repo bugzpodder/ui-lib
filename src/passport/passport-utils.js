@@ -41,8 +41,6 @@ export const extractUser = (accessToken: string, refreshToken: string, info: Goo
     accessToken,
     refreshToken,
     expirationInSeconds,
-    endOfIdToken: idToken.slice(-8),
-    endOfRefreshToken: refreshToken.slice(-8),
   };
 };
 

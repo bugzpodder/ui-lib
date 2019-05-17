@@ -22,8 +22,6 @@ describe("extractUser", () => {
         pictureUrl: "https://www.google.com",
         idToken: "some long id token",
         expirationInSeconds: exp,
-        endOfIdToken: "id token",
-        endOfRefreshToken: "sh token",
       },
       baseUser,
     );
@@ -51,8 +49,6 @@ describe("extractGoogleInfo", () => {
         pictureUrl: "https://www.google.com",
         idToken: "some long id token",
         expirationInSeconds: exp,
-        endOfIdToken: "id token",
-        endOfRefreshToken: "sh token",
       },
       baseUser,
     );
