@@ -9,7 +9,7 @@ describe("getRowHeader", () => {
 
   it("should error when provided with erroneous index", () => {
     expect(() => getRowHeader(-1)).toThrowError();
-    expect(() => getRowHeader(upperAlphaChars.length)).toThrowError();
+    expect(() => getRowHeader(upperAlphaChars.length * 26)).toThrowError();
   });
 });
 

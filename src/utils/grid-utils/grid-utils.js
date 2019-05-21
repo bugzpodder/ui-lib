@@ -1,11 +1,13 @@
 // @flow
 import { upperAlphaChars } from "../string-utils";
 
+const gridChars = [...upperAlphaChars, ...upperAlphaChars.map(char => `A${char}`)];
+
 export const getRowHeader = (rowIndex: number) => {
-  if (rowIndex < 0 || rowIndex >= upperAlphaChars.length) {
+  if (rowIndex < 0 || rowIndex >= gridChars.length) {
     throw new Error(`Invalid row index: ${rowIndex}`);
   }
-  return upperAlphaChars[rowIndex];
+  return gridChars[rowIndex];
 };
 
 // colIndex is 0-based.
