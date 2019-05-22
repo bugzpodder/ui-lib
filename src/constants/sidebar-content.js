@@ -83,11 +83,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         domain: LIMS,
         path: "/automation/programs",
       },
-      {
-        name: "Program Regex Tester",
-        domain: LIMS,
-        path: "/automation/program-regex-tester",
-      },
     ],
   },
   {
