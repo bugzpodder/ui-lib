@@ -4,103 +4,56 @@
   "scripts": {
     "build": "NODE_ENV=production yarn build:src && yarn build:flow && babel-node ./scripts/build.js",
     "build:flow": "flow-copy-source src dist",
-    "build:src": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --source-maps",
+    "build:src": "kcd-scripts build",
     "build:client": "NODE_ENV=production yarn build:src",
     "start:client": "NODE_ENV=development yarn build:src --watch",
     "cover": "open coverage/lcov-report/index.html",
     "flow": "flow",
-    "lint": "eslint --ext .js src/ scripts/",
+    "lint": "kcd-scripts lint",
     "lint-fix": "yarn lint --fix",
     "format": "prettier --write \"src/**/*.js\" \"scripts/**/*.js\" && yarn lint-fix",
     "preinstall": "node -e 'if(!/yarn\\.js$/.test(process.env.npm_execpath))throw new Error(\"Use yarn install\")'",
-    "precommit": "lint-staged",
-    "test": "jest --watch",
-    "test:staged": "jest --coverage && echo --findRelatedTests does not work properly with coverage",
-    "test-all": "jest --coverage"
+    "precommit": "kcd-scripts pre-commit",
+    "test": "kcd-scripts test --watch",
+    "test:staged": "kcd-scripts test --coverage && echo --findRelatedTests does not work properly with coverage",
+    "test-all": "kcd-scripts test --coverage"
   },
   "dependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/plugin-transform-runtime": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/runtime": "^7.4.3",
+    "@babel/runtime": "^7.4.5",
     "csv-string": "^3.1.5",
     "fuzzy": "^0.1.3",
-    "googleapis": "^39.2.0",
+    "googleapis": "^40.0.0",
+    "kcd-scripts": "^1.4.0",
     "lodash": "^4.17.11",
     "minimist": "^1.2.0",
     "moment": "^2.24.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
     "passport-strategy": "^1.0.0",
     "qs": "^6.7.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.2.2",
+    "@babel/node": "^7.4.5",
     "@grail/eslint-config-grail": ">=0.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.7.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-filenames": "^1.3.2",
-    "eslint-plugin-flowtype": "^3.6.1",
-    "eslint-plugin-import": "^2.17.2",
-    "flow-bin": "^0.97.0",
-    "flow-copy-source": "^2.0.3",
-    "jest": "^24.7.1",
-    "jest-mock-console": "^0.4.2",
-    "lint-staged": "7.3.0",
+    "flow-bin": "^0.100.0",
+    "flow-copy-source": "^2.0.6",
+    "jest-mock-console": "^1.0.0",
     "mock-socket": "^8.0.5",
     "moment-timezone": "^0.5.25",
-    "prettier": "^1.17.0"
+    "prettier": "^1.17.1"
   },
   "lint-staged": {
-    "concurrent": false,
     "linters": {
-      "*.js": [
+      "*.+(js|jsx|ts|tsx)": [
         "prettier --write",
-        "eslint --rule flowtype/require-valid-file-annotation:2 --fix",
+        "kcd-scripts lint --rule flowtype/require-valid-file-annotation:2 --fix",
         "git add"
       ],
-      "*.{scss,json,md}": [
+      "*.+(json|yml|yaml|css|less|scss|md|graphql|mdx)": [
         "prettier --write",
-        "git add"
-      ],
-      "*.config.js": [
-        "prettier --write",
-        "eslint --fix",
-        "git add"
-      ],
-      "scripts/*.js": [
-        "prettier --write",
-        "eslint --fix",
         "git add"
       ]
     }
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!**/index.js",
-      "!**/mocks/**",
-      "!src/constants/**",
-      "!src/passport/**"
-    ],
-    "coverageThreshold": {
-      "src/**/*.js": {
-        "branches": 80,
-        "functions": 100,
-        "lines": 90,
-        "statements": -10
-      }
-    },
-    "modulePathIgnorePatterns": [
-      "dist/"
-    ],
-    "testEnvironment": "node"
   },
   "main": "dist/index.js",
   "private": true,

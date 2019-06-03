@@ -1,3 +1,4 @@
+// @flow
 // Sort Options:
 declare type SortOption = { id: string, desc?: boolean };
 declare type SortOptions = Array<SortOption>;
@@ -6,7 +7,7 @@ declare type SortOptions = Array<SortOption>;
 declare type SearchOptionValue = {
   // TODO(jsingh) Deprecate singular value
   value?: ?string,
-  values?: Array<string>,
+  values?: Array<string>
 };
 declare type SearchOptionValues = Map<string, SearchOptionValue>;
 
@@ -16,28 +17,28 @@ declare type DeprecatedSearchOption = {
   isCustomRendered?: boolean,
   placeholder?: string,
   searchOperator?: string,
-  includeNulls?: boolean,
+  includeNulls?: boolean
 } & SearchOptionValue;
 
 declare type DeprecatedSearchOptions = Map<string, DeprecatedSearchOption>;
 
 declare type PaginationOptions = {
   offset: number,
-  count: number,
+  count: number
 };
 
 declare type DeprecatedGetContentOptions = {
   offset?: number,
   count?: number,
   searchOptions?: DeprecatedSearchOptions,
-  sortOptions?: SortOptions,
+  sortOptions?: SortOptions
 };
 
 declare type GetContentOptionsV2 = {
   offset?: number,
   count?: number,
   searchOptions?: SearchOptionsV2,
-  sortOptions?: SortOptions,
+  sortOptions?: SortOptions
 };
 
 // TODO(jsingh): simplify all these types!
@@ -45,11 +46,11 @@ declare type ApiQueryOptions = {
   searchOptions: SearchOptionsV2,
   sortOptions: SortOptions,
   selectedRowIds: Array<any>,
-  isLoading: boolean,
+  isLoading: boolean
 } & PaginationOptions;
 
 // Search Definitions. Used by OmniSearch to build the UI. Used to build DeprecatedSearchOptions:
-type SearchFieldProps = {
+declare type SearchFieldProps = {
   searchKey: string,
   placeholder: string,
   searchValue: ?string,
@@ -57,7 +58,7 @@ type SearchFieldProps = {
   searchValues: OmniSearchValues,
   onChange: (string, any) => any,
   onSearch: () => any,
-  isFullWidth?: boolean,
+  isFullWidth?: boolean
 };
 
 declare type SearchDef = {
@@ -71,7 +72,9 @@ declare type SearchDef = {
   includeNulls?: boolean,
   localStorageKeySuffix?: string,
   mapValues?: (Array<string>) => Promise<Array<string>>,
-  mapValuesDispatcher?: any /*Dispatch*/ => (Array<string>) => Promise<Array<string>>,
+  mapValuesDispatcher?: any /* Dispatch */ => (
+    Array<string>
+  ) => Promise<Array<string>>
 };
 
 declare type OmniSearchDef = {
@@ -80,7 +83,7 @@ declare type OmniSearchDef = {
   Component?: React$StatelessFunctionalComponent<SearchFieldProps>,
   aliases?: Array<string>,
   description?: string,
-  localStorageKeySuffix?: string,
+  localStorageKeySuffix?: string
   // TODO(jrosenfield): support validation in the future?
 } & SearchDef;
 
@@ -90,7 +93,7 @@ declare type OmniSearchDefs = Array<OmniSearchDef>;
 declare type OmniSearchValues = Map<number, string>;
 
 declare type SearchOptionV2 = {
-  values: Array<string>,
+  values: Array<string>
 } & SearchDef;
 
 declare type SearchOptionsV2 = Array<SearchOptionV2>;
@@ -98,11 +101,11 @@ declare type SearchOptionsV2 = Array<SearchOptionV2>;
 declare type SearchApi = {
   searchDefs: OmniSearchDefs,
   setSearchOptions: Function,
-  getInitialValues?: Function,
+  getInitialValues?: Function
 };
 
-type OmniSearchCommand = {
+declare type OmniSearchCommand = {
   command: string,
   omniFieldName: string,
-  omniValues?: Array<string>,
+  omniValues?: Array<string>
 };

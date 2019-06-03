@@ -1,6 +1,7 @@
+// @flow
 declare type HistoryFunctions = {
   +push: Function,
-  +replace: Function,
+  +replace: Function
 };
 
 // NOTE: Below are duplicated from react-router. If updating these, please
@@ -10,5 +11,5 @@ declare type Location = {
   search: string,
   hash: string,
   state?: any,
-  key?: string,
+  key?: string
 };

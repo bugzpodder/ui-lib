@@ -46,7 +46,7 @@ describe("sentenceCase", () => {
 
 describe("upperAlphaChars", () => {
   it("should be 26 characters", () => {
-    expect(upperAlphaChars.length).toEqual(26);
+    expect(upperAlphaChars).toHaveLength(26);
   });
   it("should be an array of 26 upper case chars from A-Z", () => {
     expect(upperAlphaChars).toEqual("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""));
@@ -73,7 +73,11 @@ describe("normalizeStr", () => {
 });
 
 describe("makeTitleString", () => {
-  const tests = [["under_scored", "Under Scored"], ["camelCase", "Camel Case"], ["cfDNA_assay", "CfDNA Assay"]];
+  const tests = [
+    ["under_scored", "Under Scored"],
+    ["camelCase", "Camel Case"],
+    ["cfDNA_assay", "CfDNA Assay"],
+  ];
 
   tests.forEach(([start, end]) => {
     it(`should convert ${start} -> ${end}`, () => {
@@ -87,7 +91,13 @@ describe("makeTitleString", () => {
 });
 
 describe("formatPercent", () => {
-  const tests = [["0.12", "12.00%"], ["0.0123", "1.23%"], ["0.1230", "12.30%"], [0.12, "12.00%"], ["abc", "-"]];
+  const tests = [
+    ["0.12", "12.00%"],
+    ["0.0123", "1.23%"],
+    ["0.1230", "12.30%"],
+    [0.12, "12.00%"],
+    ["abc", "-"],
+  ];
 
   tests.forEach(([input, expectedPercent]) => {
     it(`should convert ${input} -> ${expectedPercent}`, () => {
@@ -95,7 +105,6 @@ describe("formatPercent", () => {
     });
   });
 });
-
 ['"', global.encodeURIComponent('"')].forEach((quoteChar) => {
   const nullCases = [
     "0.12",
@@ -109,14 +118,19 @@ describe("formatPercent", () => {
     const tests = [
       ...nullCases.map(testCase => [testCase, null]),
       ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, value]),
-      ...testValues.map(value => [`   ${quoteChar}${value}${quoteChar}  `, value]),
+      ...testValues.map(value => [
+        `   ${quoteChar}${value}${quoteChar}  `,
+        value,
+      ]),
     ];
 
     tests.forEach(([quotedValue, extractedValue]) => {
       it(`should extract quoted string from '${quotedValue}' -> '${
         extractedValue != null ? extractedValue : "null"
       }'`, () => {
-        expect(extractQuotedString(quotedValue, quoteChar)).toEqual(extractedValue);
+        expect(extractQuotedString(quotedValue, quoteChar)).toEqual(
+          extractedValue
+        );
       });
     });
   });
@@ -124,11 +138,16 @@ describe("formatPercent", () => {
     const tests = [
       ...nullCases.map(testCase => [testCase, testCase]),
       ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, value]),
-      ...testValues.map(value => [`   ${quoteChar}${value}${quoteChar}  `, value]),
+      ...testValues.map(value => [
+        `   ${quoteChar}${value}${quoteChar}  `,
+        value,
+      ]),
     ];
 
     tests.forEach(([quotedValue, extractedValue]) => {
-      it(`should unquote string from '${quotedValue}' -> '${extractedValue != null ? extractedValue : "null"}'`, () => {
+      it(`should unquote string from '${quotedValue}' -> '${
+        extractedValue != null ? extractedValue : "null"
+      }'`, () => {
         expect(unquoteString(quotedValue, quoteChar)).toEqual(extractedValue);
       });
     });
@@ -137,7 +156,10 @@ describe("formatPercent", () => {
     const tests = [
       ...nullCases.map(testCase => [testCase, false]),
       ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, true]),
-      ...testValues.map(value => [`   ${quoteChar}${value}${quoteChar}  `, true]),
+      ...testValues.map(value => [
+        `   ${quoteChar}${value}${quoteChar}  `,
+        true,
+      ]),
     ];
 
     tests.forEach(([quotedValue, expectedResult]) => {
