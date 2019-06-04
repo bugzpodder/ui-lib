@@ -5,6 +5,7 @@ export const grailPurpleDark = "#3B1C52";
 export const grailPurpleMed = "#523E66";
 export const grailPurpleLight = "#B9B1C2";
 export const grailPurple = "#612B5B";
+export const grailPurpleActionColor = "#6A1B9A";
 export const grailGreen = "#287969";
 export const grailGreenLight = "#00c853";
 export const grailTan = "#B89466";

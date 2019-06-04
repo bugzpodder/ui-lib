@@ -15,6 +15,7 @@ export {
   grailGrayMedium,
   grailGreen,
   grailPurple,
+  grailPurpleActionColor,
   grailPurpleDark,
   grailPurpleLight,
   grailPurpleMed,
@@ -33,7 +34,12 @@ export {
 } from "./date-constants";
 export { INNER_CARD_ELEVATION, MAIN_CARD_ELEVATION } from "./style-constants";
 export {
-  LIMS, EDC, PIPELINE, EXTERNAL, sidebarItems, adminItems,
+  LIMS,
+  EDC,
+  PIPELINE,
+  EXTERNAL,
+  sidebarItems,
+  adminItems,
 } from "./sidebar-content";
 export { MAX_NOTIFICATIONS, NotificationTypes } from "./notification-center";
 export { SET_OMNI_FIELD_COMMAND, OMNI_KEY, OMNI_ERROR } from "./omni";
