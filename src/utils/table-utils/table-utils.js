@@ -2,13 +2,18 @@
 
 import * as CSV from "csv-string";
 
-export const getAccessors = (columns: Array<ReportColumn>): Array<string | (Object => string)> => columns.map(({ accessor }) => accessor || "");
+export const getAccessors = (
+  columns: Array<ExportableColumn>
+): Array<string | (Object => string
+)> => columns.map(({ exportAccessor }) => exportAccessor || "");
 
-// eslint-disable-next-line max-len
-export const toTableRow = (accessors: Array<string | (Object => string)>, datum: Object): Array<string> =>
+export const toTableRow = (
+  accessors: Array<string | (Object => string)>,
+  datum: Object
+): Array<string> =>
   // Return an array of converted columns
-  // eslint-disable-next-line
-  accessors.map(accessor => {
+  // eslint-disable-next-line implicit-arrow-linebreak
+  accessors.map((accessor) => {
     const columnDatum = typeof accessor === "function" ? accessor(datum) : datum[accessor];
     if (columnDatum === null) {
       return "";
@@ -16,9 +21,9 @@ export const toTableRow = (accessors: Array<string | (Object => string)>, datum:
     return columnDatum;
   });
 export const toDelimitedReport = (
-  columns: Array<ReportColumn>,
+  columns: Array<ExportableColumn>,
   data: Array<Object>,
-  options: ReportOptions = {},
+  options: ReportOptions = {}
 ): ?string => {
   const accessors = getAccessors(columns);
   const { delimiter = "," } = options;
