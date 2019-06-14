@@ -31,6 +31,7 @@ export {
   ISO8601_DATE_TIME_FORMAT,
   EPOCH_DATE,
   EPOCH_DATE_TIME,
+  TIME_FORMAT,
 } from "./date-constants";
 export { INNER_CARD_ELEVATION, MAIN_CARD_ELEVATION } from "./style-constants";
 export {
