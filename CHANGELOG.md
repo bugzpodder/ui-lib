@@ -1,4 +1,8 @@
-## 1.x.x - 2019-##-
+## 1.1.0 - 2019-##-
+
+1.
+
+## 1.0.0 - 2019-06-17
 
 1. Include all dash-looking characters when sanitizing ids in `id-util.js`
 2. Remove hard-coded blacklist in camelizeObjectKeys and titlizeObjectKeys.
