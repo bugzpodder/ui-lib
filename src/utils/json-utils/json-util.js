@@ -1,10 +1,15 @@
 // @flow
 import camelCase from "lodash/camelCase";
 import forEach from "lodash/forEach";
+import isEmpty from "lodash/isEmpty";
 import isObject from "lodash/isObject";
 import upperFirst from "lodash/upperFirst";
 
-export const convertObjectKeys = (keyMutator: Function, ignoredKeys?: Array<string>, object: any): any => {
+export const convertObjectKeys = (
+  keyMutator: Function,
+  ignoredKeys?: Array<string>,
+  object: any
+): any => {
   let convertedObject;
   if (Array.isArray(object)) {
     convertedObject = [];
@@ -17,10 +22,16 @@ export const convertObjectKeys = (keyMutator: Function, ignoredKeys?: Array<stri
   } else if (isObject(object)) {
     convertedObject = {};
     forEach(object, (value, key) => {
-      if (typeof value === "object" && (!ignoredKeys || !ignoredKeys.includes(key))) {
+      if (
+        typeof value === "object"
+        && (!ignoredKeys || !ignoredKeys.includes(key))
+      ) {
         value = convertObjectKeys(keyMutator, ignoredKeys, value);
       }
-      if (/^[A-Z0-9_]*$/.test(key) || (/^[a-z0-9_]*$/.test(key) && key.includes("_"))) {
+      if (
+        /^[A-Z0-9_]*$/.test(key)
+        || (/^[a-z0-9_]*$/.test(key) && key.includes("_"))
+      ) {
         // When parsing JSON, don't mutate uppercase keys to lowercase.
         // This is frequently a problem for maps where the key is an `UPPER` cased enum.
         convertedObject[key] = value;
@@ -67,4 +78,27 @@ export const trimObjectValues = (object: Object) => {
     }
   });
   return formattedObject;
+};
+
+// TODO(nsawas): Get this to handle duplicate keys (nested objects with keys identical to parent(s)).
+export const flattenObject = (originalObject: Object) => {
+  if (!isObject(originalObject) || originalObject.constructor !== Object) {
+    return originalObject;
+  }
+  if (isEmpty(originalObject)) {
+    return {};
+  }
+  const flatten = object => [].concat(
+    ...Object.keys(object).map((key) => {
+      if (
+        object[key]
+          && typeof object[key] === "object"
+          && object[key].constructor === Object
+      ) {
+        return flatten(object[key]);
+      }
+      return { [key]: object[key] };
+    })
+  );
+  return Object.assign({}, ...flatten(originalObject));
 };

@@ -77,6 +77,7 @@ export {
   mapToJson,
   titleizeObjectKeys,
   trimObjectValues,
+  flattenObject,
 } from "./utils/json-utils";
 export {
   buildDateRangeString,

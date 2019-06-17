@@ -2,6 +2,7 @@
 import {
   camelizeObjectKeys,
   convertObjectKeys,
+  flattenObject,
   jsonToMap,
   mapToJson,
   titleizeObjectKeys,
@@ -43,7 +44,9 @@ const testObject: { [string]: mixed } = {
 describe("convertObjectKeys", () => {
   it("should mutate json keys", () => {
     const appendMutator = key => `${key}Mutated`;
-    expect(convertObjectKeys(appendMutator, ["MaybeIgnored"], testObject)).toEqual({
+    expect(
+      convertObjectKeys(appendMutator, ["MaybeIgnored"], testObject)
+    ).toEqual({
       Case1Mutated: "test",
       cAsE2Mutated: "test",
       case3Mutated: "test",
@@ -77,11 +80,15 @@ describe("convertObjectKeys", () => {
   });
   it("should not mutate object keys if mutator is identity", () => {
     const identityMutator = key => key;
-    expect(convertObjectKeys(identityMutator, ["MaybeIgnored"], testObject)).toEqual(testObject);
+    expect(
+      convertObjectKeys(identityMutator, ["MaybeIgnored"], testObject)
+    ).toEqual(testObject);
   });
   it("should return the item if not an array or object", () => {
     const identityMutator = key => key;
-    expect(convertObjectKeys(identityMutator, ["MaybeIgnored"], "invalid")).toEqual("invalid");
+    expect(
+      convertObjectKeys(identityMutator, ["MaybeIgnored"], "invalid")
+    ).toEqual("invalid");
   });
 });
 
@@ -198,5 +205,44 @@ describe("trimObjectValues", () => {
   });
   it("should return the item if it's not an object", () => {
     expect(trimObjectValues(invalidObject)).toEqual(invalidObject);
+  });
+});
+
+describe("flattenObject", () => {
+  const eight = expect.any(Function);
+  const nestedObject = {
+    one: "one",
+    two: "two",
+    three: {
+      four: "four",
+      five: {
+        six: 6,
+        seven: {
+          eight,
+          nine: [],
+        },
+      },
+    },
+  };
+  const flattenedObject = {
+    one: "one",
+    two: "two",
+    four: "four",
+    six: 6,
+    eight,
+    nine: [],
+  };
+  it("should flatten the object", () => {
+    expect(flattenObject(nestedObject)).toMatchObject(flattenedObject);
+  });
+
+  it("should return an empty object if input is an empty object", () => {
+    expect(flattenObject({})).toMatchObject({});
+  });
+
+  it("should return the input if not an object", () => {
+    expect(flattenObject(null)).toEqual(null);
+    expect(flattenObject("hi")).toEqual("hi");
+    expect(flattenObject(420)).toEqual(420);
   });
 });

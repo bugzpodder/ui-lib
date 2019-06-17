@@ -6,4 +6,5 @@ export {
   mapToJson,
   titleizeObjectKeys,
   trimObjectValues,
+  flattenObject,
 } from "./json-util";
