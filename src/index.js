@@ -82,6 +82,7 @@ export {
 export {
   buildDateRangeString,
   extractDateRange,
+  extractValidDate,
   formatDate,
   formatDateTime,
 } from "./utils/date-utils";

@@ -1,4 +1,8 @@
 // @flow
 export {
-  buildDateRangeString, extractDateRange, formatDate, formatDateTime,
+  buildDateRangeString,
+  extractDateRange,
+  extractValidDate,
+  formatDate,
+  formatDateTime,
 } from "./date-util";

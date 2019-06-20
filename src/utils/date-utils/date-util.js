@@ -1,6 +1,10 @@
 // @flow
 import moment from "moment";
-import { DATE_FORMAT, EPOCH_DATE, EPOCH_DATE_TIME } from "../../constants/date-constants";
+import {
+  DATE_FORMAT,
+  EPOCH_DATE,
+  EPOCH_DATE_TIME,
+} from "../../constants/date-constants";
 
 // TODO(nsawas): consolidate/rename with function from @grail/components/date
 export const formatDate = (date: string | Date | moment$Moment) => {
@@ -32,7 +36,7 @@ export const DATE_REGEX_BLOCK = "((?:[-\\d]+)|(?:[-\\d]+T[-\\d:.]+Z))";
 // Also, supported, `to` replaced with `-`
 export const extractDateRange = (dateRangeString: string) => {
   const dateRangeRegExp = new RegExp(
-    `^${DATE_REGEX_BLOCK}?\\s*(?:${WRAPPED_DATE_RANGE_DELIMITERS})\\s*${DATE_REGEX_BLOCK}?$`,
+    `^${DATE_REGEX_BLOCK}?\\s*(?:${WRAPPED_DATE_RANGE_DELIMITERS})\\s*${DATE_REGEX_BLOCK}?$`
   );
   const match = dateRangeRegExp.exec(dateRangeString);
   if (!match) {
@@ -48,7 +52,10 @@ export const extractDateRange = (dateRangeString: string) => {
   };
 };
 
-export const buildDateRangeString = (dateRange: { startDate?: ?string, endDate?: ?string }) => {
+export const buildDateRangeString = (dateRange: {
+  startDate?: ?string,
+  endDate?: ?string
+}) => {
   const { startDate, endDate } = dateRange;
   if (startDate) {
     if (endDate) {
@@ -60,4 +67,15 @@ export const buildDateRangeString = (dateRange: { startDate?: ?string, endDate?:
     return `to ${endDate}`;
   }
   return "";
+};
+
+export const extractValidDate = (
+  date: string,
+  format: string = DATE_FORMAT
+): ?string => {
+  const momentDate = moment(date);
+  if (date && momentDate.isValid()) {
+    return momentDate.format(format);
+  }
+  return null;
 };
