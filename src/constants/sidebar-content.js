@@ -118,16 +118,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         domain: EDC,
         path: "/v2/providers",
       },
-      {
-        name: "Invoices",
-        domain: EDC,
-        path: "/v2/invoices",
-      },
-      {
-        name: "Adjustments",
-        domain: EDC,
-        path: "/v2/adjustments",
-      },
     ],
   },
   {
