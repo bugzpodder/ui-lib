@@ -51,6 +51,9 @@ export {
   DATE_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPES,
+  ENCODED_DOUBLE_AMPERSAND,
+  ENCODED_DOUBLE_PIPE,
+  ENCODED_PERCENT_CHAR,
   ENUM_SEARCH_TYPE,
   FULL_TEXT_SEARCH_TYPE,
   LIKE_TEXT_SEARCH_TYPE,
@@ -62,13 +65,10 @@ export {
   buildSearchQuery,
   debounceRequest,
   deprecatedBuildSearchQuery,
-  doubleAmpersand,
-  doublePipe,
   filterResults,
   boolToString,
   getPage,
   isValueValid,
-  percentChar,
 } from "./utils/api-utils";
 export {
   camelizeObjectKeys,

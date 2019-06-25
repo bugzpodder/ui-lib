@@ -1,13 +1,16 @@
 // @flow
-
-export const percentChar = "%25"; // %25 is `%`. This provides the LIKE query option.
-export const doubleAmpersand = "%26%26"; // %26%26 is `&&`.
-export const doublePipe = "||";
+export const ENCODED_DOUBLE_AMPERSAND = global.encodeURIComponent("&&");
+export const ENCODED_DOUBLE_PIPE = global.encodeURIComponent("||");
+export const ENCODED_PERCENT_CHAR = global.encodeURIComponent("%"); // This provides the LIKE query option.
 
 export const STRING_START_CHAR = "^";
 export const STRING_END_CHAR = "$";
-export const ENCODED_STRING_START_CHAR = global.encodeURIComponent(STRING_START_CHAR);
-export const ENCODED_STRING_END_CHAR = global.encodeURIComponent(STRING_END_CHAR);
+export const ENCODED_STRING_START_CHAR = global.encodeURIComponent(
+  STRING_START_CHAR
+);
+export const ENCODED_STRING_END_CHAR = global.encodeURIComponent(
+  STRING_END_CHAR
+);
 export const ENCODED_QUOTE_CHAR = global.encodeURIComponent('"');
 
 export const OMNI_TEXT_SEARCH_TYPE = Symbol("omni-text");

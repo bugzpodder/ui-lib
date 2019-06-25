@@ -10,6 +10,9 @@ import {
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
   DATE_SEARCH_TYPES,
+  ENCODED_DOUBLE_AMPERSAND,
+  ENCODED_DOUBLE_PIPE,
+  ENCODED_PERCENT_CHAR,
   ENCODED_QUOTE_CHAR,
   ENCODED_STRING_END_CHAR,
   ENCODED_STRING_START_CHAR,
@@ -20,9 +23,6 @@ import {
   LIKE_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
-  doubleAmpersand,
-  doublePipe,
-  percentChar,
 } from "./api-constants";
 import { DATE_FORMAT } from "../../constants";
 import { extractDateRange } from "../date-utils";
@@ -74,7 +74,9 @@ export const isValueValid = (value: mixed) => {
   return value !== "" && value != null;
 };
 
-const getSearchValues = (searchOption: DeprecatedSearchOption): Array<string> => {
+const getSearchValues = (
+  searchOption: DeprecatedSearchOption
+): Array<string> => {
   const { value = "", values } = searchOption;
   let searchValues = [];
   if (Array.isArray(values)) {
@@ -102,7 +104,9 @@ const getEscapedSearchValues = (searchOption: SearchOptionV2) => {
   return searchValues;
 };
 
-const getSearchOptionsV2 = (deprecatedSearchOptions: DeprecatedSearchOptions = new Map()) => {
+const getSearchOptionsV2 = (
+  deprecatedSearchOptions: DeprecatedSearchOptions = new Map()
+) => {
   const searchOptionsV2: SearchOptionsV2 = [];
   deprecatedSearchOptions.forEach((searchOption, name) => {
     const values = getSearchValues(searchOption);
@@ -136,18 +140,23 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
       if (mapValues) {
         values = await mapValues(values);
       }
-      values = getEscapedSearchValues({ ...searchOption, values }).map((value) => {
-        if (isDateSearchType) {
-          return value;
+      values = getEscapedSearchValues({ ...searchOption, values }).map(
+        (value) => {
+          if (isDateSearchType) {
+            return value;
+          }
+          return global.encodeURIComponent(value);
         }
-        return global.encodeURIComponent(value);
-      });
+      );
       return { ...searchOption, values };
-    }),
+    })
   );
   const query = resolvedSearchOptions.reduce((memo, searchOption) => {
     const {
-      type, values, searchFields = [searchOption.name], includeNulls,
+      type,
+      values,
+      searchFields = [searchOption.name],
+      includeNulls,
     } = searchOption;
     const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
     const { searchOperator = "==" } = searchOption;
@@ -156,7 +165,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
       initialSubQuery = searchFields.reduce((memo, searchField) => {
         const nullQuery = `${searchField}=="NULL"`;
         if (memo) {
-          return `${memo}${doublePipe}(${nullQuery})`;
+          return `${memo}${ENCODED_DOUBLE_PIPE}(${nullQuery})`;
         }
         return searchFields.length > 1 ? `(${nullQuery})` : nullQuery;
       }, "");
@@ -166,21 +175,29 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         if (!isValueValid(value)) {
           return multiValueSearchMemo;
         }
-        const multiFieldSearch = searchFields.reduce((multiFieldSearchMemo, searchField) => {
-          const formattedResult = `${formatter(String(value).trim())}`;
-          const subQuery = isDateSearchType ? formattedResult : `${searchField}${searchOperator}${formattedResult}`;
-          if (multiFieldSearchMemo) {
-            multiFieldSearchMemo += doublePipe;
-            return `${multiFieldSearchMemo}(${subQuery})`;
-          }
-          return searchFields.length > 1 ? `(${subQuery})` : subQuery;
-        }, "");
-        return `${multiValueSearchMemo}${multiValueSearchMemo && doublePipe}${multiFieldSearch}`;
+        const multiFieldSearch = searchFields.reduce(
+          (multiFieldSearchMemo, searchField) => {
+            const formattedResult = `${formatter(String(value).trim())}`;
+            const subQuery = isDateSearchType
+              ? formattedResult
+              : `${searchField}${searchOperator}${formattedResult}`;
+            if (multiFieldSearchMemo) {
+              multiFieldSearchMemo += ENCODED_DOUBLE_PIPE;
+              return `${multiFieldSearchMemo}(${subQuery})`;
+            }
+            return searchFields.length > 1 ? `(${subQuery})` : subQuery;
+          },
+          ""
+        );
+        return `${multiValueSearchMemo}${multiValueSearchMemo
+          && ENCODED_DOUBLE_PIPE}${multiFieldSearch}`;
       }, initialSubQuery);
       if (!multiValueSearch) {
         return null;
       }
-      return searchOptions.length > 1 ? `(${multiValueSearch})` : multiValueSearch;
+      return searchOptions.length > 1
+        ? `(${multiValueSearch})`
+        : multiValueSearch;
     };
     const newQuery = (() => {
       switch (type) {
@@ -188,19 +205,27 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case OMNI_TEXT_SEARCH_TYPE:
           return multiValueSearchBuilder((value) => {
             let searchValue = value.trim();
-            const quotedValue = extractQuotedString(searchValue, ENCODED_QUOTE_CHAR);
+            const quotedValue = extractQuotedString(
+              searchValue,
+              ENCODED_QUOTE_CHAR
+            );
             if (quotedValue != null) {
               searchValue = quotedValue;
             } else {
               if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
-                searchValue = searchValue.substring(ENCODED_STRING_START_CHAR.length);
+                searchValue = searchValue.substring(
+                  ENCODED_STRING_START_CHAR.length
+                );
               } else {
-                searchValue = `${percentChar}${searchValue}`;
+                searchValue = `${ENCODED_PERCENT_CHAR}${searchValue}`;
               }
               if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
-                searchValue = searchValue.substring(0, searchValue.length - ENCODED_STRING_END_CHAR.length);
+                searchValue = searchValue.substring(
+                  0,
+                  searchValue.length - ENCODED_STRING_END_CHAR.length
+                );
               } else {
-                searchValue = `${searchValue}${percentChar}`;
+                searchValue = `${searchValue}${ENCODED_PERCENT_CHAR}`;
               }
             }
             return `"${searchValue}"`;
@@ -216,12 +241,16 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case FULL_ID_SEARCH_TYPE:
           return multiValueSearchBuilder(value => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `"${percentChar}${value}${percentChar}"`);
+          return multiValueSearchBuilder(
+            value => `"${ENCODED_PERCENT_CHAR}${value}${ENCODED_PERCENT_CHAR}"`
+          );
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
           return multiValueSearchBuilder((dateRangeString) => {
             // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-            let { startDate, endDate } = extractDateRange(dateRangeString || "");
+            let { startDate, endDate } = extractDateRange(
+              dateRangeString || ""
+            );
             if (startDate && endDate) {
               if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
                 [startDate, endDate] = [endDate, startDate];
@@ -246,7 +275,8 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
               } else {
                 endDate = moment(String(endDate)).format(DATE_FORMAT);
               }
-              dateSearch = `${dateSearch}${dateSearch && doubleAmpersand}${searchFields[0]}<="${endDate}"`;
+              dateSearch = `${dateSearch}${dateSearch
+                && ENCODED_DOUBLE_AMPERSAND}${searchFields[0]}<="${endDate}"`;
             }
             // NOTE: Must wrap the dateSearch in brackets, since it could be or'd in the wrapper.
             return dateSearch ? `(${dateSearch})` : "";
@@ -258,7 +288,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
       }
     })();
     if (memo && newQuery) {
-      memo += doubleAmpersand;
+      memo += ENCODED_DOUBLE_AMPERSAND;
     }
 
     return newQuery ? `${memo}${newQuery}` : memo;
@@ -272,9 +302,14 @@ q query URL parameter of form:
 q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 // eslint-disable-next-line max-len
-export const deprecatedBuildSearchQuery = (deprecatedSearchOptions: DeprecatedSearchOptions) => buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
+export const deprecatedBuildSearchQuery = (
+  deprecatedSearchOptions: DeprecatedSearchOptions
+) => buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
 
-export const filterResults = (items: Array<any>, options: ApiQueryOptions): Array<any> => {
+export const filterResults = (
+  items: Array<any>,
+  options: ApiQueryOptions
+): Array<any> => {
   const {
     count, offset, sortOptions, searchOptions,
   } = options;
@@ -285,7 +320,10 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
     }
 
     const {
-      type, searchFields = [searchOption.name], values, includeNulls,
+      type,
+      searchFields = [searchOption.name],
+      values,
+      includeNulls,
     } = searchOption;
     const searchValues = getEscapedSearchValues(searchOption);
 
@@ -362,11 +400,13 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
         if (includeNulls && item[field] == null) {
           return true;
         }
-        return found || (isValueValid(item[field]) && compare(item[field], value));
+        return (
+          found || (isValueValid(item[field]) && compare(item[field], value))
+        );
       }, false);
     }, false);
     // eslint-disable-next-line space-in-parens
-  }, true), );
+  }, true));
 
   filteredResults.sort((a, b) => sortOptions.reduce((result, field) => {
     if (result !== 0 || !field.id || a[field.id] === b[field.id]) {
@@ -377,7 +417,7 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
     }
     return field.desc ? -1 : 1;
     // eslint-disable-next-line space-in-parens
-  }, 0), );
+  }, 0));
 
   return filteredResults.slice(offset, offset + count);
 };
@@ -387,4 +427,7 @@ export const filterResults = (items: Array<any>, options: ApiQueryOptions): Arra
  * called before. Otherwise, it waits until the next leading edge.
  * @param func The function to debounce.
  */
-export const debounceRequest = partialRight(debounce, 500, { leading: true, trailing: false });
+export const debounceRequest = partialRight(debounce, 500, {
+  leading: true,
+  trailing: false,
+});
