@@ -1,5 +1,6 @@
 // @flow
 
+export const ZERO_DATE = "0001-01-01";
 export const EPOCH_DATE = "1970-01-01";
 export const EPOCH_DATE_TIME = "1970-01-01T08:00:00.000Z";
 export const DATE_FORMAT = "YYYY-MM-DD";
@@ -49,4 +50,8 @@ export const TIME_INPUT_MASK = [
 
 // This mask guides the user to enter a date-time in ISO-8601 format.
 // See caveats above about erroneous dates and times.
-export const DATE_TIME_INPUT_MASK = [...DATE_INPUT_MASK, " ", ...TIME_INPUT_MASK];
+export const DATE_TIME_INPUT_MASK = [
+  ...DATE_INPUT_MASK,
+  " ",
+  ...TIME_INPUT_MASK,
+];

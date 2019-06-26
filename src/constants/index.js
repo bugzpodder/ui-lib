@@ -24,6 +24,7 @@ export {
   white,
 } from "./colors";
 export {
+  ZERO_DATE,
   DATE_FORMAT,
   DATE_TIME_FORMAT,
   DATE_INPUT_MASK,

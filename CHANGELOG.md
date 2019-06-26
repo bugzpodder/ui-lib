@@ -1,6 +1,6 @@
 ## 1.1.0 - 2019-##-
 
-1.
+1. Add `ZERO_DATE` constant. This is used to check for zero dates returned by go servers.
 
 ## 1.0.0 - 2019-06-17
 
