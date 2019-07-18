@@ -2,6 +2,7 @@
 
 1. Add `ZERO_DATE` constant. This is used to check for zero dates returned by go servers.
 2. Add `SERVER_URLS_BY_MODE` and `DEV_SERVER_URLS` to define default server URLs for sidebar content.
+3. `formatDate` and `formatDateTime` no longer return `EPOCH_DATE`s when empty strings are passed.
 
 ## 1.0.0 - 2019-06-17
 

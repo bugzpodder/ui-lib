@@ -1,6 +1,5 @@
 // @flow
 import moment from "moment-timezone";
-import { EPOCH_DATE, EPOCH_DATE_TIME } from "../../constants/date-constants";
 
 import {
   buildDateRangeString,
@@ -12,7 +11,6 @@ import {
 
 moment.tz.setDefault("America/Los_Angeles");
 
-const formattedEpochDate = "1970-01-01";
 const formattedDate = "2018-04-20";
 const formattedDateAtStartOfDay = "2018-04-20T07:00:00.000Z";
 const formattedDateTime = "2018-04-20T18:05:01.000Z";
@@ -27,12 +25,14 @@ describe("date formatting", () => {
     expect(formatDate(date)).toEqual(formattedDate);
   });
 
-  it(`converts empty string to "${EPOCH_DATE}"`, () => {
-    expect(formatDate("")).toEqual(formattedEpochDate);
+  it("handle empty strings", () => {
+    expect(formatDate("")).toEqual("");
   });
 
-  it("converts null to null", () => {
-    expect(formatDate(null)).toEqual(null);
+  it("returns empty string from falsey values", () => {
+    expect(formatDate(null)).toEqual("");
+    expect(formatDate(undefined)).toEqual("");
+    expect(formatDate(false)).toEqual("");
   });
 });
 
@@ -49,12 +49,14 @@ describe("datetime formatting", () => {
     expect(formatDateTime(date)).toEqual(formattedDateTime);
   });
 
-  it(`converts empty string to "${EPOCH_DATE_TIME}"`, () => {
-    expect(formatDateTime("")).toEqual(EPOCH_DATE_TIME);
+  it("handle empty strings", () => {
+    expect(formatDateTime("")).toEqual("");
   });
 
-  it("converts null to null", () => {
-    expect(formatDateTime(null)).toEqual(null);
+  it("returns empty string from falsey values", () => {
+    expect(formatDateTime(null)).toEqual("");
+    expect(formatDateTime(undefined)).toEqual("");
+    expect(formatDateTime(false)).toEqual("");
   });
 });
 

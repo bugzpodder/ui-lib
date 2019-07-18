@@ -1,26 +1,22 @@
 // @flow
 import moment from "moment";
-import {
-  DATE_FORMAT,
-  EPOCH_DATE,
-  EPOCH_DATE_TIME,
-} from "../../constants/date-constants";
+import { DATE_FORMAT } from "../../constants/date-constants";
 
 // TODO(nsawas): consolidate/rename with function from @grail/components/date
-export const formatDate = (date: string | Date | moment$Moment) => {
-  if (date === null) {
-    return null;
+export const formatDate = (date: string | Date | moment$Moment): string => {
+  if (!date) {
+    return "";
   }
-  const formattedDate = date === "" ? EPOCH_DATE : date;
-  return moment(formattedDate).format(DATE_FORMAT);
+  return moment(date).format(DATE_FORMAT);
 };
 
-export const formatDateTime = (dateTime: string | Date | moment$Moment) => {
-  if (dateTime === null) {
-    return null;
+export const formatDateTime = (
+  dateTime: string | Date | moment$Moment
+): string => {
+  if (!dateTime) {
+    return "";
   }
-  const formattedDateTime = dateTime === "" ? EPOCH_DATE_TIME : dateTime;
-  return moment(formattedDateTime).toISOString();
+  return moment(dateTime).toISOString();
 };
 
 export const DATE_RANGE_DELIMITER = "(?:(?:-)|(?:to))";
