@@ -149,6 +149,11 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         path: "/lims/reagent-lots",
         exact: true,
       },
+      {
+        name: "Stockroom Pick Request",
+        domain: LIMS,
+        path: "/lims/new-stock-request",
+      },
     ],
   },
   {
