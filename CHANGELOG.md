@@ -11,6 +11,7 @@
    value mapper in Omni Search fields.
 5. Move node server lib code like `passport` utils and `commandLine` utils to `@grail/server-lib`.
 6. Add `grailPurpleActionColor`. (Intended for links and actions).
+7. sanitizeId only removes the dash in the second last position instead of every position.
 
 ## 0.10.0 - 2019-04-01
 
