@@ -4,6 +4,13 @@ export const EDC = "EDC";
 export const PIPELINE = "pipeline";
 export const EXTERNAL = "external";
 
+export const DOMAINS = {
+  LIMS,
+  EDC,
+  PIPELINE,
+  EXTERNAL,
+};
+
 export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
   {
     name: "Sample Management",
