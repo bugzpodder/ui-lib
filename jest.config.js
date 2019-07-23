@@ -9,6 +9,7 @@ module.exports = Object.assign(jestConfig, {
     "!**/mocks/**",
     "!src/constants/**",
     "!src/passport/**",
+    "!src/api/**",
   ],
   coverageThreshold: {
     "src/**/*.js": {

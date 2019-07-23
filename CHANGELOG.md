@@ -3,6 +3,7 @@
 1. Add `ZERO_DATE` constant. This is used to check for zero dates returned by go servers.
 2. Add `SERVER_URLS_BY_MODE` and `DEV_SERVER_URLS` to define default server URLs for sidebar content.
 3. `formatDate` and `formatDateTime` no longer return `EPOCH_DATE`s when empty strings are passed.
+4. Add `Api` class, originally from `lims/client`.
 
 ## 1.0.0 - 2019-06-17
 
@@ -43,7 +44,7 @@
 1. Update omni search field and bar:
 
 - localStorage now includes `omni-` prefix.
-- Add support for omni commands. This allows `OmniChip` in tables to request changes in `OmniSearcBar`.
+- Add support for omni commands. This allows `OmniChip` in tables to request changes in `OmniSearchBar`.
 - Add support for start and end of string support using `^` and `$`.
 - Add support for quoted strings as exact search.
 - Update api-utils to encode URI characters correctly.
