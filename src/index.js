@@ -46,7 +46,8 @@ export {
   NotificationTypes,
 } from "./constants";
 
-export { Api } from "./api";
+// Need to export class directly from file to fix flow errors.
+export { Api } from "./api/api";
 
 export { localStorage } from "./client-utils";
 
