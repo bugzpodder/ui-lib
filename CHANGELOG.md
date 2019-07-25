@@ -4,6 +4,7 @@
 2. Add `SERVER_URLS_BY_MODE` and `DEV_SERVER_URLS` to define default server URLs for sidebar content.
 3. `formatDate` and `formatDateTime` no longer return `EPOCH_DATE`s when empty strings are passed.
 4. Add `Api` class, originally from `lims/client`.
+5. Remove `search` method from `Api`. It should be implemented by the client app.
 
 ## 1.0.0 - 2019-06-17
 

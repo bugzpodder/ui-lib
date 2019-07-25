@@ -4,7 +4,6 @@ import merge from "lodash/merge";
 import moment from "moment";
 import partialRight from "lodash/partialRight";
 import uuid from "uuid";
-import { buildOrderQuery, buildSearchQuery, getPage } from "../utils/api-utils";
 
 const SEMICOLON_SEPARATOR = "; ";
 
@@ -170,16 +169,6 @@ export class Api {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
         return response;
       });
-  };
-
-  search = async (endpoint: string, contentOptions?: GetContentOptionsV2 = {}) => {
-    const {
-      offset, count = 10, searchOptions, sortOptions,
-    } = contentOptions;
-    const page = getPage(offset, count);
-    const orderQuery = buildOrderQuery(sortOptions);
-    const searchQuery = await buildSearchQuery(searchOptions);
-    return this.getJson(`${endpoint}?q=${searchQuery}&page=${page}&count=${String(count)}${orderQuery}`);
   };
 
   sendJsonUpdateRequest = (method: string, urlSuffix: string, object: Object, options: ApiOptions = defaultOptions) => {
