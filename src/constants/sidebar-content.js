@@ -133,7 +133,8 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
       {
         name: "Dashboards",
         domain: EXTERNAL,
-        path: "https://ccga-pm-dashboard.eng.aws.grail.com/#/dashboards/ccga2/tmOD",
+        path:
+          "https://ccga-pm-dashboard.eng.aws.grail.com/#/dashboards/ccga2/tmOD",
       },
       {
         name: "Reports",
@@ -157,7 +158,7 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         exact: true,
       },
       {
-        name: "Stockroom Pick Request",
+        name: "Stockroom Pick Request (Beta)",
         domain: LIMS,
         path: "/lims/new-stock-request",
       },
