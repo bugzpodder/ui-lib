@@ -70,6 +70,11 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         domain: LIMS,
         path: "/lims/create-non-patient-samples",
       },
+      {
+        name: "Import New Patient Samples",
+        domain: LIMS,
+        path: "/lims/import-new-patient-samples",
+      },
     ],
   },
   {
@@ -223,16 +228,6 @@ export const adminItems = {
       name: "Assay Analysis",
       domain: LIMS,
       path: "/admin/assay-analysis",
-    },
-    {
-      name: "Import BST Samples",
-      domain: LIMS,
-      path: "/lims/import-samples",
-    },
-    {
-      name: "Import New Patient Samples",
-      domain: LIMS,
-      path: "/lims/import-new-patient-samples",
     },
     {
       name: "Config",
