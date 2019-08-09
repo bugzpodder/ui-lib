@@ -92,7 +92,11 @@ export {
   formatDate,
   formatDateTime,
 } from "./utils/date-utils";
-export { getColHeader, getGridCellPosition, getRowHeader } from "./utils/grid-utils";
+export {
+  getColHeader,
+  getGridCellPosition,
+  getRowHeader,
+} from "./utils/grid-utils";
 export {
   getItemsFromOmniValue,
   getKeysForSearchDef,
@@ -104,7 +108,10 @@ export {
   parseValuesFromOmniText,
 } from "./utils/omni-search-util";
 export {
-  generateFilledArray, serializePromises, mapBy, toPairWise,
+  generateFilledArray,
+  serializePromises,
+  mapBy,
+  toPairWise,
 } from "./utils/array-utils";
 export { hasKey, hasKeyValue, setKeyValue } from "./utils/key-value-utils";
 export { fnv1 } from "./utils/hash-utils";
@@ -131,7 +138,10 @@ export {
   valuesToSuggestions,
 } from "./utils/string-utils";
 export {
-  sanitizeId, getInputBarcode, getSampleLabel, getSamplePrefix,
+  sanitizeId,
+  getInputBarcode,
+  getSampleLabel,
+  getSamplePrefix,
 } from "./utils/id-utils";
 export {
   expandSearchValues,

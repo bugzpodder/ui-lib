@@ -6,7 +6,7 @@ import { isValueValid } from "../api-utils";
 
 type Option = {
   shouldUpdateBrowserHistory?: boolean,
-  shouldReplaceQuery?: boolean,
+  shouldReplaceQuery?: boolean
 };
 
 export const getPathname = (props: Object = {}): string => {
@@ -22,11 +22,17 @@ export const getQuery = (props: Object = {}): Object => {
 
 export const stringifyQuery = (query: Object = {}): string => {
   // delete params with empty string values
-  Object.keys(query).forEach(key => !isValueValid(query[key]) && delete query[key]);
+  Object.keys(query).forEach(
+    (key) => !isValueValid(query[key]) && delete query[key]
+  );
   return qs.stringify(query);
 };
 
-export const updateQueryInternal = (props: Object = {}, newQueries: Object = {}, options: Option = {}) => {
+export const updateQueryInternal = (
+  props: Object = {},
+  newQueries: Object = {},
+  options: Option = {}
+) => {
   const query = getQuery(props);
   const { history } = props;
 
@@ -34,8 +40,13 @@ export const updateQueryInternal = (props: Object = {}, newQueries: Object = {},
     return;
   }
 
-  const { shouldUpdateBrowserHistory = false, shouldReplaceQuery = false } = options;
-  const historyOperation = shouldUpdateBrowserHistory ? history.push : history.replace;
+  const {
+    shouldUpdateBrowserHistory = false,
+    shouldReplaceQuery = false,
+  } = options;
+  const historyOperation = shouldUpdateBrowserHistory
+    ? history.push
+    : history.replace;
   const newQuery = shouldReplaceQuery === true ? newQueries : { ...query, ...newQueries };
   if (!equals(query, newQuery)) {
     historyOperation({ search: `?${stringifyQuery(newQuery)}` });

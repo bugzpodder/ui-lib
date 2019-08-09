@@ -9,26 +9,40 @@ const SEMICOLON_SEPARATOR = "; ";
 
 const GENERIC_ERROR_MESSAGE = "Bad API response.";
 
-const extractIssueMessages = (object: UnprocessedJsonResult, issueType: string = "errors") => {
+const extractIssueMessages = (
+  object: UnprocessedJsonResult,
+  issueType: string = "errors"
+) => {
   if (object.errors) {
-    return object.errors[issueType].map(error => error.message);
+    return object.errors[issueType].map((error) => error.message);
   }
   return [];
 };
-export const extractIssueCodes = (object: UnprocessedJsonResult, issueType: string = "errors") => {
+export const extractIssueCodes = (
+  object: UnprocessedJsonResult,
+  issueType: string = "errors"
+) => {
   if (object.errors) {
-    return object.errors[issueType].map(error => error.errorCode).filter(errorCode => errorCode);
+    return object.errors[issueType]
+      .map((error) => error.errorCode)
+      .filter((errorCode) => errorCode);
   }
   return [];
 };
 
-export const extractErrorMessages = partialRight(extractIssueMessages, "errors");
-export const extractWarningMessages = partialRight(extractIssueMessages, "warnings");
+export const extractErrorMessages = partialRight(
+  extractIssueMessages,
+  "errors"
+);
+export const extractWarningMessages = partialRight(
+  extractIssueMessages,
+  "warnings"
+);
 export const extractErrorCodes = partialRight(extractIssueCodes, "errors");
 
 type ApiConnection = {
   apiUrl: string,
-  version: string,
+  version: string
 };
 
 const defaultOptions = {};
@@ -96,13 +110,23 @@ export class Api {
 
   getBlob = (urlSuffix: string) => this.sendBlobRequest("GET", urlSuffix);
 
-  sendBlobRequest = (method: string, urlSuffix: string, body?: Object, options: ApiOptions = defaultOptions) => {
-    const headers = merge({ headers: { "content-type": "application/json" } }, this.getCommonHeaders());
+  sendBlobRequest = (
+    method: string,
+    urlSuffix: string,
+    body?: Object,
+    options: ApiOptions = defaultOptions
+  ) => {
+    const headers = merge(
+      { headers: { "content-type": "application/json" } },
+      this.getCommonHeaders()
+    );
     if (this.apiObjectProcessors) {
       body = this.apiObjectProcessors.processOutbound(body, options);
     }
     const { apiDispatchers } = this;
-    const fetchOptions = merge({ method }, apiDispatchers, headers, { body: JSON.stringify(body) });
+    const fetchOptions = merge({ method }, apiDispatchers, headers, {
+      body: JSON.stringify(body),
+    });
     // TODO(lkong): convert the promise chain to awaits.
     apiDispatchers && apiDispatchers.dispatchIsLoading(true);
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
@@ -121,14 +145,17 @@ export class Api {
           if (!filename) {
             filename = moment().toISOString();
           }
-          return response.blob().then(blob => ({
+          return response.blob().then((blob) => ({
             blob,
             filename,
             status,
             statusIsOk: ok,
           }));
         }
-        return this.processJsonResponse(response, merge({}, apiDispatchers, options));
+        return this.processJsonResponse(
+          response,
+          merge({}, apiDispatchers, options)
+        );
       })
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
@@ -137,18 +164,24 @@ export class Api {
       });
   };
 
-  postBlob = (urlSuffix: string, blob: Blob, options?: ApiOptions = defaultOptions) => {
+  postBlob = (
+    urlSuffix: string,
+    blob: Blob,
+    options?: ApiOptions = defaultOptions
+  ) => {
     const headers = this.getCommonHeaders();
     const formData = new FormData();
     formData.append("file", blob);
     const { apiDispatchers } = this;
-    const fetchOptions = merge({ method: "POST" }, apiDispatchers, headers, { body: formData });
+    const fetchOptions = merge({ method: "POST" }, apiDispatchers, headers, {
+      body: formData,
+    });
     // TODO(lkong): convert the promise chain to awaits.
     apiDispatchers && apiDispatchers.dispatchIsSaving(true);
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then(resp => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
+      .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
@@ -163,7 +196,7 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, this.getCommonHeaders())
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then(resp => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
+      .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
@@ -171,19 +204,29 @@ export class Api {
       });
   };
 
-  sendJsonUpdateRequest = (method: string, urlSuffix: string, object: Object, options: ApiOptions = defaultOptions) => {
-    const headers = merge({ headers: { "content-type": "application/json" } }, this.getCommonHeaders());
+  sendJsonUpdateRequest = (
+    method: string,
+    urlSuffix: string,
+    object: Object,
+    options: ApiOptions = defaultOptions
+  ) => {
+    const headers = merge(
+      { headers: { "content-type": "application/json" } },
+      this.getCommonHeaders()
+    );
     if (this.apiObjectProcessors) {
       object = this.apiObjectProcessors.processOutbound(object, options);
     }
     const { apiDispatchers } = this;
-    const fetchOptions = merge({ method }, headers, { body: JSON.stringify(object) });
+    const fetchOptions = merge({ method }, headers, {
+      body: JSON.stringify(object),
+    });
     // TODO(lkong): convert the promise chain to awaits.
     apiDispatchers && apiDispatchers.dispatchIsSaving(true);
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then(response => this.processJsonResponse(response, merge({}, apiDispatchers, options)))
+      .then((response) => this.processJsonResponse(response, merge({}, apiDispatchers, options)))
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
@@ -191,15 +234,34 @@ export class Api {
       });
   };
 
-  postJson = (urlSuffix: string, object: Object, options: ApiOptions = defaultOptions) => this.sendJsonUpdateRequest("POST", urlSuffix, object, options);
+  postJson = (
+    urlSuffix: string,
+    object: Object,
+    options: ApiOptions = defaultOptions
+  ) => this.sendJsonUpdateRequest("POST", urlSuffix, object, options);
 
-  putJson = (urlSuffix: string, object: Object, options: ApiOptions = defaultOptions) => this.sendJsonUpdateRequest("PUT", urlSuffix, object, options);
+  putJson = (
+    urlSuffix: string,
+    object: Object,
+    options: ApiOptions = defaultOptions
+  ) => this.sendJsonUpdateRequest("PUT", urlSuffix, object, options);
 
-  patchJson = (urlSuffix: string, object: Object, options: ApiOptions = defaultOptions) => this.sendJsonUpdateRequest("PATCH", urlSuffix, object, options);
+  patchJson = (
+    urlSuffix: string,
+    object: Object,
+    options: ApiOptions = defaultOptions
+  ) => this.sendJsonUpdateRequest("PATCH", urlSuffix, object, options);
 
-  deleteJson = (urlSuffix: string, object: Object, options: ApiOptions = defaultOptions) => this.sendJsonUpdateRequest("DELETE", urlSuffix, object, options);
+  deleteJson = (
+    urlSuffix: string,
+    object: Object,
+    options: ApiOptions = defaultOptions
+  ) => this.sendJsonUpdateRequest("DELETE", urlSuffix, object, options);
 
-  processJsonResponse = (response: Object, options: ApiOptions = defaultOptions): JsonResult => {
+  processJsonResponse = (
+    response: Object,
+    options: ApiOptions = defaultOptions
+  ): JsonResult => {
     const { status, ok } = response;
     return response.json().then((object) => {
       const hasResultInResponse = options.hasResultInResponse !== false;
@@ -211,7 +273,9 @@ export class Api {
       const warningMessages = extractWarningMessages(object);
       const errorCodes = extractErrorCodes(object);
       let errorMessage = errorMessages.reverse().join(SEMICOLON_SEPARATOR);
-      const warningMessage = warningMessages.reverse().join(SEMICOLON_SEPARATOR);
+      const warningMessage = warningMessages
+        .reverse()
+        .join(SEMICOLON_SEPARATOR);
       if (!ok && !errorMessage && !warningMessage) {
         errorMessage = GENERIC_ERROR_MESSAGE;
       }

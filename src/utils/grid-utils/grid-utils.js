@@ -1,7 +1,10 @@
 // @flow
 import { upperAlphaChars } from "../string-utils";
 
-const gridChars = [...upperAlphaChars, ...upperAlphaChars.map(char => `A${char}`)];
+const gridChars = [
+  ...upperAlphaChars,
+  ...upperAlphaChars.map((char) => `A${char}`),
+];
 
 export const getRowHeader = (rowIndex: number) => {
   if (rowIndex < 0 || rowIndex >= gridChars.length) {

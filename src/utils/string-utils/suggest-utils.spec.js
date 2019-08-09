@@ -25,9 +25,16 @@ const quotedValueTests = [
   { value: '"No possible match"', suggestions: [] },
   { value: '"1"', suggestions: [] },
 ];
-const quotedChoiceTests = choices.map(choice => ({ value: `"${choice}"`, suggestions: [choice] }));
+const quotedChoiceTests = choices.map((choice) => ({
+  value: `"${choice}"`,
+  suggestions: [choice],
+}));
 
-const valueTests = [...unquotedValueTests, ...quotedValueTests, ...quotedChoiceTests];
+const valueTests = [
+  ...unquotedValueTests,
+  ...quotedValueTests,
+  ...quotedChoiceTests,
+];
 
 describe("valueToSuggestions", () => {
   valueTests.forEach((test) => {
@@ -38,7 +45,10 @@ describe("valueToSuggestions", () => {
   });
 });
 
-const singleValueTests = valueTests.map(({ value, suggestions }) => ({ values: [value], suggestions }));
+const singleValueTests = valueTests.map(({ value, suggestions }) => ({
+  values: [value],
+  suggestions,
+}));
 
 const multiValueTests = [
   { values: [], suggestions: [] },

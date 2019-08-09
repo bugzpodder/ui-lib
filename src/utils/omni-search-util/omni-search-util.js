@@ -1,15 +1,25 @@
 // @flow
-import { ENUM_SEARCH_TYPE, OMNI_TEXT_SEARCH_TYPE, isValueValid } from "../api-utils";
+import {
+  ENUM_SEARCH_TYPE,
+  OMNI_TEXT_SEARCH_TYPE,
+  isValueValid,
+} from "../api-utils";
 import { OMNI_ERROR, OMNI_KEY } from "../../constants/omni";
 
 // FIXME(jrosenfield): add documentation for regexes
 const validOmniText = /^(([^:]*\s+)?[\w-.]+:)*[^:]*$/;
 const searchKey = /(([^:]*\s*)\s)?([\w-.]+):/gm;
 
-const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Array<string>>) => {
+const addItemToArrayMap = (
+  key: string,
+  value: string,
+  arrayMap: Map<string, Array<string>>
+) => {
   if (value === "" || isValueValid(value)) {
     const removedLeadingWhitespaceMatch = /\s*(.*)/.exec(value);
-    value = removedLeadingWhitespaceMatch ? removedLeadingWhitespaceMatch[1] : value;
+    value = removedLeadingWhitespaceMatch
+      ? removedLeadingWhitespaceMatch[1]
+      : value;
     const previousValues = arrayMap.get(key);
     if (previousValues === undefined) {
       arrayMap.set(key, [value]);
@@ -20,7 +30,9 @@ const addItemToArrayMap = (key: string, value: string, arrayMap: Map<string, Arr
 };
 
 /** Parse a map of field label to field value, using OMNI_KEY if no label is present. */
-export const parseValuesFromOmniText = (omniText: string): Map<string, Array<string>> => {
+export const parseValuesFromOmniText = (
+  omniText: string
+): Map<string, Array<string>> => {
   const parsed: Map<string, Array<string>> = new Map();
   if (!validOmniText.test(omniText)) {
     const error = new Error("Invalid search text.");
@@ -54,7 +66,9 @@ export const parseValuesFromOmniText = (omniText: string): Map<string, Array<str
   return parsed;
 };
 
-export const getKeysForSearchDef = (searchDef: OmniSearchDef): Array<string> => {
+export const getKeysForSearchDef = (
+  searchDef: OmniSearchDef
+): Array<string> => {
   const { aliases } = searchDef;
   if (aliases !== undefined && aliases.length) {
     return [...aliases, ...searchDef.searchFields];
@@ -63,7 +77,10 @@ export const getKeysForSearchDef = (searchDef: OmniSearchDef): Array<string> => 
 };
 
 /** Go through searchDefs extract values from omniText */
-export const getSearchValuesFromOmniText = (searchDefs: OmniSearchDefs, omniText: string): OmniSearchValues => {
+export const getSearchValuesFromOmniText = (
+  searchDefs: OmniSearchDefs,
+  omniText: string
+): OmniSearchValues => {
   if (!isValueValid(omniText) || !searchDefs || searchDefs.length === 0) {
     return new Map();
   }
@@ -87,7 +104,7 @@ export const getSearchValuesFromOmniText = (searchDefs: OmniSearchDefs, omniText
       }
     });
     if (searchDef.type === ENUM_SEARCH_TYPE) {
-      values = values.map(value => value.trim());
+      values = values.map((value) => value.trim());
     }
     if (values.length) {
       const searchValue = values.join(",");
@@ -96,7 +113,7 @@ export const getSearchValuesFromOmniText = (searchDefs: OmniSearchDefs, omniText
   });
 
   // If there are field labels that could not be mapped to a searchDef, the omniText is invalid.
-  const invalidKey = [...parsedValues.keys()].find(key => !!key);
+  const invalidKey = [...parsedValues.keys()].find((key) => !!key);
   if (invalidKey) {
     const error = new Error(`${invalidKey} is not a valid search tag.`);
     error.name = OMNI_ERROR;
@@ -105,7 +122,10 @@ export const getSearchValuesFromOmniText = (searchDefs: OmniSearchDefs, omniText
   return searchValues;
 };
 
-export const getOmniTextFromSearchValues = (searchDefs: OmniSearchDefs, searchValues: OmniSearchValues): string => {
+export const getOmniTextFromSearchValues = (
+  searchDefs: OmniSearchDefs,
+  searchValues: OmniSearchValues
+): string => {
   const omniValues = [];
   searchDefs.forEach((searchDef, index) => {
     const searchValue = searchValues.get(index);
@@ -124,18 +144,23 @@ export const getOmniTextFromSearchValues = (searchDefs: OmniSearchDefs, searchVa
 
 export const getOmniTextFromKeyValues = (keyValues: Array<KeyValue>) => keyValues.map(({ key, value }) => `${key}: ${value}`).join(" ");
 
-export const getItemsFromOmniValue = (omniValue: string = ""): Array<string> => {
+export const getItemsFromOmniValue = (
+  omniValue: string = ""
+): Array<string> => {
   const parsedItems: Array<string> = [];
   if (!isValueValid(omniValue)) {
     return parsedItems;
   }
   return omniValue
     .split(",")
-    .map(value => value.trim())
-    .filter(value => value !== "");
+    .map((value) => value.trim())
+    .filter((value) => value !== "");
 };
 
-export const getSearchOptions = (searchDefs: OmniSearchDefs, searchValues: OmniSearchValues): SearchOptionsV2 => {
+export const getSearchOptions = (
+  searchDefs: OmniSearchDefs,
+  searchValues: OmniSearchValues
+): SearchOptionsV2 => {
   const searchOptions: SearchOptionsV2 = [];
   searchDefs.forEach((searchDef, index) => {
     const values = getItemsFromOmniValue(searchValues.get(index));
@@ -150,9 +175,9 @@ export const getSearchOptions = (searchDefs: OmniSearchDefs, searchValues: OmniS
 export const getValueItemsFromSearchValues = (
   searchDefs: OmniSearchDefs,
   searchValues: OmniSearchValues,
-  key: string,
+  key: string
 ): Array<string> => {
-  const matchingSearchDefIndex = searchDefs.findIndex(searchDef => getKeysForSearchDef(searchDef).includes(key));
+  const matchingSearchDefIndex = searchDefs.findIndex((searchDef) => getKeysForSearchDef(searchDef).includes(key));
   if (matchingSearchDefIndex >= 0) {
     const omniValues = searchValues.get(matchingSearchDefIndex);
     if (omniValues) {

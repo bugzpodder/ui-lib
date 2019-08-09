@@ -11,7 +11,10 @@ async function copyFile(file) {
 }
 
 async function createPackageFile() {
-  const packageData = await fse.readFile(path.resolve(__dirname, "../package.json"), "utf8");
+  const packageData = await fse.readFile(
+    path.resolve(__dirname, "../package.json"),
+    "utf8"
+  );
   const { name, version, dependencies } = JSON.parse(packageData);
   const newPackageData = {
     name,
@@ -22,7 +25,11 @@ async function createPackageFile() {
   };
   const buildPath = path.resolve(__dirname, "../dist/package.json");
 
-  await fse.writeFile(buildPath, JSON.stringify(newPackageData, null, 2), "utf8");
+  await fse.writeFile(
+    buildPath,
+    JSON.stringify(newPackageData, null, 2),
+    "utf8"
+  );
 
   return newPackageData;
 }
@@ -34,13 +41,11 @@ async function run() {
   await cp.exec("find . -name '*.md' -delete", { cwd: distDir });
   await cp.exec("find . -name '__snapshots__' -delete", { cwd: distDir });
   await fse.remove(path.resolve(__dirname, "../dist/utils/mocks"));
-  await Promise.all(["README.md", "CHANGELOG.md"].map(file => copyFile(file)));
+  await Promise.all(["README.md", "CHANGELOG.md"].map((file) => copyFile(file)));
   const packageData = await createPackageFile();
   await cp.exec("npm pack", { cwd: distDir });
   console.info(
-    `\n\nTo upload to s3, run:\n\ngrail-aws tickets/eng/dev/aws s3 cp dist/grail-lib-${
-      packageData.version
-    }.tgz s3://grail-ui/${packageData.version}/\n\n`,
+    `\n\nTo upload to s3, run:\n\ngrail-aws tickets/eng/dev/aws s3 cp dist/grail-lib-${packageData.version}.tgz s3://grail-ui/${packageData.version}/\n\n`
   );
 }
 

@@ -7,14 +7,17 @@ const placeholder = "Dummy Field";
 
 const generateValueSearchQuery = (key, value) => `?${key}=${String(value)}`;
 const generateValuesSearchQuery = (key, values) => {
-  const result = values.reduce((acc, value, index) => `${acc}${key}%5B${index}%5D=${String(value)}&`, "?");
+  const result = values.reduce(
+    (acc, value, index) => `${acc}${key}%5B${index}%5D=${String(value)}&`,
+    "?"
+  );
   if (result.length > 1) {
     return result.substring(0, result.length - 1);
   }
   return result;
 };
 
-jest.mock("lodash/debounce", () => jest.fn(fn => fn));
+jest.mock("lodash/debounce", () => jest.fn((fn) => fn));
 
 describe("getSearchValues", () => {
   it("handles no search values", () => {
@@ -32,18 +35,22 @@ describe("getSearchValues", () => {
       hash: "#",
     };
     it(`handles ${String(value)} search value`, () => {
-      expect(getSearchValues({ location })).toEqual(new Map().set("test", { value: String(value) }));
+      expect(getSearchValues({ location })).toEqual(
+        new Map().set("test", { value: String(value) })
+      );
     });
   });
   arrayValues.forEach((values) => {
-    const testValues = values.map(value => String(value));
+    const testValues = values.map((value) => String(value));
     const location: Location = {
       pathname: "/some/route",
       search: generateValuesSearchQuery("test", testValues),
       hash: "#",
     };
     it(`handles array ${String(values)} search values`, () => {
-      expect(getSearchValues({ location })).toEqual(new Map().set("test", { values: testValues }));
+      expect(getSearchValues({ location })).toEqual(
+        new Map().set("test", { values: testValues })
+      );
     });
   });
 });
@@ -69,8 +76,14 @@ describe("updateSearchUrl", () => {
       replace: jest.fn(),
     };
     it(`handles ${String(value)} search value`, () => {
-      updateSearchUrl({ location, history, searchOptions: new Map().set("test", { value, placeholder }) });
-      expect(history.replace).toBeCalledWith({ search: generateValueSearchQuery("test", value) });
+      updateSearchUrl({
+        location,
+        history,
+        searchOptions: new Map().set("test", { value, placeholder }),
+      });
+      expect(history.replace).toBeCalledWith({
+        search: generateValueSearchQuery("test", value),
+      });
     });
   });
   arrayValues.forEach((values) => {
@@ -79,7 +92,11 @@ describe("updateSearchUrl", () => {
       replace: jest.fn(),
     };
     it(`handles array ${String(values)} search values`, () => {
-      updateSearchUrl({ location, history, searchOptions: new Map().set("test", { values, placeholder }) });
+      updateSearchUrl({
+        location,
+        history,
+        searchOptions: new Map().set("test", { values, placeholder }),
+      });
       const search = generateValuesSearchQuery("test", values);
       expect(history.replace).toBeCalledWith({ search });
     });

@@ -10,7 +10,12 @@ import {
 } from "./url-search";
 
 const singleValues = ["test string", 0, 2.1727, false, true];
-const arrayValues = [["a", "test string"], [0, Math.E, -Math.PI], [false, true], [null, "test"]];
+const arrayValues = [
+  ["a", "test string"],
+  [0, Math.E, -Math.PI],
+  [false, true],
+  [null, "test"],
+];
 const placeholder = "Dummy Field";
 
 const undefinedSearchValues = new Map().set("test", {
@@ -27,12 +32,16 @@ describe("flattenSearchValues", () => {
   });
   singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
-      expect(flattenSearchValues(new Map().set("test", { value }))).toEqual({ test: value });
+      expect(flattenSearchValues(new Map().set("test", { value }))).toEqual({
+        test: value,
+      });
     });
   });
   arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
-      expect(flattenSearchValues(new Map().set("test", { values }))).toEqual({ test: values });
+      expect(flattenSearchValues(new Map().set("test", { values }))).toEqual({
+        test: values,
+      });
     });
   });
 });
@@ -48,12 +57,16 @@ describe("expandSearchValues", () => {
   });
   singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
-      expect(expandSearchValues({ test: value })).toEqual(new Map().set("test", { value }));
+      expect(expandSearchValues({ test: value })).toEqual(
+        new Map().set("test", { value })
+      );
     });
   });
   arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
-      expect(expandSearchValues({ test: values })).toEqual(new Map().set("test", { values }));
+      expect(expandSearchValues({ test: values })).toEqual(
+        new Map().set("test", { values })
+      );
     });
   });
 });
@@ -64,16 +77,18 @@ describe("extractSearchValues", () => {
   });
   singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
-      expect(extractSearchValues(new Map().set("test", { value, placeholder }))).toEqual(
-        new Map().set("test", { value }),
-      );
+      expect(
+        extractSearchValues(new Map().set("test", { value, placeholder }))
+      ).toEqual(new Map().set("test", { value }));
     });
   });
   arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
-      const expectedValues = values.filter(value => value !== null);
-      expect(extractSearchValues(new Map().set("test", { values, placeholder }))).toEqual(
-        new Map().set("test", { value: undefined, values: expectedValues }),
+      const expectedValues = values.filter((value) => value !== null);
+      expect(
+        extractSearchValues(new Map().set("test", { values, placeholder }))
+      ).toEqual(
+        new Map().set("test", { value: undefined, values: expectedValues })
       );
     });
   });
@@ -81,8 +96,10 @@ describe("extractSearchValues", () => {
     const values = [];
     values[2] = "value 1";
     const expectedValues = [values[2]];
-    expect(extractSearchValues(new Map().set("test", { values, placeholder }))).toEqual(
-      new Map().set("test", { value: undefined, values: expectedValues }),
+    expect(
+      extractSearchValues(new Map().set("test", { values, placeholder }))
+    ).toEqual(
+      new Map().set("test", { value: undefined, values: expectedValues })
     );
   });
 });
@@ -96,27 +113,37 @@ describe("mergeSearchOptions", () => {
   });
   singleValues.forEach((value) => {
     it("merges no search values into empty search options", () => {
-      expect(mergeSearchOptions(new Map(), new Map().set("test", { value }))).toEqual(new Map());
+      expect(
+        mergeSearchOptions(new Map(), new Map().set("test", { value }))
+      ).toEqual(new Map());
     });
   });
   singleValues.forEach((value) => {
     it("merges no search values into mismatched search options", () => {
       const searchOptions = new Map().set("test2", { placeholder });
-      expect(mergeSearchOptions(searchOptions, new Map().set("test", { value }))).toEqual(searchOptions);
+      expect(
+        mergeSearchOptions(searchOptions, new Map().set("test", { value }))
+      ).toEqual(searchOptions);
     });
   });
   singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
-      expect(mergeSearchOptions(new Map().set("test", { placeholder }), new Map().set("test", { value }))).toEqual(
-        new Map().set("test", { placeholder, value }),
-      );
+      expect(
+        mergeSearchOptions(
+          new Map().set("test", { placeholder }),
+          new Map().set("test", { value })
+        )
+      ).toEqual(new Map().set("test", { placeholder, value }));
     });
   });
   arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
-      expect(mergeSearchOptions(new Map().set("test", { placeholder }), new Map().set("test", { values }))).toEqual(
-        new Map().set("test", { placeholder, values }),
-      );
+      expect(
+        mergeSearchOptions(
+          new Map().set("test", { placeholder }),
+          new Map().set("test", { values })
+        )
+      ).toEqual(new Map().set("test", { placeholder, values }));
     });
   });
 });

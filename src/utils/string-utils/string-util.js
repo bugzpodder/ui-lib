@@ -23,7 +23,7 @@ export const sentenceCase = (string: string) => {
   const separator = " ";
   return sentenceCased
     .split(separator)
-    .map(word => KEYWORDS.get(word) || word)
+    .map((word) => KEYWORDS.get(word) || word)
     .join(separator);
 };
 
@@ -45,9 +45,9 @@ export const normalizeStr = (str: ?string) => {
 // my_coolString -> My Cool String
 export const makeTitleString = (str: string, capFirst: boolean = true) => str
   .replace(/([a-z])([A-Z])([a-z])/g, "$1 $2$3") // space around camels
-  .replace(/_(.)/g, $1 => ` ${$1.toUpperCase()}`) // uppercase after underscore
+  .replace(/_(.)/g, ($1) => ` ${$1.toUpperCase()}`) // uppercase after underscore
   .replace(/_/g, " ") // underscore to space
-  .replace(/^(.)/, $1 => (capFirst ? $1.toUpperCase() : $1)) // capitalize the first letter (if specified)
+  .replace(/^(.)/, ($1) => (capFirst ? $1.toUpperCase() : $1)) // capitalize the first letter (if specified)
   .replace("  ", " ");
 
 /**
@@ -65,12 +65,17 @@ export const formatPercent = (value: string | number) => {
   return `${(floatValue * 100.0).toFixed(2)}%`;
 };
 
-export const isQuotedString = (value: string, quoteChar?: string = '"'): boolean => {
+export const isQuotedString = (
+  value: string,
+  quoteChar?: string = '"'
+): boolean => {
   if (quoteChar === ENCODED_QUOTE_CHAR) {
     value = value.replace(new RegExp(ENCODED_QUOTE_CHAR, "g"), '"');
     quoteChar = '"';
   }
-  return new RegExp(`^ *${quoteChar}(([^${quoteChar}])*)${quoteChar} *$`).test(value);
+  return new RegExp(`^ *${quoteChar}(([^${quoteChar}])*)${quoteChar} *$`).test(
+    value
+  );
 };
 
 /**
@@ -82,12 +87,17 @@ export const isQuotedString = (value: string, quoteChar?: string = '"'): boolean
  * `"abc 123"` returns `abc 123`
  * `  "abc 123"  ` returns `abc 123`
  */
-export const extractQuotedString = (value: string, quoteChar?: string = '"'): string | null => {
+export const extractQuotedString = (
+  value: string,
+  quoteChar?: string = '"'
+): string | null => {
   if (quoteChar === ENCODED_QUOTE_CHAR) {
     value = value.replace(new RegExp(ENCODED_QUOTE_CHAR, "g"), '"');
     quoteChar = '"';
   }
-  const match = new RegExp(`^ *${quoteChar}(([^${quoteChar}])*)${quoteChar} *$`).exec(value);
+  const match = new RegExp(
+    `^ *${quoteChar}(([^${quoteChar}])*)${quoteChar} *$`
+  ).exec(value);
   if (match) {
     return match[1];
   }
@@ -97,7 +107,10 @@ export const extractQuotedString = (value: string, quoteChar?: string = '"'): st
 /**
  * Remove surrounding quotes from a string, if surrounded, else return string.
  */
-export const unquoteString = (value: string, quoteChar?: string = '"'): string => {
+export const unquoteString = (
+  value: string,
+  quoteChar?: string = '"'
+): string => {
   const possibleString = extractQuotedString(value, quoteChar);
   return possibleString != null ? possibleString : value;
 };

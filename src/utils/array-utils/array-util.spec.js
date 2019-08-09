@@ -1,6 +1,9 @@
 // @flow
 import {
-  generateFilledArray, mapBy, serializePromises, toPairWise,
+  generateFilledArray,
+  mapBy,
+  serializePromises,
+  toPairWise,
 } from "./array-util";
 
 describe("generateFilledArray", () => {
@@ -20,7 +23,12 @@ describe("generateFilledArray", () => {
     expect(generateFilledArray(2, "abc")).toEqual(["abc", "abc"]);
   });
   it("shall generate an array using a generator", () => {
-    expect(generateFilledArray(4, (_, index) => index - 1)).toEqual([-1, 0, 1, 2]);
+    expect(generateFilledArray(4, (_, index) => index - 1)).toEqual([
+      -1,
+      0,
+      1,
+      2,
+    ]);
   });
 });
 
@@ -43,13 +51,13 @@ describe("serializePromises", () => {
     let resolutionIndex = 0;
     const promise = serializePromises(
       values,
-      value => new Promise((resolve) => {
+      (value) => new Promise((resolve) => {
         setTimeout(() => {
           resolutionValues[resolutionIndex] = value;
           resolutionIndex += 1;
           resolve(value);
         }, Math.random() * 10);
-      }),
+      })
     );
     promise.then((results) => {
       expect(resolutionValues).toEqual(values);
@@ -75,7 +83,9 @@ describe("mapBy", () => {
         value: "b",
       },
     ];
-    expect(mapBy(array, "someKey")).toEqual(new Map().set("x", array[0]).set("c", array[1]));
+    expect(mapBy(array, "someKey")).toEqual(
+      new Map().set("x", array[0]).set("c", array[1])
+    );
   });
 });
 

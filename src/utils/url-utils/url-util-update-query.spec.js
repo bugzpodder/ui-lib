@@ -1,7 +1,7 @@
 // @flow
 import { updateQuery, updateQueryInternal } from "./url-util";
 
-jest.mock("lodash/debounce", () => jest.fn(fn => fn));
+jest.mock("lodash/debounce", () => jest.fn((fn) => fn));
 describe("updateQuery", () => {
   const updateQueryTest = (props, ...args) => updateQuery({ location: global.location, ...props }, ...args);
   const history = {
@@ -30,7 +30,9 @@ describe("updateQuery", () => {
   it("handles props with history and several new queries", () => {
     const props = { history };
     updateQueryTest(props, { test: 1, val: "abc", string: "a b c" });
-    expect(history.replace).toBeCalledWith({ search: "?test=1&val=abc&string=a%20b%20c" });
+    expect(history.replace).toBeCalledWith({
+      search: "?test=1&val=abc&string=a%20b%20c",
+    });
   });
   it("handles history push", () => {
     const history = {
@@ -51,7 +53,10 @@ describe("updateQuery", () => {
   });
 
   it("returns undefined if no history", () => {
-    const noHistoryTest = updateQueryTest({}, { test: 1, val: "abc", string: "a b c" });
+    const noHistoryTest = updateQueryTest(
+      {},
+      { test: 1, val: "abc", string: "a b c" }
+    );
     expect(noHistoryTest).toBe(undefined);
   });
   it("calls default values with updateQueryInternal", () => {

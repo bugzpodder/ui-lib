@@ -63,7 +63,7 @@ describe("AssayStepMap", () => {
   const map = new AssayStepMap(assayStepValues);
   it("implements forEach()", () => {
     map.forEach((value, { assay, step }) => {
-      const match = assayStepValues.find(assayStepValue => isEqual(assayStepValue, { assay, step, value }));
+      const match = assayStepValues.find((assayStepValue) => isEqual(assayStepValue, { assay, step, value }));
       expect(match).toBeDefined();
       if (match) {
         expect(assay).toBe(match.assay);
@@ -74,7 +74,10 @@ describe("AssayStepMap", () => {
   });
   it("implements keys()", () => {
     const keys = map.keys();
-    const expectedKeys = assayStepValues.map(({ assay, step }) => ({ assay, step }));
+    const expectedKeys = assayStepValues.map(({ assay, step }) => ({
+      assay,
+      step,
+    }));
     expect(keys).toEqual(expectedKeys);
   });
   it("implements size()", () => {

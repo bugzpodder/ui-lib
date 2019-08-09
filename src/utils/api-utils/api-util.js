@@ -131,7 +131,7 @@ q query URL parameter of form:
 q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
-  searchOptions = searchOptions.filter(searchOption => searchOption);
+  searchOptions = searchOptions.filter((searchOption) => searchOption);
   const resolvedSearchOptions = await Promise.all(
     searchOptions.map(async (searchOption) => {
       const { type, mapValues } = searchOption;
@@ -233,16 +233,16 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case NUMERIC_SEARCH_TYPE:
         // fallthrough to next case
         case BOOLEAN_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `${value}`);
+          return multiValueSearchBuilder((value) => `${value}`);
         case FULL_TEXT_SEARCH_TYPE:
         // fallthrough to next case
         case ENUM_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `"${value.trim()}"`);
+          return multiValueSearchBuilder((value) => `"${value.trim()}"`);
         case FULL_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `"${value}"`);
+          return multiValueSearchBuilder((value) => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
           return multiValueSearchBuilder(
-            value => `"${ENCODED_PERCENT_CHAR}${value}${ENCODED_PERCENT_CHAR}"`
+            (value) => `"${ENCODED_PERCENT_CHAR}${value}${ENCODED_PERCENT_CHAR}"`
           );
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
@@ -314,7 +314,7 @@ export const filterResults = (
     count, offset, sortOptions, searchOptions,
   } = options;
 
-  const filteredResults = items.filter(item => searchOptions.reduce((result, searchOption) => {
+  const filteredResults = items.filter((item) => searchOptions.reduce((result, searchOption) => {
     if (!result || !searchOption) {
       return false;
     }
@@ -349,7 +349,7 @@ export const filterResults = (
       );
     }
 
-    const validValues = searchValues.filter(value => isValueValid(value));
+    const validValues = searchValues.filter((value) => isValueValid(value));
     if (validValues.length === 0) {
       return true;
     }
