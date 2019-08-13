@@ -43,7 +43,7 @@ const testObject: { [string]: mixed } = {
 
 describe("convertObjectKeys", () => {
   it("should mutate json keys", () => {
-    const appendMutator = (key) => `${key}Mutated`;
+    const appendMutator = key => `${key}Mutated`;
     expect(
       convertObjectKeys(appendMutator, ["MaybeIgnored"], testObject)
     ).toEqual({
@@ -79,13 +79,13 @@ describe("convertObjectKeys", () => {
     });
   });
   it("should not mutate object keys if mutator is identity", () => {
-    const identityMutator = (key) => key;
+    const identityMutator = key => key;
     expect(
       convertObjectKeys(identityMutator, ["MaybeIgnored"], testObject)
     ).toEqual(testObject);
   });
   it("should return the item if not an array or object", () => {
-    const identityMutator = (key) => key;
+    const identityMutator = key => key;
     expect(
       convertObjectKeys(identityMutator, ["MaybeIgnored"], "invalid")
     ).toEqual("invalid");

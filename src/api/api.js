@@ -14,7 +14,7 @@ const extractIssueMessages = (
   issueType: string = "errors"
 ) => {
   if (object.errors) {
-    return object.errors[issueType].map((error) => error.message);
+    return object.errors[issueType].map(error => error.message);
   }
   return [];
 };
@@ -24,8 +24,8 @@ export const extractIssueCodes = (
 ) => {
   if (object.errors) {
     return object.errors[issueType]
-      .map((error) => error.errorCode)
-      .filter((errorCode) => errorCode);
+      .map(error => error.errorCode)
+      .filter(errorCode => errorCode);
   }
   return [];
 };
@@ -145,7 +145,7 @@ export class Api {
           if (!filename) {
             filename = moment().toISOString();
           }
-          return response.blob().then((blob) => ({
+          return response.blob().then(blob => ({
             blob,
             filename,
             status,
@@ -181,7 +181,7 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
+      .then(resp => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
@@ -196,7 +196,7 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, this.getCommonHeaders())
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
+      .then(resp => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
@@ -226,7 +226,7 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((response) => this.processJsonResponse(response, merge({}, apiDispatchers, options)))
+      .then(response => this.processJsonResponse(response, merge({}, apiDispatchers, options)))
       .catch(this.processCatch.bind(null, urlSuffix))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);

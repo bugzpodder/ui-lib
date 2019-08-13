@@ -38,6 +38,6 @@ export const toDelimitedReport = (
   });
   formattedRows.push(headers);
 
-  formattedRows.push(data.map((datum) => toTableRow(accessors, datum)));
+  formattedRows.push(data.map(datum => toTableRow(accessors, datum)));
   return CSV.stringify(formattedRows, delimiter);
 };

@@ -11,7 +11,7 @@ const columns = [
     exportHeaderName: "ONE_TWO_THREE",
   },
   {
-    exportAccessor: (obj) => obj.accessibleValue,
+    exportAccessor: obj => obj.accessibleValue,
   },
 ];
 
@@ -37,7 +37,7 @@ describe("getAccessors", () => {
 In order to compare output from `toDelimitedReport`, it is easier to compare test failure logs if we replace
 all <enter> keys with <ENTER>  Because whitespaces are not obvious in the test diffs, etc
 */
-const expectWithEnter = (expected) => expect(expected.replace(/\r\n/g, "<ENTER>"));
+const expectWithEnter = expected => expect(expected.replace(/\r\n/g, "<ENTER>"));
 
 describe("toDelimitedReport", () => {
   const data = [

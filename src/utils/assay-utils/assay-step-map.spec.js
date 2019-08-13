@@ -63,7 +63,7 @@ describe("AssayStepMap", () => {
   const map = new AssayStepMap(assayStepValues);
   it("implements forEach()", () => {
     map.forEach((value, { assay, step }) => {
-      const match = assayStepValues.find((assayStepValue) => isEqual(assayStepValue, { assay, step, value }));
+      const match = assayStepValues.find(assayStepValue => isEqual(assayStepValue, { assay, step, value }));
       expect(match).toBeDefined();
       if (match) {
         expect(assay).toBe(match.assay);

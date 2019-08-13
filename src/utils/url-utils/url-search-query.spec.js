@@ -17,7 +17,7 @@ const generateValuesSearchQuery = (key, values) => {
   return result;
 };
 
-jest.mock("lodash/debounce", () => jest.fn((fn) => fn));
+jest.mock("lodash/debounce", () => jest.fn(fn => fn));
 
 describe("getSearchValues", () => {
   it("handles no search values", () => {
@@ -41,7 +41,7 @@ describe("getSearchValues", () => {
     });
   });
   arrayValues.forEach((values) => {
-    const testValues = values.map((value) => String(value));
+    const testValues = values.map(value => String(value));
     const location: Location = {
       pathname: "/some/route",
       search: generateValuesSearchQuery("test", testValues),

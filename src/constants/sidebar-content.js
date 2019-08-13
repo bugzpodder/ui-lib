@@ -163,9 +163,9 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         exact: true,
       },
       {
-        name: "Stockroom Pick Request (Beta)",
+        name: "Stockroom Pick Request",
         domain: LIMS,
-        path: "/lims/new-stock-request",
+        path: "/lims/new-stockroom-pick-request",
       },
     ],
   },

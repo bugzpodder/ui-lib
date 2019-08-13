@@ -96,6 +96,6 @@ export class AbstractMultiKeyMap {
   }
 
   keys(): Array<Object> {
-    return [...this._map.keys()].map((key) => this.deserializeKey(key));
+    return [...this._map.keys()].map(key => this.deserializeKey(key));
   }
 }

@@ -8,10 +8,10 @@ export const valueToSuggestions = (
 ): Array<string> => {
   if (isQuotedString(value)) {
     value = unquoteString(value);
-    return choices.filter((choice) => choice === value);
+    return choices.filter(choice => choice === value);
   }
   const fuzzyMatches = fuzzy.filter(value.trim(), choices);
-  return fuzzyMatches.map((match) => match.string);
+  return fuzzyMatches.map(match => match.string);
 };
 
 export const valuesToSuggestions = (
@@ -20,7 +20,7 @@ export const valuesToSuggestions = (
 ): Array<string> => {
   const uniqueSuggestions = new Set();
   values
-    .map((value) => valueToSuggestions(value, choices))
-    .forEach((suggestions) => suggestions.forEach((suggestion) => uniqueSuggestions.add(suggestion)));
+    .map(value => valueToSuggestions(value, choices))
+    .forEach(suggestions => suggestions.forEach(suggestion => uniqueSuggestions.add(suggestion)));
   return [...uniqueSuggestions];
 };

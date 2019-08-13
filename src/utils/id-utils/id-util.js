@@ -12,7 +12,7 @@ export const sanitizeId = (idInput: string = "") => {
   const id = idInput.trim();
 
   // Do not sanitize if id matches any exceptions (mock NGS, qPCR, accession samples)
-  if (SANITIZATION_EXCEPTIONS.some((regex) => regex.test(id))) {
+  if (SANITIZATION_EXCEPTIONS.some(regex => regex.test(id))) {
     return id;
   }
 

@@ -45,7 +45,7 @@ export const convertObjectKeys = (
   return convertedObject;
 };
 
-const titleize = (key) => upperFirst(camelCase(key));
+const titleize = key => upperFirst(camelCase(key));
 // eslint-disable-next-line max-len
 export const titleizeObjectKeys = (object: any, ignoredKeys?: Array<string>) => convertObjectKeys(titleize, ignoredKeys, object);
 // eslint-disable-next-line max-len
@@ -88,7 +88,7 @@ export const flattenObject = (originalObject: Object) => {
   if (isEmpty(originalObject)) {
     return {};
   }
-  const flatten = (object) => [].concat(
+  const flatten = object => [].concat(
     ...Object.keys(object).map((key) => {
       if (
         object[key]
