@@ -312,17 +312,21 @@ export class Api {
     });
   };
 
-  processCatch = (urlSuffix: string, error: Error) => {
+  processCatch = (urlSuffix: string, error: Error): JsonResult => {
     const { apiDispatchers } = this;
     const { handleError } = apiDispatchers || {};
     let errorMessage = error.message || error.toString();
     errorMessage = `${urlSuffix} error: ${errorMessage}`;
     handleError && handleError(errorMessage, error);
     return {
+      status: 0,
       statusIsOk: false,
       // The result should be undefined (or at-least falsey). See T4487
-      result: undefined,
+      result: null,
+      errorMessages: [],
       errorMessage,
+      errorCodes: [],
+      warningMessages: [],
       warningMessage: "",
     };
   };

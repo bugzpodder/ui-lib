@@ -116,6 +116,7 @@ declare type ApiOptions = {
 };
 
 declare type JsonResult = {
+  result: any,
   status: number,
   statusIsOk: boolean,
   errorMessages: Array<string>,
