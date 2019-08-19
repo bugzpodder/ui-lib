@@ -1,7 +1,10 @@
 // @flow
 import "../mocks";
 import {
-  boolToString, buildOrderQuery, getPage, isValueValid,
+  boolToString,
+  buildOrderQuery,
+  getPage,
+  isValueValid,
 } from "./api-util";
 
 describe("getOverride", () => {
@@ -29,7 +32,19 @@ describe("getPage", () => {
 });
 
 describe("isValueValid", () => {
-  [0, -1, 1, Infinity, 42, 3.1415926535, "test", true, false, "A sentence", " "].forEach((value) => {
+  [
+    0,
+    -1,
+    1,
+    Infinity,
+    42,
+    3.1415926535,
+    "test",
+    true,
+    false,
+    "A sentence",
+    " ",
+  ].forEach((value) => {
     it(`should validate '${String(value)}'`, () => expect(isValueValid(value)).toBe(true));
   });
   ["", null, undefined].forEach((value) => {
@@ -45,17 +60,25 @@ describe("buildOrderQuery", () => {
     expect(buildOrderQuery([{}])).toEqual("");
   });
   it("should generate query for one sortOptions element", () => {
-    expect(buildOrderQuery([{ id: "column" }])).toEqual("&order=column ASC");
+    expect(buildOrderQuery([{ id: "column" }])).toEqual("column ASC");
   });
   it("should generate query for one ascending sortOptions element", () => {
-    expect(buildOrderQuery([{ id: "column", desc: false }])).toEqual("&order=column ASC");
+    expect(buildOrderQuery([{ id: "column", desc: false }])).toEqual(
+      "column ASC"
+    );
   });
   it("should generate query for one descending sortOptions element", () => {
-    expect(buildOrderQuery([{ id: "column", desc: true }])).toEqual("&order=column DESC");
+    expect(buildOrderQuery([{ id: "column", desc: true }])).toEqual(
+      "column DESC"
+    );
   });
   it("should generate query for mixed sortOptions elements", () => {
-    expect(buildOrderQuery([{ id: "column1" }, { id: "column2", desc: false }, { id: "column3", desc: true }])).toEqual(
-      "&order=column1 ASC, column2 ASC, column3 DESC",
-    );
+    expect(
+      buildOrderQuery([
+        { id: "column1" },
+        { id: "column2", desc: false },
+        { id: "column3", desc: true },
+      ])
+    ).toEqual("column1 ASC, column2 ASC, column3 DESC");
   });
 });

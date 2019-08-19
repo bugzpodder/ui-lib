@@ -1,5 +1,7 @@
 // @flow
 export {
+  buildQuery,
+  buildCustomURIQueryParams,
   buildOrderQuery,
   buildSearchQuery,
   debounceRequest,
@@ -10,6 +12,7 @@ export {
   isValueValid,
 } from "./api-util";
 export {
+  URI_QUERY_TYPE,
   BOOLEAN_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,

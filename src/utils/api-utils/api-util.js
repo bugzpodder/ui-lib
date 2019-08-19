@@ -10,12 +10,6 @@ import {
   DATETIME_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
   DATE_SEARCH_TYPES,
-  ENCODED_DOUBLE_AMPERSAND,
-  ENCODED_DOUBLE_PIPE,
-  ENCODED_PERCENT_CHAR,
-  ENCODED_QUOTE_CHAR,
-  ENCODED_STRING_END_CHAR,
-  ENCODED_STRING_START_CHAR,
   ENUM_SEARCH_TYPE,
   FULL_ID_SEARCH_TYPE,
   FULL_TEXT_SEARCH_TYPE,
@@ -23,6 +17,7 @@ import {
   LIKE_TEXT_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
+  URI_QUERY_TYPE,
 } from "./api-constants";
 import { DATE_FORMAT } from "../../constants";
 import { extractDateRange } from "../date-utils";
@@ -46,26 +41,18 @@ export const boolToString = (bool: boolean): string => (bool ? "1" : "0");
 /*
 Builds an order query that and's each item for the order query URL parameter
 */
-export const buildOrderQuery = (sortOptions: SortOptions = []) => {
-  let order = sortOptions.reduce((memo, sortOption) => {
-    const { id } = sortOption;
-    let { desc } = sortOption;
-    desc = desc ? "DESC" : "ASC";
-    if (!id) {
-      return memo;
-    }
-    if (memo.length > 0) {
-      memo += ", ";
-    }
-    return `${memo}${id} ${desc}`;
-  }, "" /* initial memo */);
-  if (order) {
-    order = `&order=${order}`;
-  } else {
-    order = "";
+export const buildOrderQuery = (sortOptions: SortOptions = []) => sortOptions.reduce((memo, sortOption) => {
+  const { id } = sortOption;
+  let { desc } = sortOption;
+  desc = desc ? "DESC" : "ASC";
+  if (!id) {
+    return memo;
   }
-  return order;
-};
+  if (memo.length > 0) {
+    memo += ", ";
+  }
+  return `${memo}${id} ${desc}`;
+}, "" /* initial memo */);
 
 export const isValueValid = (value: mixed) => {
   if (Array.isArray(value)) {
@@ -125,31 +112,54 @@ const getSearchOptionsV2 = (
   return searchOptionsV2;
 };
 
+const resolveSearchOptions = async (searchOptions: SearchOptionsV2 = []) => Promise.all(
+  searchOptions.map(async (searchOption) => {
+    const { type, mapValues } = searchOption;
+    let { values } = searchOption;
+    const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
+    if (mapValues) {
+      values = await mapValues(values);
+    }
+    values = getEscapedSearchValues({ ...searchOption, values }).map(
+      (value) => {
+        if (isDateSearchType) {
+          return value;
+        }
+        return value;
+      }
+    );
+    return { ...searchOption, values };
+  })
+);
+
+export const buildCustomURIQueryParams = async (
+  searchOptions: SearchOptionsV2 = [],
+  params: URLSearchParams
+) => {
+  const resolvedSearchOptions = await resolveSearchOptions(
+    searchOptions.filter(
+      (searchOption) => searchOption && searchOption.queryType === URI_QUERY_TYPE
+    )
+  );
+  return resolvedSearchOptions
+    .filter((searchOption) => searchOption.values && searchOption.values.length)
+    .forEach(({ searchFields, values }) => {
+      values.forEach((value) => {
+        params.append(searchFields[0], value);
+      });
+    });
+};
+
 /*
-Using an array of searchOptionsV2, this builds a search query that and's each item for the
+Using an array of searchOptionsV2, this builds a search query that joins each item with && for the
 q query URL parameter of form:
 q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
-  searchOptions = searchOptions.filter((searchOption) => searchOption);
-  const resolvedSearchOptions = await Promise.all(
-    searchOptions.map(async (searchOption) => {
-      const { type, mapValues } = searchOption;
-      let { values } = searchOption;
-      const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
-      if (mapValues) {
-        values = await mapValues(values);
-      }
-      values = getEscapedSearchValues({ ...searchOption, values }).map(
-        (value) => {
-          if (isDateSearchType) {
-            return value;
-          }
-          return global.encodeURIComponent(value);
-        }
-      );
-      return { ...searchOption, values };
-    })
+  const resolvedSearchOptions = await resolveSearchOptions(
+    searchOptions.filter(
+      (searchOption) => searchOption && !searchOption.queryType
+    )
   );
   const query = resolvedSearchOptions.reduce((memo, searchOption) => {
     const {
@@ -165,7 +175,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
       initialSubQuery = searchFields.reduce((memo, searchField) => {
         const nullQuery = `${searchField}=="NULL"`;
         if (memo) {
-          return `${memo}${ENCODED_DOUBLE_PIPE}(${nullQuery})`;
+          return `${memo}||(${nullQuery})`;
         }
         return searchFields.length > 1 ? `(${nullQuery})` : nullQuery;
       }, "");
@@ -182,7 +192,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
               ? formattedResult
               : `${searchField}${searchOperator}${formattedResult}`;
             if (multiFieldSearchMemo) {
-              multiFieldSearchMemo += ENCODED_DOUBLE_PIPE;
+              multiFieldSearchMemo += "||";
               return `${multiFieldSearchMemo}(${subQuery})`;
             }
             return searchFields.length > 1 ? `(${subQuery})` : subQuery;
@@ -190,7 +200,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
           ""
         );
         return `${multiValueSearchMemo}${multiValueSearchMemo
-          && ENCODED_DOUBLE_PIPE}${multiFieldSearch}`;
+          && "||"}${multiFieldSearch}`;
       }, initialSubQuery);
       if (!multiValueSearch) {
         return null;
@@ -205,27 +215,19 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case OMNI_TEXT_SEARCH_TYPE:
           return multiValueSearchBuilder((value) => {
             let searchValue = value.trim();
-            const quotedValue = extractQuotedString(
-              searchValue,
-              ENCODED_QUOTE_CHAR
-            );
+            const quotedValue = extractQuotedString(searchValue);
             if (quotedValue != null) {
               searchValue = quotedValue;
             } else {
-              if (searchValue.startsWith(ENCODED_STRING_START_CHAR)) {
-                searchValue = searchValue.substring(
-                  ENCODED_STRING_START_CHAR.length
-                );
+              if (searchValue.startsWith("^")) {
+                searchValue = searchValue.substring(1);
               } else {
-                searchValue = `${ENCODED_PERCENT_CHAR}${searchValue}`;
+                searchValue = `%${searchValue}`;
               }
-              if (searchValue.endsWith(ENCODED_STRING_END_CHAR)) {
-                searchValue = searchValue.substring(
-                  0,
-                  searchValue.length - ENCODED_STRING_END_CHAR.length
-                );
+              if (searchValue.endsWith("$")) {
+                searchValue = searchValue.substring(0, searchValue.length - 1);
               } else {
-                searchValue = `${searchValue}${ENCODED_PERCENT_CHAR}`;
+                searchValue = `${searchValue}%`;
               }
             }
             return `"${searchValue}"`;
@@ -241,9 +243,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case FULL_ID_SEARCH_TYPE:
           return multiValueSearchBuilder((value) => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder(
-            (value) => `"${ENCODED_PERCENT_CHAR}${value}${ENCODED_PERCENT_CHAR}"`
-          );
+          return multiValueSearchBuilder((value) => `"%${value}%"`);
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
           return multiValueSearchBuilder((dateRangeString) => {
@@ -275,8 +275,9 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
               } else {
                 endDate = moment(String(endDate)).format(DATE_FORMAT);
               }
-              dateSearch = `${dateSearch}${dateSearch
-                && ENCODED_DOUBLE_AMPERSAND}${searchFields[0]}<="${endDate}"`;
+              dateSearch = `${dateSearch}${dateSearch && "&&"}${
+                searchFields[0]
+              }<="${endDate}"`;
             }
             // NOTE: Must wrap the dateSearch in brackets, since it could be or'd in the wrapper.
             return dateSearch ? `(${dateSearch})` : "";
@@ -288,12 +289,46 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
       }
     })();
     if (memo && newQuery) {
-      memo += ENCODED_DOUBLE_AMPERSAND;
+      memo += "&&";
     }
 
     return newQuery ? `${memo}${newQuery}` : memo;
   }, "");
   return query;
+};
+
+export const buildQuery = async (
+  contentOptions?: GetContentOptionsV2 = {}
+): Promise<URLSearchParams> => {
+  const {
+    offset, count, searchOptions, sortOptions,
+  } = contentOptions;
+
+  const orderQuery = buildOrderQuery(sortOptions);
+  let page = "";
+  if (offset || count) {
+    page = getPage(offset, count);
+  }
+
+  const params = new URLSearchParams();
+  const [searchQuery] = await Promise.all([
+    buildSearchQuery(searchOptions),
+    buildCustomURIQueryParams(searchOptions, params),
+  ]);
+  if (searchQuery) {
+    params.append("q", searchQuery);
+  }
+  if (page) {
+    params.append("page", String(page));
+  }
+  if (count) {
+    params.append("count", String(count));
+  }
+  if (orderQuery) {
+    params.append("order", orderQuery);
+  }
+
+  return params;
 };
 
 /*

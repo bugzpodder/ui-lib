@@ -53,6 +53,7 @@ export { localStorage } from "./client-utils";
 
 export { AbstractMultiKeyMap, AssayStepMap } from "./utils/assay-utils";
 export {
+  URI_QUERY_TYPE,
   BOOLEAN_SEARCH_TYPE,
   DATE_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
@@ -67,6 +68,7 @@ export {
   LIKE_ID_SEARCH_TYPE,
   FULL_ID_SEARCH_TYPE,
   NUMERIC_SEARCH_TYPE,
+  buildQuery,
   buildOrderQuery,
   buildSearchQuery,
   debounceRequest,

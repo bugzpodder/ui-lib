@@ -76,6 +76,7 @@ declare type SearchDef = {
   description?: string,
   searchOperator?: string,
   includeNulls?: boolean,
+  queryType?: Symbol,
   localStorageKeySuffix?: string,
   mapValues?: (Array<string>) => Promise<Array<string>> | Array<string>,
   mapValuesDispatcher?: any /* Dispatch */ => (

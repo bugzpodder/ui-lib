@@ -6,6 +6,8 @@
 4. Add `Api` class, originally from `lims/client`.
 5. Remove `search` method from `Api`. It should be implemented by the client app.
 6. Fix flow problems with exporting `Api` class types.
+7. Add URI_QUERY_TYPE to searchOptions.
+8. Replaced buildSearchQuery, buildOrderQuery with buildQuery.
 
 ## 1.0.0 - 2019-06-17
 
