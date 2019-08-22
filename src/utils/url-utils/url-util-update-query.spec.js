@@ -1,7 +1,7 @@
 // @flow
 import { updateQuery, updateQueryInternal } from "./url-util";
 
-jest.mock("lodash/debounce", () => jest.fn(fn => fn));
+jest.mock("lodash/debounce", () => jest.fn((fn) => fn));
 describe("updateQuery", () => {
   const updateQueryTest = (props, ...args) => updateQuery({ location: global.location, ...props }, ...args);
   const history = {

@@ -25,7 +25,7 @@ const quotedValueTests = [
   { value: '"No possible match"', suggestions: [] },
   { value: '"1"', suggestions: [] },
 ];
-const quotedChoiceTests = choices.map(choice => ({
+const quotedChoiceTests = choices.map((choice) => ({
   value: `"${choice}"`,
   suggestions: [choice],
 }));

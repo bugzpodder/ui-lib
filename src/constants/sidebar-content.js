@@ -51,11 +51,6 @@ export const sidebarItems: (SidebarItemLink | SidebarItemParent)[] = [
         path: "/lims/issues",
       },
       {
-        name: "Sequencing Runs",
-        domain: LIMS,
-        path: "/lims/sequencing-runs",
-      },
-      {
         name: "Print Labels",
         domain: LIMS,
         path: "/lims/print-labels",

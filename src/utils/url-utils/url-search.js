@@ -55,7 +55,7 @@ export const extractSearchValues = (
   const searchValues = new Map();
   searchOptions.forEach(({ value, values }, key) => {
     if (values) {
-      values = values.filter(value => value != null);
+      values = values.filter((value) => value != null);
     }
     searchValues.set(key, { value, values });
   });

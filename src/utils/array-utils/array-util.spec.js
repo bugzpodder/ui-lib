@@ -51,7 +51,7 @@ describe("serializePromises", () => {
     let resolutionIndex = 0;
     const promise = serializePromises(
       values,
-      value => new Promise((resolve) => {
+      (value) => new Promise((resolve) => {
         setTimeout(() => {
           resolutionValues[resolutionIndex] = value;
           resolutionIndex += 1;

@@ -41,7 +41,7 @@ async function run() {
   await cp.exec("find . -name '*.md' -delete", { cwd: distDir });
   await cp.exec("find . -name '__snapshots__' -delete", { cwd: distDir });
   await fse.remove(path.resolve(__dirname, "../dist/utils/mocks"));
-  await Promise.all(["README.md", "CHANGELOG.md"].map(file => copyFile(file)));
+  await Promise.all(["README.md", "CHANGELOG.md"].map((file) => copyFile(file)));
   const packageData = await createPackageFile();
   await cp.exec("npm pack", { cwd: distDir });
   console.info(

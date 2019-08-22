@@ -84,7 +84,7 @@ describe("extractSearchValues", () => {
   });
   arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
-      const expectedValues = values.filter(value => value !== null);
+      const expectedValues = values.filter((value) => value !== null);
       expect(
         extractSearchValues(new Map().set("test", { values, placeholder }))
       ).toEqual(
