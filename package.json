@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@babel/node": "^7.5.5",
-    "@grail/eslint-config-grail": ">=0.0.0",
+    "@grailbio/eslint-config-grail": "^1.0.2",
     "flow-bin": "^0.105.1",
     "flow-copy-source": "^2.0.7",
     "jest-mock-console": "^1.0.0",
