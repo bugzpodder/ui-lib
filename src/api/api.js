@@ -157,7 +157,7 @@ export class Api {
           merge({}, apiDispatchers, options)
         );
       })
-      .catch(this.processCatch.bind(null, urlSuffix))
+      .catch(this.processCatch.bind(null, urlSuffix, options))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
         return response;
@@ -182,7 +182,7 @@ export class Api {
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
       .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
-      .catch(this.processCatch.bind(null, urlSuffix))
+      .catch(this.processCatch.bind(null, urlSuffix, options))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
         return response;
@@ -197,7 +197,7 @@ export class Api {
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
       .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
-      .catch(this.processCatch.bind(null, urlSuffix))
+      .catch(this.processCatch.bind(null, urlSuffix, options))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
         return response;
@@ -227,7 +227,7 @@ export class Api {
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
       .then((response) => this.processJsonResponse(response, merge({}, apiDispatchers, options)))
-      .catch(this.processCatch.bind(null, urlSuffix))
+      .catch(this.processCatch.bind(null, urlSuffix, options))
       .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
         return response;
@@ -312,12 +312,21 @@ export class Api {
     });
   };
 
-  processCatch = (urlSuffix: string, error: Error): JsonResult => {
+  processCatch = (
+    urlSuffix: string,
+    options: ApiOptions,
+    error: Error
+  ): JsonResult => {
     const { apiDispatchers } = this;
     const { handleError } = apiDispatchers || {};
+    const { handleError: handleErrorOverride } = options || {};
     let errorMessage = error.message || error.toString();
     errorMessage = `${urlSuffix} error: ${errorMessage}`;
-    handleError && handleError(errorMessage, error);
+    if (handleErrorOverride) {
+      handleErrorOverride(errorMessage, error);
+    } else if (handleError) {
+      handleError(errorMessage, error);
+    }
     return {
       status: 0,
       statusIsOk: false,
