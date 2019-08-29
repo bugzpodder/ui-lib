@@ -1,13 +1,13 @@
 ## 1.1.0 - 2019-##-
 
 1. Add `ZERO_DATE` constant. This is used to check for zero dates returned by go servers.
-2. Add `SERVER_URLS_BY_MODE` and `DEV_SERVER_URLS` to define default server URLs for sidebar content.
-3. `formatDate` and `formatDateTime` no longer return `EPOCH_DATE`s when empty strings are passed.
-4. Add `Api` class, originally from `lims/client`.
-5. Remove `search` method from `Api`. It should be implemented by the client app.
-6. Fix flow problems with exporting `Api` class types.
-7. Add URI_QUERY_TYPE to searchOptions.
-8. Replaced buildSearchQuery, buildOrderQuery with buildQuery.
+2. `formatDate` and `formatDateTime` no longer return `EPOCH_DATE`s when empty strings are passed.
+3. Add `Api` class, originally from `lims/client`.
+4. Remove `search` method from `Api`. It should be implemented by the client app.
+5. Fix flow problems with exporting `Api` class types.
+6. Add URI_QUERY_TYPE to searchOptions.
+7. Replaced buildSearchQuery, buildOrderQuery with buildQuery.
+8. Move sidebar-content and related URL constants to `common-private`.
 
 ## 1.0.0 - 2019-06-17
 

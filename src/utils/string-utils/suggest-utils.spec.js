@@ -1,16 +1,21 @@
 // @flow
 import { valueToSuggestions, valuesToSuggestions } from "./suggest-utils";
 
-const choices = ["abc", "CFDNA Targeted Methylation", "Targeted Math", "123"];
+const choices = [
+  "abc",
+  "SOme crystal math here",
+  "lowerCamelCase math UpperCamelCase",
+  "123",
+];
 
 const unquotedValueTests = [
   // Empty string must return all choices.
   { value: "", suggestions: choices },
   { value: "   ", suggestions: choices },
   { value: "abc", suggestions: [choices[0]] },
-  { value: "tm", suggestions: [choices[1], choices[2]] },
-  { value: "  targeted m", suggestions: [choices[1], choices[2]] },
-  { value: "METH", suggestions: [choices[1]] },
+  { value: "ath", suggestions: [choices[1], choices[2]] },
+  { value: "  math ", suggestions: [choices[1], choices[2]] },
+  { value: "CRYSTAL", suggestions: [choices[1]] },
   { value: "No possible match", suggestions: [] },
   { value: "1", suggestions: [choices[3]] },
 ];
@@ -19,9 +24,9 @@ const quotedValueTests = [
   // Empty string must return all choices.
   { value: '" abc"', suggestions: [] },
   { value: '"abc"', suggestions: [choices[0]] },
-  { value: '"tm"', suggestions: [] },
-  { value: '"  targeted m"', suggestions: [] },
-  { value: '"METH"', suggestions: [] },
+  { value: '"pm"', suggestions: [] },
+  { value: '"  test m"', suggestions: [] },
+  { value: '"CRYSTAL"', suggestions: [] },
   { value: '"No possible match"', suggestions: [] },
   { value: '"1"', suggestions: [] },
 ];
@@ -52,9 +57,9 @@ const singleValueTests = valueTests.map(({ value, suggestions }) => ({
 
 const multiValueTests = [
   { values: [], suggestions: [] },
-  { values: ["meth", "math"], suggestions: [choices[1], choices[2]] },
+  { values: ["crystal", "math"], suggestions: [choices[1], choices[2]] },
   { values: ["No match", "abc"], suggestions: [choices[0]] },
-  { values: ["abc", "meth", "math", "123"], suggestions: choices },
+  { values: ["abc", "crystal", "math", "123"], suggestions: choices },
 ];
 
 const choicesTest = choices.map((choice, index) => {

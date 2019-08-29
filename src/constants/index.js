@@ -35,15 +35,5 @@ export {
   TIME_FORMAT,
 } from "./date-constants";
 export { INNER_CARD_ELEVATION, MAIN_CARD_ELEVATION } from "./style-constants";
-export {
-  LIMS,
-  EDC,
-  PIPELINE,
-  EXTERNAL,
-  DOMAINS,
-  sidebarItems,
-  adminItems,
-} from "./sidebar-content";
-export { SERVER_URLS_BY_MODE, DEV_SERVER_URLS } from "./urls";
 export { MAX_NOTIFICATIONS, NotificationTypes } from "./notification-center";
 export { SET_OMNI_FIELD_COMMAND, OMNI_KEY, OMNI_ERROR } from "./omni";
