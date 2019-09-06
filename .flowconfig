@@ -17,5 +17,5 @@ untyped-type-import=error
 
 [options]
 emoji=true
-module.name_mapper='^@grail\/\(.*\)$' -> '<PROJECT_ROOT>/../\1'
+module.name_mapper='^@grailbio\/\(.*\)$' -> '<PROJECT_ROOT>/../\1'
 module.file_ext=.js

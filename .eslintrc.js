@@ -20,18 +20,20 @@ module.exports = {
               'Please import lodash functions directly, eg: import isEmpty from "lodash/isEmpty".'
           },
           {
-            name: "@grail/components",
-            message: "Please do not import @grail/components from @grail/lib."
+            name: "@grailbio/components",
+            message:
+              "Please do not import @grailbio/components from @grailbio/lib."
           },
           {
-            name: "@grail/server-lib",
-            message: "Please do not import @grail/server-lib from @grail/lib."
+            name: "@grailbio/server-lib",
+            message:
+              "Please do not import @grailbio/server-lib from @grailbio/lib."
           }
         ],
         patterns: [
-          "@grail/lib/src/*",
-          "@grail/server-lib/src/*",
-          "@grail/components/*"
+          "@grailbio/lib/src/*",
+          "@grailbio/server-lib/src/*",
+          "@grailbio/components/*"
         ]
       }
     ]

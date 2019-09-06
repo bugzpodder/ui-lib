@@ -2,7 +2,7 @@
 import moment from "moment";
 import { DATE_FORMAT } from "../../constants/date-constants";
 
-// TODO(nsawas): consolidate/rename with function from @grail/components/date
+// TODO(nsawas): consolidate/rename with function from @grailbio/components/date
 export const formatDate = (date: string | Date | moment$Moment): string => {
   if (!date) {
     return "";

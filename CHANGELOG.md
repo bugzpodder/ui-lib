@@ -8,6 +8,7 @@
 6. Add URI_QUERY_TYPE to searchOptions.
 7. Replaced buildSearchQuery, buildOrderQuery with buildQuery.
 8. Move sidebar-content and related URL constants to `common-private`.
+9. Rename package to `@grailbio/lib`, publish to github and npm.
 
 ## 1.0.0 - 2019-06-17
 
