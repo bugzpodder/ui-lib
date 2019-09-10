@@ -51,7 +51,7 @@ To publish:
 - Bump the package version following semantic versioning guidelines (https://semver.org/)
 - `yarn version --patch --no-git-tag-version`
 - For non-patch release, update `CHANGELOG.md` version.
-- `npm publish --access public`
+- `npm publish`
   - Optionally, you can pass in 2FA code using `--otp ######`
 
 #### **Installation and Usage**
