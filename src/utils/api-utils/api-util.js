@@ -343,10 +343,10 @@ export const deprecatedBuildSearchQuery = (
 
 export const filterResults = (
   items: Array<any>,
-  options: ApiQueryOptions
+  options: GetContentOptionsV2
 ): Array<any> => {
   const {
-    count, offset, sortOptions, searchOptions,
+    count, offset, sortOptions = [], searchOptions = [],
   } = options;
 
   const filteredResults = items.filter((item) => searchOptions.reduce((result, searchOption) => {
@@ -443,18 +443,22 @@ export const filterResults = (
     // eslint-disable-next-line space-in-parens
   }, true));
 
-  filteredResults.sort((a, b) => sortOptions.reduce((result, field) => {
-    if (result !== 0 || !field.id || a[field.id] === b[field.id]) {
-      return result;
-    }
-    if (a[field.id] < b[field.id]) {
-      return field.desc ? 1 : -1;
-    }
-    return field.desc ? -1 : 1;
-    // eslint-disable-next-line space-in-parens
-  }, 0));
+  if (sortOptions.length) {
+    filteredResults.sort((a, b) => sortOptions.reduce((result, field) => {
+      if (result !== 0 || !field.id || a[field.id] === b[field.id]) {
+        return result;
+      }
+      if (a[field.id] < b[field.id]) {
+        return field.desc ? 1 : -1;
+      }
+      return field.desc ? -1 : 1;
+      // eslint-disable-next-line space-in-parens
+    }, 0));
+  }
 
-  return filteredResults.slice(offset, offset + count);
+  return offset || count
+    ? filteredResults.slice(offset, offset + count)
+    : filteredResults;
 };
 
 /**
