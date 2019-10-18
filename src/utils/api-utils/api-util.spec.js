@@ -12,12 +12,38 @@ import {
 } from "./api-constants";
 import { filterResults } from "./api-util";
 
-const testSimple = [{ id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }, { id: 3 }, { id: 0 }];
-const testObjs = [{ name: "xx" }, { name: "xy" }, { name: "aa" }, { name: "bb" }, { name: "bx" }];
+const testSimple = [
+  { id: 1 },
+  { id: 5 },
+  { id: 2 },
+  { id: 4 },
+  { id: 3 },
+  { id: 0 },
+];
+const testObjs = [
+  { name: "xx" },
+  { name: "xy" },
+  { name: "aa" },
+  { name: "bb" },
+  { name: "bx" },
+];
 
-const testObjs2 = [{ name: "xx" }, { name: "xy" }, { name: "xy" }, { name: "bb" }, { name: "aa" }, { name: null }];
+const testObjs2 = [
+  { name: "xx" },
+  { name: "xy" },
+  { name: "xy" },
+  { name: "bb" },
+  { name: "aa" },
+  { name: null },
+];
 
-const testObjs3 = [{ name: "x" }, { name: "x" }, { name: "b" }, { name: "b" }, { name: "a" }];
+const testObjs3 = [
+  { name: "x" },
+  { name: "x" },
+  { name: "b" },
+  { name: "b" },
+  { name: "a" },
+];
 
 const testDates = [
   { date: "2017-08-23" },
@@ -84,7 +110,13 @@ const testNestedId = [
   { name: "A00100-2", labels: [{ name: "abc" }, { name: null }] },
 ];
 
-const testBoolean = [{ isValid: true }, { isValid: false }, { isValid: 1 }, { isValid: 0 }, {}];
+const testBoolean = [
+  { isValid: true },
+  { isValid: false },
+  { isValid: 1 },
+  { isValid: 0 },
+  {},
+];
 
 const checkResult = (input, options) => {
   const output = filterResults(input, options);
@@ -96,8 +128,6 @@ describe("filterResults", () => {
     const options = {
       count: 10,
       offset: 0,
-      sortOptions: [],
-      searchOptions: [],
     };
     checkResult([1, 5, 3, 2, 4], options);
   });
@@ -106,8 +136,6 @@ describe("filterResults", () => {
     const options = {
       count: 3,
       offset: 0,
-      sortOptions: [],
-      searchOptions: [],
     };
     checkResult([1, 2, 3, 4, 5], options);
   });
@@ -116,28 +144,20 @@ describe("filterResults", () => {
     const options = {
       count: 2,
       offset: 1,
-      sortOptions: [],
-      searchOptions: [],
     };
     checkResult([1, 2, 3, 4, 5], options);
   });
 
   it("should sort", () => {
     const options = {
-      count: 5,
-      offset: 0,
       sortOptions: [{ id: "id" }],
-      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
 
   it("should sort desc", () => {
     const options = {
-      count: 5,
-      offset: 0,
       sortOptions: [{ id: "id", desc: true }],
-      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
@@ -147,36 +167,27 @@ describe("filterResults", () => {
       count: 2,
       offset: 1,
       sortOptions: [{ id: "id" }],
-      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
 
   it("should multi-sort", () => {
     const options = {
-      count: 5,
-      offset: 0,
       sortOptions: [{ id: "name" }, { id: "id" }],
-      searchOptions: [],
     };
     checkResult(testObjs3, options);
   });
 
   it("should sort desc and offset", () => {
     const options = {
-      count: 5,
       offset: 3,
       sortOptions: [{ id: "id", desc: true }],
-      searchOptions: [],
     };
     checkResult(testSimple, options);
   });
 
   it("should not filter undefined", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -190,9 +201,6 @@ describe("filterResults", () => {
 
   it("should filter number", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -206,9 +214,6 @@ describe("filterResults", () => {
 
   it("should filter equal number", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -223,9 +228,6 @@ describe("filterResults", () => {
 
   it("should filter unequal number", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -240,9 +242,6 @@ describe("filterResults", () => {
 
   it("should filter many numbers", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -256,9 +255,6 @@ describe("filterResults", () => {
 
   it("should filter zero", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -272,9 +268,6 @@ describe("filterResults", () => {
 
   it("should not filter empty string", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -288,9 +281,6 @@ describe("filterResults", () => {
 
   it("should filter string", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -304,9 +294,6 @@ describe("filterResults", () => {
 
   it("should filter string including NULL", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -321,9 +308,6 @@ describe("filterResults", () => {
 
   it("should filter many strings", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -337,9 +321,6 @@ describe("filterResults", () => {
 
   it("should filter string for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -353,9 +334,6 @@ describe("filterResults", () => {
 
   it("should filter many strings for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -369,9 +347,6 @@ describe("filterResults", () => {
 
   it("should filter unequal string for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -386,9 +361,6 @@ describe("filterResults", () => {
 
   it("should filter many unequal strings for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -403,9 +375,6 @@ describe("filterResults", () => {
 
   it("should filter substring", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -419,9 +388,6 @@ describe("filterResults", () => {
 
   it("should filter unequal substring", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -436,9 +402,6 @@ describe("filterResults", () => {
 
   it("should not filter empty substring", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -452,9 +415,6 @@ describe("filterResults", () => {
 
   it("should filter substring for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -468,9 +428,6 @@ describe("filterResults", () => {
 
   it("should filter many substrings for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -484,9 +441,6 @@ describe("filterResults", () => {
 
   it("should filter unequal substring for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -501,9 +455,6 @@ describe("filterResults", () => {
 
   it("should filter many unequal substrings for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -518,9 +469,6 @@ describe("filterResults", () => {
 
   it("should filter numeric for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.count",
@@ -534,9 +482,6 @@ describe("filterResults", () => {
 
   it("should filter multi numeric for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.count",
@@ -550,9 +495,6 @@ describe("filterResults", () => {
 
   it("should filter unequal numeric for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.count",
@@ -567,9 +509,6 @@ describe("filterResults", () => {
 
   it("should filter true for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.isValid",
@@ -583,9 +522,6 @@ describe("filterResults", () => {
 
   it("should filter false for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.isValid",
@@ -599,9 +535,6 @@ describe("filterResults", () => {
 
   it("should filter unequal boolean for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.isValid",
@@ -616,9 +549,6 @@ describe("filterResults", () => {
 
   it("should filter unequal numeric for nested", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "values.count",
@@ -633,9 +563,6 @@ describe("filterResults", () => {
 
   it("should filter true boolean", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "isValid",
@@ -649,9 +576,6 @@ describe("filterResults", () => {
 
   it("should filter false boolean", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "isValid",
@@ -666,9 +590,6 @@ describe("filterResults", () => {
 
   it("should filter multi-field", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "omni",
@@ -683,9 +604,6 @@ describe("filterResults", () => {
 
   it("should filter many multi-fields", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "omni",
@@ -700,9 +618,6 @@ describe("filterResults", () => {
 
   it("should filter empty multi-field", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "omni",
@@ -717,9 +632,6 @@ describe("filterResults", () => {
 
   it("should filter nested multi-field", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "omni",
@@ -734,9 +646,6 @@ describe("filterResults", () => {
 
   it("should filter many nested multi-fields", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "omni",
@@ -752,9 +661,6 @@ describe("filterResults", () => {
   it("should filter start datetime", () => {
     const date = "2017-10-03T16:20:00.000Z";
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -769,9 +675,6 @@ describe("filterResults", () => {
   it("should filter end date with empty string startDate", () => {
     const date = "2017-10-03T16:20:00.000Z";
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -786,9 +689,6 @@ describe("filterResults", () => {
   it("should filter start and end datetime", () => {
     const date = "2017-10-03T16:20:00.000Z";
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -802,9 +702,6 @@ describe("filterResults", () => {
 
   it("should not filter without datetime", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -818,9 +715,6 @@ describe("filterResults", () => {
 
   it("should not filter missing datetime", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "missingDate",
@@ -835,9 +729,6 @@ describe("filterResults", () => {
   it("should filter start date", () => {
     const date = "2017-10-03";
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -852,9 +743,6 @@ describe("filterResults", () => {
   it("should filter end date with empty string startDate", () => {
     const date = "2017-10-03";
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -869,9 +757,6 @@ describe("filterResults", () => {
   it("should filter start and end date", () => {
     const date = "2017-10-03";
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -885,9 +770,6 @@ describe("filterResults", () => {
 
   it("should not filter without date", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -901,9 +783,6 @@ describe("filterResults", () => {
 
   it("should not filter missing date", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "missingDate",
@@ -917,9 +796,6 @@ describe("filterResults", () => {
 
   it("should return true if no values", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -933,9 +809,6 @@ describe("filterResults", () => {
 
   it("should filter results for reverse start and end date", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "date",
@@ -949,9 +822,6 @@ describe("filterResults", () => {
 
   it("should filter multi search", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -970,9 +840,6 @@ describe("filterResults", () => {
 
   it("should filter multi search with empty value", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -991,9 +858,6 @@ describe("filterResults", () => {
 
   it("should filter multi search with starting empty value", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "id",
@@ -1014,7 +878,7 @@ describe("filterResults", () => {
     const options = {
       count: 2,
       offset: 1,
-      sortOptions: [],
+
       searchOptions: [
         {
           name: "name",
@@ -1028,8 +892,6 @@ describe("filterResults", () => {
 
   it("should filter then sort", () => {
     const options = {
-      count: 5,
-      offset: 0,
       sortOptions: [{ id: "name" }],
       searchOptions: [
         {
@@ -1092,9 +954,6 @@ describe("filterResults", () => {
 
   it("should filter id field", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -1107,9 +966,6 @@ describe("filterResults", () => {
   });
   it("should filter lab test accession label id field", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -1122,9 +978,6 @@ describe("filterResults", () => {
   });
   it("should filter like id field", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "name",
@@ -1137,9 +990,6 @@ describe("filterResults", () => {
   });
   it("should filter id field with filterKey", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -1150,11 +1000,14 @@ describe("filterResults", () => {
     };
     checkResult(testNestedId, options);
   });
+  it("should sort id field with filterKey", () => {
+    const options = {
+      sortOptions: [{ id: "labels.name" }],
+    };
+    checkResult(testNestedId, options);
+  });
   it("should filter id field with filterKey including NULL", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -1168,9 +1021,6 @@ describe("filterResults", () => {
   });
   it("should filter lab test accession label id field with filterKey", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",
@@ -1183,9 +1033,6 @@ describe("filterResults", () => {
   });
   it("should filter like id field with filterKey", () => {
     const options = {
-      count: 5,
-      offset: 0,
-      sortOptions: [],
       searchOptions: [
         {
           name: "labels.name",

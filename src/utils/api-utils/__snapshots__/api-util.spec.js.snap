@@ -12,8 +12,6 @@ Object {
   "options": Object {
     "count": 10,
     "offset": 0,
-    "searchOptions": Array [],
-    "sortOptions": Array [],
   },
   "output": Array [
     1,
@@ -50,8 +48,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "omni",
@@ -65,7 +61,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -112,8 +107,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -123,7 +116,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -159,8 +151,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -170,7 +160,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -206,8 +195,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": true,
@@ -218,7 +205,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -246,8 +232,6 @@ Object {
     Object {},
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -258,7 +242,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -313,8 +296,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "values.isValid",
@@ -324,7 +305,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -373,8 +353,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -384,7 +362,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -453,8 +430,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -464,7 +439,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -540,8 +514,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "includeNulls": true,
@@ -552,7 +524,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -606,8 +577,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -617,7 +586,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -686,8 +654,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -697,7 +663,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -737,8 +702,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -748,7 +711,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -821,8 +783,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -832,7 +792,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -886,8 +845,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "omni",
@@ -902,7 +859,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -972,8 +928,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "omni",
@@ -988,7 +942,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1041,8 +994,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "id",
@@ -1053,7 +1004,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1089,8 +1039,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -1101,7 +1049,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1159,8 +1106,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -1171,7 +1116,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1244,8 +1188,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -1256,7 +1198,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1332,8 +1273,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -1345,7 +1284,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1411,8 +1349,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -1424,7 +1360,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1507,8 +1442,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "values.count",
@@ -1519,7 +1452,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1573,8 +1505,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -1593,7 +1523,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [],
 }
@@ -1619,8 +1548,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -1639,7 +1566,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [],
 }
@@ -1665,8 +1591,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "id",
@@ -1685,7 +1609,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [],
 }
@@ -1716,8 +1639,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "omni",
@@ -1731,7 +1652,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1793,8 +1713,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "omni",
@@ -1808,7 +1726,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1857,8 +1774,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "id",
@@ -1868,7 +1783,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1920,8 +1834,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "values.count",
@@ -1931,7 +1843,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -1978,8 +1889,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -1989,7 +1898,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2022,8 +1930,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -2033,7 +1939,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2063,8 +1968,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -2074,7 +1977,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2107,8 +2009,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -2118,7 +2018,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2151,8 +2050,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -2162,7 +2059,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2198,8 +2094,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -2209,7 +2103,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2264,8 +2157,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -2275,7 +2166,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2312,8 +2202,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "includeNulls": true,
@@ -2324,7 +2212,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2360,8 +2247,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -2371,7 +2256,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2429,8 +2313,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "labels.name",
@@ -2440,7 +2322,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2505,7 +2386,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2538,8 +2418,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -2635,8 +2513,6 @@ Object {
     Object {},
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "isValid",
@@ -2646,7 +2522,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2701,8 +2576,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "values.isValid",
@@ -2712,7 +2585,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2778,8 +2650,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -2790,7 +2660,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2837,8 +2706,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -2849,7 +2716,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2901,8 +2767,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -2913,7 +2777,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -2979,8 +2842,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -2991,7 +2852,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3057,8 +2917,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -3069,7 +2927,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3103,8 +2960,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -3115,7 +2970,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3173,8 +3027,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "isEqual": false,
@@ -3185,7 +3037,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3242,8 +3093,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "id",
@@ -3253,7 +3102,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3275,8 +3123,6 @@ Object {
   "options": Object {
     "count": 3,
     "offset": 0,
-    "searchOptions": Array [],
-    "sortOptions": Array [],
   },
   "output": Array [
     1,
@@ -3306,9 +3152,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
-    "searchOptions": Array [],
     "sortOptions": Array [
       Object {
         "id": "name",
@@ -3358,8 +3201,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -3369,7 +3210,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3411,8 +3251,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "name",
@@ -3422,7 +3260,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3464,8 +3301,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "missingDate",
@@ -3475,7 +3310,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3517,8 +3351,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "missingDate",
@@ -3528,7 +3360,6 @@ Object {
         ],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3570,8 +3401,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "id",
@@ -3579,7 +3408,6 @@ Object {
         "values": Array [],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3621,8 +3449,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -3630,7 +3456,6 @@ Object {
         "values": Array [],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3672,8 +3497,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -3681,7 +3504,6 @@ Object {
         "values": Array [],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3715,8 +3537,6 @@ Object {
   "options": Object {
     "count": 2,
     "offset": 1,
-    "searchOptions": Array [],
-    "sortOptions": Array [],
   },
   "output": Array [
     2,
@@ -3745,8 +3565,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
     "searchOptions": Array [
       Object {
         "name": "date",
@@ -3754,7 +3572,6 @@ Object {
         "values": Array [],
       },
     ],
-    "sortOptions": Array [],
   },
   "output": Array [
     Object {
@@ -3799,9 +3616,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
-    "searchOptions": Array [],
     "sortOptions": Array [
       Object {
         "id": "id",
@@ -3823,6 +3637,9 @@ Object {
     },
     Object {
       "id": 4,
+    },
+    Object {
+      "id": 5,
     },
   ],
 }
@@ -3853,7 +3670,6 @@ Object {
   "options": Object {
     "count": 2,
     "offset": 1,
-    "searchOptions": Array [],
     "sortOptions": Array [
       Object {
         "id": "id",
@@ -3894,9 +3710,6 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
-    "offset": 0,
-    "searchOptions": Array [],
     "sortOptions": Array [
       Object {
         "desc": true,
@@ -3919,6 +3732,9 @@ Object {
     },
     Object {
       "id": 1,
+    },
+    Object {
+      "id": 0,
     },
   ],
 }
@@ -3947,9 +3763,7 @@ Object {
     },
   ],
   "options": Object {
-    "count": 5,
     "offset": 3,
-    "searchOptions": Array [],
     "sortOptions": Array [
       Object {
         "desc": true,
@@ -3957,15 +3771,127 @@ Object {
       },
     ],
   },
+  "output": Array [],
+}
+`;
+
+exports[`filterResults should sort id field with filterKey 1`] = `
+Object {
+  "input": Array [
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "P001001",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "A00100-1",
+        },
+      ],
+      "name": "xy",
+    },
+    Object {
+      "labels": Array [],
+      "name": "A00100-1",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001002",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "abc",
+        },
+        Object {
+          "name": null,
+        },
+      ],
+      "name": "A00100-2",
+    },
+  ],
+  "options": Object {
+    "sortOptions": Array [
+      Object {
+        "id": "labels.name",
+      },
+    ],
+  },
   "output": Array [
     Object {
-      "id": 2,
+      "labels": Array [],
+      "name": "A00100-1",
     },
     Object {
-      "id": 1,
+      "labels": Array [
+        Object {
+          "name": "A00100-1",
+        },
+      ],
+      "name": "xy",
     },
     Object {
-      "id": 0,
+      "labels": Array [
+        Object {
+          "name": "P001001",
+        },
+        Object {
+          "name": "aa",
+        },
+      ],
+      "name": "bb",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "P001002",
+        },
+        Object {
+          "name": "bg",
+        },
+      ],
+      "name": "cd",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "abc",
+        },
+        Object {
+          "name": null,
+        },
+      ],
+      "name": "A00100-2",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "P001001",
     },
   ],
 }

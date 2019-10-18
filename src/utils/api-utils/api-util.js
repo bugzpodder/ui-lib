@@ -3,6 +3,7 @@
 
 import debounce from "lodash/debounce";
 import escapeRegExp from "lodash/escapeRegExp";
+import get from "lodash/get";
 import moment from "moment";
 import partialRight from "lodash/partialRight";
 import {
@@ -419,40 +420,59 @@ export const filterResults = (
         return searchResult;
       }
       return searchFields.reduce((found, field) => {
-        const [itemKey, filterKey] = field.split(".");
-        if (filterKey) {
-          return (
-            found
-              || (item[itemKey]
-                && item[itemKey].some((e) => {
-                  if (includeNulls && e[filterKey] == null) {
-                    return true;
-                  }
-                  return compare(e[filterKey], value);
-                }))
-          );
-        }
-        if (includeNulls && item[field] == null) {
+        if (found) {
           return true;
         }
-        return (
-          found || (isValueValid(item[field]) && compare(item[field], value))
-        );
+        const tokens = field.split(".");
+        const itemKey = tokens.shift();
+        const filterKey = tokens.join(".");
+
+        if (filterKey && Array.isArray(item[itemKey])) {
+          return item[itemKey].some((e) => {
+            const resultValue = get(e, filterKey);
+            if (includeNulls && resultValue == null) {
+              return true;
+            }
+            return (
+              isValueValid(resultValue) && compare(get(e, filterKey), value)
+            );
+          });
+        }
+
+        const resultValue = get(item, field);
+        if (includeNulls && resultValue == null) {
+          return true;
+        }
+        return isValueValid(resultValue) && compare(resultValue, value);
       }, false);
     }, false);
-    // eslint-disable-next-line space-in-parens
   }, true));
 
   if (sortOptions.length) {
     filteredResults.sort((a, b) => sortOptions.reduce((result, field) => {
-      if (result !== 0 || !field.id || a[field.id] === b[field.id]) {
+      if (result !== 0 || !field.id) {
         return result;
       }
-      if (a[field.id] < b[field.id]) {
+
+      const tokens = field.id.split(".");
+      const itemKey = tokens.shift();
+      const filterKey = tokens.join(".");
+
+      const aResult = Array.isArray(a[itemKey])
+        ? get(a[itemKey][0], filterKey)
+        : get(a, field.id);
+
+      const bResult = Array.isArray(b[itemKey])
+        ? get(b[itemKey][0], filterKey)
+        : get(b, field.id);
+
+      if (aResult === bResult) {
+        return result;
+      }
+      if (aResult < bResult) {
         return field.desc ? 1 : -1;
       }
       return field.desc ? -1 : 1;
-      // eslint-disable-next-line space-in-parens
     }, 0));
   }
 
