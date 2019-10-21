@@ -244,7 +244,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case FULL_ID_SEARCH_TYPE:
           return multiValueSearchBuilder((value) => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder((value) => `"%${value}%"`);
+          return multiValueSearchBuilder((value) => `"${value}%"`);
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
           return multiValueSearchBuilder((dateRangeString) => {

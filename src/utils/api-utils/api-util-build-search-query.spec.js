@@ -183,7 +183,7 @@ describe("buildSearchQuery for like id search", () => {
           type: LIKE_ID_SEARCH_TYPE,
         },
       ])
-    ).resolves.toEqual('column1=="%P00100-1%"||column1=="%P001001%"');
+    ).resolves.toEqual('column1=="P00100-1%"||column1=="P001001%"');
   });
   it("should generate query for one element, two fields", () => {
     expect(
@@ -196,7 +196,7 @@ describe("buildSearchQuery for like id search", () => {
         },
       ])
     ).resolves.toEqual(
-      '(column1=="%P00100-1%")||(column2=="%P00100-1%")||(column1=="%P001001%")||(column2=="%P001001%")'
+      '(column1=="P00100-1%")||(column2=="P00100-1%")||(column1=="P001001%")||(column2=="P001001%")'
     );
   });
   it("should generate query for one accession label element", () => {
@@ -208,7 +208,7 @@ describe("buildSearchQuery for like id search", () => {
           type: LIKE_ID_SEARCH_TYPE,
         },
       ])
-    ).resolves.toEqual('column1=="%A00100-1%"');
+    ).resolves.toEqual('column1=="A00100-1%"');
   });
 });
 
