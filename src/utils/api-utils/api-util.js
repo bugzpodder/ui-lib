@@ -4,6 +4,7 @@
 import debounce from "lodash/debounce";
 import escapeRegExp from "lodash/escapeRegExp";
 import get from "lodash/get";
+import isString from "lodash/isString";
 import moment from "moment";
 import partialRight from "lodash/partialRight";
 import {
@@ -469,6 +470,13 @@ export const filterResults = (
       if (aResult === bResult) {
         return result;
       }
+      if (isString(aResult) && isString(bResult)) {
+        const result = aResult.localeCompare(bResult, undefined, {
+          numeric: true,
+        });
+        return field.desc ? -result : result;
+      }
+
       if (aResult < bResult) {
         return field.desc ? 1 : -1;
       }

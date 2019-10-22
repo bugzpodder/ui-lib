@@ -3855,6 +3855,25 @@ Object {
     Object {
       "labels": Array [
         Object {
+          "name": "abc",
+        },
+        Object {
+          "name": null,
+        },
+      ],
+      "name": "A00100-2",
+    },
+    Object {
+      "labels": Array [
+        Object {
+          "name": "bb",
+        },
+      ],
+      "name": "P001001",
+    },
+    Object {
+      "labels": Array [
+        Object {
           "name": "P001001",
         },
         Object {
@@ -3873,25 +3892,6 @@ Object {
         },
       ],
       "name": "cd",
-    },
-    Object {
-      "labels": Array [
-        Object {
-          "name": "abc",
-        },
-        Object {
-          "name": null,
-        },
-      ],
-      "name": "A00100-2",
-    },
-    Object {
-      "labels": Array [
-        Object {
-          "name": "bb",
-        },
-      ],
-      "name": "P001001",
     },
   ],
 }

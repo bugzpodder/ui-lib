@@ -11,6 +11,7 @@
 9. Rename package to `@grailbio/lib`, publish to github and npm.
 10. filterResults uses default values if they aren't provided.
 11. filterResults can now filter and sort deeply nested objects.
+12. filterResults sort string values in proper numeric order.
 
 ## 1.0.0 - 2019-06-17
 
