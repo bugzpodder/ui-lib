@@ -3841,10 +3841,6 @@ Object {
   },
   "output": Array [
     Object {
-      "labels": Array [],
-      "name": "A00100-1",
-    },
-    Object {
       "labels": Array [
         Object {
           "name": "A00100-1",
@@ -3881,6 +3877,10 @@ Object {
         },
       ],
       "name": "bb",
+    },
+    Object {
+      "labels": Array [],
+      "name": "A00100-1",
     },
     Object {
       "labels": Array [
