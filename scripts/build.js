@@ -15,7 +15,7 @@ async function copyFile(file) {
 async function createPackageFile() {
   const packageData = await fse.readFile(
     path.resolve(__dirname, "../package.json"),
-    "utf8"
+    "utf8",
   );
   const { name, version, dependencies } = JSON.parse(packageData);
   const newPackageData = {
@@ -29,7 +29,7 @@ async function createPackageFile() {
   await fse.writeFile(
     buildPath,
     JSON.stringify(newPackageData, null, 2),
-    "utf8"
+    "utf8",
   );
   return newPackageData;
 }
@@ -41,7 +41,7 @@ async function run() {
   await exec("find . -name '*.md' -delete", { cwd: distDir });
   await exec("find . -name '__snapshots__' -delete", { cwd: distDir });
   await fse.remove(path.resolve(__dirname, "../dist/utils/mocks"));
-  await Promise.all(["README.md", "CHANGELOG.md"].map((file) => copyFile(file)));
+  await Promise.all(["README.md", "CHANGELOG.md"].map(file => copyFile(file)));
   const packageData = await createPackageFile();
   await exec("npm pack", { cwd: distDir });
   const buildTarBall = `grail-lib-${packageData.version}.tgz`;

@@ -43,18 +43,19 @@ export const boolToString = (bool: boolean): string => (bool ? "1" : "0");
 /*
 Builds an order query that and's each item for the order query URL parameter
 */
-export const buildOrderQuery = (sortOptions: SortOptions = []) => sortOptions.reduce((memo, sortOption) => {
-  const { id } = sortOption;
-  let { desc } = sortOption;
-  desc = desc ? "DESC" : "ASC";
-  if (!id) {
-    return memo;
-  }
-  if (memo.length > 0) {
-    memo += ", ";
-  }
-  return `${memo}${id} ${desc}`;
-}, "" /* initial memo */);
+export const buildOrderQuery = (sortOptions: SortOptions = []) =>
+  sortOptions.reduce((memo, sortOption) => {
+    const { id } = sortOption;
+    let { desc } = sortOption;
+    desc = desc ? "DESC" : "ASC";
+    if (!id) {
+      return memo;
+    }
+    if (memo.length > 0) {
+      memo += ", ";
+    }
+    return `${memo}${id} ${desc}`;
+  }, "" /* initial memo */);
 
 export const isValueValid = (value: mixed) => {
   if (Array.isArray(value)) {
@@ -64,7 +65,7 @@ export const isValueValid = (value: mixed) => {
 };
 
 const getSearchValues = (
-  searchOption: DeprecatedSearchOption
+  searchOption: DeprecatedSearchOption,
 ): Array<string> => {
   const { value = "", values } = searchOption;
   let searchValues = [];
@@ -94,14 +95,12 @@ const getEscapedSearchValues = (searchOption: SearchOptionV2) => {
 };
 
 const getSearchOptionsV2 = (
-  deprecatedSearchOptions: DeprecatedSearchOptions = new Map()
+  deprecatedSearchOptions: DeprecatedSearchOptions = new Map(),
 ) => {
   const searchOptionsV2: SearchOptionsV2 = [];
   deprecatedSearchOptions.forEach((searchOption, name) => {
     const values = getSearchValues(searchOption);
-    const {
-      type, searchFields, searchOperator, includeNulls,
-    } = searchOption;
+    const { type, searchFields, searchOperator, includeNulls } = searchOption;
     searchOptionsV2.push({
       name,
       type,
@@ -114,39 +113,40 @@ const getSearchOptionsV2 = (
   return searchOptionsV2;
 };
 
-const resolveSearchOptions = async (searchOptions: SearchOptionsV2 = []) => Promise.all(
-  searchOptions.map(async (searchOption) => {
-    const { type, mapValues } = searchOption;
-    let { values } = searchOption;
-    const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
-    if (mapValues) {
-      values = await mapValues(values);
-    }
-    values = getEscapedSearchValues({ ...searchOption, values }).map(
-      (value) => {
-        if (isDateSearchType) {
-          return value;
-        }
-        return value;
+const resolveSearchOptions = async (searchOptions: SearchOptionsV2 = []) =>
+  Promise.all(
+    searchOptions.map(async searchOption => {
+      const { type, mapValues } = searchOption;
+      let { values } = searchOption;
+      const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
+      if (mapValues) {
+        values = await mapValues(values);
       }
-    );
-    return { ...searchOption, values };
-  })
-);
+      values = getEscapedSearchValues({ ...searchOption, values }).map(
+        value => {
+          if (isDateSearchType) {
+            return value;
+          }
+          return value;
+        },
+      );
+      return { ...searchOption, values };
+    }),
+  );
 
 export const buildCustomURIQueryParams = async (
   searchOptions: SearchOptionsV2 = [],
-  params: URLSearchParams
+  params: URLSearchParams,
 ) => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
-      (searchOption) => searchOption && searchOption.queryType === URI_QUERY_TYPE
-    )
+      searchOption => searchOption && searchOption.queryType === URI_QUERY_TYPE,
+    ),
   );
   return resolvedSearchOptions
-    .filter((searchOption) => searchOption.values && searchOption.values.length)
+    .filter(searchOption => searchOption.values && searchOption.values.length)
     .forEach(({ searchFields, values }) => {
-      values.forEach((value) => {
+      values.forEach(value => {
         params.append(searchFields[0], value);
       });
     });
@@ -160,8 +160,8 @@ q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
-      (searchOption) => searchOption && !searchOption.queryType
-    )
+      searchOption => searchOption && !searchOption.queryType,
+    ),
   );
   const query = resolvedSearchOptions.reduce((memo, searchOption) => {
     const {
@@ -182,7 +182,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         return searchFields.length > 1 ? `(${nullQuery})` : nullQuery;
       }, "");
     }
-    const multiValueSearchBuilder = (formatter) => {
+    const multiValueSearchBuilder = formatter => {
       const multiValueSearch = values.reduce((multiValueSearchMemo, value) => {
         if (!isValueValid(value)) {
           return multiValueSearchMemo;
@@ -199,10 +199,10 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
             }
             return searchFields.length > 1 ? `(${subQuery})` : subQuery;
           },
-          ""
+          "",
         );
-        return `${multiValueSearchMemo}${multiValueSearchMemo
-          && "||"}${multiFieldSearch}`;
+        return `${multiValueSearchMemo}${multiValueSearchMemo &&
+          "||"}${multiFieldSearch}`;
       }, initialSubQuery);
       if (!multiValueSearch) {
         return null;
@@ -215,7 +215,7 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
       switch (type) {
         case LIKE_TEXT_SEARCH_TYPE:
         case OMNI_TEXT_SEARCH_TYPE:
-          return multiValueSearchBuilder((value) => {
+          return multiValueSearchBuilder(value => {
             let searchValue = value.trim();
             const quotedValue = extractQuotedString(searchValue);
             if (quotedValue != null) {
@@ -237,21 +237,21 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
         case NUMERIC_SEARCH_TYPE:
         // fallthrough to next case
         case BOOLEAN_SEARCH_TYPE:
-          return multiValueSearchBuilder((value) => `${value}`);
+          return multiValueSearchBuilder(value => `${value}`);
         case FULL_TEXT_SEARCH_TYPE:
         // fallthrough to next case
         case ENUM_SEARCH_TYPE:
-          return multiValueSearchBuilder((value) => `"${value.trim()}"`);
+          return multiValueSearchBuilder(value => `"${value.trim()}"`);
         case FULL_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder((value) => `"${value}"`);
+          return multiValueSearchBuilder(value => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder((value) => `"${value}%"`);
+          return multiValueSearchBuilder(value => `"${value}%"`);
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
-          return multiValueSearchBuilder((dateRangeString) => {
+          return multiValueSearchBuilder(dateRangeString => {
             // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
             let { startDate, endDate } = extractDateRange(
-              dateRangeString || ""
+              dateRangeString || "",
             );
             if (startDate && endDate) {
               if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
@@ -300,11 +300,9 @@ export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
 };
 
 export const buildQuery = async (
-  contentOptions?: GetContentOptionsV2 = {}
+  contentOptions?: GetContentOptionsV2 = {},
 ): Promise<URLSearchParams> => {
-  const {
-    offset, count, searchOptions, sortOptions,
-  } = contentOptions;
+  const { offset, count, searchOptions, sortOptions } = contentOptions;
 
   const orderQuery = buildOrderQuery(sortOptions);
   let page = "";
@@ -340,148 +338,152 @@ q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 // eslint-disable-next-line max-len
 export const deprecatedBuildSearchQuery = (
-  deprecatedSearchOptions: DeprecatedSearchOptions
+  deprecatedSearchOptions: DeprecatedSearchOptions,
 ) => buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
 
 export const filterResults = (
   items: Array<any>,
-  options: GetContentOptionsV2
+  options: GetContentOptionsV2,
 ): Array<any> => {
-  const {
-    count, offset, sortOptions = [], searchOptions = [],
-  } = options;
+  const { count, offset, sortOptions = [], searchOptions = [] } = options;
 
-  const filteredResults = items.filter((item) => searchOptions.reduce((result, searchOption) => {
-    if (!result || !searchOption) {
-      return false;
-    }
-
-    const {
-      type,
-      searchFields = [searchOption.name],
-      values,
-      includeNulls,
-    } = searchOption;
-    const searchValues = getEscapedSearchValues(searchOption);
-
-    if (DATE_SEARCH_TYPES.includes(type)) {
-      if (searchFields.length === 0 || !item[searchFields[0]]) {
-        return true;
-      }
-      if (!values) {
-        return true;
-      }
-      // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-      let { startDate, endDate } = extractDateRange(values[0] || "");
-      if (startDate && endDate) {
-        if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
-          [startDate, endDate] = [endDate, startDate];
-        }
+  const filteredResults = items.filter(item =>
+    searchOptions.reduce((result, searchOption) => {
+      if (!result || !searchOption) {
+        return false;
       }
 
-      const itemTime = moment(item[searchFields[0]]);
-      return (
-        (!startDate || itemTime.isAfter(moment(String(startDate))))
-          && (!endDate || itemTime.isBefore(moment(String(endDate))))
-      );
-    }
+      const {
+        type,
+        searchFields = [searchOption.name],
+        values,
+        includeNulls,
+      } = searchOption;
+      const searchValues = getEscapedSearchValues(searchOption);
 
-    const validValues = searchValues.filter((value) => isValueValid(value));
-    if (validValues.length === 0) {
-      return true;
-    }
-
-    let compare;
-    switch (type) {
-      case LIKE_TEXT_SEARCH_TYPE:
-      case OMNI_TEXT_SEARCH_TYPE:
-        compare = (e, value) => new RegExp(escapeRegExp(String(value)), "i").test(e);
-        break;
-      case LIKE_ID_SEARCH_TYPE:
-        compare = (e, value) => new RegExp(escapeRegExp(sanitizeId(String(value))), "i").test(e);
-        break;
-      case BOOLEAN_SEARCH_TYPE:
-        compare = (e, value) => !!e === value || String(e) === String(value);
-        break;
-      case NUMERIC_SEARCH_TYPE:
-        // fallthrough
-      case FULL_TEXT_SEARCH_TYPE:
-      case ENUM_SEARCH_TYPE:
-        compare = (e, value) => e === value;
-        break;
-      case FULL_ID_SEARCH_TYPE:
-        compare = (e, value) => e === sanitizeId(String(value));
-        break;
-      default:
-        throw new Error(`Unknown search type: ${String(type)}`);
-    }
-
-    return validValues.reduce((searchResult, value) => {
-      if (searchResult || !isValueValid(value)) {
-        return searchResult;
-      }
-      return searchFields.reduce((found, field) => {
-        if (found) {
+      if (DATE_SEARCH_TYPES.includes(type)) {
+        if (searchFields.length === 0 || !item[searchFields[0]]) {
           return true;
         }
-        const tokens = field.split(".");
+        if (!values) {
+          return true;
+        }
+        // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
+        let { startDate, endDate } = extractDateRange(values[0] || "");
+        if (startDate && endDate) {
+          if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
+            [startDate, endDate] = [endDate, startDate];
+          }
+        }
+
+        const itemTime = moment(item[searchFields[0]]);
+        return (
+          (!startDate || itemTime.isAfter(moment(String(startDate)))) &&
+          (!endDate || itemTime.isBefore(moment(String(endDate))))
+        );
+      }
+
+      const validValues = searchValues.filter(value => isValueValid(value));
+      if (validValues.length === 0) {
+        return true;
+      }
+
+      let compare;
+      switch (type) {
+        case LIKE_TEXT_SEARCH_TYPE:
+        case OMNI_TEXT_SEARCH_TYPE:
+          compare = (e, value) =>
+            new RegExp(escapeRegExp(String(value)), "i").test(e);
+          break;
+        case LIKE_ID_SEARCH_TYPE:
+          compare = (e, value) =>
+            new RegExp(escapeRegExp(sanitizeId(String(value))), "i").test(e);
+          break;
+        case BOOLEAN_SEARCH_TYPE:
+          compare = (e, value) => !!e === value || String(e) === String(value);
+          break;
+        case NUMERIC_SEARCH_TYPE:
+        // fallthrough
+        case FULL_TEXT_SEARCH_TYPE:
+        case ENUM_SEARCH_TYPE:
+          compare = (e, value) => e === value;
+          break;
+        case FULL_ID_SEARCH_TYPE:
+          compare = (e, value) => e === sanitizeId(String(value));
+          break;
+        default:
+          throw new Error(`Unknown search type: ${String(type)}`);
+      }
+
+      return validValues.reduce((searchResult, value) => {
+        if (searchResult || !isValueValid(value)) {
+          return searchResult;
+        }
+        return searchFields.reduce((found, field) => {
+          if (found) {
+            return true;
+          }
+          const tokens = field.split(".");
+          const itemKey = tokens.shift();
+          const filterKey = tokens.join(".");
+
+          if (filterKey && Array.isArray(item[itemKey])) {
+            return item[itemKey].some(e => {
+              const resultValue = get(e, filterKey);
+              if (includeNulls && resultValue == null) {
+                return true;
+              }
+              return (
+                isValueValid(resultValue) && compare(get(e, filterKey), value)
+              );
+            });
+          }
+
+          const resultValue = get(item, field);
+          if (includeNulls && resultValue == null) {
+            return true;
+          }
+          return isValueValid(resultValue) && compare(resultValue, value);
+        }, false);
+      }, false);
+    }, true),
+  );
+
+  if (sortOptions.length) {
+    filteredResults.sort((a, b) =>
+      sortOptions.reduce((result, field) => {
+        if (result !== 0 || !field.id) {
+          return result;
+        }
+
+        const tokens = field.id.split(".");
         const itemKey = tokens.shift();
         const filterKey = tokens.join(".");
 
-        if (filterKey && Array.isArray(item[itemKey])) {
-          return item[itemKey].some((e) => {
-            const resultValue = get(e, filterKey);
-            if (includeNulls && resultValue == null) {
-              return true;
-            }
-            return (
-              isValueValid(resultValue) && compare(get(e, filterKey), value)
-            );
+        const aResult = Array.isArray(a[itemKey])
+          ? get(a[itemKey][0], filterKey)
+          : get(a, field.id);
+
+        const bResult = Array.isArray(b[itemKey])
+          ? get(b[itemKey][0], filterKey)
+          : get(b, field.id);
+
+        if (aResult === bResult) {
+          return result;
+        }
+        if (isString(aResult) && isString(bResult)) {
+          const result = aResult.localeCompare(bResult, undefined, {
+            numeric: true,
           });
+          return field.desc ? -result : result;
         }
 
-        const resultValue = get(item, field);
-        if (includeNulls && resultValue == null) {
-          return true;
+        if (aResult == null || aResult < bResult) {
+          return field.desc ? 1 : -1;
         }
-        return isValueValid(resultValue) && compare(resultValue, value);
-      }, false);
-    }, false);
-  }, true));
-
-  if (sortOptions.length) {
-    filteredResults.sort((a, b) => sortOptions.reduce((result, field) => {
-      if (result !== 0 || !field.id) {
-        return result;
-      }
-
-      const tokens = field.id.split(".");
-      const itemKey = tokens.shift();
-      const filterKey = tokens.join(".");
-
-      const aResult = Array.isArray(a[itemKey])
-        ? get(a[itemKey][0], filterKey)
-        : get(a, field.id);
-
-      const bResult = Array.isArray(b[itemKey])
-        ? get(b[itemKey][0], filterKey)
-        : get(b, field.id);
-
-      if (aResult === bResult) {
-        return result;
-      }
-      if (isString(aResult) && isString(bResult)) {
-        const result = aResult.localeCompare(bResult, undefined, {
-          numeric: true,
-        });
-        return field.desc ? -result : result;
-      }
-
-      if (aResult < bResult) {
-        return field.desc ? 1 : -1;
-      }
-      return field.desc ? -1 : 1;
-    }, 0));
+        return field.desc ? -1 : 1;
+      }, 0),
+    );
   }
 
   return offset || count

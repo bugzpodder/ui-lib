@@ -10,10 +10,10 @@ declare type ExportableColumn = {
   // be printed. If it is a string, the object's value at the attribute with
   // that name will be printed unmodified. In paged tables, if this is not
   // specified, the `accessor` field will be used instead.
-  exportAccessor: string | (Object => string)
+  exportAccessor: string | (Object => string),
 };
 
 declare type ReportOptions = {
   delimiter?: string,
-  fileMimeType?: string
+  fileMimeType?: string,
 };
