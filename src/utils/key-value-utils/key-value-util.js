@@ -10,6 +10,8 @@ export const setKeyValue = (keyValues: Array<Object>, item: Object) => {
 };
 
 // eslint-disable-next-line max-len
-export const hasKeyValue = (keyValues: Array<KeyValue>, k: string, v: string) => keyValues.some(({ key, value }) => key === k && value === v);
+export const hasKeyValue = (keyValues: Array<KeyValue>, k: string, v: string) =>
+  keyValues.some(({ key, value }) => key === k && value === v);
 
-export const hasKey = (keyValues: Array<KeyValue>, k: string) => keyValues.some(({ key }) => key === k);
+export const hasKey = (keyValues: Array<KeyValue>, k: string) =>
+  keyValues.some(({ key }) => key === k);

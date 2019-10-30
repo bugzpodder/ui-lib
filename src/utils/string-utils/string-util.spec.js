@@ -36,7 +36,7 @@ const expectedSentenceCaseTranslations = {
 };
 
 describe("sentenceCase", () => {
-  keys(expectedSentenceCaseTranslations).forEach((key) => {
+  keys(expectedSentenceCaseTranslations).forEach(key => {
     const value = expectedSentenceCaseTranslations[key];
     it(`convert "${key}" to "${value}"`, () => {
       expect(sentenceCase(key)).toEqual(value);
@@ -105,7 +105,7 @@ describe("formatPercent", () => {
     });
   });
 });
-['"', global.encodeURIComponent('"')].forEach((quoteChar) => {
+['"', global.encodeURIComponent('"')].forEach(quoteChar => {
   const nullCases = [
     "0.12",
     `${quoteChar}abc`,
@@ -116,9 +116,9 @@ describe("formatPercent", () => {
   const testValues = ["", "abc 123", "test"];
   describe("extractQuotedString", () => {
     const tests = [
-      ...nullCases.map((testCase) => [testCase, null]),
-      ...testValues.map((value) => [`${quoteChar}${value}${quoteChar}`, value]),
-      ...testValues.map((value) => [
+      ...nullCases.map(testCase => [testCase, null]),
+      ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, value]),
+      ...testValues.map(value => [
         `   ${quoteChar}${value}${quoteChar}  `,
         value,
       ]),
@@ -129,16 +129,16 @@ describe("formatPercent", () => {
         extractedValue != null ? extractedValue : "null"
       }'`, () => {
         expect(extractQuotedString(quotedValue, quoteChar)).toEqual(
-          extractedValue
+          extractedValue,
         );
       });
     });
   });
   describe("unquoteString", () => {
     const tests = [
-      ...nullCases.map((testCase) => [testCase, testCase]),
-      ...testValues.map((value) => [`${quoteChar}${value}${quoteChar}`, value]),
-      ...testValues.map((value) => [
+      ...nullCases.map(testCase => [testCase, testCase]),
+      ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, value]),
+      ...testValues.map(value => [
         `   ${quoteChar}${value}${quoteChar}  `,
         value,
       ]),
@@ -154,9 +154,9 @@ describe("formatPercent", () => {
   });
   describe("isQuotedString", () => {
     const tests = [
-      ...nullCases.map((testCase) => [testCase, false]),
-      ...testValues.map((value) => [`${quoteChar}${value}${quoteChar}`, true]),
-      ...testValues.map((value) => [
+      ...nullCases.map(testCase => [testCase, false]),
+      ...testValues.map(value => [`${quoteChar}${value}${quoteChar}`, true]),
+      ...testValues.map(value => [
         `   ${quoteChar}${value}${quoteChar}  `,
         true,
       ]),

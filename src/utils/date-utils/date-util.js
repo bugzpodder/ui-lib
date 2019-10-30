@@ -11,7 +11,7 @@ export const formatDate = (date: string | Date | moment$Moment): string => {
 };
 
 export const formatDateTime = (
-  dateTime: string | Date | moment$Moment
+  dateTime: string | Date | moment$Moment,
 ): string => {
   if (!dateTime) {
     return "";
@@ -32,7 +32,7 @@ export const DATE_REGEX_BLOCK = "((?:[-\\d]+)|(?:[-\\d]+T[-\\d:.]+Z))";
 // Also, supported, `to` replaced with `-`
 export const extractDateRange = (dateRangeString: string) => {
   const dateRangeRegExp = new RegExp(
-    `^${DATE_REGEX_BLOCK}?\\s*(?:${WRAPPED_DATE_RANGE_DELIMITERS})\\s*${DATE_REGEX_BLOCK}?$`
+    `^${DATE_REGEX_BLOCK}?\\s*(?:${WRAPPED_DATE_RANGE_DELIMITERS})\\s*${DATE_REGEX_BLOCK}?$`,
   );
   const match = dateRangeRegExp.exec(dateRangeString);
   if (!match) {
@@ -50,7 +50,7 @@ export const extractDateRange = (dateRangeString: string) => {
 
 export const buildDateRangeString = (dateRange: {
   startDate?: ?string,
-  endDate?: ?string
+  endDate?: ?string,
 }) => {
   const { startDate, endDate } = dateRange;
   if (startDate) {
@@ -67,7 +67,7 @@ export const buildDateRangeString = (dateRange: {
 
 export const extractValidDate = (
   date: string,
-  format: string = DATE_FORMAT
+  format: string = DATE_FORMAT,
 ): ?string => {
   const momentDate = moment(date);
   if (date && momentDate.isValid()) {

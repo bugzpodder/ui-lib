@@ -9,5 +9,9 @@ export {
   updateSearchUrl,
 } from "./url-search";
 export {
-  getPathname, getQuery, stringifyQuery, updateQuery, updateQueryInternal,
+  getPathname,
+  getQuery,
+  stringifyQuery,
+  updateQuery,
+  updateQueryInternal,
 } from "./url-util";

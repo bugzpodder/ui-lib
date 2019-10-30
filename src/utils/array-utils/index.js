@@ -1,4 +1,7 @@
 // @flow
 export {
-  generateFilledArray, serializePromises, mapBy, toPairWise,
+  generateFilledArray,
+  serializePromises,
+  mapBy,
+  toPairWise,
 } from "./array-util";

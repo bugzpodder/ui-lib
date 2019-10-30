@@ -11,38 +11,38 @@ const GENERIC_ERROR_MESSAGE = "Bad API response.";
 
 const extractIssueMessages = (
   object: UnprocessedJsonResult,
-  issueType: string = "errors"
+  issueType: string = "errors",
 ) => {
   if (object.errors) {
-    return object.errors[issueType].map((error) => error.message);
+    return object.errors[issueType].map(error => error.message);
   }
   return [];
 };
 export const extractIssueCodes = (
   object: UnprocessedJsonResult,
-  issueType: string = "errors"
+  issueType: string = "errors",
 ) => {
   if (object.errors) {
     return object.errors[issueType]
-      .map((error) => error.errorCode)
-      .filter((errorCode) => errorCode);
+      .map(error => error.errorCode)
+      .filter(errorCode => errorCode);
   }
   return [];
 };
 
 export const extractErrorMessages = partialRight(
   extractIssueMessages,
-  "errors"
+  "errors",
 );
 export const extractWarningMessages = partialRight(
   extractIssueMessages,
-  "warnings"
+  "warnings",
 );
 export const extractErrorCodes = partialRight(extractIssueCodes, "errors");
 
 type ApiConnection = {
   apiUrl: string,
-  version: string
+  version: string,
 };
 
 const defaultOptions = {};
@@ -51,38 +51,40 @@ const defaultOptions = {};
 // Some 500 errors don't have JSON body content, and have to be pre-processed here.
 // If the server sends 500 with JSON, which will be extracted in `processJsonResponse`
 // See T4365 and T5850
-const checkForServerError = (response: Object) => new Promise((resolve, reject) => {
-  const { status } = response;
-  if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-    const contentType = response.headers.get("Content-Type");
-    if (!contentType || !contentType.includes("application/json")) {
-      const errorMessage = "500 Server Error";
+const checkForServerError = (response: Object) =>
+  new Promise((resolve, reject) => {
+    const { status } = response;
+    if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
+      const contentType = response.headers.get("Content-Type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const errorMessage = "500 Server Error";
+        return reject(new Error(errorMessage));
+      }
+    } else if (status === HttpStatus.NOT_FOUND) {
+      const errorMessage = "404 Not Found";
       return reject(new Error(errorMessage));
     }
-  } else if (status === HttpStatus.NOT_FOUND) {
-    const errorMessage = "404 Not Found";
-    return reject(new Error(errorMessage));
-  }
-  // Otherwise, fall through to allow `processJsonResponse` to handle json error and warning messages.
-  return resolve(response);
-});
+    // Otherwise, fall through to allow `processJsonResponse` to handle json error and warning messages.
+    return resolve(response);
+  });
 
 // Check for API server version mismatch. If mismatched, throw an error and reload the UI.
-const checkForServerVersionMismatch = (response: Object) => new Promise((resolve) => {
-  const { status } = response;
-  if (status === HttpStatus.PRECONDITION_FAILED) {
-    // If the server rejects the request with PRECONDITION_FAILED, most likely it is due
-    // to a version error.
-    // Alternatively, it may be some other incompatibility. In any case, the client should
-    // reload the UI to correct the issue.
-    setTimeout(() => {
-      window.location.reload();
-    }, 5000);
-    throw new Error(`${moment().toISOString()}
+const checkForServerVersionMismatch = (response: Object) =>
+  new Promise(resolve => {
+    const { status } = response;
+    if (status === HttpStatus.PRECONDITION_FAILED) {
+      // If the server rejects the request with PRECONDITION_FAILED, most likely it is due
+      // to a version error.
+      // Alternatively, it may be some other incompatibility. In any case, the client should
+      // reload the UI to correct the issue.
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+      throw new Error(`${moment().toISOString()}
         Server disconnected due to data incompatibility, most likely mismatch in version. Restarting client.`);
-  }
-  return resolve(response);
-});
+    }
+    return resolve(response);
+  });
 
 export class Api {
   apiName: string;
@@ -114,11 +116,11 @@ export class Api {
     method: string,
     urlSuffix: string,
     body?: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ) => {
     const headers = merge(
       { headers: { "content-type": "application/json" } },
-      this.getCommonHeaders()
+      this.getCommonHeaders(),
     );
     if (this.apiObjectProcessors) {
       body = this.apiObjectProcessors.processOutbound(body, options);
@@ -132,7 +134,7 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((response) => {
+      .then(response => {
         const { status, ok } = response;
         if (ok) {
           let filename = "";
@@ -145,7 +147,7 @@ export class Api {
           if (!filename) {
             filename = moment().toISOString();
           }
-          return response.blob().then((blob) => ({
+          return response.blob().then(blob => ({
             blob,
             filename,
             status,
@@ -154,11 +156,11 @@ export class Api {
         }
         return this.processJsonResponse(
           response,
-          merge({}, apiDispatchers, options)
+          merge({}, apiDispatchers, options),
         );
       })
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then((response) => {
+      .then(response => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
         return response;
       });
@@ -167,7 +169,7 @@ export class Api {
   postBlob = (
     urlSuffix: string,
     blob: Blob,
-    options?: ApiOptions = defaultOptions
+    options?: ApiOptions = defaultOptions,
   ) => {
     const headers = this.getCommonHeaders();
     const formData = new FormData();
@@ -181,9 +183,11 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
+      .then(resp =>
+        this.processJsonResponse(resp, merge({}, apiDispatchers, options)),
+      )
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then((response) => {
+      .then(response => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
         return response;
       });
@@ -196,9 +200,11 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, this.getCommonHeaders())
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((resp) => this.processJsonResponse(resp, merge({}, apiDispatchers, options)))
+      .then(resp =>
+        this.processJsonResponse(resp, merge({}, apiDispatchers, options)),
+      )
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then((response) => {
+      .then(response => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
         return response;
       });
@@ -208,11 +214,11 @@ export class Api {
     method: string,
     urlSuffix: string,
     object: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ) => {
     const headers = merge(
       { headers: { "content-type": "application/json" } },
-      this.getCommonHeaders()
+      this.getCommonHeaders(),
     );
     if (this.apiObjectProcessors) {
       object = this.apiObjectProcessors.processOutbound(object, options);
@@ -226,9 +232,11 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then((response) => this.processJsonResponse(response, merge({}, apiDispatchers, options)))
+      .then(response =>
+        this.processJsonResponse(response, merge({}, apiDispatchers, options)),
+      )
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then((response) => {
+      .then(response => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
         return response;
       });
@@ -237,33 +245,33 @@ export class Api {
   postJson = (
     urlSuffix: string,
     object: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ) => this.sendJsonUpdateRequest("POST", urlSuffix, object, options);
 
   putJson = (
     urlSuffix: string,
     object: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ) => this.sendJsonUpdateRequest("PUT", urlSuffix, object, options);
 
   patchJson = (
     urlSuffix: string,
     object: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ) => this.sendJsonUpdateRequest("PATCH", urlSuffix, object, options);
 
   deleteJson = (
     urlSuffix: string,
     object: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ) => this.sendJsonUpdateRequest("DELETE", urlSuffix, object, options);
 
   processJsonResponse = (
     response: Object,
-    options: ApiOptions = defaultOptions
+    options: ApiOptions = defaultOptions,
   ): JsonResult => {
     const { status, ok } = response;
-    return response.json().then((object) => {
+    return response.json().then(object => {
       const hasResultInResponse = options.hasResultInResponse !== false;
 
       if (this.apiObjectProcessors) {
@@ -280,12 +288,12 @@ export class Api {
         errorMessage = GENERIC_ERROR_MESSAGE;
       }
       if (errorMessage) {
-        if (status === HttpStatus.UNAUTHORIZED) {
-          // This is expected since user is not signed in.
-          console.error(errorMessage);
-        } else {
-          options.handleError && options.handleError(errorMessage, object);
-        }
+        // TODO(ecarrel): possibly re-enable suppression of unauthorized alerts
+        //  in some cases? jsingh@ added this in D5120 but it was removed as
+        //  part of the generalization of this code to ui/lib (D33755). However,
+        //  I am not sure if the problem that jsingh@ was trying to solve still
+        //  happens?
+        options.handleError && options.handleError(errorMessage, object);
       }
       if (warningMessage) {
         options.handleWarning && options.handleWarning(warningMessage, object);
@@ -315,7 +323,7 @@ export class Api {
   processCatch = (
     urlSuffix: string,
     options: ApiOptions,
-    error: Error
+    error: Error,
   ): JsonResult => {
     const { apiDispatchers } = this;
     const { handleError } = apiDispatchers || {};

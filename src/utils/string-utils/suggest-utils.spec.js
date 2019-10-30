@@ -30,7 +30,7 @@ const quotedValueTests = [
   { value: '"No possible match"', suggestions: [] },
   { value: '"1"', suggestions: [] },
 ];
-const quotedChoiceTests = choices.map((choice) => ({
+const quotedChoiceTests = choices.map(choice => ({
   value: `"${choice}"`,
   suggestions: [choice],
 }));
@@ -42,7 +42,7 @@ const valueTests = [
 ];
 
 describe("valueToSuggestions", () => {
-  valueTests.forEach((test) => {
+  valueTests.forEach(test => {
     const { value, suggestions } = test;
     it(`with "${value}" it finds suggestions: "${suggestions.toString()}"`, () => {
       expect(valueToSuggestions(value, choices)).toEqual(suggestions);
@@ -73,7 +73,7 @@ const choicesTest = choices.map((choice, index) => {
 const valuesTests = [...singleValueTests, ...multiValueTests, ...choicesTest];
 
 describe("valuesToSuggestions", () => {
-  valuesTests.forEach((test) => {
+  valuesTests.forEach(test => {
     const { values, suggestions } = test;
     it(`with "${values.toString()}" it finds suggestions: "${suggestions.toString()}"`, () => {
       expect(valuesToSuggestions(values, choices)).toEqual(suggestions);

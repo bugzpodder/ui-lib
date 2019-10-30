@@ -49,7 +49,8 @@ export const fnv1 = (data: string | Buffer) => {
 
   for (let i = 0; i < data.length; ++i) {
     // 32 bit FNV_Prime = 2^24 + 2^8 + 0x93.
-    hash += (hash << 24) + (hash << 8) + (hash << 7) + (hash << 4) + (hash << 1);
+    hash +=
+      (hash << 24) + (hash << 8) + (hash << 7) + (hash << 4) + (hash << 1);
     hash ^= data[i];
   }
 

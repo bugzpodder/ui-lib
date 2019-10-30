@@ -21,13 +21,19 @@ describe("parseValuesFromOmniText", () => {
     expect(parseValuesFromOmniText("")).toEqual(new Map().set("omni", [""]));
   });
   it("should parse omni values", () => {
-    expect(parseValuesFromOmniText("abc")).toEqual(new Map().set("omni", ["abc"]));
+    expect(parseValuesFromOmniText("abc")).toEqual(
+      new Map().set("omni", ["abc"]),
+    );
   });
   it("should parse one value", () => {
-    expect(parseValuesFromOmniText("test: abc")).toEqual(new Map().set("test", ["abc"]));
+    expect(parseValuesFromOmniText("test: abc")).toEqual(
+      new Map().set("test", ["abc"]),
+    );
   });
   it("should parse two values", () => {
-    expect(parseValuesFromOmniText("test: abc, def")).toEqual(new Map().set("test", ["abc", " def"]));
+    expect(parseValuesFromOmniText("test: abc, def")).toEqual(
+      new Map().set("test", ["abc", " def"]),
+    );
   });
   it("should parse two keys", () => {
     expect(parseValuesFromOmniText("test: abc, def test2: x")).toEqual(
@@ -40,7 +46,9 @@ describe("parseValuesFromOmniText", () => {
     );
   });
   it("should parse duplicate keys", () => {
-    expect(parseValuesFromOmniText("test: abc, def test: x")).toEqual(new Map().set("test", ["abc", " def", "x"]));
+    expect(parseValuesFromOmniText("test: abc, def test: x")).toEqual(
+      new Map().set("test", ["abc", " def", "x"]),
+    );
   });
 });
 
@@ -61,7 +69,8 @@ const searchDefs: OmniSearchDefs = [
     name: "Lot Number",
     type: FULL_TEXT_SEARCH_TYPE,
     aliases: ["lot"],
-    description: "e.g. L00001 (GRAIL lot number) or ZRC203172 (vendor lot number)",
+    description:
+      "e.g. L00001 (GRAIL lot number) or ZRC203172 (vendor lot number)",
     searchFields: ["lotNumber", "vendorLotNumber"],
   },
   {
@@ -79,20 +88,26 @@ describe("getOmniTextFromSearchValues", () => {
     searchValues.set(0, "1");
     searchValues.set(2, "34, 12");
     const expectedOmniText = "1 lot: 34, 12";
-    expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
+    expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(
+      expectedOmniText,
+    );
   });
   it("skips missing values", () => {
     const searchValues = new Map();
     searchValues.set(2, "34,");
     const expectedOmniText = "lot: 34,";
-    expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
+    expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(
+      expectedOmniText,
+    );
   });
   it("skips empty strings", () => {
     const searchValues = new Map();
     searchValues.set(0, "");
     searchValues.set(2, "34,");
     const expectedOmniText = "lot: 34,";
-    expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(expectedOmniText);
+    expect(getOmniTextFromSearchValues(searchDefs, searchValues)).toEqual(
+      expectedOmniText,
+    );
   });
 });
 
@@ -118,17 +133,23 @@ describe("getSearchValuesFromOmniText", () => {
     const expectedSearchValues = new Map();
     expectedSearchValues.set(1, "5");
     expectedSearchValues.set(2, "12 1,34");
-    expect(getSearchValuesFromOmniText(searchDefs, "lot:12 1 lot: 34 part:5")).toEqual(expectedSearchValues);
+    expect(
+      getSearchValuesFromOmniText(searchDefs, "lot:12 1 lot: 34 part:5"),
+    ).toEqual(expectedSearchValues);
   });
   it("should trim whitespace for ENUM_SEARCH_TYPE", () => {
     const expectedSearchValues = new Map();
     expectedSearchValues.set(3, "ABC");
-    expect(getSearchValuesFromOmniText(searchDefs, "someEnum:  ABC")).toEqual(expectedSearchValues);
+    expect(getSearchValuesFromOmniText(searchDefs, "someEnum:  ABC")).toEqual(
+      expectedSearchValues,
+    );
   });
   it("should extract omni field", () => {
     const expectedSearchValues = new Map();
     expectedSearchValues.set(0, "ABC");
-    expect(getSearchValuesFromOmniText(searchDefs, " ABC")).toEqual(expectedSearchValues);
+    expect(getSearchValuesFromOmniText(searchDefs, " ABC")).toEqual(
+      expectedSearchValues,
+    );
   });
   // it("accepts multiple values under the same key", () => {
   //   const expectedSearchValues = new Map();
@@ -137,21 +158,31 @@ describe("getSearchValuesFromOmniText", () => {
   //   expect(getSearchValuesFromOmniText(searchDefs, "lotNumber: [34, 12] 1 ")).toEqual(expectedSearchValues);
   // });
   it("errors for invalid keys", () => {
-    expect(() => getSearchValuesFromOmniText(searchDefs, "lotNmber:12 1 lot: 34")).toThrowError();
+    expect(() =>
+      getSearchValuesFromOmniText(searchDefs, "lotNmber:12 1 lot: 34"),
+    ).toThrowError();
   });
   it("errors for invalid text", () => {
-    expect(() => getSearchValuesFromOmniText(searchDefs, ":::::")).toThrowError();
+    expect(() =>
+      getSearchValuesFromOmniText(searchDefs, ":::::"),
+    ).toThrowError();
   });
   it("returns empty map with invalid arguments", () => {
     const expectedSearchValues = new Map();
-    expect(getSearchValuesFromOmniText(searchDefs, "")).toEqual(expectedSearchValues);
-    expect(getSearchValuesFromOmniText(null, "foobar")).toEqual(expectedSearchValues);
+    expect(getSearchValuesFromOmniText(searchDefs, "")).toEqual(
+      expectedSearchValues,
+    );
+    expect(getSearchValuesFromOmniText(null, "foobar")).toEqual(
+      expectedSearchValues,
+    );
   });
   it("handles non omni searchDefs", () => {
     const [__omniDef, ...remainingDefs] = searchDefs;
     const expectedSearchValues = new Map();
     expectedSearchValues.set(1, "34");
-    expect(getSearchValuesFromOmniText(remainingDefs, "lot: 34")).toEqual(expectedSearchValues);
+    expect(getSearchValuesFromOmniText(remainingDefs, "lot: 34")).toEqual(
+      expectedSearchValues,
+    );
   });
 });
 
@@ -168,7 +199,8 @@ describe("getSearchOptions", () => {
       name: "Lot Number",
       type: FULL_TEXT_SEARCH_TYPE,
       aliases: ["lot"],
-      description: "e.g. L00001 (GRAIL lot number) or ZRC203172 (vendor lot number)",
+      description:
+        "e.g. L00001 (GRAIL lot number) or ZRC203172 (vendor lot number)",
       searchFields: ["lotNumber", "vendorLotNumber"],
       values: ["2", "3", "4"],
     },
@@ -177,7 +209,9 @@ describe("getSearchOptions", () => {
   searchValues.set(1, "1");
   searchValues.set(2, "2,,3,4");
   it("should create search options properly", () => {
-    expect(getSearchOptions(searchDefs, searchValues)).toEqual(expectedSearchOptions);
+    expect(getSearchOptions(searchDefs, searchValues)).toEqual(
+      expectedSearchOptions,
+    );
   });
   const invalidSearchValues = new Map().set(32, "1");
   it("should create search options properly", () => {
@@ -203,12 +237,18 @@ describe("getValueItemsFromSearchValues", () => {
   searchValues.set(1, "1");
   searchValues.set(2, "2,,3,4");
   it("gets no search values for no matching key", () => {
-    expect(getValueItemsFromSearchValues(searchDefs, searchValues, "unknownKey")).toEqual([]);
+    expect(
+      getValueItemsFromSearchValues(searchDefs, searchValues, "unknownKey"),
+    ).toEqual([]);
   });
   it("gets no search values for no matching value", () => {
-    expect(getValueItemsFromSearchValues(searchDefs, searchValues, "anEnum")).toEqual([]);
+    expect(
+      getValueItemsFromSearchValues(searchDefs, searchValues, "anEnum"),
+    ).toEqual([]);
   });
   it("gets search values for matching key", () => {
-    expect(getValueItemsFromSearchValues(searchDefs, searchValues, "lot")).toEqual(["2", "3", "4"]);
+    expect(
+      getValueItemsFromSearchValues(searchDefs, searchValues, "lot"),
+    ).toEqual(["2", "3", "4"]);
   });
 });

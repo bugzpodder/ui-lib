@@ -2,7 +2,10 @@
 
 import isArray from "lodash/isArray";
 
-export const generateFilledArray = (count: number, valueOrGenerator: any = 0): Array<any> => {
+export const generateFilledArray = (
+  count: number,
+  valueOrGenerator: any = 0,
+): Array<any> => {
   if (typeof valueOrGenerator === "function") {
     return Array(count)
       .fill()
@@ -12,7 +15,10 @@ export const generateFilledArray = (count: number, valueOrGenerator: any = 0): A
 };
 
 // This sequentially executes promises after each prior promise resolves.
-export const serializePromises = async (array: Array<any>, mapper: Function) => {
+export const serializePromises = async (
+  array: Array<any>,
+  mapper: Function,
+) => {
   const promises = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const item of array) {
@@ -24,10 +30,14 @@ export const serializePromises = async (array: Array<any>, mapper: Function) => 
 
 // Similar to lodash keyBy. Returns a `new Map` with each `idKey` in the
 // array items as the Map's key.
-export const mapBy = (array: Array<any>, idKey: string = "id"): Map<string, any> => array.reduce((result, item) => {
-  result.set(item[idKey], item);
-  return result;
-}, new Map());
+export const mapBy = (
+  array: Array<any>,
+  idKey: string = "id",
+): Map<string, any> =>
+  array.reduce((result, item) => {
+    result.set(item[idKey], item);
+    return result;
+  }, new Map());
 
 // toPairWise takes an array of size n and returns an array of size n - 1, where
 // each item is a two-element array holding two consecutive elements in the

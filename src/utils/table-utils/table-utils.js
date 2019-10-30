@@ -3,18 +3,19 @@
 import * as CSV from "csv-string";
 
 export const getAccessors = (
-  columns: Array<ExportableColumn>
-): Array<string | (Object => string
-)> => columns.map(({ exportAccessor }) => exportAccessor || "");
+  columns: Array<ExportableColumn>,
+): Array<string | (Object => string)> =>
+  columns.map(({ exportAccessor }) => exportAccessor || "");
 
 export const toTableRow = (
   accessors: Array<string | (Object => string)>,
-  datum: Object
+  datum: Object,
 ): Array<string> =>
   // Return an array of converted columns
   // eslint-disable-next-line implicit-arrow-linebreak
-  accessors.map((accessor) => {
-    const columnDatum = typeof accessor === "function" ? accessor(datum) : datum[accessor];
+  accessors.map(accessor => {
+    const columnDatum =
+      typeof accessor === "function" ? accessor(datum) : datum[accessor];
     if (columnDatum === null) {
       return "";
     }
@@ -23,7 +24,7 @@ export const toTableRow = (
 export const toDelimitedReport = (
   columns: Array<ExportableColumn>,
   data: Array<Object>,
-  options: ReportOptions = {}
+  options: ReportOptions = {},
 ): ?string => {
   const accessors = getAccessors(columns);
   const { delimiter = "," } = options;
@@ -38,6 +39,6 @@ export const toDelimitedReport = (
   });
   formattedRows.push(headers);
 
-  formattedRows.push(data.map((datum) => toTableRow(accessors, datum)));
+  formattedRows.push(data.map(datum => toTableRow(accessors, datum)));
   return CSV.stringify(formattedRows, delimiter);
 };

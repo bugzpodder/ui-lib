@@ -37,7 +37,8 @@ const testMap = new Map()
   .set(1, "test1")
   .set(2, { test2a: "testing", test2b: 0 })
   .set(3, "test3");
-const testJson = '[[1,"test1"],[2,{"test2a":"testing","test2b":0}],[3,"test3"]]';
+const testJson =
+  '[[1,"test1"],[2,{"test2a":"testing","test2b":0}],[3,"test3"]]';
 
 describe("setMap", () => {
   it("sets map properly in localStorage", () => {

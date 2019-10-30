@@ -6,10 +6,10 @@ export const ENCODED_PERCENT_CHAR = global.encodeURIComponent("%"); // This prov
 export const STRING_START_CHAR = "^";
 export const STRING_END_CHAR = "$";
 export const ENCODED_STRING_START_CHAR = global.encodeURIComponent(
-  STRING_START_CHAR
+  STRING_START_CHAR,
 );
 export const ENCODED_STRING_END_CHAR = global.encodeURIComponent(
-  STRING_END_CHAR
+  STRING_END_CHAR,
 );
 export const ENCODED_QUOTE_CHAR = global.encodeURIComponent('"');
 export const ENCODED_EQUAL_CHAR = global.encodeURIComponent("=");

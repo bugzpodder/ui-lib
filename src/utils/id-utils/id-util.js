@@ -12,7 +12,7 @@ export const sanitizeId = (idInput: string = "") => {
   const id = idInput.trim();
 
   // Do not sanitize if id matches any exceptions (mock NGS, qPCR, accession samples)
-  if (SANITIZATION_EXCEPTIONS.some((regex) => regex.test(id))) {
+  if (SANITIZATION_EXCEPTIONS.some(regex => regex.test(id))) {
     return id;
   }
 
@@ -25,7 +25,8 @@ export const sanitizeId = (idInput: string = "") => {
 
 export const getSamplePrefix = (id: string) => id.substr(0, id.length - 1);
 
-export const getSampleLabel = (id: string) => `${getSamplePrefix(id)}-${getSampleSuffix(id)}`;
+export const getSampleLabel = (id: string) =>
+  `${getSamplePrefix(id)}-${getSampleSuffix(id)}`;
 
 export const getInputBarcode = (id: string = "", previousId: string = "") => {
   id = id.trim();

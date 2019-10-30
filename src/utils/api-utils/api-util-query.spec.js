@@ -44,11 +44,13 @@ describe("isValueValid", () => {
     false,
     "A sentence",
     " ",
-  ].forEach((value) => {
-    it(`should validate '${String(value)}'`, () => expect(isValueValid(value)).toBe(true));
+  ].forEach(value => {
+    it(`should validate '${String(value)}'`, () =>
+      expect(isValueValid(value)).toBe(true));
   });
-  ["", null, undefined].forEach((value) => {
-    it(`should invalidate '${String(value)}'`, () => expect(isValueValid(value)).toBe(false));
+  ["", null, undefined].forEach(value => {
+    it(`should invalidate '${String(value)}'`, () =>
+      expect(isValueValid(value)).toBe(false));
   });
 });
 
@@ -64,12 +66,12 @@ describe("buildOrderQuery", () => {
   });
   it("should generate query for one ascending sortOptions element", () => {
     expect(buildOrderQuery([{ id: "column", desc: false }])).toEqual(
-      "column ASC"
+      "column ASC",
     );
   });
   it("should generate query for one descending sortOptions element", () => {
     expect(buildOrderQuery([{ id: "column", desc: true }])).toEqual(
-      "column DESC"
+      "column DESC",
     );
   });
   it("should generate query for mixed sortOptions elements", () => {
@@ -78,7 +80,7 @@ describe("buildOrderQuery", () => {
         { id: "column1" },
         { id: "column2", desc: false },
         { id: "column3", desc: true },
-      ])
+      ]),
     ).toEqual("column1 ASC, column2 ASC, column3 DESC");
   });
 });

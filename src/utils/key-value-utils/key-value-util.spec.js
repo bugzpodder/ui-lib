@@ -18,12 +18,18 @@ const setKeyValueTestCases = [
   {
     initial: [{ key: "foo", value: "bar" }],
     newEntry: { key: "baz", value2: "bot" },
-    expectedResult: [{ key: "foo", value: "bar" }, { key: "baz", value2: "bot" }],
+    expectedResult: [
+      { key: "foo", value: "bar" },
+      { key: "baz", value2: "bot" },
+    ],
   },
   {
     initial: [{ key: "foo", value: "bar" }, { key: "baz", value: "bat" }],
     newEntry: { key: "baz", value2: "boo" },
-    expectedResult: [{ key: "foo", value: "bar" }, { key: "baz", value2: "boo" }],
+    expectedResult: [
+      { key: "foo", value: "bar" },
+      { key: "baz", value2: "boo" },
+    ],
   },
 ];
 
@@ -32,7 +38,9 @@ describe("setKeyValue", () => {
     const { initial, newEntry, expectedResult } = testCase;
     const actual = initial.slice();
     setKeyValue(actual, newEntry);
-    it(`setKeyValue test case ${index} add new entry '${JSON.stringify(newEntry)}'`, () => {
+    it(`setKeyValue test case ${index} add new entry '${JSON.stringify(
+      newEntry,
+    )}'`, () => {
       expect(actual).toEqual(expectedResult);
     });
   });

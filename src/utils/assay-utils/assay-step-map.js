@@ -11,8 +11,8 @@ type StepInfo = {
 export class AssayStepMap extends AbstractMultiKeyMap {
   constructor(assayStepValues?: Array<Object>) {
     super();
-    assayStepValues
-      && assayStepValues.forEach(({ assay, step, value }) => {
+    assayStepValues &&
+      assayStepValues.forEach(({ assay, step, value }) => {
         this.set({ assay, step }, value);
       });
   }

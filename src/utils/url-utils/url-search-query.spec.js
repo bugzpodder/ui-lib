@@ -9,7 +9,7 @@ const generateValueSearchQuery = (key, value) => `?${key}=${String(value)}`;
 const generateValuesSearchQuery = (key, values) => {
   const result = values.reduce(
     (acc, value, index) => `${acc}${key}%5B${index}%5D=${String(value)}&`,
-    "?"
+    "?",
   );
   if (result.length > 1) {
     return result.substring(0, result.length - 1);
@@ -17,7 +17,7 @@ const generateValuesSearchQuery = (key, values) => {
   return result;
 };
 
-jest.mock("lodash/debounce", () => jest.fn((fn) => fn));
+jest.mock("lodash/debounce", () => jest.fn(fn => fn));
 
 describe("getSearchValues", () => {
   it("handles no search values", () => {
@@ -28,7 +28,7 @@ describe("getSearchValues", () => {
     };
     expect(getSearchValues({ location })).toEqual(new Map());
   });
-  singleValues.forEach((value) => {
+  singleValues.forEach(value => {
     const location: Location = {
       pathname: "/some/route",
       search: generateValueSearchQuery("test", value),
@@ -36,12 +36,12 @@ describe("getSearchValues", () => {
     };
     it(`handles ${String(value)} search value`, () => {
       expect(getSearchValues({ location })).toEqual(
-        new Map().set("test", { value: String(value) })
+        new Map().set("test", { value: String(value) }),
       );
     });
   });
-  arrayValues.forEach((values) => {
-    const testValues = values.map((value) => String(value));
+  arrayValues.forEach(values => {
+    const testValues = values.map(value => String(value));
     const location: Location = {
       pathname: "/some/route",
       search: generateValuesSearchQuery("test", testValues),
@@ -49,7 +49,7 @@ describe("getSearchValues", () => {
     };
     it(`handles array ${String(values)} search values`, () => {
       expect(getSearchValues({ location })).toEqual(
-        new Map().set("test", { values: testValues })
+        new Map().set("test", { values: testValues }),
       );
     });
   });
@@ -70,7 +70,7 @@ describe("updateSearchUrl", () => {
     expect(history.replace).not.toBeCalled();
     expect(history.push).not.toBeCalled();
   });
-  singleValues.forEach((value) => {
+  singleValues.forEach(value => {
     const history = {
       push: jest.fn(),
       replace: jest.fn(),
@@ -86,7 +86,7 @@ describe("updateSearchUrl", () => {
       });
     });
   });
-  arrayValues.forEach((values) => {
+  arrayValues.forEach(values => {
     const history = {
       push: jest.fn(),
       replace: jest.fn(),

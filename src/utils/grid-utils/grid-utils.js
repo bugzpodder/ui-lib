@@ -3,7 +3,7 @@ import { upperAlphaChars } from "../string-utils";
 
 const gridChars = [
   ...upperAlphaChars,
-  ...upperAlphaChars.map((char) => `A${char}`),
+  ...upperAlphaChars.map(char => `A${char}`),
 ];
 
 export const getRowHeader = (rowIndex: number) => {
@@ -16,4 +16,5 @@ export const getRowHeader = (rowIndex: number) => {
 // colIndex is 0-based.
 export const getColHeader = (colIndex: number) => `${colIndex + 1}`;
 
-export const getGridCellPosition = (rowIndex: number, colIndex: number) => `${getRowHeader(rowIndex)}${getColHeader(colIndex)}`;
+export const getGridCellPosition = (rowIndex: number, colIndex: number) =>
+  `${getRowHeader(rowIndex)}${getColHeader(colIndex)}`;

@@ -41,7 +41,7 @@ describe("buildSearchQuery for full text search", () => {
           values: [""],
           type: FULL_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for one element", () => {
@@ -52,7 +52,7 @@ describe("buildSearchQuery for full text search", () => {
           values: ["abc"],
           type: FULL_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="abc"');
   });
 });
@@ -66,7 +66,7 @@ describe("buildSearchQuery for like text search", () => {
           values: [""],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for one element", () => {
@@ -77,7 +77,7 @@ describe("buildSearchQuery for like text search", () => {
           values: ["abc"],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="%abc%"');
   });
   it("should generate query for one element with STRING_START_CHAR prefix", () => {
@@ -88,7 +88,7 @@ describe("buildSearchQuery for like text search", () => {
           values: [`${STRING_START_CHAR}abc`],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="abc%"');
   });
   it("should generate query for one element with STRING_END_CHAR suffix", () => {
@@ -99,7 +99,7 @@ describe("buildSearchQuery for like text search", () => {
           values: [`abc${STRING_END_CHAR}`],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="%abc"');
   });
   it("should generate query for one element with STRING_START_CHAR prefix and STRING_END_CHAR suffix", () => {
@@ -110,7 +110,7 @@ describe("buildSearchQuery for like text search", () => {
           values: [`${STRING_START_CHAR}abc${STRING_END_CHAR}`],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="abc"');
   });
   it("should generate query for one element with quotes", () => {
@@ -121,7 +121,7 @@ describe("buildSearchQuery for like text search", () => {
           values: ['"abc"'],
           type: LIKE_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="abc"');
   });
 });
@@ -135,7 +135,7 @@ describe("buildSearchQuery for full id search", () => {
           values: [""],
           type: FULL_ID_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for one element", () => {
@@ -146,7 +146,7 @@ describe("buildSearchQuery for full id search", () => {
           values: ["P00100-1"],
           type: FULL_ID_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="P00100-1"||column1=="P001001"');
   });
   it("should generate query for one accession label element", () => {
@@ -157,7 +157,7 @@ describe("buildSearchQuery for full id search", () => {
           values: ["A00100-1"],
           type: FULL_ID_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="A00100-1"');
   });
 });
@@ -171,7 +171,7 @@ describe("buildSearchQuery for like id search", () => {
           values: [""],
           type: LIKE_ID_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for one element", () => {
@@ -182,7 +182,7 @@ describe("buildSearchQuery for like id search", () => {
           values: ["P00100-1"],
           type: LIKE_ID_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="P00100-1%"||column1=="P001001%"');
   });
   it("should generate query for one element, two fields", () => {
@@ -194,9 +194,9 @@ describe("buildSearchQuery for like id search", () => {
           type: LIKE_ID_SEARCH_TYPE,
           searchFields: ["column1", "column2"],
         },
-      ])
+      ]),
     ).resolves.toEqual(
-      '(column1=="P00100-1%")||(column2=="P00100-1%")||(column1=="P001001%")||(column2=="P001001%")'
+      '(column1=="P00100-1%")||(column2=="P00100-1%")||(column1=="P001001%")||(column2=="P001001%")',
     );
   });
   it("should generate query for one accession label element", () => {
@@ -207,7 +207,7 @@ describe("buildSearchQuery for like id search", () => {
           values: ["A00100-1"],
           type: LIKE_ID_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="A00100-1%"');
   });
 });
@@ -219,8 +219,8 @@ describe("deprecatedBuildSearchQuery for numeric search", () => {
         new Map().set("column1", {
           value: undefined,
           type: NUMERIC_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("");
   });
   it("should generate query for 0 search", () => {
@@ -229,8 +229,8 @@ describe("deprecatedBuildSearchQuery for numeric search", () => {
         new Map().set("column1", {
           value: 0,
           type: NUMERIC_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("column1==0");
   });
   it("should generate query for one element", () => {
@@ -239,8 +239,8 @@ describe("deprecatedBuildSearchQuery for numeric search", () => {
         new Map().set("column1", {
           value: 123,
           type: NUMERIC_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("column1==123");
   });
 });
@@ -252,8 +252,8 @@ describe("deprecatedBuildSearchQuery for boolean search", () => {
         new Map().set("column1", {
           value: undefined,
           type: BOOLEAN_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("");
   });
   it("should generate query for false search", () => {
@@ -262,8 +262,8 @@ describe("deprecatedBuildSearchQuery for boolean search", () => {
         new Map().set("column1", {
           value: false,
           type: BOOLEAN_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("column1==false");
   });
   it("should generate query for one element", () => {
@@ -272,8 +272,8 @@ describe("deprecatedBuildSearchQuery for boolean search", () => {
         new Map().set("column1", {
           value: true,
           type: BOOLEAN_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("column1==true");
   });
 });
@@ -286,8 +286,8 @@ describe("deprecatedBuildSearchQuery for multi field search", () => {
           value: "",
           type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["column1", "column2"],
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("");
   });
   it("should generate query for elements", () => {
@@ -297,8 +297,8 @@ describe("deprecatedBuildSearchQuery for multi field search", () => {
           value: "123",
           type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["column1", "column2"],
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual('(column1=="%123%")||(column2=="%123%")');
   });
   it("should generate query for elements, and multiple options", () => {
@@ -313,10 +313,10 @@ describe("deprecatedBuildSearchQuery for multi field search", () => {
           .set("column3", {
             value: "456",
             type: LIKE_TEXT_SEARCH_TYPE,
-          })
-      )
+          }),
+      ),
     ).resolves.toEqual(
-      '((column1=="%123%")||(column2=="%123%"))&&(column3=="%456%")'
+      '((column1=="%123%")||(column2=="%123%"))&&(column3=="%456%")',
     );
   });
 });
@@ -328,8 +328,8 @@ describe("deprecatedBuildSearchQuery for multi value search", () => {
         new Map().set("column1", {
           values: [],
           type: FULL_TEXT_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("");
   });
   it("should generate query for Like text search elements", () => {
@@ -338,8 +338,8 @@ describe("deprecatedBuildSearchQuery for multi value search", () => {
         new Map().set("column1", {
           type: LIKE_TEXT_SEARCH_TYPE,
           values: ["123", "345"],
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual('column1=="%123%"||column1=="%345%"');
   });
   it("should generate query for Numeric text search elements", () => {
@@ -348,8 +348,8 @@ describe("deprecatedBuildSearchQuery for multi value search", () => {
         new Map().set("column1", {
           type: NUMERIC_SEARCH_TYPE,
           values: [123, 345.6],
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("column1==123||column1==345.6");
   });
   it("should generate query for Boolean text search elements", () => {
@@ -358,8 +358,8 @@ describe("deprecatedBuildSearchQuery for multi value search", () => {
         new Map().set("column1", {
           type: BOOLEAN_SEARCH_TYPE,
           values: [true, false], // Technically, this is silly...
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("column1==true||column1==false");
   });
   it("should generate query for Full text search elements", () => {
@@ -368,8 +368,8 @@ describe("deprecatedBuildSearchQuery for multi value search", () => {
         new Map().set("column1", {
           type: FULL_TEXT_SEARCH_TYPE,
           values: ["123", "345"],
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual('column1=="123"||column1=="345"');
   });
 });
@@ -388,8 +388,8 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
         new Map().set("date", {
           values: [`${date}`],
           type: DATETIME_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${startOfDay}")`);
   });
   it("should generate query for start date to", () => {
@@ -398,8 +398,8 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
         new Map().set("date", {
           values: [`${date} to`],
           type: DATETIME_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${startOfDay}")`);
   });
   it("should generate query for end date with no string startDate", () => {
@@ -408,8 +408,8 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
         new Map().set("date", {
           values: [`to ${date}`],
           type: DATETIME_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date<="${endOfDay}")`);
   });
   const newStartDate = "2016-04-20T16:20:00.000Z";
@@ -422,8 +422,8 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
         new Map().set("date", {
           values: [`${newStartDate} to ${date}`],
           type: DATETIME_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${endOfDay}")`);
   });
   it("should generate query for reversed start and end date", () => {
@@ -432,8 +432,8 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
         new Map().set("date", {
           values: [`${date} to ${newStartDate}`],
           type: DATETIME_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${endOfDay}")`);
   });
   it("should generate query for no dates", () => {
@@ -442,8 +442,8 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
         new Map().set("date", {
           values: [],
           type: DATETIME_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("");
   });
 });
@@ -456,8 +456,8 @@ describe("deprecatedBuildSearchQuery for date search", () => {
         new Map().set("date", {
           values: [`${date}`],
           type: DATE_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${date}")`);
   });
   it("should generate query for start date to", () => {
@@ -466,8 +466,8 @@ describe("deprecatedBuildSearchQuery for date search", () => {
         new Map().set("date", {
           values: [`${date} to`],
           type: DATE_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${date}")`);
   });
   it("should generate query for end date with no string startDate", () => {
@@ -476,8 +476,8 @@ describe("deprecatedBuildSearchQuery for date search", () => {
         new Map().set("date", {
           values: [`to ${date}`],
           type: DATE_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date<="${date}")`);
   });
   const newStartDate = "2016-04-20";
@@ -487,8 +487,8 @@ describe("deprecatedBuildSearchQuery for date search", () => {
         new Map().set("date", {
           values: [`${newStartDate} - ${date}`],
           type: DATE_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${newStartDate}"&&date<="${date}")`);
   });
   it("should generate query for reversed start and end date", () => {
@@ -497,8 +497,8 @@ describe("deprecatedBuildSearchQuery for date search", () => {
         new Map().set("date", {
           values: [`${date} - ${newStartDate}`],
           type: DATE_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual(`(date>="${newStartDate}"&&date<="${date}")`);
   });
   it("should generate query for no dates", () => {
@@ -507,8 +507,8 @@ describe("deprecatedBuildSearchQuery for date search", () => {
         new Map().set("date", {
           values: [],
           type: DATE_SEARCH_TYPE,
-        })
-      )
+        }),
+      ),
     ).resolves.toEqual("");
   });
 });
@@ -529,10 +529,10 @@ describe("deprecatedBuildSearchQuery for several search items", () => {
           .set("column3", {
             value: "some string",
             type: LIKE_TEXT_SEARCH_TYPE,
-          })
-      )
+          }),
+      ),
     ).resolves.toEqual(
-      '(column1==123)&&(column2=="def xyz")&&(column3=="%some string%")'
+      '(column1==123)&&(column2=="def xyz")&&(column3=="%some string%")',
     );
   });
   it("should generate query for several search elements when one is empty string", () => {
@@ -550,8 +550,8 @@ describe("deprecatedBuildSearchQuery for several search items", () => {
           .set("column3", {
             value: "some string",
             type: LIKE_TEXT_SEARCH_TYPE,
-          })
-      )
+          }),
+      ),
     ).resolves.toEqual('(column1==123)&&(column3=="%some string%")');
   });
   it("should generate query for several search elements when the last string is empty string (See T1661)", () => {
@@ -567,7 +567,7 @@ describe("deprecatedBuildSearchQuery for several search items", () => {
           values: [""],
           type: FULL_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual("(column1==123)");
   });
 });
@@ -584,7 +584,7 @@ describe("buildSearchQuery is invalid", () => {
       },
     ];
     expect(buildSearchQuery(searchOptions)).rejects.toEqual(
-      new Error("Unknown search type: Symbol(UNIT_TEST INVALID_SYMBOL)")
+      new Error("Unknown search type: Symbol(UNIT_TEST INVALID_SYMBOL)"),
     );
   });
   it("should return if date search field value is invalid", () => {
@@ -595,7 +595,7 @@ describe("buildSearchQuery is invalid", () => {
           values: [],
           type: DATE_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual("");
   });
   it("should return if no search options are present", () => {
@@ -612,7 +612,7 @@ describe("buildSearchQuery for uri encoding", () => {
           values: ["abc & 123", "xyz"],
           type: FULL_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="abc & 123"||column1=="xyz"');
   });
 });
@@ -627,7 +627,7 @@ describe("buildSearchQuery for searchOperator", () => {
           type: FULL_TEXT_SEARCH_TYPE,
           searchOperator: "!=",
         },
-      ])
+      ]),
     ).resolves.toEqual('column1!="abc & 123"||column1!="xyz"');
   });
   it("should set searchOperator for two search fields", () => {
@@ -640,9 +640,9 @@ describe("buildSearchQuery for searchOperator", () => {
           searchFields: ["column1", "column2"],
           searchOperator: "!=",
         },
-      ])
+      ]),
     ).resolves.toEqual(
-      '(column1!="abc & 123")||(column2!="abc & 123")||(column1!="xyz")||(column2!="xyz")'
+      '(column1!="abc & 123")||(column2!="abc & 123")||(column1!="xyz")||(column2!="xyz")',
     );
   });
 });
@@ -657,7 +657,7 @@ describe("buildSearchQuery for includeNulls", () => {
           type: FULL_TEXT_SEARCH_TYPE,
           includeNulls: true,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="NULL"');
   });
   it("should search for null for one search field and one value", () => {
@@ -669,7 +669,7 @@ describe("buildSearchQuery for includeNulls", () => {
           type: FULL_TEXT_SEARCH_TYPE,
           includeNulls: true,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="NULL"||column1=="abc"');
   });
   it("should search for null for one search field and two values", () => {
@@ -681,7 +681,7 @@ describe("buildSearchQuery for includeNulls", () => {
           type: FULL_TEXT_SEARCH_TYPE,
           includeNulls: true,
         },
-      ])
+      ]),
     ).resolves.toEqual('column1=="NULL"||column1=="abc & 123"||column1=="xyz"');
   });
   it("should search for NULL for two search fields", () => {
@@ -694,9 +694,9 @@ describe("buildSearchQuery for includeNulls", () => {
           searchFields: ["column1", "column2"],
           includeNulls: true,
         },
-      ])
+      ]),
     ).resolves.toEqual(
-      '(column1=="NULL")||(column2=="NULL")||(column1=="abc & 123")||(column2=="abc & 123")||(column1=="xyz")||(column2=="xyz")'
+      '(column1=="NULL")||(column2=="NULL")||(column1=="abc & 123")||(column2=="abc & 123")||(column1=="xyz")||(column2=="xyz")',
     );
   });
   it("should search for NULL for several search options", () => {
@@ -720,9 +720,9 @@ describe("buildSearchQuery for includeNulls", () => {
           type: FULL_TEXT_SEARCH_TYPE,
           includeNulls: true,
         },
-      ])
+      ]),
     ).resolves.toEqual(
-      '(column1=="NULL"||column1=="xyz")&&(column2=="xyz")&&(column3=="NULL"||column3=="abc")'
+      '(column1=="NULL"||column1=="xyz")&&(column2=="xyz")&&(column3=="NULL"||column3=="abc")',
     );
   });
 
@@ -749,7 +749,7 @@ describe("buildSearchQuery for includeNulls", () => {
           searchFields: ["column3"],
           type: FULL_TEXT_SEARCH_TYPE,
         },
-      ])
+      ]),
     ).resolves.toEqual('(column3=="ghi")');
   });
 });
@@ -809,7 +809,7 @@ describe("buildQuery for full text search", () => {
       ],
     });
     expect(query.toString()).toEqual(
-      `column1=abc&column2=def&q=%28column3${ENCODED_EQUAL_CHAR}${ENCODED_EQUAL_CHAR}${ENCODED_QUOTE_CHAR}ghi${ENCODED_QUOTE_CHAR}%29`
+      `column1=abc&column2=def&q=%28column3${ENCODED_EQUAL_CHAR}${ENCODED_EQUAL_CHAR}${ENCODED_QUOTE_CHAR}ghi${ENCODED_QUOTE_CHAR}%29`,
     );
   });
 });
@@ -827,7 +827,7 @@ describe("buildCustomURIQueryParams for full text search", () => {
           type: FULL_TEXT_SEARCH_TYPE,
         },
       ],
-      query
+      query,
     );
     expect(query.toString()).toEqual("");
   });
@@ -843,7 +843,7 @@ describe("buildCustomURIQueryParams for full text search", () => {
           type: FULL_TEXT_SEARCH_TYPE,
         },
       ],
-      query
+      query,
     );
     expect(query.toString()).toEqual("column1=abc");
   });
@@ -872,7 +872,7 @@ describe("buildCustomURIQueryParams for full text search", () => {
           type: FULL_TEXT_SEARCH_TYPE,
         },
       ],
-      query
+      query,
     );
     expect(query.toString()).toEqual("column1=abc&column2=def");
   });

@@ -17,7 +17,7 @@ describe("sanitizeId", () => {
     expect(sanitizeId("S00010-1")).toBe("S000101");
   });
   const dashTypes = "-‑\u002D\u058A\u05BE\u1806\u2010\u2011\u2012\u2013\u2014\u2015\u2E3A\u2E3B\uFE58\uFE63\uFF0D".split(
-    ""
+    "",
   );
   dashTypes.forEach((dash, index) => {
     it(`should sanitize dash type ${dash} (${index})`, () => {

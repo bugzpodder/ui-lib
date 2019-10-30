@@ -74,7 +74,7 @@ describe("extractDateRange", () => {
       endDate: "2018-04-20T16:20:00Z",
     });
   });
-  DATE_RANGE_OPTIONS.forEach((dateRangeOption) => {
+  DATE_RANGE_OPTIONS.forEach(dateRangeOption => {
     const { startDate, endDate } = dateRangeOption;
     it(`extracts startDate ${startDate}`, () => {
       expect(extractDateRange(startDate)).toEqual({ startDate });
@@ -82,18 +82,18 @@ describe("extractDateRange", () => {
     it(`extracts endDate ${endDate}`, () => {
       expect(extractDateRange(`to ${endDate}`)).toEqual({ endDate });
     });
-    [" ", "  ", "   "].forEach((spaces) => {
-      ["-", "to"].forEach((delimiter) => {
+    [" ", "  ", "   "].forEach(spaces => {
+      ["-", "to"].forEach(delimiter => {
         it(`extracts startDate ${startDate} using delimter: "${spaces}${delimiter}"`, () => {
           expect(extractDateRange(`${startDate}${spaces}${delimiter}`)).toEqual(
-            { startDate }
+            { startDate },
           );
         });
         it(`extracts startDate ${startDate} and endDate ${endDate} using delimter: "${spaces}${delimiter}${spaces}"`, () => {
           expect(
             extractDateRange(
-              `${startDate}${spaces}${delimiter}${spaces}${endDate}`
-            )
+              `${startDate}${spaces}${delimiter}${spaces}${endDate}`,
+            ),
           ).toEqual({
             startDate,
             endDate,
@@ -101,7 +101,7 @@ describe("extractDateRange", () => {
         });
         it(`extracts endDate ${endDate} using delimter: "${delimiter}${spaces}"`, () => {
           expect(
-            extractDateRange(`${spaces}${delimiter}${spaces}${endDate}`)
+            extractDateRange(`${spaces}${delimiter}${spaces}${endDate}`),
           ).toEqual({ endDate });
         });
       });
@@ -113,7 +113,7 @@ describe("buildDateRangeString", () => {
   it("builds with no dates", () => {
     expect(buildDateRangeString({})).toEqual("");
   });
-  DATE_RANGE_OPTIONS.forEach((dateRangeOption) => {
+  DATE_RANGE_OPTIONS.forEach(dateRangeOption => {
     const { startDate, endDate } = dateRangeOption;
     it(`builds with startDate ${startDate}`, () => {
       expect(buildDateRangeString({ startDate })).toEqual(startDate);
@@ -123,29 +123,29 @@ describe("buildDateRangeString", () => {
     });
     it(`builds with startDate ${startDate} endDate ${endDate}`, () => {
       expect(buildDateRangeString({ startDate, endDate })).toEqual(
-        `${startDate} to ${endDate}`
+        `${startDate} to ${endDate}`,
       );
     });
   });
 });
 
 describe("extractValidDate", () => {
-  [null, undefined, "", "abc", "-----"].forEach((invalidDate) => {
+  [null, undefined, "", "abc", "-----"].forEach(invalidDate => {
     it(`returns null when given ${String(invalidDate)}`, () => {
       expect(extractValidDate(invalidDate)).toEqual(null);
     });
   });
-  ["2015-04-20", "1999-04-20"].forEach((validDate) => {
+  ["2015-04-20", "1999-04-20"].forEach(validDate => {
     it(`returns validDate when given ${String(validDate)}`, () => {
       expect(extractValidDate(validDate)).toEqual(validDate);
     });
   });
-  ["04/20/2019", "04/20/1999"].forEach((validDate) => {
+  ["04/20/2019", "04/20/1999"].forEach(validDate => {
     it(`returns validDate when given ${String(validDate)}`, () => {
       expect(extractValidDate(validDate, "MM/DD/YYYY")).toEqual(validDate);
     });
   });
-  ["20 Apr 2019", "20 Apr 1999"].forEach((validDate) => {
+  ["20 Apr 2019", "20 Apr 1999"].forEach(validDate => {
     it(`returns validDate when given ${String(validDate)}`, () => {
       expect(extractValidDate(validDate, "DD MMM YYYY")).toEqual(validDate);
     });
