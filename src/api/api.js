@@ -93,11 +93,30 @@ export class Api {
   authPromise: Promise<*>;
   apiDispatchers: ?ApiDispatchers;
   apiObjectProcessors: ?ApiObjectProcessors;
+  handleError: (
+    status: number,
+    errorMessage: string,
+    object: Object,
+    options: ApiOptions,
+  ) => void;
 
-  constructor(apiName: string, { apiUrl, version }: ApiConnection) {
+  constructor(
+    apiName: string,
+    { apiUrl, version }: ApiConnection,
+    handleError?: (
+      status: number,
+      errorMessage: string,
+      object: Object,
+      options: ApiOptions,
+    ) => void,
+  ) {
     this.apiName = apiName;
     this.apiUrl = apiUrl;
     this.apiVersion = version;
+    this.handleError =
+      handleError ||
+      ((status, errorMessage, object, options) =>
+        options.handleError && options.handleError(errorMessage, object));
   }
 
   getAcceptVersionHeader = () => `${this.apiName}-version=${this.apiVersion}`;
@@ -288,12 +307,7 @@ export class Api {
         errorMessage = GENERIC_ERROR_MESSAGE;
       }
       if (errorMessage) {
-        // TODO(ecarrel): possibly re-enable suppression of unauthorized alerts
-        //  in some cases? jsingh@ added this in D5120 but it was removed as
-        //  part of the generalization of this code to ui/lib (D33755). However,
-        //  I am not sure if the problem that jsingh@ was trying to solve still
-        //  happens?
-        options.handleError && options.handleError(errorMessage, object);
+        this.handleError(status, errorMessage, object, options);
       }
       if (warningMessage) {
         options.handleWarning && options.handleWarning(warningMessage, object);
