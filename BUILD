@@ -8,8 +8,6 @@ filegroup(
             "node_modules/**",
             "dist/**",
             "coverage/**",
-            "cypress/**",
-            "flow-typed/**",
         ],
     ),
     visibility = ["//visibility:public"],

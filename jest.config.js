@@ -1,22 +1,19 @@
-// @flow
-const jestConfig = require("kcd-scripts/config").jest;
-
-module.exports = Object.assign(jestConfig, {
-  testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+module.exports = {
   collectCoverageFrom: [
-    "src/**/*.js",
-    "!**/index.js",
+    "src/**/*.ts",
+    "!**/index.ts",
     "!**/mocks/**",
     "!src/constants/**",
     "!src/passport/**",
     "!src/api/**",
+    "!src/utils/warning-utils/**",
   ],
   coverageThreshold: {
-    "src/**/*.js": {
+    "src/**/*.ts": {
       branches: 80,
       functions: 100,
       lines: 90,
       statements: -10,
     },
   },
-});
+};

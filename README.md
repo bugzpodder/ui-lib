@@ -25,9 +25,6 @@ Modify CHANGELOG.md to reflect contributions to this code.
 When introducing new code, you must include an `index.js`, which exports to the
 `index.js` of the `src` directory.
 
-Include `flow-typed` files as needed and categorized between ones
-written for npm packages, and ones written for GRAIL's custom utility functions.
-
 ### Distributing to GitHub
 
 URL: https://github.com/grailbio/ui-lib
