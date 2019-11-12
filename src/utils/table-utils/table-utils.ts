@@ -1,5 +1,5 @@
 import * as CSV from "csv-string";
-import { ExportableColumn, ReportOptions } from "types/report-utils";
+import { ExportableColumn, ReportOptions } from "../../types/report-utils";
 
 export const getAccessors = (
   columns: Array<ExportableColumn>,

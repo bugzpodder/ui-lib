@@ -1,4 +1,4 @@
-import { KeyValue } from "types/common";
+import { KeyValue } from "../../types/common";
 
 export const setKeyValue = (
   keyValues: Array<{

@@ -15,7 +15,8 @@ export declare class Api {
     authPromise: Promise<any> | undefined;
     apiDispatchers: ApiDispatchers | undefined | null;
     apiObjectProcessors: ApiObjectProcessors | undefined | null;
-    constructor(apiName: string, { apiUrl, version }: ApiConnection);
+    handleError: (status: number, errorMessage: string, object: Record<string, any>, options: ApiOptions) => void;
+    constructor(apiName: string, { apiUrl, version }: ApiConnection, handleError?: (status: number, errorMessage: string, object: Record<string, any>, options: ApiOptions) => void);
     getAcceptVersionHeader: () => string;
     getCommonHeaders: () => {
         headers: {

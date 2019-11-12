@@ -5,7 +5,7 @@ import {
   OMNI_TEXT_SEARCH_TYPE,
 } from "../api-utils/api-constants";
 
-import { OmniSearchDefs } from "types/api";
+import { OmniSearchDefs } from "../../types/api";
 import {
   getItemsFromOmniValue,
   getOmniTextFromKeyValues,

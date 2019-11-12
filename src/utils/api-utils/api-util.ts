@@ -26,9 +26,8 @@ import {
   DeprecatedSearchOptions,
   GetContentOptionsV2,
   SearchOptionV2,
-  SearchOptionsV2,
   SortOption,
-} from "types/api";
+} from "../../types/api";
 import { extractDateRange } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
 import { sanitizeId } from "../id-utils";
@@ -101,7 +100,7 @@ const getEscapedSearchValues = (searchOption: SearchOptionV2) => {
 const getSearchOptionsV2 = (
   deprecatedSearchOptions: DeprecatedSearchOptions = new Map(),
 ) => {
-  const searchOptionsV2: SearchOptionsV2 = [];
+  const searchOptionsV2: SearchOptionV2[] = [];
   deprecatedSearchOptions.forEach((searchOption, name) => {
     const values = getSearchValues(searchOption);
     const { type, searchFields, searchOperator, includeNulls } = searchOption;
@@ -117,7 +116,7 @@ const getSearchOptionsV2 = (
   return searchOptionsV2;
 };
 
-const resolveSearchOptions = async (searchOptions: SearchOptionsV2 = []) =>
+const resolveSearchOptions = async (searchOptions: SearchOptionV2[] = []) =>
   Promise.all(
     searchOptions.map(async searchOption => {
       const { type, mapValues } = searchOption;
@@ -139,7 +138,7 @@ const resolveSearchOptions = async (searchOptions: SearchOptionsV2 = []) =>
   );
 
 export const buildCustomURIQueryParams = async (
-  searchOptions: SearchOptionsV2 = [],
+  searchOptions: SearchOptionV2[] = [],
   params: URLSearchParams,
 ) => {
   const resolvedSearchOptions = await resolveSearchOptions(
@@ -163,7 +162,9 @@ Using an array of searchOptionsV2, this builds a search query that joins each it
 q query URL parameter of form:
 q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
-export const buildSearchQuery = async (searchOptions: SearchOptionsV2 = []) => {
+export const buildSearchQuery = async (
+  searchOptions: SearchOptionV2[] = [],
+) => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
       searchOption => searchOption && !searchOption.queryType,

@@ -9,7 +9,7 @@
     "start:client": "NODE_ENV=development tsdx watch",
     "cover": "open coverage/lcov-report/index.html",
     "flow": "true",
-    "lint": "tsdx lint src",
+    "lint": "tsc && tsdx lint src",
     "lint-fix": "yarn lint --fix",
     "format": "prettier --write \"*.js\" && yarn lint-fix",
     "preinstall": "node -e 'if(!/yarn\\.js$/.test(process.env.npm_execpath))throw new Error(\"Use yarn install\")'",

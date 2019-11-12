@@ -1,4 +1,4 @@
-import { ExportableColumn, ReportOptions } from "types/report-utils";
+import { ExportableColumn, ReportOptions } from "../../types/report-utils";
 export declare const getAccessors: (columns: ExportableColumn[]) => (string | Function)[];
 export declare const toTableRow: (accessors: (string | Function)[], datum: {
     [x: string]: any;

@@ -1,5 +1,5 @@
-import { DeprecatedSearchOptions } from "types/api";
-import { KeyValue } from "types/common";
+import { DeprecatedSearchOptions } from "../../types/api";
+import { KeyValue } from "../../types/common";
 declare type SearchParams = {
     location: Location;
     history: History;

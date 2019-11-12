@@ -3,14 +3,14 @@ import {
   OMNI_TEXT_SEARCH_TYPE,
   isValueValid,
 } from "../api-utils";
-import { KeyValue } from "types/common";
+import { KeyValue } from "../../types/common";
 import { OMNI_ERROR, OMNI_KEY } from "../../constants/omni";
 import {
   OmniSearchDef,
   OmniSearchDefs,
   OmniSearchValues,
-  SearchOptionsV2,
-} from "types/api";
+  SearchOptionV2,
+} from "../../types/api";
 
 // FIXME(jrosenfield): add documentation for regexes
 const validOmniText = /^(([^:]*\s+)?[\w-.]+:)*[^:]*$/;
@@ -165,8 +165,8 @@ export const getItemsFromOmniValue = (omniValue = ""): string[] => {
 export const getSearchOptions = (
   searchDefs: OmniSearchDefs,
   searchValues: OmniSearchValues,
-): SearchOptionsV2 => {
-  const searchOptions: SearchOptionsV2 = [];
+): SearchOptionV2[] => {
+  const searchOptions: SearchOptionV2[] = [];
   searchDefs.forEach((searchDef, index) => {
     const values = getItemsFromOmniValue(searchValues.get(index));
     if (isValueValid(values)) {

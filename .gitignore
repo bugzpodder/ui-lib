@@ -1,6 +1,7 @@
 coverage/
 dist/**/*.js
 dist/**/*.js.map
+grailbio-lib-*.tgz
 node_modules/
 .rts2_cache_cjs/
 .rts2_cache_esm/

@@ -9,7 +9,7 @@ import {
   ApiOptions,
   JsonResult,
   UnprocessedJsonResult,
-} from "types/api";
+} from "../types/api";
 
 const SEMICOLON_SEPARATOR = "; ";
 

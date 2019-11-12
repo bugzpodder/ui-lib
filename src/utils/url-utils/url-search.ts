@@ -1,6 +1,6 @@
 import isArray from "lodash/isArray";
-import { DeprecatedSearchOptions, SearchOptionValues } from "types/api";
-import { KeyValue } from "types/common";
+import { DeprecatedSearchOptions, SearchOptionValues } from "../../types/api";
+import { KeyValue } from "../../types/common";
 import { getOmniTextFromKeyValues } from "../omni-search-util";
 import { getQuery, stringifyQuery, updateQuery } from "./url-util";
 

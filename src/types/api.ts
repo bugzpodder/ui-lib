@@ -38,19 +38,19 @@ export type DeprecatedGetContentOptions = {
 export type GetContentOptionsV2 = {
   offset?: number;
   count?: number;
-  searchOptions?: SearchOptionsV2;
+  searchOptions?: SearchOptionV2[];
   sortOptions?: SortOption[];
 };
 
 export type OmniQueryOptionsV2 = {
   /** `isUserSearchAction` is true when the omni query is updated by the user. */
   isUserSearchAction?: boolean;
-  searchOptions: SearchOptionsV2;
+  searchOptions: SearchOptionV2[];
 };
 
 // TODO(jsingh): simplify all these types!
 export type ApiQueryOptions = {
-  searchOptions: SearchOptionsV2;
+  searchOptions: SearchOptionV2[];
   sortOptions: SortOption[];
   selectedRowIds: Array<any>;
   isLoading: boolean;
@@ -86,8 +86,6 @@ export type SearchDef = {
 export type SearchOptionV2 = {
   values: string[];
 } & SearchDef;
-
-export type SearchOptionsV2 = Array<SearchOptionV2>;
 
 export type OmniSearchDef = {
   name: string;
