@@ -1,5 +1,5 @@
 import debounce from "lodash/debounce";
-import equals from "lodash/fp/equals";
+import isEqual from "lodash/isEqual";
 import qs from "qs";
 import { isValueValid } from "../api-utils";
 
@@ -66,7 +66,7 @@ export const updateQueryInternal = (
     : history.replace;
   const newQuery =
     shouldReplaceQuery === true ? newQueries : { ...query, ...newQueries };
-  if (!equals(query, newQuery)) {
+  if (!isEqual(query, newQuery)) {
     historyOperation({ search: `?${stringifyQuery(newQuery)}` });
   }
 };
