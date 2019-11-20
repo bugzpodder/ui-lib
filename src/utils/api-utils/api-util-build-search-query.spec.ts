@@ -1,6 +1,3 @@
-import "../mocks";
-import moment from "moment-timezone";
-
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
@@ -23,7 +20,8 @@ import {
   deprecatedBuildSearchQuery,
 } from "./api-util";
 
-moment.tz.setDefault("America/Los_Angeles");
+import endOfDay from "date-fns/endOfDay";
+import startOfDay from "date-fns/startOfDay";
 
 describe("buildSearchQuery", () => {
   it("should generate no query for no search", () => {
@@ -375,12 +373,8 @@ describe("deprecatedBuildSearchQuery for multi value search", () => {
 
 describe("deprecatedBuildSearchQuery for datetime search", () => {
   const date = "2017-04-20T16:20:00.000Z";
-  const startOfDay = moment(date)
-    .startOf("day")
-    .toISOString();
-  const endOfDay = moment(date)
-    .endOf("day")
-    .toISOString();
+  const start = startOfDay(new Date(date)).toISOString();
+  const end = endOfDay(new Date(date)).toISOString();
   it("should generate query for start date", () => {
     expect(
       deprecatedBuildSearchQuery(
@@ -389,7 +383,7 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
-    ).resolves.toEqual(`(date>="${startOfDay}")`);
+    ).resolves.toEqual(`(date>="${start}")`);
   });
   it("should generate query for start date to", () => {
     expect(
@@ -399,7 +393,7 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
-    ).resolves.toEqual(`(date>="${startOfDay}")`);
+    ).resolves.toEqual(`(date>="${start}")`);
   });
   it("should generate query for end date with no string startDate", () => {
     expect(
@@ -409,12 +403,10 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
-    ).resolves.toEqual(`(date<="${endOfDay}")`);
+    ).resolves.toEqual(`(date<="${end}")`);
   });
   const newStartDate = "2016-04-20T16:20:00.000Z";
-  const newStartOfDay = moment(newStartDate)
-    .startOf("day")
-    .toISOString();
+  const newStartOfDay = startOfDay(new Date(newStartDate)).toISOString();
   it("should generate query for start and end date", () => {
     expect(
       deprecatedBuildSearchQuery(
@@ -423,7 +415,7 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
-    ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${endOfDay}")`);
+    ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${end}")`);
   });
   it("should generate query for reversed start and end date", () => {
     expect(
@@ -433,7 +425,7 @@ describe("deprecatedBuildSearchQuery for datetime search", () => {
           type: DATETIME_SEARCH_TYPE,
         }),
       ),
-    ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${endOfDay}")`);
+    ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${end}")`);
   });
   it("should generate query for no dates", () => {
     expect(

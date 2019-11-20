@@ -1,21 +1,39 @@
-import moment from "moment";
-import { DATE_FORMAT } from "../../constants/date-constants";
+import format from "date-fns/format";
 
-// TODO(nsawas): consolidate/rename with function from @grailbio/components/date
-export const formatDate = (date: string | Date | moment.Moment): string => {
+import isDate from "date-fns/isDate";
+import isValid from "date-fns/isValid";
+import parse from "date-fns/parse";
+import parseISO from "date-fns/parseISO";
+import { DATE_UNICODE_FORMAT } from "../../constants/date-constants";
+
+export const parseDate = (date: string | Date | null): Date | null => {
   if (!date) {
-    return "";
+    return null;
   }
-  return moment(date).format(DATE_FORMAT);
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore: Property isValid and toDate does not exist on string.
+  if (date.isValid && date.toDate) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore: Property isValid and toDate does not exist on string.
+    return date.isValid() ? date.toDate() : null;
+  }
+
+  const dateObj = isDate(date) ? new Date(date) : parseISO(String(date));
+  return dateObj && isValid(dateObj) ? dateObj : null;
 };
 
-export const formatDateTime = (
-  dateTime: string | Date | moment.Moment,
-): string => {
-  if (!dateTime) {
-    return "";
-  }
-  return moment(dateTime).toISOString();
+// TODO(nsawas): consolidate/rename with function from @grailbio/components/date
+export const formatDate = (date: string | Date | null): string => {
+  const dateObj = parseDate(date);
+  return dateObj && isValid(dateObj)
+    ? format(dateObj, DATE_UNICODE_FORMAT)
+    : "";
+};
+
+export const formatDateTime = (dateTime: string | Date | null): string => {
+  const dateObj = parseDate(dateTime);
+  return dateObj && isValid(dateObj) ? dateObj.toISOString() : "";
 };
 
 export const DATE_RANGE_DELIMITER = "(?:(?:-)|(?:to))";
@@ -66,11 +84,12 @@ export const buildDateRangeString = (dateRange: {
 
 export const extractValidDate = (
   date: string,
-  format: string = DATE_FORMAT,
-): string | undefined | null => {
-  const momentDate = moment(date);
-  if (date && momentDate.isValid()) {
-    return momentDate.format(format);
+  dateFormat: string = DATE_UNICODE_FORMAT,
+): string | null => {
+  if (!date) {
+    return null;
   }
-  return null;
+
+  const dateObj = parse(date, dateFormat, new Date());
+  return dateObj && isValid(dateObj) ? format(dateObj, dateFormat) : null;
 };

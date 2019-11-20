@@ -1,4 +1,3 @@
-/** Shared API utilities * */
 import { DeprecatedSearchOption, GetContentOptionsV2, SearchOptionV2, SortOption } from "../../types/api";
 export declare const getPage: (offset?: number, count?: number) => number;
 export declare const boolToString: (bool: boolean) => string;

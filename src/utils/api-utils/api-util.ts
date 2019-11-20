@@ -1,10 +1,13 @@
+import endOfDay from "date-fns/endOfDay";
+import isAfter from "date-fns/isAfter";
+import parseISO from "date-fns/parseISO";
+import startOfDay from "date-fns/startOfDay";
 /** Shared API utilities * */
 
 import debounce from "lodash/debounce";
 import escapeRegExp from "lodash/escapeRegExp";
 import get from "lodash/get";
 import isString from "lodash/isString";
-import moment from "moment";
 import partialRight from "lodash/partialRight";
 import {
   BOOLEAN_SEARCH_TYPE,
@@ -20,7 +23,6 @@ import {
   OMNI_TEXT_SEARCH_TYPE,
   URI_QUERY_TYPE,
 } from "./api-constants";
-import { DATE_FORMAT } from "../../constants";
 import {
   DeprecatedSearchOption,
   DeprecatedSearchOptions,
@@ -28,7 +30,7 @@ import {
   SearchOptionV2,
   SortOption,
 } from "../../types/api";
-import { extractDateRange } from "../date-utils";
+import { extractDateRange, formatDate } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
 import { sanitizeId } from "../id-utils";
 
@@ -257,32 +259,33 @@ export const buildSearchQuery = async (
         case DATETIME_SEARCH_TYPE: {
           return multiValueSearchBuilder(dateRangeString => {
             // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-            let { startDate, endDate } = extractDateRange(
+            let { startDate, endDate = "" } = extractDateRange(
               dateRangeString || "",
             );
-            if (startDate && endDate) {
-              if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
+
+            let startDateObj = parseISO(startDate);
+            let endDateObj = parseISO(endDate);
+
+            if (startDateObj && endDateObj) {
+              if (isAfter(startDateObj, endDateObj)) {
                 [startDate, endDate] = [endDate, startDate];
+                [startDateObj, endDateObj] = [endDateObj, startDateObj];
               }
             }
             let dateSearch = "";
             if (isValueValid(startDate) && String(startDate).trim() !== "") {
               if (type === DATETIME_SEARCH_TYPE) {
-                startDate = moment(String(startDate))
-                  .startOf("day")
-                  .toISOString();
+                startDate = startOfDay(startDateObj).toISOString();
               } else {
-                startDate = moment(String(startDate)).format(DATE_FORMAT);
+                startDate = formatDate(startDateObj);
               }
               dateSearch = `${searchFields[0]}>="${startDate}"`;
             }
             if (isValueValid(endDate) && String(endDate).trim() !== "") {
               if (type === DATETIME_SEARCH_TYPE) {
-                endDate = moment(String(endDate))
-                  .endOf("day")
-                  .toISOString();
+                endDate = endOfDay(endDateObj).toISOString();
               } else {
-                endDate = moment(String(endDate)).format(DATE_FORMAT);
+                endDate = formatDate(endDateObj);
               }
               dateSearch = `${dateSearch}${dateSearch && "&&"}${
                 searchFields[0]
@@ -376,17 +379,20 @@ export const filterResults = (
           return true;
         }
         // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
-        let { startDate, endDate } = extractDateRange(values[0] || "");
+        let { startDate, endDate = "" } = extractDateRange(values[0] || "");
+        let startDateObj = parseISO(startDate);
+        let endDateObj = parseISO(endDate);
         if (startDate && endDate) {
-          if (moment(String(startDate)).isAfter(moment(String(endDate)))) {
+          if (isAfter(startDateObj, endDateObj)) {
             [startDate, endDate] = [endDate, startDate];
+            [startDateObj, endDateObj] = [endDateObj, startDateObj];
           }
         }
 
-        const itemTime = moment(item[searchFields[0]]);
+        const itemTime = new Date(item[searchFields[0]]);
         return (
-          (!startDate || itemTime.isAfter(moment(String(startDate)))) &&
-          (!endDate || itemTime.isBefore(moment(String(endDate))))
+          (!startDate || isAfter(itemTime, startDateObj)) &&
+          (!endDate || isAfter(endDateObj, itemTime))
         );
       }
 

@@ -31,6 +31,11 @@ module.exports = {
             message:
               "Please do not import @grailbio/server-lib from @grailbio/lib.",
           },
+          {
+            name: "date-fns",
+            message:
+              'Please import date-fns directly, eg: import parseISO from "date-fns/parseISO".',
+          },
         ],
         patterns: [
           "@grailbio/lib/src/*",

@@ -1,5 +1,3 @@
-import "../client-utils/mocks";
-import "../utils/mocks/fetch-mock";
 import { sentenceCase } from "../utils/string-utils";
 
 import * as apis from "./api";

@@ -1,4 +1,3 @@
-import "../mocks";
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,

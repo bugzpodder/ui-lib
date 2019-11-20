@@ -1,6 +1,5 @@
 import HttpStatus from "http-status-codes";
 import merge from "lodash/merge";
-import moment from "moment";
 import partialRight from "lodash/partialRight";
 import uuid from "uuid";
 import {
@@ -86,7 +85,7 @@ const checkForServerVersionMismatch = (response: Response): Promise<Response> =>
       setTimeout(() => {
         window.location.reload();
       }, 5000);
-      throw new Error(`${moment().toISOString()}
+      throw new Error(`${new Date().toISOString()}
         Server disconnected due to data incompatibility, most likely mismatch in version. Restarting client.`);
     }
     return resolve(response);
@@ -179,7 +178,7 @@ export class Api {
               }
             }
             if (!filename) {
-              filename = moment().toISOString();
+              filename = new Date().toISOString();
             }
             return response.blob().then(blob => ({
               blob,

@@ -13,6 +13,7 @@
 11. filterResults can now filter and sort deeply nested objects.
 12. filterResults sort string values in proper numeric order.
 13. Stop suppressing unauthorized errors from being displayed.
+14. Add support for date-fns in date utils.
 
 ## 1.0.0 - 2019-06-17
 

@@ -1,5 +1,3 @@
-import moment from "moment-timezone";
-
 import {
   buildDateRangeString,
   extractDateRange,
@@ -7,8 +5,6 @@ import {
   formatDate,
   formatDateTime,
 } from "./date-util";
-
-moment.tz.setDefault("America/Los_Angeles");
 
 const formattedDate = "2018-04-20";
 const formattedDateAtStartOfDay = "2018-04-20T07:00:00.000Z";
@@ -131,22 +127,22 @@ describe("buildDateRangeString", () => {
 describe("extractValidDate", () => {
   [null, undefined, "", "abc", "-----"].forEach(invalidDate => {
     it(`returns null when given ${String(invalidDate)}`, () => {
-      expect(extractValidDate(invalidDate as any)).toEqual(null);
+      expect(extractValidDate(invalidDate as any, "yyyy-MM-dd")).toEqual(null);
     });
   });
   ["2015-04-20", "1999-04-20"].forEach(validDate => {
     it(`returns validDate when given ${String(validDate)}`, () => {
-      expect(extractValidDate(validDate)).toEqual(validDate);
+      expect(extractValidDate(validDate, "yyyy-MM-dd")).toEqual(validDate);
     });
   });
   ["04/20/2019", "04/20/1999"].forEach(validDate => {
     it(`returns validDate when given ${String(validDate)}`, () => {
-      expect(extractValidDate(validDate, "MM/DD/YYYY")).toEqual(validDate);
+      expect(extractValidDate(validDate, "MM/dd/yyyy")).toEqual(validDate);
     });
   });
   ["20 Apr 2019", "20 Apr 1999"].forEach(validDate => {
     it(`returns validDate when given ${String(validDate)}`, () => {
-      expect(extractValidDate(validDate, "DD MMM YYYY")).toEqual(validDate);
+      expect(extractValidDate(validDate, "dd MMM yyyy")).toEqual(validDate);
     });
   });
 });

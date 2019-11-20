@@ -1,4 +1,3 @@
-import "../mocks";
 import {
   boolToString,
   buildOrderQuery,
