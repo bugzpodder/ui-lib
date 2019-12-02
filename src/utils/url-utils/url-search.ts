@@ -1,5 +1,7 @@
 import isArray from "lodash/isArray";
 import { DeprecatedSearchOptions, SearchOptionValues } from "../../types/api";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { History, Location } from "history";
 import { KeyValue } from "../../types/common";
 import { getOmniTextFromKeyValues } from "../omni-search-util";
 import { getQuery, stringifyQuery, updateQuery } from "./url-util";

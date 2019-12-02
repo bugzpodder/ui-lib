@@ -1,4 +1,5 @@
 import { DeprecatedSearchOptions } from "../../types/api";
+import { History, Location } from "history";
 import { KeyValue } from "../../types/common";
 declare type SearchParams = {
     location: Location;
@@ -12,7 +13,7 @@ export declare const expandSearchValues: (validSearchValues: {
 export declare const extractSearchValues: (searchOptions: Map<string, import("../../types/api").DeprecatedSearchOption>) => Map<string, import("../../types/api").SearchOptionValue>;
 export declare const mergeSearchOptions: (searchOptions: Map<string, import("../../types/api").DeprecatedSearchOption>, searchValues?: Map<string, import("../../types/api").SearchOptionValue> | undefined) => Map<string, import("../../types/api").DeprecatedSearchOption>;
 export declare const getSearchValues: ({ location, }: {
-    location: Location;
+    location: Location<any>;
 }) => Map<string, import("../../types/api").SearchOptionValue>;
 export declare const updateSearchUrl: ({ location, history, searchOptions }: SearchParams, options?: {
     [x: string]: any;

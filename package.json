@@ -25,6 +25,7 @@
     }
   },
   "dependencies": {
+    "@types/history": "^4.7.3",
     "@types/lodash": "^4.14.148",
     "csv-string": "^3.1.6",
     "date-fns": "^2.8.0",
