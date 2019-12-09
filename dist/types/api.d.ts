@@ -84,8 +84,8 @@ export declare type OmniSearchDefs = Array<OmniSearchDef>;
 export declare type OmniSearchValues = Map<number, string>;
 export declare type SearchApi = {
     searchDefs: OmniSearchDefs;
-    setSearchOptions: Function;
-    getInitialValues?: Function;
+    setSearchOptions: (options: OmniQueryOptionsV2) => any;
+    getInitialValues?: (searchDefs: OmniSearchDef[]) => OmniSearchValues;
 };
 export declare type OmniSearchCommand = {
     command: string;

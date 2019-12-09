@@ -2,7 +2,7 @@ import * as CSV from "csv-string";
 import { ExportableColumn, ReportOptions } from "../../types/report-utils";
 
 export const getAccessors = (
-  columns: Array<ExportableColumn>,
+  columns: Array<ExportableColumn<any>>,
 ): (string | Function)[] =>
   columns.map(({ exportAccessor }) => exportAccessor || "");
 
@@ -21,7 +21,7 @@ export const toTableRow = (
     return columnDatum;
   });
 export const toDelimitedReport = (
-  columns: Array<ExportableColumn>,
+  columns: Array<ExportableColumn<any>>,
   data: Array<{
     [x: string]: any;
   }>,

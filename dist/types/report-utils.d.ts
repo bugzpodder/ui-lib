@@ -1,6 +1,6 @@
-export declare type ExportableColumn = {
+export declare type ExportableColumn<T> = {
     exportHeaderName: string;
-    exportAccessor: string | ((x0: Record<string, any>) => string);
+    exportAccessor: string | ((x0: T) => string);
 };
 export declare type ReportOptions = {
     delimiter?: string;

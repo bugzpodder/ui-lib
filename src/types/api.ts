@@ -104,8 +104,8 @@ export type OmniSearchValues = Map<number, string>;
 
 export type SearchApi = {
   searchDefs: OmniSearchDefs;
-  setSearchOptions: Function;
-  getInitialValues?: Function;
+  setSearchOptions: (options: OmniQueryOptionsV2) => any;
+  getInitialValues?: (searchDefs: OmniSearchDef[]) => OmniSearchValues;
 };
 
 export type OmniSearchCommand = {

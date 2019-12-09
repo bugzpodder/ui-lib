@@ -1,4 +1,4 @@
-export type ExportableColumn = {
+export type ExportableColumn<T> = {
   // Defines the name of the header in the exported file. In paged tables, if
   // this is not specified, its value will come from the Header field if it is a
   // string, else the exportAccessor field if it is a string, else the accessor
@@ -9,7 +9,7 @@ export type ExportableColumn = {
   // be printed. If it is a string, the object's value at the attribute with
   // that name will be printed unmodified. In paged tables, if this is not
   // specified, the `accessor` field will be used instead.
-  exportAccessor: string | ((x0: Record<string, any>) => string);
+  exportAccessor: string | ((x0: T) => string);
 };
 
 export type ReportOptions = {
