@@ -13,18 +13,20 @@ export const generateFilledArray = (
 };
 
 // This sequentially executes promises after each prior promise resolves.
-export const serializePromises = async (
-  array: Array<any>,
-  mapper: (x0: any) => Promise<any>,
-) => {
-  const promises: Promise<any>[] = [];
+export async function serializePromises<T, R>(
+  array: Array<T>,
+  mapper: (x0: T, x1?: number) => Promise<R>,
+) {
+  const results: R[] = [];
+  let ind = 0;
   // eslint-disable-next-line no-restricted-syntax
   for (const item of array) {
     // eslint-disable-next-line no-await-in-loop
-    promises.push(await mapper(item));
+    results.push(await mapper(item, ind));
+    ind += 1;
   }
-  return promises;
-};
+  return results;
+}
 
 // Similar to lodash keyBy. Returns a `new Map` with each `idKey` in the
 // array items as the Map's key.

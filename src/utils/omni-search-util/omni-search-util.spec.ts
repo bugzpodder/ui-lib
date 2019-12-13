@@ -5,7 +5,7 @@ import {
   OMNI_TEXT_SEARCH_TYPE,
 } from "../api-utils/api-constants";
 
-import { OmniSearchDefs } from "../../types/api";
+import { OmniSearchDef } from "../../types/api";
 import {
   getItemsFromOmniValue,
   getOmniTextFromKeyValues,
@@ -52,7 +52,7 @@ describe("parseValuesFromOmniText", () => {
   });
 });
 
-const searchDefs: OmniSearchDefs = [
+const searchDefs: OmniSearchDef[] = [
   {
     name: "omni",
     type: OMNI_TEXT_SEARCH_TYPE,

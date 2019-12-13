@@ -7,7 +7,6 @@ import { KeyValue } from "../../types/common";
 import { OMNI_ERROR, OMNI_KEY } from "../../constants/omni";
 import {
   OmniSearchDef,
-  OmniSearchDefs,
   OmniSearchValues,
   SearchOptionV2,
 } from "../../types/api";
@@ -85,7 +84,7 @@ export const getKeysForSearchDef = (searchDef: OmniSearchDef): string[] => {
 
 /** Go through searchDefs extract values from omniText */
 export const getSearchValuesFromOmniText = (
-  searchDefs: OmniSearchDefs | null,
+  searchDefs: OmniSearchDef[] | null,
   omniText: string,
 ): OmniSearchValues => {
   if (!isValueValid(omniText) || !searchDefs || searchDefs.length === 0) {
@@ -130,7 +129,7 @@ export const getSearchValuesFromOmniText = (
 };
 
 export const getOmniTextFromSearchValues = (
-  searchDefs: OmniSearchDefs,
+  searchDefs: OmniSearchDef[],
   searchValues: OmniSearchValues,
 ): string => {
   const omniValues: string[] = [];
@@ -163,7 +162,7 @@ export const getItemsFromOmniValue = (omniValue = ""): string[] => {
 };
 
 export const getSearchOptions = (
-  searchDefs: OmniSearchDefs,
+  searchDefs: OmniSearchDef[],
   searchValues: OmniSearchValues,
 ): SearchOptionV2[] => {
   const searchOptions: SearchOptionV2[] = [];
@@ -176,9 +175,8 @@ export const getSearchOptions = (
   return searchOptions;
 };
 
-// eslint-disable-next-line max-len
 export const getValueItemsFromSearchValues = (
-  searchDefs: OmniSearchDefs,
+  searchDefs: OmniSearchDef[],
   searchValues: OmniSearchValues,
   key: string,
 ): string[] => {
