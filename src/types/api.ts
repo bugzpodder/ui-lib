@@ -118,8 +118,8 @@ export type ApiOptions = {
   [key: string]: any;
 };
 
-export type JsonResult = {
-  result: any;
+export type JsonResult<T> = {
+  result: T;
   status: number;
   statusIsOk: boolean;
   errorMessages: string[];

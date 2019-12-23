@@ -28,27 +28,27 @@ export declare class Api {
     sendBlobRequest: (method: string, urlSuffix: string, body?: {
         [x: string]: any;
     } | undefined, options?: ApiOptions) => any;
-    postBlob: (urlSuffix: string, blob: Blob, options?: ApiOptions) => Promise<JsonResult>;
-    getJson: (urlSuffix: string, options?: ApiOptions) => Promise<JsonResult>;
+    postBlob: (urlSuffix: string, blob: Blob, options?: ApiOptions) => Promise<JsonResult<any>>;
+    getJson: (urlSuffix: string, options?: ApiOptions) => Promise<JsonResult<any>>;
     sendJsonUpdateRequest: (method: string, urlSuffix: string, object: {
         [x: string]: any;
-    }, options?: ApiOptions) => Promise<JsonResult>;
+    }, options?: ApiOptions) => Promise<JsonResult<any>>;
     postJson: (urlSuffix: string, object: {
         [x: string]: any;
-    }, options?: ApiOptions) => Promise<JsonResult>;
+    }, options?: ApiOptions) => Promise<JsonResult<any>>;
     putJson: (urlSuffix: string, object: {
         [x: string]: any;
-    }, options?: ApiOptions) => Promise<JsonResult>;
+    }, options?: ApiOptions) => Promise<JsonResult<any>>;
     patchJson: (urlSuffix: string, object: {
         [x: string]: any;
-    }, options?: ApiOptions) => Promise<JsonResult>;
+    }, options?: ApiOptions) => Promise<JsonResult<any>>;
     deleteJson: (urlSuffix: string, object: {
         [x: string]: any;
-    }, options?: ApiOptions) => Promise<JsonResult>;
+    }, options?: ApiOptions) => Promise<JsonResult<any>>;
     processJsonResponse: (response: {
         [x: string]: any;
-    }, options?: ApiOptions) => JsonResult;
-    processCatch: (urlSuffix: string, options: ApiOptions, error: Error) => JsonResult;
+    }, options?: ApiOptions) => JsonResult<any>;
+    processCatch: (urlSuffix: string, options: ApiOptions, error: Error) => JsonResult<any>;
     setDispatchers: (apiDispatchers: ApiDispatchers) => void;
     setObjectProcessors: (objectProcessors: ApiObjectProcessors) => void;
 }

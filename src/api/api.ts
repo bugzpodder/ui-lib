@@ -315,7 +315,7 @@ export class Api {
       [x: string]: any;
     },
     options: ApiOptions = defaultOptions,
-  ): JsonResult => {
+  ): JsonResult<any> => {
     const { status, ok } = response;
     return response.json().then(object => {
       const hasResultInResponse = options.hasResultInResponse !== false;
@@ -365,7 +365,7 @@ export class Api {
     urlSuffix: string,
     options: ApiOptions,
     error: Error,
-  ): JsonResult => {
+  ): JsonResult<any> => {
     const { apiDispatchers } = this;
     const { handleError } = apiDispatchers || {};
     const { handleError: handleErrorOverride } = options || {};

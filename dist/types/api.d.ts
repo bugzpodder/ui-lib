@@ -96,8 +96,8 @@ export declare type ApiOptions = {
     hasResultInResponse?: boolean;
     [key: string]: any;
 };
-export declare type JsonResult = {
-    result: any;
+export declare type JsonResult<T> = {
+    result: T;
     status: number;
     statusIsOk: boolean;
     errorMessages: string[];
