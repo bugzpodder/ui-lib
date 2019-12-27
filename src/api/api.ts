@@ -17,7 +17,7 @@ const GENERIC_ERROR_MESSAGE = "Bad API response.";
 const extractIssueMessages = (
   object: UnprocessedJsonResult,
   issueType = "errors",
-) => {
+): string[] => {
   if (object.errors) {
     return object.errors[issueType].map(error => error.message);
   }
@@ -26,7 +26,7 @@ const extractIssueMessages = (
 export const extractIssueCodes = (
   object: UnprocessedJsonResult,
   issueType = "errors",
-) => {
+): string[] => {
   if (object.errors) {
     return object.errors[issueType]
       .map(error => error.errorCode)
@@ -95,9 +95,8 @@ export class Api {
   apiName: string;
   apiUrl: string;
   apiVersion: string;
-  authPromise: Promise<any> | undefined;
-  apiDispatchers: ApiDispatchers | undefined | null;
-  apiObjectProcessors: ApiObjectProcessors | undefined | null;
+  apiDispatchers: ApiDispatchers | undefined;
+  apiObjectProcessors: ApiObjectProcessors | undefined;
   handleError: (
     status: number,
     errorMessage: string,
@@ -120,13 +119,14 @@ export class Api {
     this.apiVersion = version;
     this.handleError =
       handleError ||
-      ((_, errorMessage, object, options) =>
+      ((_, errorMessage, object, options): void =>
         options.handleError && options.handleError(errorMessage, object));
   }
 
-  getAcceptVersionHeader = () => `${this.apiName}-version=${this.apiVersion}`;
+  getAcceptVersionHeader = (): string =>
+    `${this.apiName}-version=${this.apiVersion}`;
 
-  getCommonHeaders = () => {
+  getCommonHeaders = (): Record<string, any> => {
     const commonHeaders = {
       accept: `application/json, ${this.getAcceptVersionHeader()}`,
       "x-request-id": uuid.v4(),
@@ -134,16 +134,15 @@ export class Api {
     return { headers: { ...commonHeaders } };
   };
 
-  getBlob = (urlSuffix: string) => this.sendBlobRequest("GET", urlSuffix);
+  getBlob = (urlSuffix: string): Promise<JsonResult<any>> =>
+    this.sendBlobRequest("GET", urlSuffix);
 
   sendBlobRequest = (
     method: string,
     urlSuffix: string,
-    body?: {
-      [x: string]: any;
-    },
+    body?: Record<string, any>,
     options: ApiOptions = defaultOptions,
-  ) => {
+  ): Promise<JsonResult<any>> => {
     const headers = merge(
       { headers: { "content-type": "application/json" } },
       this.getCommonHeaders(),
@@ -204,7 +203,7 @@ export class Api {
     urlSuffix: string,
     blob: Blob,
     options: ApiOptions = defaultOptions,
-  ) => {
+  ): Promise<JsonResult<any>> => {
     const headers = this.getCommonHeaders();
     const formData = new FormData();
     formData.append("file", blob);
@@ -227,7 +226,10 @@ export class Api {
       });
   };
 
-  getJson = (urlSuffix: string, options: ApiOptions = defaultOptions) => {
+  getJson = (
+    urlSuffix: string,
+    options: ApiOptions = defaultOptions,
+  ): Promise<JsonResult<any>> => {
     const { apiDispatchers } = this;
     // TODO(lkong): convert the promise chain to awaits.
     apiDispatchers && apiDispatchers.dispatchIsLoading(true);
@@ -247,11 +249,9 @@ export class Api {
   sendJsonUpdateRequest = (
     method: string,
     urlSuffix: string,
-    object: {
-      [x: string]: any;
-    },
+    object: Record<string, any>,
     options: ApiOptions = defaultOptions,
-  ) => {
+  ): Promise<JsonResult<any>> => {
     const headers = merge(
       { headers: { "content-type": "application/json" } },
       this.getCommonHeaders(),
@@ -280,40 +280,34 @@ export class Api {
 
   postJson = (
     urlSuffix: string,
-    object: {
-      [x: string]: any;
-    },
+    object: Record<string, any>,
     options: ApiOptions = defaultOptions,
-  ) => this.sendJsonUpdateRequest("POST", urlSuffix, object, options);
+  ): Promise<JsonResult<any>> =>
+    this.sendJsonUpdateRequest("POST", urlSuffix, object, options);
 
   putJson = (
     urlSuffix: string,
-    object: {
-      [x: string]: any;
-    },
+    object: Record<string, any>,
     options: ApiOptions = defaultOptions,
-  ) => this.sendJsonUpdateRequest("PUT", urlSuffix, object, options);
+  ): Promise<JsonResult<any>> =>
+    this.sendJsonUpdateRequest("PUT", urlSuffix, object, options);
 
   patchJson = (
     urlSuffix: string,
-    object: {
-      [x: string]: any;
-    },
+    object: Record<string, any>,
     options: ApiOptions = defaultOptions,
-  ) => this.sendJsonUpdateRequest("PATCH", urlSuffix, object, options);
+  ): Promise<JsonResult<any>> =>
+    this.sendJsonUpdateRequest("PATCH", urlSuffix, object, options);
 
   deleteJson = (
     urlSuffix: string,
-    object: {
-      [x: string]: any;
-    },
+    object: Record<string, any>,
     options: ApiOptions = defaultOptions,
-  ) => this.sendJsonUpdateRequest("DELETE", urlSuffix, object, options);
+  ): Promise<JsonResult<any>> =>
+    this.sendJsonUpdateRequest("DELETE", urlSuffix, object, options);
 
   processJsonResponse = (
-    response: {
-      [x: string]: any;
-    },
+    response: Record<string, any>,
     options: ApiOptions = defaultOptions,
   ): JsonResult<any> => {
     const { status, ok } = response;
@@ -389,11 +383,11 @@ export class Api {
     };
   };
 
-  setDispatchers = (apiDispatchers: ApiDispatchers) => {
+  setDispatchers = (apiDispatchers: ApiDispatchers): void => {
     this.apiDispatchers = apiDispatchers;
   };
 
-  setObjectProcessors = (objectProcessors: ApiObjectProcessors) => {
+  setObjectProcessors = (objectProcessors: ApiObjectProcessors): void => {
     this.apiObjectProcessors = objectProcessors;
   };
 }

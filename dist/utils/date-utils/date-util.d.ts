@@ -6,10 +6,7 @@ export declare const WRAPPED_DATE_RANGE_DELIMITERS: string;
 export declare const DATE_REGEX_BLOCK = "((?:[-\\d]+)|(?:[-\\d]+T[-\\d:.]+Z))";
 export declare const extractDateRange: (dateRangeString: string) => {
     startDate: string;
-    endDate: undefined;
-} | {
-    startDate: string;
-    endDate: string;
+    endDate?: string | undefined;
 };
 export declare const buildDateRangeString: (dateRange: {
     startDate?: string | null | undefined;

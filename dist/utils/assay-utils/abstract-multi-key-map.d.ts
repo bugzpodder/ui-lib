@@ -8,36 +8,16 @@
  * See https://medium.com/@charpeni/3b3551c440b1 for more details.
  */
 export declare class AbstractMultiKeyMap {
-    _map: Map<string, {
-        [x: string]: any;
-    }>;
-    constructor(iterables?: Array<[{
-        [x: string]: any;
-    }, {
-        [x: string]: any;
-    }]>);
-    serializeKey(key: {
-        [x: string]: any;
-    }): string;
+    _map: Map<string, Record<string, any>>;
+    constructor(iterables?: Array<[Record<string, any>, Record<string, any>]>);
+    serializeKey(key: Record<string, any>): string;
     deserializeKey(key: string): any;
-    set(object: {
-        [x: string]: any;
-    }, value: any): this;
-    get(object: {
-        [x: string]: any;
-    }): {
-        [x: string]: any;
-    } | undefined;
-    has(object: {
-        [x: string]: any;
-    }): boolean;
-    delete(object: {
-        [x: string]: any;
-    }): this;
+    set(object: Record<string, any>, value: any): AbstractMultiKeyMap;
+    get(object: Record<string, any>): any;
+    has(object: Record<string, any>): boolean;
+    delete(object: Record<string, any>): AbstractMultiKeyMap;
     forEach(callback: Function, callersThis?: any): void;
     clear(): void;
     size(): number;
-    keys(): Array<{
-        [x: string]: any;
-    }>;
+    keys(): Record<string, any>[];
 }

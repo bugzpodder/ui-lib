@@ -5,7 +5,7 @@ const gridChars = [
   ...upperAlphaChars.map(char => `A${char}`),
 ];
 
-export const getRowHeader = (rowIndex: number) => {
+export const getRowHeader = (rowIndex: number): string => {
   if (rowIndex < 0 || rowIndex >= gridChars.length) {
     throw new Error(`Invalid row index: ${rowIndex}`);
   }
@@ -13,7 +13,9 @@ export const getRowHeader = (rowIndex: number) => {
 };
 
 // colIndex is 0-based.
-export const getColHeader = (colIndex: number) => `${colIndex + 1}`;
+export const getColHeader = (colIndex: number): string => `${colIndex + 1}`;
 
-export const getGridCellPosition = (rowIndex: number, colIndex: number) =>
-  `${getRowHeader(rowIndex)}${getColHeader(colIndex)}`;
+export const getGridCellPosition = (
+  rowIndex: number,
+  colIndex: number,
+): string => `${getRowHeader(rowIndex)}${getColHeader(colIndex)}`;

@@ -16,7 +16,7 @@ const KEYWORDS: Map<string, string> = new Map([
   ["Grail", "GRAIL"],
 ]);
 
-export const sentenceCase = (string: string) => {
+export const sentenceCase = (string: string): string => {
   string = string || "";
   const sentenceCased = startCase(camelCase(string.trim()));
   const separator = " ";
@@ -32,7 +32,7 @@ export const upperAlphaChars = generateFilledArray(26, (_, index) =>
   String.fromCharCode(charCodeOfA + index),
 );
 
-export const normalizeStr = (str: string | undefined | null) => {
+export const normalizeStr = (str: string): string => {
   if (!str) {
     return "";
   }
@@ -44,7 +44,7 @@ export const normalizeStr = (str: string | undefined | null) => {
 
 // replaces underscores, capitalizes letters after underscore, adds space before camelCasing
 // my_coolString -> My Cool String
-export const makeTitleString = (str: string, capFirst = true) =>
+export const makeTitleString = (str: string, capFirst = true): string =>
   str
     .replace(/([a-z])([A-Z])([a-z])/g, "$1 $2$3") // space around camels
     .replace(/_(.)/g, $1 => ` ${$1.toUpperCase()}`) // uppercase after underscore
@@ -59,7 +59,7 @@ export const makeTitleString = (str: string, capFirst = true) =>
  * a value like 4.32000000000000001.
  * @param value The float to format.
  */
-export const formatPercent = (value: any) => {
+export const formatPercent = (value: any): string => {
   const floatValue = parseFloat(value);
   if (Number.isNaN(floatValue)) {
     return "-";

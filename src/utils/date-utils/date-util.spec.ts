@@ -80,9 +80,9 @@ describe("extractDateRange", () => {
     [" ", "  ", "   "].forEach(spaces => {
       ["-", "to"].forEach(delimiter => {
         it(`extracts startDate ${startDate} using delimter: "${spaces}${delimiter}"`, () => {
-          expect(extractDateRange(`${startDate}${spaces}${delimiter}`)).toEqual(
-            { startDate },
-          );
+          expect(
+            extractDateRange(`${startDate}${spaces}${delimiter}`),
+          ).toEqual({ startDate });
         });
         it(`extracts startDate ${startDate} and endDate ${endDate} using delimter: "${spaces}${delimiter}${spaces}"`, () => {
           expect(

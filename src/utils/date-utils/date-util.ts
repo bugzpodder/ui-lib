@@ -47,7 +47,12 @@ export const DATE_REGEX_BLOCK = "((?:[-\\d]+)|(?:[-\\d]+T[-\\d:.]+Z))";
 // "to 2018-04-20"
 // " to 2018-04-20"
 // Also, supported, `to` replaced with `-`
-export const extractDateRange = (dateRangeString: string) => {
+export const extractDateRange = (
+  dateRangeString: string,
+): {
+  startDate: string;
+  endDate?: string;
+} => {
   const dateRangeRegExp = new RegExp(
     `^${DATE_REGEX_BLOCK}?\\s*(?:${WRAPPED_DATE_RANGE_DELIMITERS})\\s*${DATE_REGEX_BLOCK}?$`,
   );
@@ -68,7 +73,7 @@ export const extractDateRange = (dateRangeString: string) => {
 export const buildDateRangeString = (dateRange: {
   startDate?: string | null;
   endDate?: string | null;
-}) => {
+}): string => {
   const { startDate, endDate } = dateRange;
   if (startDate) {
     if (endDate) {

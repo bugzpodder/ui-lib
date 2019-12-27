@@ -8,9 +8,7 @@ export const getAccessors = (
 
 export const toTableRow = (
   accessors: (string | Function)[],
-  datum: {
-    [x: string]: any;
-  }, // Return an array of converted columns
+  datum: Record<string, any>, // Return an array of converted columns
 ): string[] => // eslint-disable-next-line implicit-arrow-linebreak
   accessors.map(accessor => {
     const columnDatum =
@@ -22,11 +20,9 @@ export const toTableRow = (
   });
 export const toDelimitedReport = (
   columns: Array<ExportableColumn<any>>,
-  data: Array<{
-    [x: string]: any;
-  }>,
+  data: Array<Record<string, any>>,
   options: ReportOptions = {},
-): string | undefined | null => {
+): string => {
   const accessors = getAccessors(columns);
   const { delimiter = "," } = options;
 

@@ -9,7 +9,7 @@ const columns = [
     exportHeaderName: "ONE_TWO_THREE",
   },
   {
-    exportAccessor: obj => obj.accessibleValue,
+    exportAccessor: (obj: any): string => obj.accessibleValue,
   },
 ];
 
@@ -35,8 +35,12 @@ describe("getAccessors", () => {
 In order to compare output from `toDelimitedReport`, it is easier to compare test failure logs if we replace
 all <enter> keys with <ENTER>  Because whitespaces are not obvious in the test diffs, etc
 */
-const expectWithEnter = expected =>
-  expect(expected.replace(/\r\n/g, "<ENTER>"));
+const expectWithEnter = (
+  expected: string,
+): jest.JestMatchersShape<
+  jest.Matchers<void, string>,
+  jest.Matchers<Promise<void>, string>
+> => expect(expected.replace(/\r\n/g, "<ENTER>"));
 
 describe("toDelimitedReport", () => {
   const data = [

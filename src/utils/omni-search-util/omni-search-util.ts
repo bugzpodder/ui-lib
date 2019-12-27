@@ -19,7 +19,7 @@ const addItemToArrayMap = (
   key: string,
   value: string,
   arrayMap: Map<string, string[]>,
-) => {
+): void => {
   if (value === "" || isValueValid(value)) {
     const removedLeadingWhitespaceMatch = /\s*(.*)/.exec(value);
     value = removedLeadingWhitespaceMatch
@@ -147,7 +147,7 @@ export const getOmniTextFromSearchValues = (
   return omniValues.join(" ");
 };
 
-export const getOmniTextFromKeyValues = (keyValues: KeyValue[]) =>
+export const getOmniTextFromKeyValues = (keyValues: KeyValue[]): string =>
   keyValues.map(({ key, value }) => `${key}: ${value}`).join(" ");
 
 export const getItemsFromOmniValue = (omniValue = ""): string[] => {

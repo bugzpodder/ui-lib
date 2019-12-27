@@ -2,6 +2,13 @@ import endOfDay from "date-fns/endOfDay";
 import isAfter from "date-fns/isAfter";
 import parseISO from "date-fns/parseISO";
 import startOfDay from "date-fns/startOfDay";
+import {
+  DeprecatedSearchOption,
+  DeprecatedSearchOptions,
+  GetContentOptionsV2,
+  SearchOptionV2,
+  SortOption,
+} from "../../types/api";
 /** Shared API utilities * */
 
 import debounce from "lodash/debounce";
@@ -23,13 +30,7 @@ import {
   OMNI_TEXT_SEARCH_TYPE,
   URI_QUERY_TYPE,
 } from "./api-constants";
-import {
-  DeprecatedSearchOption,
-  DeprecatedSearchOptions,
-  GetContentOptionsV2,
-  SearchOptionV2,
-  SortOption,
-} from "../../types/api";
+
 import { extractDateRange, formatDate } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
 import { sanitizeId } from "../id-utils";
@@ -37,7 +38,7 @@ import { sanitizeId } from "../id-utils";
 /*
 Determine the page for the page query URL parameter
 */
-export const getPage = (offset = 0, count = 10) => {
+export const getPage = (offset = 0, count = 10): number => {
   let page = offset / count + 1;
   page = Math.floor(page);
   return page;
@@ -51,7 +52,7 @@ export const boolToString = (bool: boolean): string => (bool ? "1" : "0");
 /*
 Builds an order query that and's each item for the order query URL parameter
 */
-export const buildOrderQuery = (sortOptions: SortOption[] = []) =>
+export const buildOrderQuery = (sortOptions: SortOption[] = []): string =>
   sortOptions.reduce((memo, sortOption) => {
     const { id } = sortOption;
     const desc = sortOption.desc ? "DESC" : "ASC";
@@ -64,7 +65,7 @@ export const buildOrderQuery = (sortOptions: SortOption[] = []) =>
     return `${memo}${id} ${desc}`;
   }, "" /* initial memo */);
 
-export const isValueValid = (value: any) => {
+export const isValueValid = (value: any): boolean => {
   if (Array.isArray(value)) {
     return value.length > 0;
   }
@@ -84,7 +85,7 @@ const getSearchValues = (searchOption: DeprecatedSearchOption): string[] => {
   return searchValues;
 };
 
-const getEscapedSearchValues = (searchOption: SearchOptionV2) => {
+const getEscapedSearchValues = (searchOption: SearchOptionV2): string[] => {
   const { values, type } = searchOption;
   let searchValues = values;
   if (type === FULL_ID_SEARCH_TYPE || type === LIKE_ID_SEARCH_TYPE) {
@@ -101,7 +102,7 @@ const getEscapedSearchValues = (searchOption: SearchOptionV2) => {
 
 const getSearchOptionsV2 = (
   deprecatedSearchOptions: DeprecatedSearchOptions = new Map(),
-) => {
+): SearchOptionV2[] => {
   const searchOptionsV2: SearchOptionV2[] = [];
   deprecatedSearchOptions.forEach((searchOption, name) => {
     const values = getSearchValues(searchOption);
@@ -118,7 +119,9 @@ const getSearchOptionsV2 = (
   return searchOptionsV2;
 };
 
-const resolveSearchOptions = async (searchOptions: SearchOptionV2[] = []) =>
+const resolveSearchOptions = async (
+  searchOptions: SearchOptionV2[] = [],
+): Promise<SearchOptionV2[]> =>
   Promise.all(
     searchOptions.map(async searchOption => {
       const { type, mapValues } = searchOption;
@@ -142,13 +145,13 @@ const resolveSearchOptions = async (searchOptions: SearchOptionV2[] = []) =>
 export const buildCustomURIQueryParams = async (
   searchOptions: SearchOptionV2[] = [],
   params: URLSearchParams,
-) => {
+): Promise<void> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
       searchOption => searchOption && searchOption.queryType === URI_QUERY_TYPE,
     ),
   );
-  return resolvedSearchOptions
+  resolvedSearchOptions
     .filter(searchOption => searchOption.values && searchOption.values.length)
     .forEach(({ searchFields, values }) => {
       if (searchFields) {
@@ -166,7 +169,7 @@ q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 export const buildSearchQuery = async (
   searchOptions: SearchOptionV2[] = [],
-) => {
+): Promise<string> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
       searchOption => searchOption && !searchOption.queryType,
@@ -191,7 +194,9 @@ export const buildSearchQuery = async (
         return searchFields.length > 1 ? `(${nullQuery})` : nullQuery;
       }, "");
     }
-    const multiValueSearchBuilder = formatter => {
+    const multiValueSearchBuilder = (
+      formatter: (x0: string) => string,
+    ): string | null => {
       const multiValueSearch = values.reduce((multiValueSearchMemo, value) => {
         if (!isValueValid(value)) {
           return multiValueSearchMemo;
@@ -220,7 +225,7 @@ export const buildSearchQuery = async (
         ? `(${multiValueSearch})`
         : multiValueSearch;
     };
-    const newQuery = (() => {
+    const newQuery = ((): string | null => {
       switch (type) {
         case LIKE_TEXT_SEARCH_TYPE:
         case OMNI_TEXT_SEARCH_TYPE:
@@ -349,7 +354,8 @@ q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 // eslint-disable-next-line max-len
 export const deprecatedBuildSearchQuery = (
   deprecatedSearchOptions: DeprecatedSearchOptions,
-) => buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
+): Promise<string> =>
+  buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
 
 export const filterResults = (
   items: Array<any>,
@@ -405,24 +411,25 @@ export const filterResults = (
       switch (type) {
         case LIKE_TEXT_SEARCH_TYPE:
         case OMNI_TEXT_SEARCH_TYPE:
-          compare = (e, value) =>
+          compare = (e, value): boolean =>
             new RegExp(escapeRegExp(String(value)), "i").test(e);
           break;
         case LIKE_ID_SEARCH_TYPE:
-          compare = (e, value) =>
+          compare = (e, value): boolean =>
             new RegExp(escapeRegExp(sanitizeId(String(value))), "i").test(e);
           break;
         case BOOLEAN_SEARCH_TYPE:
-          compare = (e, value) => !!e === value || String(e) === String(value);
+          compare = (e, value): boolean =>
+            !!e === value || String(e) === String(value);
           break;
         case NUMERIC_SEARCH_TYPE:
         // fallthrough
         case FULL_TEXT_SEARCH_TYPE:
         case ENUM_SEARCH_TYPE:
-          compare = (e, value) => e === value;
+          compare = (e, value): boolean => e === value;
           break;
         case FULL_ID_SEARCH_TYPE:
-          compare = (e, value) => e === sanitizeId(String(value));
+          compare = (e, value): boolean => e === sanitizeId(String(value));
           break;
         default:
           throw new Error(`Unknown search type: ${String(type)}`);

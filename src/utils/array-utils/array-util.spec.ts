@@ -107,12 +107,19 @@ describe("toPairWise", () => {
 
   it("returns two pairs when passed array with three elements", () => {
     const arr = [1, 2, 3];
-    expect(toPairWise(arr)).toEqual([[1, 2], [2, 3]]);
+    expect(toPairWise(arr)).toEqual([
+      [1, 2],
+      [2, 3],
+    ]);
   });
 
   it("returns three pairs when passed array with four elements", () => {
     const arr = [1, 2, 3, 4];
-    expect(toPairWise(arr)).toEqual([[1, 2], [2, 3], [3, 4]]);
+    expect(toPairWise(arr)).toEqual([
+      [1, 2],
+      [2, 3],
+      [3, 4],
+    ]);
   });
 
   it("throws an error when passed something that isn't an array", () => {

@@ -4,9 +4,7 @@ declare type StepInfo = {
     step: string;
 };
 export declare class AssayStepMap extends AbstractMultiKeyMap {
-    constructor(assayStepValues?: Array<{
-        [x: string]: any;
-    }>);
+    constructor(assayStepValues?: Record<string, any>[]);
     serializeKey: ({ assay, step }: StepInfo) => string;
     deserializeKey: (serializedKey: string) => {
         assay: string;

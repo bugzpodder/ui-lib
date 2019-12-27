@@ -12,9 +12,12 @@ type SearchParams = {
   searchOptions: DeprecatedSearchOptions;
 };
 
-const isDefinedNotNull = (value: any) => value !== undefined && value !== null;
+const isDefinedNotNull = (value: any): boolean =>
+  value !== undefined && value !== null;
 
-export const flattenSearchValues = (searchValues: SearchOptionValues) =>
+export const flattenSearchValues = (
+  searchValues: SearchOptionValues,
+): Record<string, any> =>
   [...searchValues]
     .map(([key, { value, values }]) => ({ key, value, values }))
     .filter(({ value, values }) => {
@@ -33,9 +36,9 @@ export const flattenSearchValues = (searchValues: SearchOptionValues) =>
       return acc;
     }, {});
 
-export const expandSearchValues = (validSearchValues: {
-  [x: string]: any;
-}): SearchOptionValues => {
+export const expandSearchValues = (
+  validSearchValues: Record<string, any>,
+): SearchOptionValues => {
   try {
     const searchValues = new Map();
     Object.keys(validSearchValues).forEach(key => {
@@ -92,18 +95,13 @@ export const getSearchValues = ({
   return expandSearchValues(validSearchValues);
 };
 
-const getUrlQuery = (
-  searchValues: SearchOptionValues,
-): {
-  [x: string]: any;
-} => flattenSearchValues(searchValues);
+const getUrlQuery = (searchValues: SearchOptionValues): Record<string, any> =>
+  flattenSearchValues(searchValues);
 
 export const updateSearchUrl = (
   { location, history, searchOptions }: SearchParams,
-  options: {
-    [x: string]: any;
-  } = {},
-) => {
+  options: Record<string, any> = {},
+): void => {
   const searchValues = extractSearchValues(searchOptions);
   updateQuery({ location, history }, getUrlQuery(searchValues), {
     shouldUpdateBrowserHistory: false,
@@ -111,5 +109,5 @@ export const updateSearchUrl = (
   });
 };
 
-export const getOmniUrlQueryString = (keyValues: KeyValue[]) =>
+export const getOmniUrlQueryString = (keyValues: KeyValue[]): string =>
   `${stringifyQuery({ omni: getOmniTextFromKeyValues(keyValues) })}`;

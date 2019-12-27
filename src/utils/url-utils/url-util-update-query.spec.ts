@@ -2,7 +2,7 @@ import { updateQuery, updateQueryInternal } from "./url-util";
 
 jest.mock("lodash/debounce", () => jest.fn(fn => fn));
 describe("updateQuery", () => {
-  const updateQueryTest = (props, ...args) =>
+  const updateQueryTest = (props, ...args): void =>
     updateQuery({ location: (global as any).location, ...props }, ...args);
   const history = {
     push: jest.fn(),

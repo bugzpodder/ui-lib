@@ -16,7 +16,7 @@ export const generateFilledArray = (
 export async function serializePromises<T, R>(
   array: Array<T>,
   mapper: (x0: T, x1?: number) => Promise<R>,
-) {
+): Promise<R[]> {
   const results: R[] = [];
   let ind = 0;
   // eslint-disable-next-line no-restricted-syntax

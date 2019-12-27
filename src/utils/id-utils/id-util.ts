@@ -4,9 +4,9 @@ const SANITIZATION_EXCEPTIONS = [
 ];
 const ID_REGEXP = /^[A-Za-z0-9]+[\u002D\u058A\u05BE\u1806\u2010\u2011\u2012\u2013\u2014\u2015\u2E3A\u2E3B\uFE58\uFE63\uFF0D][A-Za-z0-9]$/;
 
-const getSampleSuffix = (id: string) => id[id.length - 1];
+const getSampleSuffix = (id: string): string => id[id.length - 1];
 
-export const sanitizeId = (idInput = "") => {
+export const sanitizeId = (idInput = ""): string => {
   const id = idInput.trim();
 
   // Do not sanitize if id matches any exceptions (mock NGS, qPCR, accession samples)
@@ -21,12 +21,13 @@ export const sanitizeId = (idInput = "") => {
     : id;
 };
 
-export const getSamplePrefix = (id: string) => id.substr(0, id.length - 1);
+export const getSamplePrefix = (id: string): string =>
+  id.substr(0, id.length - 1);
 
-export const getSampleLabel = (id: string) =>
+export const getSampleLabel = (id: string): string =>
   `${getSamplePrefix(id)}-${getSampleSuffix(id)}`;
 
-export const getInputBarcode = (id = "", previousId = "") => {
+export const getInputBarcode = (id = "", previousId = ""): string => {
   id = id.trim();
   if (!previousId) {
     return id;

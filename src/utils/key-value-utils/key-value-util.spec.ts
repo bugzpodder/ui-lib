@@ -22,7 +22,10 @@ const setKeyValueTestCases = [
     ],
   },
   {
-    initial: [{ key: "foo", value: "bar" }, { key: "baz", value: "bat" }],
+    initial: [
+      { key: "foo", value: "bar" },
+      { key: "baz", value: "bat" },
+    ],
     newEntry: { key: "baz", value2: "boo" },
     expectedResult: [
       { key: "foo", value: "bar" },
@@ -34,12 +37,7 @@ const setKeyValueTestCases = [
 describe("setKeyValue", () => {
   forEach(
     setKeyValueTestCases,
-    (
-      testCase: {
-        [x: string]: any;
-      },
-      index: number,
-    ) => {
+    (testCase: Record<string, any>, index: number) => {
       const { initial, newEntry, expectedResult } = testCase;
       const actual = initial.slice();
       setKeyValue(actual, newEntry);

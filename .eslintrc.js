@@ -48,6 +48,10 @@ module.exports = {
       "error",
       { devDependencies: ["src/**/*.spec.ts", "src/**/*.spec.tsx"] },
     ],
-    "import/no-unresolved": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      { allowExpressions: true },
+    ],
   },
 };

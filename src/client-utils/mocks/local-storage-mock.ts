@@ -1,23 +1,21 @@
 class LocalStorageMock {
-  store: {
-    [x: string]: any;
-  } = {};
+  store: Record<string, any> = {};
 
-  clear() {
+  clear(): void {
     this.store = {};
   }
 
-  getItem(key) {
+  getItem(key): string {
     return this.store[key];
   }
 
-  setItem(key, value) {
+  setItem(key, value): void {
     if (value) {
       this.store[key] = value.toString();
     }
   }
 
-  removeItem(key) {
+  removeItem(key): void {
     delete this.store[key];
   }
 }

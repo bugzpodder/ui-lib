@@ -1,6 +1,6 @@
 import { jsonToMap, mapToJson } from "../../utils/json-utils";
 
-const getLocalStorage = () => {
+const getLocalStorage = (): any => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore localstorage does not exist on global.
   const { localStorage } = global;
@@ -10,11 +10,11 @@ const getLocalStorage = () => {
   return localStorage;
 };
 
-export const set = (key: string, object: any) => {
+export const set = (key: string, object: any): void => {
   getLocalStorage().setItem(key, JSON.stringify(object));
 };
 
-export const get = (key: string, defaultValue: any = undefined) => {
+export const get = (key: string, defaultValue: any = undefined): any => {
   const object = getLocalStorage().getItem(key);
   if (object !== undefined && object !== null && object !== "undefined") {
     return JSON.parse(object);
@@ -23,7 +23,7 @@ export const get = (key: string, defaultValue: any = undefined) => {
   return defaultValue;
 };
 
-export const remove = (key: string) => {
+export const remove = (key: string): void => {
   getLocalStorage().removeItem(key);
 };
 

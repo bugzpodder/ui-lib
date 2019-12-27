@@ -44,10 +44,10 @@ export const convertObjectKeys = (
   return convertedObject;
 };
 
-const titleize = key => upperFirst(camelCase(key));
-export const titleizeObjectKeys = (object: any, ignoredKeys?: string[]) =>
+const titleize = (key: string): string => upperFirst(camelCase(key));
+export const titleizeObjectKeys = (object: any, ignoredKeys?: string[]): any =>
   convertObjectKeys(titleize, ignoredKeys, object);
-export const camelizeObjectKeys = (object: any, ignoredKeys?: string[]) =>
+export const camelizeObjectKeys = (object: any, ignoredKeys?: string[]): any =>
   convertObjectKeys(camelCase, ignoredKeys, object);
 
 // warning: does not work if the map's key or value is another map object.
@@ -65,7 +65,7 @@ export const jsonToMap: Function = (jsonStr: string) => {
   return new Map(JSON.parse(jsonStr));
 };
 
-export const trimObjectValues = (object: { [x: string]: any }) => {
+export const trimObjectValues = (object: any): any => {
   if (!isObject(object) || object.constructor !== Object) {
     return object;
   }
@@ -79,14 +79,16 @@ export const trimObjectValues = (object: { [x: string]: any }) => {
 };
 
 // TODO(nsawas): Get this to handle duplicate keys (nested objects with keys identical to parent(s)).
-export const flattenObject = (originalObject: { [x: string]: any }) => {
+export const flattenObject = (
+  originalObject: Record<string, any>,
+): Record<string, any> => {
   if (!isObject(originalObject) || originalObject.constructor !== Object) {
     return originalObject;
   }
   if (isEmpty(originalObject)) {
     return {};
   }
-  const flatten = object =>
+  const flatten = (object): any =>
     [].concat(
       ...Object.keys(object).map(key => {
         if (

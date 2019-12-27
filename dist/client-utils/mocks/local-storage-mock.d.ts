@@ -1,9 +1,7 @@
 declare class LocalStorageMock {
-    store: {
-        [x: string]: any;
-    };
+    store: Record<string, any>;
     clear(): void;
-    getItem(key: any): any;
+    getItem(key: any): string;
     setItem(key: any, value: any): void;
     removeItem(key: any): void;
 }

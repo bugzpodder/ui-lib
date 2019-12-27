@@ -8,26 +8,10 @@
  * See https://medium.com/@charpeni/3b3551c440b1 for more details.
  */
 export class AbstractMultiKeyMap {
-  _map: Map<
-    string,
-    {
-      [x: string]: any;
-    }
-  >;
+  _map: Map<string, Record<string, any>>;
 
   // istanbul ignore next
-  constructor(
-    iterables?: Array<
-      [
-        {
-          [x: string]: any;
-        },
-        {
-          [x: string]: any;
-        },
-      ]
-    >,
-  ) {
+  constructor(iterables?: Array<[Record<string, any>, Record<string, any>]>) {
     if (this.constructor === AbstractMultiKeyMap) {
       throw new TypeError("Cannot instantiate abstract class");
     }
@@ -54,7 +38,7 @@ export class AbstractMultiKeyMap {
 
   /* eslint-disable class-methods-use-this */
   // istanbul ignore next abstract
-  serializeKey(key: { [x: string]: any }): string {
+  serializeKey(key: Record<string, any>): string {
     console.debug(`Serializing ${key.toString()}`);
     throw new TypeError("Must implement serializeKey");
   }
@@ -68,46 +52,39 @@ export class AbstractMultiKeyMap {
   }
   /* eslint-enable class-methods-use-this */
 
-  set(
-    object: {
-      [x: string]: any;
-    },
-    value: any,
-  ) {
+  set(object: Record<string, any>, value: any): AbstractMultiKeyMap {
     this._map.set(this.serializeKey(object), value);
     return this;
   }
 
-  get(object: { [x: string]: any }) {
+  get(object: Record<string, any>): any {
     return this._map.get(this.serializeKey(object));
   }
 
-  has(object: { [x: string]: any }) {
+  has(object: Record<string, any>): boolean {
     return this._map.has(this.serializeKey(object));
   }
 
-  delete(object: { [x: string]: any }) {
+  delete(object: Record<string, any>): AbstractMultiKeyMap {
     this._map.delete(this.serializeKey(object));
     return this;
   }
 
-  forEach(callback: Function, callersThis?: any) {
+  forEach(callback: Function, callersThis?: any): void {
     this._map.forEach((value, key) => {
       callback.apply(callersThis, [value, this.deserializeKey(key)]);
     });
   }
 
-  clear() {
+  clear(): void {
     this._map.clear();
   }
 
-  size() {
+  size(): number {
     return this._map.size;
   }
 
-  keys(): Array<{
-    [x: string]: any;
-  }> {
+  keys(): Record<string, any>[] {
     return Array.from(this._map.keys()).map(key => this.deserializeKey(key));
   }
 }

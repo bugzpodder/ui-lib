@@ -35,7 +35,7 @@
  * hash algorithms. The only difference between fnv-1 and fnv-1a is the order of the XOR and multiplication.
  * For more information, see the following: https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
  */
-export const fnv1 = (data: string | Buffer) => {
+export const fnv1 = (data: string | Buffer): number => {
   /* eslint-disable no-bitwise */
   // Offset basis.
   let hash = 0x811c9dc5;

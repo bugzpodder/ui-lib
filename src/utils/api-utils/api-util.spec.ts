@@ -116,7 +116,7 @@ const testBoolean = [
   {},
 ];
 
-const checkResult = (input, options) => {
+const checkResult = (input, options): void => {
   const output = filterResults(input, options);
   expect({ options, input, output }).toMatchSnapshot();
 };
