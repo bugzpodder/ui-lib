@@ -4,25 +4,16 @@ import startCase from "lodash/startCase";
 import { ENCODED_QUOTE_CHAR } from "../api-utils/api-constants";
 import { generateFilledArray } from "../array-utils";
 
-// Map of sentence case key words to their desired display string.
-const KEYWORDS: Map<string, string> = new Map([
-  ["Ngs", "NGS"],
-  ["Npc", "NPC"],
-  ["Qpcr", "qPCR"],
-  ["Ml", "mL"],
-  ["Ul", "µL"],
-  ["Pl", "pL"],
-  ["Lims", "LIMS"],
-  ["Grail", "GRAIL"],
-]);
-
-export const sentenceCase = (string: string): string => {
+export const sentenceCase = (
+  string: string,
+  keywords: Map<string, string> = new Map(),
+): string => {
   string = string || "";
   const sentenceCased = startCase(camelCase(string.trim()));
   const separator = " ";
   return sentenceCased
     .split(separator)
-    .map(word => KEYWORDS.get(word) || word)
+    .map(word => keywords.get(word) || word)
     .join(separator);
 };
 

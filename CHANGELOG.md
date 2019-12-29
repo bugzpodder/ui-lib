@@ -1,3 +1,8 @@
+## 2.0.0
+
+1. (BREAKING) Deprecated legacy type definitions.
+2. (BREAKING) sentenceCase no longer uses a default keyword map.
+
 ## 1.1.0 - 2019-##-
 
 1. Add `ZERO_DATE` constant. This is used to check for zero dates returned by go servers.

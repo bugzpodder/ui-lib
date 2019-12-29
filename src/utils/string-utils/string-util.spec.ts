@@ -54,10 +54,20 @@ describe("upperAlphaChars", () => {
 
 describe("keywords", () => {
   it("should format acronyms", () => {
-    expect(sentenceCase("NPC_QPCR_ASSAY")).toEqual("NPC qPCR Assay");
+    expect(
+      sentenceCase(
+        "NPC_QPCR_ASSAY",
+        new Map([
+          ["Npc", "NPC"],
+          ["Qpcr", "qPCR"],
+        ]),
+      ),
+    ).toEqual("NPC qPCR Assay");
   });
   it("should format units", () => {
-    expect(sentenceCase("OUTPUT_VOLUME_ML")).toEqual("Output Volume mL");
+    expect(sentenceCase("OUTPUT_VOLUME_ML", new Map([["Ml", "mL"]]))).toEqual(
+      "Output Volume mL",
+    );
   });
 });
 

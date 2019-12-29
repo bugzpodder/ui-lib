@@ -1,4 +1,4 @@
-export declare const sentenceCase: (string: string) => string;
+export declare const sentenceCase: (string: string, keywords?: Map<string, string>) => string;
 export declare const upperAlphaChars: any[];
 export declare const normalizeStr: (str: string) => string;
 export declare const makeTitleString: (str: string, capFirst?: boolean) => string;
