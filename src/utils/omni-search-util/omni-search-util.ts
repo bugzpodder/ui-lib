@@ -119,7 +119,7 @@ export const getSearchValuesFromOmniText = (
   });
 
   // If there are field labels that could not be mapped to a searchDef, the omniText is invalid.
-  const invalidKey = [...parsedValues.keys()].find(key => !!key);
+  const invalidKey = Array.from(parsedValues.keys()).find(key => !!key);
   if (invalidKey) {
     const error = new Error(`${invalidKey} is not a valid search tag.`);
     error.name = OMNI_ERROR;
