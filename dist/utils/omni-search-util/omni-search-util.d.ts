@@ -1,5 +1,5 @@
 import { KeyValue } from "../../types/common";
-import { OmniSearchDef, SearchOptionV2 } from "../../types/api";
+import { OmniSearchDef, SearchOption } from "../../types/api";
 /** Parse a map of field label to field value, using OMNI_KEY if no label is present. */
 export declare const parseValuesFromOmniText: (omniText: string) => Map<string, string[]>;
 export declare const getKeysForSearchDef: (searchDef: OmniSearchDef) => string[];
@@ -8,5 +8,5 @@ export declare const getSearchValuesFromOmniText: (searchDefs: OmniSearchDef[] |
 export declare const getOmniTextFromSearchValues: (searchDefs: OmniSearchDef[], searchValues: Map<number, string>) => string;
 export declare const getOmniTextFromKeyValues: (keyValues: KeyValue[]) => string;
 export declare const getItemsFromOmniValue: (omniValue?: string) => string[];
-export declare const getSearchOptions: (searchDefs: OmniSearchDef[], searchValues: Map<number, string>) => SearchOptionV2[];
+export declare const getSearchOptions: (searchDefs: OmniSearchDef[], searchValues: Map<number, string>) => SearchOption[];
 export declare const getValueItemsFromSearchValues: (searchDefs: OmniSearchDef[], searchValues: Map<number, string>, key: string) => string[];

@@ -40,7 +40,7 @@ describe("getSearchValues", () => {
     };
     it(`handles ${String(value)} search value`, () => {
       expect(getSearchValues({ location: location as any })).toEqual(
-        new Map().set("test", { value: String(value) }),
+        new Map().set("test", { values: [String(value)] }),
       );
     });
   });
@@ -87,7 +87,7 @@ describe("updateSearchUrl", () => {
       updateSearchUrl({
         location: location as any,
         history: history as any,
-        searchOptions: new Map().set("test", { value, placeholder }),
+        searchOptions: new Map().set("test", { values: [value], placeholder }),
       });
       expect(history.replace).toBeCalledWith({
         search: generateValueSearchQuery("test", value),

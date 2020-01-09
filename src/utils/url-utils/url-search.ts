@@ -1,5 +1,5 @@
 import isArray from "lodash/isArray";
-import { DeprecatedSearchOptions, SearchOptionValues } from "../../types/api";
+import { SearchOptionValues } from "../../types/api";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { History, Location } from "history";
 import { KeyValue } from "../../types/common";
@@ -9,30 +9,19 @@ import { getQuery, stringifyQuery, updateQuery } from "./url-util";
 type SearchParams = {
   location: Location;
   history: History;
-  searchOptions: DeprecatedSearchOptions;
+  searchOptions: SearchOptionValues;
 };
-
-const isDefinedNotNull = (value: any): boolean =>
-  value !== undefined && value !== null;
 
 export const flattenSearchValues = (
   searchValues: SearchOptionValues,
 ): Record<string, any> =>
   [...searchValues]
-    .map(([key, { value, values }]) => ({ key, value, values }))
-    .filter(({ value, values }) => {
-      if (!isDefinedNotNull(value) && values === undefined) {
-        return false;
-      }
-      if (value === undefined && values !== undefined) {
-        if (!values.length || !values.some(isDefinedNotNull)) {
-          return false;
-        }
-      }
-      return true;
+    .map(([key, { values }]) => ({ key, values }))
+    .filter(({ values }) => {
+      return isArray(values) && values.some(value => value != null);
     })
-    .reduce((acc, { key, value, values }) => {
-      acc[key] = isDefinedNotNull(value) ? value : values;
+    .reduce((acc, { key, values }) => {
+      acc[key] = values.length === 1 ? values[0] : values;
       return acc;
     }, {});
 
@@ -43,11 +32,7 @@ export const expandSearchValues = (
     const searchValues = new Map();
     Object.keys(validSearchValues).forEach(key => {
       const result = validSearchValues[key];
-      if (isArray(result)) {
-        searchValues.set(key, { values: result });
-      } else {
-        searchValues.set(key, { value: result });
-      }
+      searchValues.set(key, { values: isArray(result) ? result : [result] });
     });
     return searchValues;
   } catch (error) {
@@ -57,30 +42,29 @@ export const expandSearchValues = (
 };
 
 export const extractSearchValues = (
-  searchOptions: DeprecatedSearchOptions,
+  searchOptions: SearchOptionValues,
 ): SearchOptionValues => {
   const searchValues = new Map();
-  searchOptions.forEach(({ value, values }, key) => {
-    if (values) {
-      values = values.filter(value => value != null);
-    }
-    searchValues.set(key, { value, values });
+  searchOptions.forEach(({ values }, key) => {
+    searchValues.set(key, {
+      values: isArray(values) ? values.filter(value => value != null) : [],
+    });
   });
   return searchValues;
 };
 
 export const mergeSearchOptions = (
-  searchOptions: DeprecatedSearchOptions,
+  searchOptions: SearchOptionValues,
   searchValues?: SearchOptionValues,
-): DeprecatedSearchOptions => {
+): SearchOptionValues => {
   if (!searchValues) {
     return searchOptions;
   }
-  const newSearchOptions: DeprecatedSearchOptions = new Map(searchOptions);
+  const newSearchOptions: SearchOptionValues = new Map(searchOptions);
   searchOptions.forEach((searchOption, key) => {
     if (searchValues && searchValues.has(key)) {
-      const { value, values } = searchValues.get(key) || {};
-      newSearchOptions.set(key, { ...searchOption, value, values });
+      const { values } = searchValues.get(key) || { values: [] };
+      newSearchOptions.set(key, { ...searchOption, values });
     }
   });
   return newSearchOptions;

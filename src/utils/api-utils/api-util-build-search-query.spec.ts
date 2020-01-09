@@ -1,3 +1,5 @@
+import endOfDay from "date-fns/endOfDay";
+import startOfDay from "date-fns/startOfDay";
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
@@ -17,11 +19,7 @@ import {
   buildCustomURIQueryParams,
   buildQuery,
   buildSearchQuery,
-  deprecatedBuildSearchQuery,
 } from "./api-util";
-
-import endOfDay from "date-fns/endOfDay";
-import startOfDay from "date-fns/startOfDay";
 
 describe("buildSearchQuery", () => {
   it("should generate no query for no search", () => {
@@ -209,340 +207,288 @@ describe("buildSearchQuery for like id search", () => {
   });
 });
 
-describe("deprecatedBuildSearchQuery for numeric search", () => {
+describe("buildSearchQuery for numeric search", () => {
   it("should generate no query for empty search", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: undefined,
-          type: NUMERIC_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [undefined], type: NUMERIC_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for 0 search", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: 0,
-          type: NUMERIC_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [0], type: NUMERIC_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("column1==0");
   });
   it("should generate query for one element", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: 123,
-          type: NUMERIC_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [123], type: NUMERIC_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("column1==123");
   });
 });
 
-describe("deprecatedBuildSearchQuery for boolean search", () => {
+describe("buildSearchQuery for boolean search", () => {
   it("should generate no query for empty search", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: undefined,
-          type: BOOLEAN_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [undefined], type: BOOLEAN_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for false search", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: false,
-          type: BOOLEAN_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [false], type: BOOLEAN_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("column1==false");
   });
   it("should generate query for one element", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: true,
-          type: BOOLEAN_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [true], type: BOOLEAN_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("column1==true");
   });
 });
 
-describe("deprecatedBuildSearchQuery for multi field search", () => {
+describe("buildSearchQuery for multi field search", () => {
   it("should generate no query for empty string search", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: "",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [""],
           type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["column1", "column2"],
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for elements", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          value: "123",
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["123"],
           type: LIKE_TEXT_SEARCH_TYPE,
           searchFields: ["column1", "column2"],
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual('(column1=="%123%")||(column2=="%123%")');
   });
   it("should generate query for elements, and multiple options", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map()
-          .set("column1", {
-            value: "123",
-            type: LIKE_TEXT_SEARCH_TYPE,
-            searchFields: ["column1", "column2"],
-          })
-          .set("column3", {
-            value: "456",
-            type: LIKE_TEXT_SEARCH_TYPE,
-          }),
-      ),
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: ["123"],
+          type: LIKE_TEXT_SEARCH_TYPE,
+          searchFields: ["column1", "column2"],
+        },
+        { name: "column3", values: ["456"], type: LIKE_TEXT_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(
       '((column1=="%123%")||(column2=="%123%"))&&(column3=="%456%")',
     );
   });
 });
 
-describe("deprecatedBuildSearchQuery for multi value search", () => {
+describe("buildSearchQuery for multi value search", () => {
   it("should generate no query for empty array", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          values: [],
-          type: FULL_TEXT_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [], type: FULL_TEXT_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("");
   });
   it("should generate query for Like text search elements", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
+      buildSearchQuery([
+        {
+          name: "column1",
           type: LIKE_TEXT_SEARCH_TYPE,
           values: ["123", "345"],
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual('column1=="%123%"||column1=="%345%"');
   });
   it("should generate query for Numeric text search elements", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
-          type: NUMERIC_SEARCH_TYPE,
-          values: [123, 345.6],
-        }),
-      ),
+      buildSearchQuery([
+        { name: "column1", type: NUMERIC_SEARCH_TYPE, values: [123, 345.6] },
+      ]),
     ).resolves.toEqual("column1==123||column1==345.6");
   });
   it("should generate query for Boolean text search elements", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
+      buildSearchQuery([
+        {
+          name: "column1",
           type: BOOLEAN_SEARCH_TYPE,
           values: [true, false], // Technically, this is silly...
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual("column1==true||column1==false");
   });
   it("should generate query for Full text search elements", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("column1", {
+      buildSearchQuery([
+        {
+          name: "column1",
           type: FULL_TEXT_SEARCH_TYPE,
           values: ["123", "345"],
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual('column1=="123"||column1=="345"');
   });
 });
 
-describe("deprecatedBuildSearchQuery for datetime search", () => {
+describe("buildSearchQuery for datetime search", () => {
   const date = "2017-04-20T16:20:00.000Z";
   const start = startOfDay(new Date(date)).toISOString();
   const end = endOfDay(new Date(date)).toISOString();
   it("should generate query for start date", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`${date}`],
-          type: DATETIME_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [`${date}`], type: DATETIME_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(`(date>="${start}")`);
   });
   it("should generate query for start date to", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`${date} to`],
-          type: DATETIME_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [`${date} to`], type: DATETIME_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(`(date>="${start}")`);
   });
   it("should generate query for end date with no string startDate", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`to ${date}`],
-          type: DATETIME_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [`to ${date}`], type: DATETIME_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(`(date<="${end}")`);
   });
   const newStartDate = "2016-04-20T16:20:00.000Z";
   const newStartOfDay = startOfDay(new Date(newStartDate)).toISOString();
   it("should generate query for start and end date", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
+      buildSearchQuery([
+        {
+          name: "date",
           values: [`${newStartDate} to ${date}`],
           type: DATETIME_SEARCH_TYPE,
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${end}")`);
   });
   it("should generate query for reversed start and end date", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
+      buildSearchQuery([
+        {
+          name: "date",
           values: [`${date} to ${newStartDate}`],
           type: DATETIME_SEARCH_TYPE,
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual(`(date>="${newStartOfDay}"&&date<="${end}")`);
   });
   it("should generate query for no dates", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [],
-          type: DATETIME_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [], type: DATETIME_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual("");
   });
 });
 
-describe("deprecatedBuildSearchQuery for date search", () => {
+describe("buildSearchQuery for date search", () => {
   const date = "2017-04-20";
   it("should generate query for start date", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`${date}`],
-          type: DATE_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [`${date}`], type: DATE_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(`(date>="${date}")`);
   });
   it("should generate query for start date to", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`${date} to`],
-          type: DATE_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [`${date} to`], type: DATE_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(`(date>="${date}")`);
   });
   it("should generate query for end date with no string startDate", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`to ${date}`],
-          type: DATE_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([
+        { name: "date", values: [`to ${date}`], type: DATE_SEARCH_TYPE },
+      ]),
     ).resolves.toEqual(`(date<="${date}")`);
   });
   const newStartDate = "2016-04-20";
   it("should generate query for start and end date", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`${newStartDate} - ${date}`],
+      buildSearchQuery([
+        {
+          name: "date",
+          values: [`${newStartDate} to ${date}`],
           type: DATE_SEARCH_TYPE,
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual(`(date>="${newStartDate}"&&date<="${date}")`);
   });
   it("should generate query for reversed start and end date", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [`${date} - ${newStartDate}`],
+      buildSearchQuery([
+        {
+          name: "date",
+          values: [`${date} to ${newStartDate}`],
           type: DATE_SEARCH_TYPE,
-        }),
-      ),
+        },
+      ]),
     ).resolves.toEqual(`(date>="${newStartDate}"&&date<="${date}")`);
   });
   it("should generate query for no dates", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map().set("date", {
-          values: [],
-          type: DATE_SEARCH_TYPE,
-        }),
-      ),
+      buildSearchQuery([{ name: "date", values: [], type: DATE_SEARCH_TYPE }]),
     ).resolves.toEqual("");
   });
 });
 
-describe("deprecatedBuildSearchQuery for several search items", () => {
+describe("buildSearchQuery for several search items", () => {
   it("should generate query for several search elements", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map()
-          .set("column1", {
-            value: 123,
-            type: NUMERIC_SEARCH_TYPE,
-          })
-          .set("column2", {
-            value: "def xyz",
-            type: FULL_TEXT_SEARCH_TYPE,
-          })
-          .set("column3", {
-            value: "some string",
-            type: LIKE_TEXT_SEARCH_TYPE,
-          }),
-      ),
+      buildSearchQuery([
+        { name: "column1", values: [123], type: NUMERIC_SEARCH_TYPE },
+        { name: "column2", values: ["def xyz"], type: FULL_TEXT_SEARCH_TYPE },
+        {
+          name: "column3",
+          values: ["some string"],
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ]),
     ).resolves.toEqual(
       '(column1==123)&&(column2=="def xyz")&&(column3=="%some string%")',
     );
   });
   it("should generate query for several search elements when one is empty string", () => {
     expect(
-      deprecatedBuildSearchQuery(
-        new Map()
-          .set("column1", {
-            value: 123,
-            type: NUMERIC_SEARCH_TYPE,
-          })
-          .set("column2", {
-            value: "",
-            type: FULL_TEXT_SEARCH_TYPE,
-          })
-          .set("column3", {
-            value: "some string",
-            type: LIKE_TEXT_SEARCH_TYPE,
-          }),
-      ),
+      buildSearchQuery([
+        {
+          name: "column1",
+          values: [123],
+          type: NUMERIC_SEARCH_TYPE,
+        },
+        { name: "column2", values: [""], type: FULL_TEXT_SEARCH_TYPE },
+        {
+          name: "column3",
+          values: ["some string"],
+          type: LIKE_TEXT_SEARCH_TYPE,
+        },
+      ]),
     ).resolves.toEqual('(column1==123)&&(column3=="%some string%")');
   });
   it("should generate query for several search elements when the last string is empty string (See T1661)", () => {

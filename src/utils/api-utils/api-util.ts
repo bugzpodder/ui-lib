@@ -1,21 +1,13 @@
-import endOfDay from "date-fns/endOfDay";
-import isAfter from "date-fns/isAfter";
-import parseISO from "date-fns/parseISO";
-import startOfDay from "date-fns/startOfDay";
-import {
-  DeprecatedSearchOption,
-  DeprecatedSearchOptions,
-  GetContentOptionsV2,
-  SearchOptionV2,
-  SortOption,
-} from "../../types/api";
-/** Shared API utilities * */
-
 import debounce from "lodash/debounce";
+import endOfDay from "date-fns/endOfDay";
 import escapeRegExp from "lodash/escapeRegExp";
 import get from "lodash/get";
+import isAfter from "date-fns/isAfter";
 import isString from "lodash/isString";
+import isValid from "date-fns/isValid";
+import parseISO from "date-fns/parseISO";
 import partialRight from "lodash/partialRight";
+import startOfDay from "date-fns/startOfDay";
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
@@ -30,9 +22,10 @@ import {
   OMNI_TEXT_SEARCH_TYPE,
   URI_QUERY_TYPE,
 } from "./api-constants";
-
+import { GetContentOptions, SearchOption, SortOption } from "../../types/api";
 import { extractDateRange, formatDate } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
+
 import { sanitizeId } from "../id-utils";
 
 /*
@@ -72,20 +65,7 @@ export const isValueValid = (value: any): boolean => {
   return value !== "" && value != null;
 };
 
-const getSearchValues = (searchOption: DeprecatedSearchOption): string[] => {
-  const { value = "", values } = searchOption;
-  let searchValues: string[] = [];
-  if (Array.isArray(values)) {
-    searchValues = values;
-  } else if (Array.isArray(value)) {
-    searchValues = value;
-  } else if (value != null) {
-    searchValues = [value];
-  }
-  return searchValues;
-};
-
-const getEscapedSearchValues = (searchOption: SearchOptionV2): string[] => {
+const getEscapedSearchValues = (searchOption: SearchOption): string[] => {
   const { values, type } = searchOption;
   let searchValues = values;
   if (type === FULL_ID_SEARCH_TYPE || type === LIKE_ID_SEARCH_TYPE) {
@@ -100,28 +80,9 @@ const getEscapedSearchValues = (searchOption: SearchOptionV2): string[] => {
   return searchValues;
 };
 
-const getSearchOptionsV2 = (
-  deprecatedSearchOptions: DeprecatedSearchOptions = new Map(),
-): SearchOptionV2[] => {
-  const searchOptionsV2: SearchOptionV2[] = [];
-  deprecatedSearchOptions.forEach((searchOption, name) => {
-    const values = getSearchValues(searchOption);
-    const { type, searchFields, searchOperator, includeNulls } = searchOption;
-    searchOptionsV2.push({
-      name,
-      type,
-      searchFields: searchFields || [name],
-      values,
-      searchOperator,
-      includeNulls,
-    });
-  });
-  return searchOptionsV2;
-};
-
 const resolveSearchOptions = async (
-  searchOptions: SearchOptionV2[] = [],
-): Promise<SearchOptionV2[]> =>
+  searchOptions: SearchOption[] = [],
+): Promise<SearchOption[]> =>
   Promise.all(
     searchOptions.map(async searchOption => {
       const { type, mapValues } = searchOption;
@@ -143,7 +104,7 @@ const resolveSearchOptions = async (
   );
 
 export const buildCustomURIQueryParams = async (
-  searchOptions: SearchOptionV2[] = [],
+  searchOptions: SearchOption[] = [],
   params: URLSearchParams,
 ): Promise<void> => {
   const resolvedSearchOptions = await resolveSearchOptions(
@@ -168,7 +129,7 @@ q query URL parameter of form:
 q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 export const buildSearchQuery = async (
-  searchOptions: SearchOptionV2[] = [],
+  searchOptions: SearchOption[] = [],
 ): Promise<string> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
@@ -267,11 +228,10 @@ export const buildSearchQuery = async (
             let { startDate, endDate = "" } = extractDateRange(
               dateRangeString || "",
             );
-
             let startDateObj = parseISO(startDate);
             let endDateObj = parseISO(endDate);
 
-            if (startDateObj && endDateObj) {
+            if (isValid(startDateObj) && isValid(endDateObj)) {
               if (isAfter(startDateObj, endDateObj)) {
                 [startDate, endDate] = [endDate, startDate];
                 [startDateObj, endDateObj] = [endDateObj, startDateObj];
@@ -279,7 +239,7 @@ export const buildSearchQuery = async (
             }
             let dateSearch = "";
             if (isValueValid(startDate) && String(startDate).trim() !== "") {
-              if (type === DATETIME_SEARCH_TYPE) {
+              if (type === DATETIME_SEARCH_TYPE && isValid(startDateObj)) {
                 startDate = startOfDay(startDateObj).toISOString();
               } else {
                 startDate = formatDate(startDateObj);
@@ -287,7 +247,7 @@ export const buildSearchQuery = async (
               dateSearch = `${searchFields[0]}>="${startDate}"`;
             }
             if (isValueValid(endDate) && String(endDate).trim() !== "") {
-              if (type === DATETIME_SEARCH_TYPE) {
+              if (type === DATETIME_SEARCH_TYPE && isValid(endDateObj)) {
                 endDate = endOfDay(endDateObj).toISOString();
               } else {
                 endDate = formatDate(endDateObj);
@@ -315,7 +275,7 @@ export const buildSearchQuery = async (
 };
 
 export const buildQuery = async (
-  contentOptions: GetContentOptionsV2 = {},
+  contentOptions: GetContentOptions = {},
 ): Promise<URLSearchParams> => {
   const { offset, count, searchOptions, sortOptions } = contentOptions;
 
@@ -346,20 +306,9 @@ export const buildQuery = async (
   return params;
 };
 
-/*
-Using a Map of searchOptions, this builds a search query that and's each item for the
-q query URL parameter of form:
-q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
-*/
-// eslint-disable-next-line max-len
-export const deprecatedBuildSearchQuery = (
-  deprecatedSearchOptions: DeprecatedSearchOptions,
-): Promise<string> =>
-  buildSearchQuery(getSearchOptionsV2(deprecatedSearchOptions));
-
 export const filterResults = (
   items: Array<any>,
-  options: GetContentOptionsV2,
+  options: GetContentOptions,
 ): Array<any> => {
   const { count, offset, sortOptions = [], searchOptions = [] } = options;
 

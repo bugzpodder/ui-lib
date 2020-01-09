@@ -31,7 +31,9 @@ describe("flattenSearchValues", () => {
   });
   singleValues.forEach(value => {
     it(`handles ${String(value)} search value`, () => {
-      expect(flattenSearchValues(new Map().set("test", { value }))).toEqual({
+      expect(
+        flattenSearchValues(new Map().set("test", { values: [value] })),
+      ).toEqual({
         test: value,
       });
     });
@@ -59,7 +61,7 @@ describe("expandSearchValues", () => {
   singleValues.forEach(value => {
     it(`handles ${String(value)} search value`, () => {
       expect(expandSearchValues({ test: value })).toEqual(
-        new Map().set("test", { value }),
+        new Map().set("test", { values: [value] }),
       );
     });
   });
@@ -79,8 +81,10 @@ describe("extractSearchValues", () => {
   singleValues.forEach(value => {
     it(`handles ${String(value)} search value`, () => {
       expect(
-        extractSearchValues(new Map().set("test", { value, placeholder })),
-      ).toEqual(new Map().set("test", { value }));
+        extractSearchValues(
+          new Map().set("test", { values: [value], placeholder }),
+        ),
+      ).toEqual(new Map().set("test", { values: [value] }));
     });
   });
   arrayValues.forEach(values => {
@@ -115,7 +119,10 @@ describe("mergeSearchOptions", () => {
   singleValues.forEach(value => {
     it("merges no search values into empty search options", () => {
       expect(
-        mergeSearchOptions(new Map(), new Map().set("test", { value })),
+        mergeSearchOptions(
+          new Map(),
+          new Map().set("test", { values: [value] }),
+        ),
       ).toEqual(new Map());
     });
   });
@@ -123,7 +130,10 @@ describe("mergeSearchOptions", () => {
     it("merges no search values into mismatched search options", () => {
       const searchOptions = new Map().set("test2", { placeholder });
       expect(
-        mergeSearchOptions(searchOptions, new Map().set("test", { value })),
+        mergeSearchOptions(
+          searchOptions,
+          new Map().set("test", { values: [value] }),
+        ),
       ).toEqual(searchOptions);
     });
   });
@@ -132,9 +142,9 @@ describe("mergeSearchOptions", () => {
       expect(
         mergeSearchOptions(
           new Map().set("test", { placeholder }),
-          new Map().set("test", { value }),
+          new Map().set("test", { values: [value] }),
         ),
-      ).toEqual(new Map().set("test", { placeholder, value }));
+      ).toEqual(new Map().set("test", { placeholder, values: [value] }));
     });
   });
   arrayValues.forEach(values => {

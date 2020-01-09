@@ -6,33 +6,13 @@ export type SortOption = { id: string; desc?: boolean };
 
 // Search Options. Used by API calls to build the query:
 export type SearchOptionValue = {
-  // TODO(jsingh) Deprecate singular value
-  value?: string | null;
-  values?: string[];
+  values: any[];
 };
 export type SearchOptionValues = Map<string, SearchOptionValue>;
-
-export type DeprecatedSearchOption = {
-  type: symbol;
-  searchFields?: string[];
-  isCustomRendered?: boolean;
-  placeholder?: string;
-  searchOperator?: string;
-  includeNulls?: boolean;
-} & SearchOptionValue;
-
-export type DeprecatedSearchOptions = Map<string, DeprecatedSearchOption>;
 
 export type PaginationOptions = {
   offset: number;
   count: number;
-};
-
-export type DeprecatedGetContentOptions = {
-  offset?: number;
-  count?: number;
-  searchOptions?: DeprecatedSearchOptions;
-  sortOptions?: SortOption[];
 };
 
 export type SearchDef = {
@@ -50,26 +30,24 @@ export type SearchDef = {
   mapValuesDispatcher?: (x0: any) => (x0: string[]) => Promise<string[]>;
 };
 
-export type SearchOptionV2 = {
-  values: string[];
-} & SearchDef;
+export type SearchOption = SearchOptionValue & SearchDef;
 
-export type GetContentOptionsV2 = {
+export type GetContentOptions = {
   offset?: number;
   count?: number;
-  searchOptions?: SearchOptionV2[];
+  searchOptions?: SearchOption[];
   sortOptions?: SortOption[];
 };
 
-export type OmniQueryOptionsV2 = {
+export type OmniQueryOptions = {
   /** `isUserSearchAction` is true when the omni query is updated by the user. */
   isUserSearchAction?: boolean;
-  searchOptions: SearchOptionV2[];
+  searchOptions: SearchOption[];
 };
 
 // TODO(jsingh): simplify all these types!
 export type ApiQueryOptions = {
-  searchOptions: SearchOptionV2[];
+  searchOptions: SearchOption[];
   sortOptions: SortOption[];
   selectedRowIds: any[];
   isLoading: boolean;
@@ -87,7 +65,7 @@ export type OmniSearchDef = {
 
 export type OmniSearchValues = Map<number, string>;
 
-// Search Definitions. Used by OmniSearch to build the UI. Used to build DeprecatedSearchOptions:
+// Search Definitions. Used by OmniSearch to build the UI.
 export type SearchFieldProps = {
   searchKey: string;
   placeholder: string;
@@ -101,7 +79,7 @@ export type SearchFieldProps = {
 
 export type SearchApi = {
   searchDefs: OmniSearchDef[];
-  setSearchOptions: (options: OmniQueryOptionsV2) => any;
+  setSearchOptions: (options: OmniQueryOptions) => any;
   getInitialValues?: (searchDefs: OmniSearchDef[]) => OmniSearchValues;
 };
 
@@ -135,14 +113,14 @@ export type ApiIssue = {
   errorCode?: string;
 };
 
-export type ApiIssues = {
+export type ApiProblems = {
   errors: ApiIssue[];
   warnings: ApiIssue[];
 };
 
 export type UnprocessedJsonResult = {
   result?: Record<string, any>;
-  errors?: ApiIssues;
+  errors?: ApiProblems;
 };
 
 export type ApiDispatchers = {

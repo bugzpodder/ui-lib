@@ -4,7 +4,6 @@ export {
   buildOrderQuery,
   buildSearchQuery,
   debounceRequest,
-  deprecatedBuildSearchQuery,
   filterResults,
   boolToString,
   getPage,

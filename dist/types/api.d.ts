@@ -4,28 +4,12 @@ export declare type SortOption = {
     desc?: boolean;
 };
 export declare type SearchOptionValue = {
-    value?: string | null;
-    values?: string[];
+    values: any[];
 };
 export declare type SearchOptionValues = Map<string, SearchOptionValue>;
-export declare type DeprecatedSearchOption = {
-    type: symbol;
-    searchFields?: string[];
-    isCustomRendered?: boolean;
-    placeholder?: string;
-    searchOperator?: string;
-    includeNulls?: boolean;
-} & SearchOptionValue;
-export declare type DeprecatedSearchOptions = Map<string, DeprecatedSearchOption>;
 export declare type PaginationOptions = {
     offset: number;
     count: number;
-};
-export declare type DeprecatedGetContentOptions = {
-    offset?: number;
-    count?: number;
-    searchOptions?: DeprecatedSearchOptions;
-    sortOptions?: SortOption[];
 };
 export declare type SearchDef = {
     name: string;
@@ -41,22 +25,20 @@ export declare type SearchDef = {
     mapValues?: (x0: string[]) => Promise<string[]> | string[];
     mapValuesDispatcher?: (x0: any) => (x0: string[]) => Promise<string[]>;
 };
-export declare type SearchOptionV2 = {
-    values: string[];
-} & SearchDef;
-export declare type GetContentOptionsV2 = {
+export declare type SearchOption = SearchOptionValue & SearchDef;
+export declare type GetContentOptions = {
     offset?: number;
     count?: number;
-    searchOptions?: SearchOptionV2[];
+    searchOptions?: SearchOption[];
     sortOptions?: SortOption[];
 };
-export declare type OmniQueryOptionsV2 = {
+export declare type OmniQueryOptions = {
     /** `isUserSearchAction` is true when the omni query is updated by the user. */
     isUserSearchAction?: boolean;
-    searchOptions: SearchOptionV2[];
+    searchOptions: SearchOption[];
 };
 export declare type ApiQueryOptions = {
-    searchOptions: SearchOptionV2[];
+    searchOptions: SearchOption[];
     sortOptions: SortOption[];
     selectedRowIds: any[];
     isLoading: boolean;
@@ -82,7 +64,7 @@ export declare type SearchFieldProps = {
 };
 export declare type SearchApi = {
     searchDefs: OmniSearchDef[];
-    setSearchOptions: (options: OmniQueryOptionsV2) => any;
+    setSearchOptions: (options: OmniQueryOptions) => any;
     getInitialValues?: (searchDefs: OmniSearchDef[]) => OmniSearchValues;
 };
 export declare type OmniSearchCommand = {
@@ -111,13 +93,13 @@ export declare type ApiIssue = {
     path: string;
     errorCode?: string;
 };
-export declare type ApiIssues = {
+export declare type ApiProblems = {
     errors: ApiIssue[];
     warnings: ApiIssue[];
 };
 export declare type UnprocessedJsonResult = {
     result?: Record<string, any>;
-    errors?: ApiIssues;
+    errors?: ApiProblems;
 };
 export declare type ApiDispatchers = {
     handleError: (errorMessage: string, object: Record<string, any>) => any;

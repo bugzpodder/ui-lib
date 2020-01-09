@@ -1,15 +1,15 @@
-import { DeprecatedSearchOptions } from "../../types/api";
+import { SearchOptionValues } from "../../types/api";
 import { History, Location } from "history";
 import { KeyValue } from "../../types/common";
 declare type SearchParams = {
     location: Location;
     history: History;
-    searchOptions: DeprecatedSearchOptions;
+    searchOptions: SearchOptionValues;
 };
 export declare const flattenSearchValues: (searchValues: Map<string, import("../../types/api").SearchOptionValue>) => Record<string, any>;
 export declare const expandSearchValues: (validSearchValues: Record<string, any>) => Map<string, import("../../types/api").SearchOptionValue>;
-export declare const extractSearchValues: (searchOptions: Map<string, import("../../types/api").DeprecatedSearchOption>) => Map<string, import("../../types/api").SearchOptionValue>;
-export declare const mergeSearchOptions: (searchOptions: Map<string, import("../../types/api").DeprecatedSearchOption>, searchValues?: Map<string, import("../../types/api").SearchOptionValue> | undefined) => Map<string, import("../../types/api").DeprecatedSearchOption>;
+export declare const extractSearchValues: (searchOptions: Map<string, import("../../types/api").SearchOptionValue>) => Map<string, import("../../types/api").SearchOptionValue>;
+export declare const mergeSearchOptions: (searchOptions: Map<string, import("../../types/api").SearchOptionValue>, searchValues?: Map<string, import("../../types/api").SearchOptionValue> | undefined) => Map<string, import("../../types/api").SearchOptionValue>;
 export declare const getSearchValues: ({ location, }: {
     location: Location<any>;
 }) => Map<string, import("../../types/api").SearchOptionValue>;
