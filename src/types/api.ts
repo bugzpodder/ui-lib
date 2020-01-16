@@ -45,7 +45,7 @@ export type OmniQueryOptions = {
   searchOptions: SearchOption[];
 };
 
-// TODO(jsingh): simplify all these types!
+// TODO(jzhao): simplify all these types!
 export type ApiQueryOptions = {
   searchOptions: SearchOption[];
   sortOptions: SortOption[];
@@ -60,7 +60,7 @@ export type OmniSearchDef = {
   aliases?: string[];
   description?: string;
   localStorageKeySuffix?: string;
-  // TODO(jrosenfield): support validation in the future?
+  // TODO(jzhao): support validation in the future?
 } & SearchDef;
 
 export type OmniSearchValues = Map<number, string>;

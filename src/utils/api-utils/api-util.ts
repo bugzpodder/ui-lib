@@ -2,6 +2,7 @@ import debounce from "lodash/debounce";
 import endOfDay from "date-fns/endOfDay";
 import escapeRegExp from "lodash/escapeRegExp";
 import get from "lodash/get";
+import identity from "lodash/identity";
 import isAfter from "date-fns/isAfter";
 import isString from "lodash/isString";
 import isValid from "date-fns/isValid";
@@ -25,8 +26,6 @@ import {
 import { GetContentOptions, SearchOption, SortOption } from "../../types/api";
 import { extractDateRange, formatDate } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
-
-import { sanitizeId } from "../id-utils";
 
 /*
 Determine the page for the page query URL parameter
@@ -65,12 +64,15 @@ export const isValueValid = (value: any): boolean => {
   return value !== "" && value != null;
 };
 
-const getEscapedSearchValues = (searchOption: SearchOption): string[] => {
+const getEscapedSearchValues = (
+  searchOption: SearchOption,
+  transformId: (id: string) => string,
+): string[] => {
   const { values, type } = searchOption;
   let searchValues = values;
   if (type === FULL_ID_SEARCH_TYPE || type === LIKE_ID_SEARCH_TYPE) {
     searchValues = searchValues.reduce((memo: string[], currValue) => {
-      const sanitizedValue = sanitizeId(String(currValue));
+      const sanitizedValue = transformId(String(currValue));
       if (sanitizedValue !== currValue) {
         return [...memo, currValue, sanitizedValue];
       }
@@ -82,6 +84,7 @@ const getEscapedSearchValues = (searchOption: SearchOption): string[] => {
 
 const resolveSearchOptions = async (
   searchOptions: SearchOption[] = [],
+  transformId: (x: string) => string = identity,
 ): Promise<SearchOption[]> =>
   Promise.all(
     searchOptions.map(async searchOption => {
@@ -91,14 +94,15 @@ const resolveSearchOptions = async (
       if (mapValues) {
         values = await mapValues(values);
       }
-      values = getEscapedSearchValues({ ...searchOption, values }).map(
-        value => {
-          if (isDateSearchType) {
-            return value;
-          }
+      values = getEscapedSearchValues(
+        { ...searchOption, values },
+        transformId,
+      ).map(value => {
+        if (isDateSearchType) {
           return value;
-        },
-      );
+        }
+        return value;
+      });
       return { ...searchOption, values };
     }),
   );
@@ -106,11 +110,13 @@ const resolveSearchOptions = async (
 export const buildCustomURIQueryParams = async (
   searchOptions: SearchOption[] = [],
   params: URLSearchParams,
+  transformId: (id: string) => string = identity,
 ): Promise<void> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
       searchOption => searchOption && searchOption.queryType === URI_QUERY_TYPE,
     ),
+    transformId,
   );
   resolvedSearchOptions
     .filter(searchOption => searchOption.values && searchOption.values.length)
@@ -130,11 +136,13 @@ q=(key=="value")&&(key=="%value%")&&(dateKey>="ISO8601date")
 */
 export const buildSearchQuery = async (
   searchOptions: SearchOption[] = [],
+  transformId: (id: string) => string = identity,
 ): Promise<string> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
       searchOption => searchOption && !searchOption.queryType,
     ),
+    transformId,
   );
   const query = resolvedSearchOptions.reduce((memo, searchOption) => {
     const {
@@ -276,6 +284,7 @@ export const buildSearchQuery = async (
 
 export const buildQuery = async (
   contentOptions: GetContentOptions = {},
+  transformId: (id: string) => string = identity,
 ): Promise<URLSearchParams> => {
   const { offset, count, searchOptions, sortOptions } = contentOptions;
 
@@ -287,8 +296,8 @@ export const buildQuery = async (
 
   const params = new URLSearchParams();
   const [searchQuery] = await Promise.all([
-    buildSearchQuery(searchOptions),
-    buildCustomURIQueryParams(searchOptions, params),
+    buildSearchQuery(searchOptions, transformId),
+    buildCustomURIQueryParams(searchOptions, params, transformId),
   ]);
   if (searchQuery) {
     params.append("q", searchQuery);
@@ -309,6 +318,7 @@ export const buildQuery = async (
 export const filterResults = (
   items: Array<any>,
   options: GetContentOptions,
+  transformId: (id: string) => string = identity,
 ): Array<any> => {
   const { count, offset, sortOptions = [], searchOptions = [] } = options;
 
@@ -324,7 +334,7 @@ export const filterResults = (
         values,
         includeNulls,
       } = searchOption;
-      const searchValues = getEscapedSearchValues(searchOption);
+      const searchValues = getEscapedSearchValues(searchOption, transformId);
 
       if (DATE_SEARCH_TYPES.includes(type)) {
         if (searchFields.length === 0 || !item[searchFields[0]]) {
@@ -365,7 +375,7 @@ export const filterResults = (
           break;
         case LIKE_ID_SEARCH_TYPE:
           compare = (e, value): boolean =>
-            new RegExp(escapeRegExp(sanitizeId(String(value))), "i").test(e);
+            new RegExp(escapeRegExp(transformId(String(value))), "i").test(e);
           break;
         case BOOLEAN_SEARCH_TYPE:
           compare = (e, value): boolean =>
@@ -378,7 +388,7 @@ export const filterResults = (
           compare = (e, value): boolean => e === value;
           break;
         case FULL_ID_SEARCH_TYPE:
-          compare = (e, value): boolean => e === sanitizeId(String(value));
+          compare = (e, value): boolean => e === transformId(String(value));
           break;
         default:
           throw new Error(`Unknown search type: ${String(type)}`);

@@ -22,8 +22,8 @@ describe("sanitizeId", () => {
       expect(sanitizeId(`S00010${dash}1`)).toBe("S000101");
     });
   });
-  it("shouldn't sanitize accession ids or mock sample ids", () => {
-    expect(sanitizeId("A00014L-1")).toBe("A00014L-1");
+  it("should sanitize accession ids or mock sample ids", () => {
+    expect(sanitizeId("A00014L-1")).toBe("A00014L1");
     expect(sanitizeId("NPC-NGS-1")).toBe("NPC-NGS-1");
   });
   it("should be able to handle undefined input", () => {

@@ -3,6 +3,7 @@
 1. (BREAKING) Deprecated legacy type definitions.
 2. (BREAKING) sentenceCase no longer uses a default keyword map.
 3. (BREAKING) Removed legacy value from OmniSearch utils.
+4. (BREAKING) Make sanitizeId optional in buildQuery and filterResults APIs.
 
 ## 1.1.0 - 2019-##-
 

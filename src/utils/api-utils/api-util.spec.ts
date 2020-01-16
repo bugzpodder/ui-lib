@@ -9,6 +9,7 @@ import {
   NUMERIC_SEARCH_TYPE,
 } from "./api-constants";
 import { filterResults } from "./api-util";
+import { sanitizeId } from "../id-utils/id-util";
 
 const testSimple = [
   { id: 1 },
@@ -117,7 +118,13 @@ const testBoolean = [
 ];
 
 const checkResult = (input, options): void => {
-  const output = filterResults(input, options);
+  const transformId = (id: string): string => {
+    if (id.length > 0 && id[0] === "A") {
+      return id;
+    }
+    return sanitizeId(id);
+  };
+  const output = filterResults(input, options, transformId);
   expect({ options, input, output }).toMatchSnapshot();
 };
 

@@ -20,6 +20,7 @@ import {
   buildQuery,
   buildSearchQuery,
 } from "./api-util";
+import { sanitizeId } from "../id-utils";
 
 describe("buildSearchQuery", () => {
   it("should generate no query for no search", () => {
@@ -135,13 +136,16 @@ describe("buildSearchQuery for full id search", () => {
   });
   it("should generate query for one element", () => {
     expect(
-      buildSearchQuery([
-        {
-          name: "column1",
-          values: ["P00100-1"],
-          type: FULL_ID_SEARCH_TYPE,
-        },
-      ]),
+      buildSearchQuery(
+        [
+          {
+            name: "column1",
+            values: ["P00100-1"],
+            type: FULL_ID_SEARCH_TYPE,
+          },
+        ],
+        sanitizeId,
+      ),
     ).resolves.toEqual('column1=="P00100-1"||column1=="P001001"');
   });
   it("should generate query for one accession label element", () => {
@@ -171,25 +175,31 @@ describe("buildSearchQuery for like id search", () => {
   });
   it("should generate query for one element", () => {
     expect(
-      buildSearchQuery([
-        {
-          name: "column1",
-          values: ["P00100-1"],
-          type: LIKE_ID_SEARCH_TYPE,
-        },
-      ]),
+      buildSearchQuery(
+        [
+          {
+            name: "column1",
+            values: ["P00100-1"],
+            type: LIKE_ID_SEARCH_TYPE,
+          },
+        ],
+        sanitizeId,
+      ),
     ).resolves.toEqual('column1=="P00100-1%"||column1=="P001001%"');
   });
   it("should generate query for one element, two fields", () => {
     expect(
-      buildSearchQuery([
-        {
-          name: "column1",
-          values: ["P00100-1"],
-          type: LIKE_ID_SEARCH_TYPE,
-          searchFields: ["column1", "column2"],
-        },
-      ]),
+      buildSearchQuery(
+        [
+          {
+            name: "column1",
+            values: ["P00100-1"],
+            type: LIKE_ID_SEARCH_TYPE,
+            searchFields: ["column1", "column2"],
+          },
+        ],
+        sanitizeId,
+      ),
     ).resolves.toEqual(
       '(column1=="P00100-1%")||(column2=="P00100-1%")||(column1=="P001001%")||(column2=="P001001%")',
     );
