@@ -13,6 +13,7 @@ import * as apis from "./api";
         }),
       ).toEqual([]);
     });
+
     [1, 3, 42].forEach(length => {
       it(`should handle ${length} ${issueType} messages`, () => {
         const messages = Array.from({ length }, (_, key) => ({
@@ -31,6 +32,21 @@ import * as apis from "./api";
           }),
         ).toEqual(expectedErrorMessages);
       });
+    });
+
+    it(`should handle ${issueType} messages in different formats`, () => {
+      expect(
+        apis[functionName]({ errors: { [parameterName]: ["string"] } }),
+      ).toEqual(["string"]);
+      expect(
+        apis[functionName]({ errors: { [parameterName]: "string" } }),
+      ).toEqual(["string"]);
+      expect(apis[functionName]({ errors: { [parameterName]: 0 } })).toEqual(
+        [],
+      );
+      expect(apis[functionName]({ errors: ["string"] })).toEqual(["string"]);
+      expect(apis[functionName]({ errors: "string" })).toEqual(["string"]);
+      expect(apis[functionName]({ errors: 0 })).toEqual([]);
     });
   });
 });

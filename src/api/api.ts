@@ -1,4 +1,7 @@
 import HttpStatus from "http-status-codes";
+import has from "lodash/has";
+import isObject from "lodash/isObject";
+import isString from "lodash/isString";
 import merge from "lodash/merge";
 import partialRight from "lodash/partialRight";
 import uuid from "uuid";
@@ -12,25 +15,48 @@ import {
 
 const SEMICOLON_SEPARATOR = "; ";
 
-const GENERIC_ERROR_MESSAGE = "Bad API response.";
-
 const extractIssueMessages = (
   object: UnprocessedJsonResult,
   issueType = "errors",
 ): string[] => {
-  if (object.errors) {
-    return object.errors[issueType].map(error => error.message);
+  let { errors } = object;
+  if (!errors) {
+    return [];
+  }
+  if (isObject(errors) && has(errors, issueType)) {
+    errors = errors[issueType];
+  }
+  if (isString(errors)) {
+    return [errors];
+  }
+  if (Array.isArray(errors)) {
+    if (errors.every(error => isString(error))) {
+      return errors;
+    }
+    return errors.map(error => error.message);
   }
   return [];
 };
+
 export const extractIssueCodes = (
   object: UnprocessedJsonResult,
   issueType = "errors",
 ): string[] => {
-  if (object.errors) {
-    return object.errors[issueType]
-      .map(error => error.errorCode)
-      .filter(errorCode => errorCode);
+  let { errors } = object;
+  if (!errors) {
+    return [];
+  }
+  if (isObject(errors) && has(object, issueType)) {
+    errors = errors[issueType];
+  }
+  if (isString(errors)) {
+    return [];
+  }
+  if (Array.isArray(errors)) {
+    if (errors.every(error => isString(error))) {
+      return [];
+    }
+    return errors.map(error => error.errorCode).filter(errorCode => errorCode);
   }
   return [];
 };
@@ -310,7 +336,7 @@ export class Api {
     response: Record<string, any>,
     options: ApiOptions = defaultOptions,
   ): JsonResult<any> => {
-    const { status, ok } = response;
+    const { status, statusText, ok } = response;
     return response.json().then(object => {
       const hasResultInResponse = options.hasResultInResponse !== false;
 
@@ -325,7 +351,7 @@ export class Api {
         .reverse()
         .join(SEMICOLON_SEPARATOR);
       if (!ok && !errorMessage && !warningMessage) {
-        errorMessage = GENERIC_ERROR_MESSAGE;
+        errorMessage = statusText;
       }
       if (errorMessage) {
         this.handleError(status, errorMessage, object, options);
