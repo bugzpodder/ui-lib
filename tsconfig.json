@@ -1,7 +1,6 @@
 {
   "include": ["src"],
   "compilerOptions": {
-    "skipLibCheck": true,
     "target": "es5",
     "module": "esnext",
     "lib": ["dom", "esnext"],
