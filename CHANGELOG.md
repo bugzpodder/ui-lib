@@ -1,11 +1,20 @@
-## 2.0.0
+## 2.0.0 - 2019-11-24
 
 1. (BREAKING) Deprecated legacy type definitions.
 2. (BREAKING) sentenceCase no longer uses a default keyword map.
 3. (BREAKING) Removed legacy value from OmniSearch utils.
 4. (BREAKING) Make sanitizeId optional in buildQuery and filterResults APIs.
+5. Fix API extraction methods to handle various error and warning types.
 
-## 1.1.0 - 2019-##-
+## 1.1.13 - 2019-11-24
+
+1. filterResults uses default values if they aren't provided.
+2. filterResults can now filter and sort deeply nested objects.
+3. filterResults sort string values in proper numeric order.
+4. Stop suppressing unauthorized errors from being displayed.
+5. Add support for date-fns in date utils.
+
+## 1.1.9 - 2019-09-06
 
 1. Add `ZERO_DATE` constant. This is used to check for zero dates returned by go servers.
 2. `formatDate` and `formatDateTime` no longer return `EPOCH_DATE`s when empty strings are passed.
@@ -16,11 +25,6 @@
 7. Replaced buildSearchQuery, buildOrderQuery with buildQuery.
 8. Move sidebar-content and related URL constants to `common-private`.
 9. Rename package to `@grailbio/lib`, publish to github and npm.
-10. filterResults uses default values if they aren't provided.
-11. filterResults can now filter and sort deeply nested objects.
-12. filterResults sort string values in proper numeric order.
-13. Stop suppressing unauthorized errors from being displayed.
-14. Add support for date-fns in date utils.
 
 ## 1.0.0 - 2019-06-17
 
@@ -31,7 +35,7 @@
    value mapper in Omni Search fields.
 5. Move node server lib code like `passport` utils and `commandLine` utils to `@grail/server-lib`.
 6. Add `grailPurpleActionColor`. (Intended for links and actions).
-7. sanitizeId only removes the dash in the second last position instead of every position.
+7. SanitizeId only removes the dash in the second last position instead of every position.
 
 ## 0.10.0 - 2019-04-01
 
