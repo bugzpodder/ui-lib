@@ -42,17 +42,17 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "@grailbio/eslint-config-grail": "^1.0.3",
-    "@types/jest": "^24.0.23",
-    "@types/react": "^16.9.16",
-    "eslint-plugin-tsc": "^1.2.0",
-    "fs-extra": "^8.1.0",
-    "husky": "^3.1.0",
-    "jest-mock-console": "^1.0.0",
+    "@grailbio/eslint-config-grail": "1.0.3",
+    "@types/jest": "24.0.23",
+    "@types/react": "16.9.16",
+    "eslint-plugin-tsc": "1.2.0",
+    "fs-extra": "8.1.0",
+    "husky": "3.1.0",
+    "jest-mock-console": "1.0.0",
     "lint-staged": "7.3.0",
-    "mock-socket": "^9.0.2",
-    "prettier": "^1.19.1",
-    "tsdx": "^0.11.0"
+    "mock-socket": "9.0.2",
+    "prettier": "1.19.1",
+    "tsdx": "0.11.0"
   },
   "lint-staged": {
     "*.+(ts|tsx)": [
