@@ -105,6 +105,7 @@ export type JsonResult<T> = {
   errorCodes: string[];
   warningMessages: string[];
   warningMessage: string;
+  warningCodes: string[];
 };
 
 export type ApiIssue = {

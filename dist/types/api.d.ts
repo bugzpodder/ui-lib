@@ -87,6 +87,7 @@ export declare type JsonResult<T> = {
     errorCodes: string[];
     warningMessages: string[];
     warningMessage: string;
+    warningCodes: string[];
 };
 export declare type ApiIssue = {
     message: string;

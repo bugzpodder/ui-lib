@@ -4,6 +4,7 @@ export declare const extractIssueCodes: (object: UnprocessedJsonResult, issueTyp
 export declare const extractErrorMessages: import("lodash").Function1<UnprocessedJsonResult, string[]>;
 export declare const extractWarningMessages: import("lodash").Function1<UnprocessedJsonResult, string[]>;
 export declare const extractErrorCodes: import("lodash").Function1<UnprocessedJsonResult, string[]>;
+export declare const extractWarningCodes: import("lodash").Function1<UnprocessedJsonResult, string[]>;
 declare type ApiConnection = {
     apiUrl: string;
     version: string;

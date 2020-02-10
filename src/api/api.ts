@@ -46,7 +46,7 @@ export const extractIssueCodes = (
   if (!errors) {
     return [];
   }
-  if (isObject(errors) && has(object, issueType)) {
+  if (isObject(errors) && has(errors, issueType)) {
     errors = errors[issueType];
   }
   if (isString(errors)) {
@@ -70,6 +70,7 @@ export const extractWarningMessages = partialRight(
   "warnings",
 );
 export const extractErrorCodes = partialRight(extractIssueCodes, "errors");
+export const extractWarningCodes = partialRight(extractIssueCodes, "warnings");
 
 type ApiConnection = {
   apiUrl: string;
@@ -346,6 +347,7 @@ export class Api {
       const errorMessages = extractErrorMessages(object);
       const warningMessages = extractWarningMessages(object);
       const errorCodes = extractErrorCodes(object);
+      const warningCodes = extractWarningCodes(object);
       let errorMessage = errorMessages.reverse().join(SEMICOLON_SEPARATOR);
       const warningMessage = warningMessages
         .reverse()
@@ -377,6 +379,7 @@ export class Api {
         errorCodes,
         warningMessages,
         warningMessage,
+        warningCodes,
       };
     });
   };
@@ -406,6 +409,7 @@ export class Api {
       errorCodes: [],
       warningMessages: [],
       warningMessage: "",
+      warningCodes: [],
     };
   };
 
