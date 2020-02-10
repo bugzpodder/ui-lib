@@ -1,5 +1,5 @@
-import isArray from "lodash/isArray";
 import { SearchOptionValues } from "../../types/api";
+import { isArray } from "lodash";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { History, Location } from "history";
 import { KeyValue } from "../../types/common";

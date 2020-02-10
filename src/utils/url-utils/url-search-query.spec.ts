@@ -1,5 +1,7 @@
 import { getSearchValues, updateSearchUrl } from "./url-search";
 
+jest.useFakeTimers();
+
 const singleValues = ["testString", 0, 2.1727, false, true];
 const arrayValues = [
   ["a", "testString"],
@@ -20,8 +22,6 @@ const generateValuesSearchQuery = (key, values): string => {
   }
   return result;
 };
-
-jest.mock("lodash/debounce", () => jest.fn(fn => fn));
 
 describe("getSearchValues", () => {
   it("handles no search values", () => {
@@ -75,6 +75,7 @@ describe("updateSearchUrl", () => {
       history: history as any,
       searchOptions: new Map(),
     });
+    jest.runAllTimers();
     expect(history.replace).not.toBeCalled();
     expect(history.push).not.toBeCalled();
   });
@@ -89,6 +90,7 @@ describe("updateSearchUrl", () => {
         history: history as any,
         searchOptions: new Map().set("test", { values: [value], placeholder }),
       });
+      jest.runAllTimers();
       expect(history.replace).toBeCalledWith({
         search: generateValueSearchQuery("test", value),
       });
@@ -105,6 +107,7 @@ describe("updateSearchUrl", () => {
         history: history as any,
         searchOptions: new Map().set("test", { values, placeholder }),
       });
+      jest.runAllTimers();
       const search = generateValuesSearchQuery("test", values);
       expect(history.replace).toBeCalledWith({ search });
     });

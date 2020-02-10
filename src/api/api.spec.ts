@@ -1,6 +1,5 @@
-import { sentenceCase } from "../utils/string-utils";
-
 import * as apis from "./api";
+import { sentenceCase } from "../utils/string-utils";
 
 ["error", "warning"].forEach(issueType => {
   const functionName = `extract${sentenceCase(issueType)}Messages`;

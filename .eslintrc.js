@@ -17,11 +17,6 @@ module.exports = {
       {
         paths: [
           {
-            name: "lodash",
-            message:
-              'Please import lodash functions directly, eg: import isEmpty from "lodash/isEmpty".',
-          },
-          {
             name: "@grailbio/components",
             message:
               "Please do not import @grailbio/components from @grailbio/lib.",
@@ -30,11 +25,6 @@ module.exports = {
             name: "@grailbio/server-lib",
             message:
               "Please do not import @grailbio/server-lib from @grailbio/lib.",
-          },
-          {
-            name: "date-fns",
-            message:
-              'Please import date-fns directly, eg: import parseISO from "date-fns/parseISO".',
           },
         ],
         patterns: [

@@ -1,7 +1,5 @@
-import camelCase from "lodash/camelCase";
-import startCase from "lodash/startCase";
-
 import { ENCODED_QUOTE_CHAR } from "../api-utils/api-constants";
+import { camelCase, startCase } from "lodash";
 import { generateFilledArray } from "../array-utils";
 
 export const sentenceCase = (

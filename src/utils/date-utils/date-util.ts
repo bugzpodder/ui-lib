@@ -1,10 +1,5 @@
-import format from "date-fns/format";
-
-import isDate from "date-fns/isDate";
-import isValid from "date-fns/isValid";
-import parse from "date-fns/parse";
-import parseISO from "date-fns/parseISO";
 import { DATE_UNICODE_FORMAT } from "../../constants/date-constants";
+import { format, isDate, isValid, parse, parseISO } from "date-fns";
 
 export const parseDate = (date: string | Date | null): Date | null => {
   if (!date) {

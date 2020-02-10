@@ -1,8 +1,4 @@
-import camelCase from "lodash/camelCase";
-import forEach from "lodash/forEach";
-import isEmpty from "lodash/isEmpty";
-import isObject from "lodash/isObject";
-import upperFirst from "lodash/upperFirst";
+import { camelCase, forEach, isEmpty, isObject, upperFirst } from "lodash";
 
 export const convertObjectKeys = (
   keyMutator: Function,

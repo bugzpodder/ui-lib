@@ -1,6 +1,5 @@
-import isEqual from "lodash/isEqual";
-
 import { AssayStepMap } from "./assay-step-map";
+import { isEqual } from "lodash";
 
 describe("AssayStepMap", () => {
   it("can be instantiated", () => {

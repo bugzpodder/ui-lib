@@ -4,7 +4,6 @@ import {
   LIKE_TEXT_SEARCH_TYPE,
   OMNI_TEXT_SEARCH_TYPE,
 } from "../api-utils/api-constants";
-
 import { OmniSearchDef } from "../../types/api";
 import {
   getItemsFromOmniValue,

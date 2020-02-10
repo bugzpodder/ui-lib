@@ -1,9 +1,4 @@
 import HttpStatus from "http-status-codes";
-import has from "lodash/has";
-import isObject from "lodash/isObject";
-import isString from "lodash/isString";
-import merge from "lodash/merge";
-import partialRight from "lodash/partialRight";
 import uuid from "uuid";
 import {
   ApiDispatchers,
@@ -12,6 +7,7 @@ import {
   JsonResult,
   UnprocessedJsonResult,
 } from "../types/api";
+import { has, isObject, isString, merge, partialRight } from "lodash";
 
 const SEMICOLON_SEPARATOR = "; ";
 

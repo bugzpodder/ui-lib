@@ -1,6 +1,5 @@
-import debounce from "lodash/debounce";
-import isEqual from "lodash/isEqual";
 import qs from "qs";
+import { debounce, isEqual } from "lodash";
 import { isValueValid } from "../api-utils";
 
 type Option = {

@@ -1,5 +1,4 @@
 import mockConsole from "jest-mock-console";
-
 import {
   expandSearchValues,
   extractSearchValues,

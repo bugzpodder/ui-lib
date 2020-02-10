@@ -1,5 +1,4 @@
-import forEach from "lodash/forEach";
-
+import { forEach } from "lodash";
 import { hasKey, hasKeyValue, setKeyValue } from "./key-value-util";
 
 const setKeyValueTestCases = [

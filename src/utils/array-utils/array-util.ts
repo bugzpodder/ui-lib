@@ -1,4 +1,4 @@
-import isArray from "lodash/isArray";
+import { isArray } from "lodash";
 
 export const generateFilledArray = (
   count: number,

@@ -1,14 +1,3 @@
-import debounce from "lodash/debounce";
-import endOfDay from "date-fns/endOfDay";
-import escapeRegExp from "lodash/escapeRegExp";
-import get from "lodash/get";
-import identity from "lodash/identity";
-import isAfter from "date-fns/isAfter";
-import isString from "lodash/isString";
-import isValid from "date-fns/isValid";
-import parseISO from "date-fns/parseISO";
-import partialRight from "lodash/partialRight";
-import startOfDay from "date-fns/startOfDay";
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
@@ -24,6 +13,15 @@ import {
   URI_QUERY_TYPE,
 } from "./api-constants";
 import { GetContentOptions, SearchOption, SortOption } from "../../types/api";
+import {
+  debounce,
+  escapeRegExp,
+  get,
+  identity,
+  isString,
+  partialRight,
+} from "lodash";
+import { endOfDay, isAfter, isValid, parseISO, startOfDay } from "date-fns";
 import { extractDateRange, formatDate } from "../date-utils";
 import { extractQuotedString } from "../string-utils";
 

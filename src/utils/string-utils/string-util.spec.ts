@@ -1,5 +1,3 @@
-import keys from "lodash/keys";
-
 import {
   extractQuotedString,
   formatPercent,
@@ -10,6 +8,7 @@ import {
   unquoteString,
   upperAlphaChars,
 } from "./string-util";
+import { keys } from "lodash";
 
 const multiLine = `multiple lines
 of

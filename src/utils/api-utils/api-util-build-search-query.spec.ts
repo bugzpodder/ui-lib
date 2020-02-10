@@ -1,5 +1,3 @@
-import endOfDay from "date-fns/endOfDay";
-import startOfDay from "date-fns/startOfDay";
 import {
   BOOLEAN_SEARCH_TYPE,
   DATETIME_SEARCH_TYPE,
@@ -20,6 +18,7 @@ import {
   buildQuery,
   buildSearchQuery,
 } from "./api-util";
+import { endOfDay, startOfDay } from "date-fns";
 import { sanitizeId } from "../id-utils";
 
 describe("buildSearchQuery", () => {
