@@ -6,13 +6,13 @@ declare type SearchParams = {
     history: History;
     searchOptions: SearchOptionValues;
 };
-export declare const flattenSearchValues: (searchValues: Map<string, import("../../types/api").SearchOptionValue>) => Record<string, any>;
-export declare const expandSearchValues: (validSearchValues: Record<string, any>) => Map<string, import("../../types/api").SearchOptionValue>;
-export declare const extractSearchValues: (searchOptions: Map<string, import("../../types/api").SearchOptionValue>) => Map<string, import("../../types/api").SearchOptionValue>;
-export declare const mergeSearchOptions: (searchOptions: Map<string, import("../../types/api").SearchOptionValue>, searchValues?: Map<string, import("../../types/api").SearchOptionValue> | undefined) => Map<string, import("../../types/api").SearchOptionValue>;
+export declare const flattenSearchValues: (searchValues: SearchOptionValues) => Record<string, any>;
+export declare const expandSearchValues: (validSearchValues: Record<string, any>) => SearchOptionValues;
+export declare const extractSearchValues: (searchOptions: SearchOptionValues) => SearchOptionValues;
+export declare const mergeSearchOptions: (searchOptions: SearchOptionValues, searchValues?: SearchOptionValues | undefined) => SearchOptionValues;
 export declare const getSearchValues: ({ location, }: {
-    location: Location<any>;
-}) => Map<string, import("../../types/api").SearchOptionValue>;
+    location: Location<History.PoorMansUnknown>;
+}) => SearchOptionValues;
 export declare const updateSearchUrl: ({ location, history, searchOptions }: SearchParams, options?: Record<string, any>) => void;
 export declare const getOmniUrlQueryString: (keyValues: KeyValue[]) => string;
 export {};
