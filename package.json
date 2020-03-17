@@ -8,7 +8,7 @@
     "build:client": "yarn build",
     "start:client": "NODE_ENV=development tsdx watch",
     "cover": "open coverage/lcov-report/index.html",
-    "flow": "tsc",
+    "check-types": "tsc",
     "lint": "yarn flow && tsdx lint src",
     "lint-fix": "yarn lint --fix",
     "format": "prettier --write \"*.js\" && yarn lint-fix",
