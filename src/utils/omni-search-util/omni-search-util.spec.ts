@@ -227,7 +227,7 @@ describe("getItemsFromOmniValue", () => {
   it("eliminates empty comma sections", () => {
     expect(getItemsFromOmniValue(" 12 1, , 34")).toEqual(["12 1", "34"]);
   });
-  // TODO(jzhao): add more testing coverage
+  // TODO(nsawas): add more testing coverage
 });
 
 describe("getValueItemsFromSearchValues", () => {

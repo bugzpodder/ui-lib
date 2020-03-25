@@ -5,9 +5,7 @@ export const generateFilledArray = (
   valueOrGenerator: any = 0,
 ): Array<any> => {
   if (typeof valueOrGenerator === "function") {
-    return Array(count)
-      .fill(null)
-      .map(valueOrGenerator);
+    return Array(count).fill(null).map(valueOrGenerator);
   }
   return Array(count).fill(valueOrGenerator);
 };

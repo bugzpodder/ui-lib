@@ -18,7 +18,7 @@ export const flattenSearchValues = (
   [...searchValues]
     .map(([key, { values }]) => ({ key, values }))
     .filter(({ values }) => {
-      return isArray(values) && values.some(value => value != null);
+      return isArray(values) && values.some((value) => value != null);
     })
     .reduce((acc, { key, values }) => {
       acc[key] = values.length === 1 ? values[0] : values;
@@ -30,7 +30,7 @@ export const expandSearchValues = (
 ): SearchOptionValues => {
   try {
     const searchValues = new Map();
-    Object.keys(validSearchValues).forEach(key => {
+    Object.keys(validSearchValues).forEach((key) => {
       const result = validSearchValues[key];
       searchValues.set(key, { values: isArray(result) ? result : [result] });
     });
@@ -47,7 +47,7 @@ export const extractSearchValues = (
   const searchValues = new Map();
   searchOptions.forEach(({ values }, key) => {
     searchValues.set(key, {
-      values: isArray(values) ? values.filter(value => value != null) : [],
+      values: isArray(values) ? values.filter((value) => value != null) : [],
     });
   });
   return searchValues;

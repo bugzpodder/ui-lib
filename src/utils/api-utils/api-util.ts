@@ -85,7 +85,7 @@ const resolveSearchOptions = async (
   transformId: (x: string) => string = identity,
 ): Promise<SearchOption[]> =>
   Promise.all(
-    searchOptions.map(async searchOption => {
+    searchOptions.map(async (searchOption) => {
       const { type, mapValues } = searchOption;
       let { values } = searchOption;
       const isDateSearchType = DATE_SEARCH_TYPES.includes(type);
@@ -95,7 +95,7 @@ const resolveSearchOptions = async (
       values = getEscapedSearchValues(
         { ...searchOption, values },
         transformId,
-      ).map(value => {
+      ).map((value) => {
         if (isDateSearchType) {
           return value;
         }
@@ -112,15 +112,16 @@ export const buildCustomURIQueryParams = async (
 ): Promise<void> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
-      searchOption => searchOption && searchOption.queryType === URI_QUERY_TYPE,
+      (searchOption) =>
+        searchOption && searchOption.queryType === URI_QUERY_TYPE,
     ),
     transformId,
   );
   resolvedSearchOptions
-    .filter(searchOption => searchOption.values && searchOption.values.length)
+    .filter((searchOption) => searchOption.values && searchOption.values.length)
     .forEach(({ searchFields, values }) => {
       if (searchFields) {
-        values.forEach(value => {
+        values.forEach((value) => {
           params.append(searchFields[0], value);
         });
       }
@@ -138,7 +139,7 @@ export const buildSearchQuery = async (
 ): Promise<string> => {
   const resolvedSearchOptions = await resolveSearchOptions(
     searchOptions.filter(
-      searchOption => searchOption && !searchOption.queryType,
+      (searchOption) => searchOption && !searchOption.queryType,
     ),
     transformId,
   );
@@ -182,8 +183,9 @@ export const buildSearchQuery = async (
           },
           "",
         );
-        return `${multiValueSearchMemo}${multiValueSearchMemo &&
-          "||"}${multiFieldSearch}`;
+        return `${multiValueSearchMemo}${
+          multiValueSearchMemo && "||"
+        }${multiFieldSearch}`;
       }, initialSubQuery);
       if (!multiValueSearch) {
         return null;
@@ -196,7 +198,7 @@ export const buildSearchQuery = async (
       switch (type) {
         case LIKE_TEXT_SEARCH_TYPE:
         case OMNI_TEXT_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => {
+          return multiValueSearchBuilder((value) => {
             let searchValue = value.trim();
             const quotedValue = extractQuotedString(searchValue);
             if (quotedValue != null) {
@@ -218,18 +220,18 @@ export const buildSearchQuery = async (
         case NUMERIC_SEARCH_TYPE:
         // fallthrough to next case
         case BOOLEAN_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `${value}`);
+          return multiValueSearchBuilder((value) => `${value}`);
         case FULL_TEXT_SEARCH_TYPE:
         // fallthrough to next case
         case ENUM_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `"${value.trim()}"`);
+          return multiValueSearchBuilder((value) => `"${value.trim()}"`);
         case FULL_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `"${value}"`);
+          return multiValueSearchBuilder((value) => `"${value}"`);
         case LIKE_ID_SEARCH_TYPE:
-          return multiValueSearchBuilder(value => `"${value}%"`);
+          return multiValueSearchBuilder((value) => `"${value}%"`);
         case DATE_SEARCH_TYPE:
         case DATETIME_SEARCH_TYPE: {
-          return multiValueSearchBuilder(dateRangeString => {
+          return multiValueSearchBuilder((dateRangeString) => {
             // Note: startDate or endDate could be null, undefined or "". Consider all as `unset`
             let { startDate, endDate = "" } = extractDateRange(
               dateRangeString || "",
@@ -320,7 +322,7 @@ export const filterResults = (
 ): Array<any> => {
   const { count, offset, sortOptions = [], searchOptions = [] } = options;
 
-  const filteredResults = items.filter(item =>
+  const filteredResults = items.filter((item) =>
     searchOptions.reduce((result: boolean, searchOption) => {
       if (!result || !searchOption) {
         return false;
@@ -359,7 +361,7 @@ export const filterResults = (
         );
       }
 
-      const validValues = searchValues.filter(value => isValueValid(value));
+      const validValues = searchValues.filter((value) => isValueValid(value));
       if (validValues.length === 0) {
         return true;
       }
@@ -405,7 +407,7 @@ export const filterResults = (
           const filterKey = tokens.join(".");
 
           if (filterKey && itemKey != null && Array.isArray(item[itemKey])) {
-            return item[itemKey].some(e => {
+            return item[itemKey].some((e) => {
               const resultValue = get(e, filterKey);
               if (includeNulls && resultValue == null) {
                 return true;

@@ -46,7 +46,7 @@ export type OmniQueryOptions = {
   searchOptions: SearchOption[];
 };
 
-// TODO(jzhao): simplify all these types!
+// TODO(nsawas): simplify all these types!
 export type ApiQueryOptions = {
   searchOptions: SearchOption[];
   sortOptions: SortOption[];
@@ -61,7 +61,7 @@ export type OmniSearchDef = {
   aliases?: string[];
   description?: string;
   localStorageKeySuffix?: string;
-  // TODO(jzhao): support validation in the future?
+  // TODO(nsawas): support validation in the future?
 } & SearchDef;
 
 export type OmniSearchValues = Map<number, string>;

@@ -1,5 +1,6 @@
 {
   "include": ["src"],
+  "exclude": ["**/*.spec.tsx"],
   "compilerOptions": {
     "skipLibCheck": true,
     "target": "es5",
@@ -9,7 +10,7 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "noEmit": true,
     "noUnusedLocals": true,

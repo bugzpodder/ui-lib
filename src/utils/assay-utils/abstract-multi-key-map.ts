@@ -17,7 +17,7 @@ export class AbstractMultiKeyMap {
     }
     const tuples: Array<any> = [];
     if (iterables) {
-      iterables.forEach(tuple => {
+      iterables.forEach((tuple) => {
         tuples.push([this.serializeKey(tuple[0]), tuple[1]]);
       });
     }
@@ -85,6 +85,6 @@ export class AbstractMultiKeyMap {
   }
 
   keys(): Record<string, any>[] {
-    return Array.from(this._map.keys()).map(key => this.deserializeKey(key));
+    return Array.from(this._map.keys()).map((key) => this.deserializeKey(key));
   }
 }

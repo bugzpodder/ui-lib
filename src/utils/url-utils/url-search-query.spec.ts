@@ -32,7 +32,7 @@ describe("getSearchValues", () => {
     };
     expect(getSearchValues({ location: location as any })).toEqual(new Map());
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     const location = {
       pathname: "/some/route",
       search: generateValueSearchQuery("test", value),
@@ -44,8 +44,8 @@ describe("getSearchValues", () => {
       );
     });
   });
-  arrayValues.forEach(values => {
-    const testValues = (values as any[]).map(value => String(value));
+  arrayValues.forEach((values) => {
+    const testValues = (values as any[]).map((value) => String(value));
     const location = {
       pathname: "/some/route",
       search: generateValuesSearchQuery("test", testValues),
@@ -79,7 +79,7 @@ describe("updateSearchUrl", () => {
     expect(history.replace).not.toBeCalled();
     expect(history.push).not.toBeCalled();
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     const history = {
       push: jest.fn(),
       replace: jest.fn(),
@@ -96,7 +96,7 @@ describe("updateSearchUrl", () => {
       });
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     const history = {
       push: jest.fn(),
       replace: jest.fn(),

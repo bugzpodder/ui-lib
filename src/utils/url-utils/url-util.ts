@@ -23,7 +23,7 @@ export const getQuery = (
 export const stringifyQuery = (query: Record<string, any> = {}): string => {
   // delete params with empty string values
   Object.keys(query).forEach(
-    key => !isValueValid(query[key]) && delete query[key],
+    (key) => !isValueValid(query[key]) && delete query[key],
   );
   return qs.stringify(query);
 };

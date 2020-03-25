@@ -2,7 +2,7 @@ import { upperAlphaChars } from "../string-utils";
 
 const gridChars = [
   ...upperAlphaChars,
-  ...upperAlphaChars.map(char => `A${char}`),
+  ...upperAlphaChars.map((char) => `A${char}`),
 ];
 
 export const getRowHeader = (rowIndex: number): string => {

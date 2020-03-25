@@ -42,11 +42,11 @@ describe("isValueValid", () => {
     false,
     "A sentence",
     " ",
-  ].forEach(value => {
+  ].forEach((value) => {
     it(`should validate '${String(value)}'`, () =>
       expect(isValueValid(value)).toBe(true));
   });
-  ["", null, undefined].forEach(value => {
+  ["", null, undefined].forEach((value) => {
     it(`should invalidate '${String(value)}'`, () =>
       expect(isValueValid(value)).toBe(false));
   });

@@ -1,5 +1,4 @@
 import HttpStatus from "http-status-codes";
-import uuid from "uuid";
 import {
   ApiDispatchers,
   ApiObjectProcessors,
@@ -8,6 +7,7 @@ import {
   UnprocessedJsonResult,
 } from "../types/api";
 import { has, isObject, isString, merge, partialRight } from "lodash";
+import { v4 } from "uuid";
 
 const SEMICOLON_SEPARATOR = "; ";
 
@@ -26,10 +26,10 @@ const extractIssueMessages = (
     return [errors];
   }
   if (Array.isArray(errors)) {
-    if (errors.every(error => isString(error))) {
+    if (errors.every((error) => isString(error))) {
       return errors;
     }
-    return errors.map(error => error.message);
+    return errors.map((error) => error.message);
   }
   return [];
 };
@@ -49,10 +49,12 @@ export const extractIssueCodes = (
     return [];
   }
   if (Array.isArray(errors)) {
-    if (errors.every(error => isString(error))) {
+    if (errors.every((error) => isString(error))) {
       return [];
     }
-    return errors.map(error => error.errorCode).filter(errorCode => errorCode);
+    return errors
+      .map((error) => error.errorCode)
+      .filter((errorCode) => errorCode);
   }
   return [];
 };
@@ -98,7 +100,7 @@ const checkForServerError = (response: Response): Promise<Response> =>
 
 // Check for API server version mismatch. If mismatched, throw an error and reload the UI.
 const checkForServerVersionMismatch = (response: Response): Promise<Response> =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     const { status } = response;
     if (status === HttpStatus.PRECONDITION_FAILED) {
       // If the server rejects the request with PRECONDITION_FAILED, most likely it is due
@@ -152,7 +154,7 @@ export class Api {
   getCommonHeaders = (): Record<string, any> => {
     const commonHeaders = {
       accept: `application/json, ${this.getAcceptVersionHeader()}`,
-      "x-request-id": uuid.v4(),
+      "x-request-id": v4(),
     };
     return { headers: { ...commonHeaders } };
   };
@@ -185,7 +187,7 @@ export class Api {
         .then(checkForServerVersionMismatch)
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore: type JsonResult is not assignable.
-        .then(response => {
+        .then((response) => {
           const { status, ok } = response;
           if (ok) {
             let filename = "";
@@ -202,7 +204,7 @@ export class Api {
             if (!filename) {
               filename = new Date().toISOString();
             }
-            return response.blob().then(blob => ({
+            return response.blob().then((blob) => ({
               blob,
               filename,
               status,
@@ -215,7 +217,7 @@ export class Api {
           );
         })
         .catch(this.processCatch.bind(null, urlSuffix, options))
-        .then(response => {
+        .then((response) => {
           apiDispatchers && apiDispatchers.dispatchIsLoading(false);
           return response;
         })
@@ -239,11 +241,11 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then(resp =>
+      .then((resp) =>
         this.processJsonResponse(resp, merge({}, apiDispatchers, options)),
       )
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then(response => {
+      .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
         return response;
       });
@@ -259,11 +261,11 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, this.getCommonHeaders())
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then(resp =>
+      .then((resp) =>
         this.processJsonResponse(resp, merge({}, apiDispatchers, options)),
       )
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then(response => {
+      .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsLoading(false);
         return response;
       });
@@ -291,11 +293,11 @@ export class Api {
     return fetch(`${this.apiUrl}${urlSuffix}`, fetchOptions)
       .then(checkForServerError)
       .then(checkForServerVersionMismatch)
-      .then(response =>
+      .then((response) =>
         this.processJsonResponse(response, merge({}, apiDispatchers, options)),
       )
       .catch(this.processCatch.bind(null, urlSuffix, options))
-      .then(response => {
+      .then((response) => {
         apiDispatchers && apiDispatchers.dispatchIsSaving(false);
         return response;
       });
@@ -334,7 +336,7 @@ export class Api {
     options: ApiOptions = defaultOptions,
   ): JsonResult<any> => {
     const { status, statusText, ok } = response;
-    return response.json().then(object => {
+    return response.json().then((object) => {
       const hasResultInResponse = options.hasResultInResponse !== false;
 
       if (this.apiObjectProcessors) {

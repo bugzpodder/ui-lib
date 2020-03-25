@@ -10,7 +10,7 @@ export const toTableRow = (
   accessors: (string | Function)[],
   datum: Record<string, any>, // Return an array of converted columns
 ): string[] => // eslint-disable-next-line implicit-arrow-linebreak
-  accessors.map(accessor => {
+  accessors.map((accessor) => {
     const columnDatum =
       typeof accessor === "function" ? accessor(datum) : datum[accessor];
     if (columnDatum === null) {
@@ -36,6 +36,6 @@ export const toDelimitedReport = (
   });
   formattedRows.push(headers);
 
-  formattedRows.push(data.map(datum => toTableRow(accessors, datum)));
+  formattedRows.push(data.map((datum) => toTableRow(accessors, datum)));
   return CSV.stringify(formattedRows, delimiter);
 };

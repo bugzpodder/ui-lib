@@ -1,7 +1,7 @@
 import * as apis from "./api";
 import { sentenceCase } from "../utils/string-utils";
 
-["error", "warning"].forEach(issueType => {
+["error", "warning"].forEach((issueType) => {
   const functionName = `extract${sentenceCase(issueType)}Messages`;
   const parameterName = `${issueType}s`;
   describe(functionName, () => {
@@ -13,7 +13,7 @@ import { sentenceCase } from "../utils/string-utils";
       ).toEqual([]);
     });
 
-    [1, 3, 42].forEach(length => {
+    [1, 3, 42].forEach((length) => {
       it(`should handle ${length} ${issueType} messages`, () => {
         const messages = Array.from({ length }, (_, key) => ({
           message: `Error ${key + 1}`,

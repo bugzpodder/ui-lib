@@ -28,7 +28,7 @@ describe("flattenSearchValues", () => {
   it("returns false if values are null or undefined", () => {
     expect(flattenSearchValues(undefinedSearchValues)).toEqual({});
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
       expect(
         flattenSearchValues(new Map().set("test", { values: [value] })),
@@ -37,7 +37,7 @@ describe("flattenSearchValues", () => {
       });
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
       expect(flattenSearchValues(new Map().set("test", { values }))).toEqual({
         test: values,
@@ -57,14 +57,14 @@ describe("expandSearchValues", () => {
     expect(expandSearchValues()).toEqual(new Map());
     expect(console.error).toHaveBeenCalled();
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
       expect(expandSearchValues({ test: value })).toEqual(
         new Map().set("test", { values: [value] }),
       );
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
       expect(expandSearchValues({ test: values })).toEqual(
         new Map().set("test", { values }),
@@ -77,7 +77,7 @@ describe("extractSearchValues", () => {
   it("handles no search values", () => {
     expect(extractSearchValues(new Map())).toEqual(new Map());
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
       expect(
         extractSearchValues(
@@ -86,9 +86,11 @@ describe("extractSearchValues", () => {
       ).toEqual(new Map().set("test", { values: [value] }));
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
-      const expectedValues = (values as any[]).filter(value => value !== null);
+      const expectedValues = (values as any[]).filter(
+        (value) => value !== null,
+      );
       expect(
         extractSearchValues(new Map().set("test", { values, placeholder })),
       ).toEqual(
@@ -115,7 +117,7 @@ describe("mergeSearchOptions", () => {
   it("handles invalid search values", () => {
     expect(mergeSearchOptions(new Map())).toEqual(new Map());
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it("merges no search values into empty search options", () => {
       expect(
         mergeSearchOptions(
@@ -125,7 +127,7 @@ describe("mergeSearchOptions", () => {
       ).toEqual(new Map());
     });
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it("merges no search values into mismatched search options", () => {
       const searchOptions = new Map().set("test2", { placeholder });
       expect(
@@ -136,7 +138,7 @@ describe("mergeSearchOptions", () => {
       ).toEqual(searchOptions);
     });
   });
-  singleValues.forEach(value => {
+  singleValues.forEach((value) => {
     it(`handles ${String(value)} search value`, () => {
       expect(
         mergeSearchOptions(
@@ -146,7 +148,7 @@ describe("mergeSearchOptions", () => {
       ).toEqual(new Map().set("test", { placeholder, values: [value] }));
     });
   });
-  arrayValues.forEach(values => {
+  arrayValues.forEach((values) => {
     it(`handles array ${String(values)} search values`, () => {
       expect(
         mergeSearchOptions(

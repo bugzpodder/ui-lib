@@ -8,7 +8,7 @@ export const convertObjectKeys = (
   let convertedObject;
   if (Array.isArray(object)) {
     convertedObject = [];
-    forEach(object, value => {
+    forEach(object, (value) => {
       if (typeof value === "object") {
         value = convertObjectKeys(keyMutator, ignoredKeys, value);
       }
@@ -66,7 +66,7 @@ export const trimObjectValues = (object: any): any => {
     return object;
   }
   const formattedObject = { ...object };
-  Object.entries(formattedObject).forEach(entry => {
+  Object.entries(formattedObject).forEach((entry) => {
     if (typeof entry[1] === "string") {
       formattedObject[entry[0]] = entry[1].trim();
     }
@@ -86,7 +86,7 @@ export const flattenObject = (
   }
   const flatten = (object): any =>
     [].concat(
-      ...Object.keys(object).map(key => {
+      ...Object.keys(object).map((key) => {
         if (
           object[key] &&
           typeof object[key] === "object" &&

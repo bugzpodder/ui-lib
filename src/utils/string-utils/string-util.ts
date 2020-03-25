@@ -11,7 +11,7 @@ export const sentenceCase = (
   const separator = " ";
   return sentenceCased
     .split(separator)
-    .map(word => keywords.get(word) || word)
+    .map((word) => keywords.get(word) || word)
     .join(separator);
 };
 
@@ -36,9 +36,9 @@ export const normalizeStr = (str: string): string => {
 export const makeTitleString = (str: string, capFirst = true): string =>
   str
     .replace(/([a-z])([A-Z])([a-z])/g, "$1 $2$3") // space around camels
-    .replace(/_(.)/g, $1 => ` ${$1.toUpperCase()}`) // uppercase after underscore
+    .replace(/_(.)/g, ($1) => ` ${$1.toUpperCase()}`) // uppercase after underscore
     .replace(/_/g, " ") // underscore to space
-    .replace(/^(.)/, $1 => (capFirst ? $1.toUpperCase() : $1)) // capitalize the first letter (if specified)
+    .replace(/^(.)/, ($1) => (capFirst ? $1.toUpperCase() : $1)) // capitalize the first letter (if specified)
     .replace("  ", " ");
 
 /**

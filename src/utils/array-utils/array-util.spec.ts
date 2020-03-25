@@ -41,7 +41,7 @@ describe("generateFilledArray functional", () => {
 });
 
 describe("serializePromises", () => {
-  it("shall serially call array functions", done => {
+  it("shall serially call array functions", (done) => {
     const count = 10;
     let start = 0;
     // eslint-disable-next-line no-plusplus
@@ -50,8 +50,8 @@ describe("serializePromises", () => {
     let resolutionIndex = 0;
     const promise = serializePromises(
       values,
-      value =>
-        new Promise(resolve => {
+      (value) =>
+        new Promise((resolve) => {
           setTimeout(() => {
             resolutionValues[resolutionIndex] = value;
             resolutionIndex += 1;
@@ -59,7 +59,7 @@ describe("serializePromises", () => {
           }, Math.random() * 10);
         }),
     );
-    promise.then(results => {
+    promise.then((results) => {
       expect(resolutionValues).toEqual(values);
       expect(results).toEqual(values);
       done();
